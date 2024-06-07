@@ -1,15 +1,17 @@
 import * as React from "react";
 
-import { CharacterCard } from "components";
+import { CharacterCard, InputNumber } from "components";
 import { reactReducer } from "utils";
 import { Characters } from "types";
 
-import { charactersDefault } from "./data";
+import { charactersDefault, maxCharacters } from "./data";
 import styles from "./styles.module.scss";
 
 export const HomePage = () => {
   const [characters, udpateCharacters] =
     reactReducer<Characters>(charactersDefault);
+
+  const [numPlayers, setNumPlayers] = React.useState(5);
 
   const numActiveCharacters = React.useMemo(() => {
     return Object.values(characters).filter((character) => character.isActive)
@@ -28,8 +30,29 @@ export const HomePage = () => {
     ).length;
   }, [characters]);
 
+  const maxEvil = maxCharacters[numPlayers].evil;
+  const maxGood = maxCharacters[numPlayers].good;
+
   const handleCharacterClick = (characterId: string) => {
     const character = characters[characterId];
+
+    if (!character.isOptional) return;
+
+    if (
+      character.allegiance === "good" &&
+      !characters[characterId].isActive &&
+      numActiveGoodCharacters >= maxGood
+    ) {
+      return;
+    }
+
+    if (
+      character.allegiance === "evil" &&
+      !characters[characterId].isActive &&
+      numActiveEvilCharacters >= maxEvil
+    ) {
+      return;
+    }
 
     // if(character.allegiance === "good" && )
 
@@ -56,14 +79,26 @@ export const HomePage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.heading}>Pick your characters 0/6</div>
-        <div className={styles.numSelected}>
+        <div className={styles.heading}>Avalon Ritual Setup</div>
+        {/* <div className={styles.numSelected}>
           ({numActiveCharacters}) selected
-        </div>
+        </div> */}
       </div>
 
-      <div className={styles.charactersHeading}>
-        Good Characters {numActiveGoodCharacters}/4
+      <div className={styles.numPlayersSection}>
+        <div className={styles.sectionHeading}>Number of Players</div>
+
+        <InputNumber
+          value={numPlayers}
+          setValue={setNumPlayers}
+          min={5}
+          max={10}
+          className={styles.numPlayersInput}
+        />
+      </div>
+
+      <div className={styles.sectionHeading}>
+        Good Characters {numActiveGoodCharacters}/{maxGood}
       </div>
 
       <div className={styles.characters}>
@@ -76,9 +111,10 @@ export const HomePage = () => {
         ))}
       </div>
 
-      <div className={styles.charactersHeading}>
-        Evil Characters {numActiveEvilCharacters}/6
+      <div className={styles.sectionHeading}>
+        Evil Characters {numActiveEvilCharacters}/{maxEvil}
       </div>
+
       <div className={styles.characters}>
         {evilCharacters.map((character) => (
           <CharacterCard

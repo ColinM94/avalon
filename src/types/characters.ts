@@ -1,7 +1,8 @@
 export interface Character {
   id: string;
-  isActive: boolean;
   allegiance: "good" | "evil";
+  isActive: boolean;
+  isOptional: boolean;
 }
 
 export type Characters = Record<string, Character>;

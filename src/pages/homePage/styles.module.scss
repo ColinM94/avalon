@@ -2,7 +2,8 @@
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding-top: vars.$spacing-primary;
+  padding: vars.$spacing-primary;
+  gap: vars.$spacing-primary;
 
   .header {
     flex-direction: row;
@@ -10,7 +11,7 @@
     justify-content: center;
     gap: vars.$spacing-primary;
     width: 100%;
-    margin-bottom: calc(vars.$spacing-primary * 2);
+    margin-bottom: calc(vars.$spacing-primary);
 
     .heading {
       font-size: vars.$font-size-h1;
@@ -25,23 +26,32 @@
     }
   }
 
-  .charactersHeading {
+  .numPlayersSection {
+    margin-bottom: vars.$spacing-primary;
+    width: 100%;
+
+    gap: vars.$spacing-secondary;
+
+    .numPlayersInput {
+      align-self: center;
+    }
+  }
+
+  .sectionHeading {
     font-size: vars.$font-size-h2;
     align-self: flex-start;
-    margin-left: vars.$spacing-primary;
   }
 
   .characters {
     flex-direction: row;
     gap: vars.$spacing-primary;
     flex-wrap: wrap;
-    padding: vars.$spacing-primary;
 
     .character {
       flex: 1;
       min-width: calc(33% - vars.$spacing-primary);
       max-width: calc(33% - vars.$spacing-primary * 0.5);
-      height: 225px;
+      height: 175px;
       justify-content: center;
       align-items: center;
     }

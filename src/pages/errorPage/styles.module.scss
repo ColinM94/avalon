@@ -1,0 +1,20 @@
+.container {
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  flex: 0.75;
+  padding: vars.$spacing-primary;
+
+  .heading {
+    font-size: vars.$font-size-display;
+  }
+
+  .description {
+    font-size: vars.$font-size-body;
+    color: vars.$color-text-secondary;
+    margin-top: vars.$spacing-primary;
+    margin-bottom: vars.$spacing-primary;
+    text-align: center;
+    word-break: break-all;
+  }
+}
