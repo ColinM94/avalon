@@ -1,0 +1,31 @@
+.container {
+  flex-direction: row;
+  gap: vars.$spacing-primary;
+  width: 100%;
+  // padding-left: vars.$spacing-primary;
+  // padding-right: vars.$spacing-primary;
+
+  .incrementButton {
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  .input {
+    flex: 1;
+    background-color: vars.$color-surface;
+    border-radius: vars.$roundness;
+    border-color: vars.$color-primary;
+    color: vars.$color-text-primary;
+    font-size: vars.$font-size-body;
+    padding-left: vars.$spacing-primary;
+    padding-right: vars.$spacing-primary;
+
+    &:active {
+    }
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
