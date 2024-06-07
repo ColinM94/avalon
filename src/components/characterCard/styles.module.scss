@@ -1,5 +1,5 @@
-$evilColor: rgb(196, 16, 16);
-$goodColor: rgb(68, 68, 201);
+$evilColor: #f07e0a;
+$goodColor: #43839a;
 
 .container {
   box-shadow: vars.$shadow;
@@ -7,24 +7,71 @@ $goodColor: rgb(68, 68, 201);
   border-radius: vars.$roundness;
   padding: vars.$spacing-primary;
   cursor: pointer;
+  filter: grayscale(100%);
 
   &:hover {
     scale: 1.02;
+
+    .image {
+      transform: scale(1.1);
+    }
+  }
+
+  .name {
+    position: absolute;
+    bottom: vars.$spacing-tertiary;
+    left: vars.$spacing-secondary;
+    right: vars.$spacing-secondary;
+    z-index: 2;
+    text-align: center;
+    font-size: vars.$font-size-body;
+  }
+
+  .image {
+    position: absolute;
+    height: 100%;
+    object-fit: contain;
+    bottom: 0;
+    transition: transform 0.2s;
   }
 }
 
+.active {
+  filter: unset;
+  // border-width: 0;
+}
+
 .good {
-  border: 1px solid $goodColor;
+  // border: 1px solid $goodColor;
+  // background-color: $goodColor;
+  background: rgb(55, 80, 89);
+  background: radial-gradient(
+    circle,
+    rgba(55, 80, 89, 1) 0%,
+    rgba(67, 98, 154, 1) 45%,
+    rgba(53, 128, 187, 1) 81%
+  );
 }
 
 .activeGood {
+  @extend .active;
   background-color: $goodColor;
 }
 
 .evil {
-  border: 1px solid $evilColor;
+  // border: 1px solid $evilColor;
+  background-color: $evilColor;
+
+  background: rgb(176, 125, 74);
+  background: radial-gradient(
+    circle,
+    rgba(176, 125, 74, 1) 0%,
+    rgba(213, 126, 38, 1) 45%,
+    rgba(255, 129, 0, 1) 81%
+  );
 }
 
 .activeEvil {
+  @extend .active;
   background-color: $evilColor;
 }

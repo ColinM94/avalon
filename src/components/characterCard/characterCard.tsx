@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import { classes } from "utils";
 import { characterNames } from "consts";
 
@@ -6,6 +8,20 @@ import styles from "./styles.module.scss";
 
 export const CharacterCard = (props: Props) => {
   const { character, onClick, className } = props;
+
+  const [image, setImage] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const loadImage = async () => {
+      const tempImage = await import(
+        `assets/images/characters/${character.id}.png`
+      );
+
+      setImage(tempImage.default);
+    };
+
+    loadImage();
+  }, [character.id]);
 
   const classNames = classes(
     styles.container,
@@ -18,7 +34,10 @@ export const CharacterCard = (props: Props) => {
 
   return (
     <div onClick={() => onClick(character.id)} className={classNames}>
-      {characterNames[character.id] || character.id}
+      <div className={styles.name}>
+        {characterNames[character.id] || character.id}
+      </div>
+      {image && <img loading="lazy" src={image} className={styles.image} />}
     </div>
   );
 };
