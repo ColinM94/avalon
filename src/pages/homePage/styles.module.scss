@@ -1,0 +1,49 @@
+.container {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding-top: vars.$spacing-primary;
+
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$spacing-primary;
+    width: 100%;
+    margin-bottom: calc(vars.$spacing-primary * 2);
+
+    .heading {
+      font-size: vars.$font-size-h1;
+    }
+
+    .numSelected {
+      height: 100%;
+      position: absolute;
+      right: vars.$spacing-primary;
+      height: 100%;
+      justify-content: center;
+    }
+  }
+
+  .charactersHeading {
+    font-size: vars.$font-size-h2;
+    align-self: flex-start;
+    margin-left: vars.$spacing-primary;
+  }
+
+  .characters {
+    flex-direction: row;
+    gap: vars.$spacing-primary;
+    flex-wrap: wrap;
+    padding: vars.$spacing-primary;
+
+    .character {
+      flex: 1;
+      min-width: calc(33% - vars.$spacing-primary);
+      max-width: calc(33% - vars.$spacing-primary * 0.5);
+      height: 225px;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

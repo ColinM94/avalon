@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    /* Base Options */
+    "target": "ESNext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": false,
+    "allowJs": false,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+
+    /* Strictness */
+    "strict": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    // "noUncheckedIndexedAccess": true,
+
+    /* Module Resolution */
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "noEmit": true,
+
+    /* Misc */
+    "useDefineForClassFields": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "types": ["vite/client"]
+  },
+  "include": ["src", "global.d.ts", "vite.config.ts"]
+}

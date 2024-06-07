@@ -1,0 +1,109 @@
+@font-face {
+  font-family: "Medieval";
+  src: url("assets/fonts/MedievalSharp-Regular.ttf");
+  font-display: swap;
+}
+
+* :not(head, script) {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  box-sizing: border-box;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 62.5%;
+  font-style: inherit;
+  font-variant: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  font-family: inherit;
+  vertical-align: baseline;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+html,
+#root,
+body {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+
+  // Firefox
+  // scrollbar-color: vars.$color-surface2 vars.$color-surface;
+
+  ::-webkit-scrollbar {
+    display: none;
+    width: 10px;
+    border-radius: vars.$roundness;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: vars.$roundness;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: vars.$color-surface2;
+    border-radius: vars.$roundness;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: vars.$color-surface3;
+  }
+}
+
+img,
+image,
+svg {
+  max-width: 100%;
+  pointer-events: none;
+}
+
+body {
+  font-family: "Medieval", Calibri, "Trebuchet MS", sans-serif;
+  color: vars.$color-text-primary;
+  background-color: vars.$color-background;
+  line-height: 1.2;
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: vars.$font-size-h1;
+}
+
+h2 {
+  font-size: vars.$font-size-h2;
+}
+
+h3 {
+  font-size: vars.$font-size-h3;
+}
+
+h4,
+h5,
+h6,
+p,
+div,
+span {
+  font-size: vars.$font-size-body;
+}
+
+a {
+  font-size: vars.$font-size-body;
+  text-decoration: none;
+  color: vars.$color-primary;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+option {
+  font-size: vars.$font-size-body;
+}

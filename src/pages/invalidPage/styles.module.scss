@@ -1,0 +1,10 @@
+.container {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  gap: vars.$spacing-primary;
+}
+
+.button {
+  background-color: vars.$color-primary;
+}

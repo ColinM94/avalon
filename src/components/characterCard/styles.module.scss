@@ -1,0 +1,30 @@
+$evilColor: rgb(196, 16, 16);
+$goodColor: rgb(68, 68, 201);
+
+.container {
+  box-shadow: vars.$shadow;
+  background-color: vars.$color-surface;
+  border-radius: vars.$roundness;
+  padding: vars.$spacing-primary;
+  cursor: pointer;
+
+  &:hover {
+    scale: 1.02;
+  }
+}
+
+.good {
+  border: 1px solid $goodColor;
+}
+
+.activeGood {
+  background-color: $goodColor;
+}
+
+.evil {
+  border: 1px solid $evilColor;
+}
+
+.activeEvil {
+  background-color: $evilColor;
+}

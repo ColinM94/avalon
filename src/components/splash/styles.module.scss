@@ -1,0 +1,29 @@
+.container {
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  padding: vars.$spacing-primary;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  background-color: vars.$color-background;
+  z-index: 1;
+
+  animation: fadeOut 3s forwards;
+
+  @keyframes fadeOut {
+    25% {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+      display: none;
+    }
+  }
+
+  .heading {
+    font-size: 3rem;
+    text-align: center;
+  }
+}
