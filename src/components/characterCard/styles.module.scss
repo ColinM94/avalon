@@ -9,6 +9,21 @@ $goodColor: #43839a;
   cursor: pointer;
   filter: grayscale(100%);
 
+  .infoButton {
+    position: absolute;
+    top: vars.$spacing-tertiary;
+    right: vars.$spacing-tertiary;
+    background-color: rgba(128, 128, 128, 0.75);
+    border-radius: 100%;
+    padding: vars.$spacing-tertiary;
+    aspect-ratio: 1;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    font-size: 100%;
+    z-index: 2;
+  }
+
   &:hover {
     scale: 1.02;
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { CharacterCard, InputNumber } from "components";
-import { reactReducer } from "utils";
+import { Button, CharacterCard, InputNumber } from "components";
+import { classes, reactReducer } from "utils";
 import { Characters } from "types";
 
 import { charactersDefault, maxCharacters } from "./data";
@@ -76,54 +76,80 @@ export const HomePage = () => {
     );
   }, [characters]);
 
+  const handleContinue = () => {};
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.heading}>Avalon Ritual Setup</div>
+        <div className={styles.heading}>Avalon Setup</div>
         {/* <div className={styles.numSelected}>
           ({numActiveCharacters}) selected
         </div> */}
       </div>
 
-      <div className={styles.numPlayersSection}>
+      <div className={styles.section}>
         <div className={styles.sectionHeading}>Number of Players</div>
-
+        {/* 
         <InputNumber
           value={numPlayers}
           setValue={setNumPlayers}
           min={5}
           max={10}
           className={styles.numPlayersInput}
-        />
+        /> */}
+
+        <div className={styles.numPlayersOption}>
+          {[5, 6, 7, 8, 9, 10].map((num) => (
+            <div
+              onClick={() => setNumPlayers(num)}
+              className={classes(
+                styles.numPlayersOption,
+                numPlayers === num && styles.numPlayersOptionActive
+              )}
+            >
+              {num}
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className={styles.sectionHeading}>
-        Good Characters {numActiveGoodCharacters}/{maxGood}
+      <div className={styles.section}>
+        <div className={styles.sectionHeading}>
+          Good Characters {numActiveGoodCharacters}/{maxGood}
+        </div>
+
+        <div className={styles.characters}>
+          {goodCharacters.map((character) => (
+            <CharacterCard
+              character={character}
+              onClick={handleCharacterClick}
+              className={styles.character}
+            />
+          ))}
+        </div>
       </div>
 
-      <div className={styles.characters}>
-        {goodCharacters.map((character) => (
-          <CharacterCard
-            character={character}
-            onClick={handleCharacterClick}
-            className={styles.character}
-          />
-        ))}
+      <div className={styles.section}>
+        <div className={styles.sectionHeading}>
+          Evil Characters {numActiveEvilCharacters}/{maxEvil}
+        </div>
+
+        <div className={styles.characters}>
+          {evilCharacters.map((character) => (
+            <CharacterCard
+              character={character}
+              onClick={handleCharacterClick}
+              className={styles.character}
+            />
+          ))}
+        </div>
       </div>
 
-      <div className={styles.sectionHeading}>
-        Evil Characters {numActiveEvilCharacters}/{maxEvil}
-      </div>
-
-      <div className={styles.characters}>
-        {evilCharacters.map((character) => (
-          <CharacterCard
-            character={character}
-            onClick={handleCharacterClick}
-            className={styles.character}
-          />
-        ))}
-      </div>
+      <Button
+        label="Continue"
+        onClick={handleContinue}
+        className={styles.continueButton}
+      />
     </div>
   );
 };

@@ -23,6 +23,17 @@ export const CharacterCard = (props: Props) => {
     loadImage();
   }, [character.id]);
 
+  const handleInfoClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    alert(
+      `${characterNames[character.id]} is a character for ${
+        character.allegiance
+      }`
+    );
+  };
+
   const classNames = classes(
     styles.container,
     className,
@@ -34,6 +45,9 @@ export const CharacterCard = (props: Props) => {
 
   return (
     <div onClick={() => onClick(character.id)} className={classNames}>
+      <div onClick={handleInfoClick} className={styles.infoButton}>
+        ?
+      </div>
       <div className={styles.name}>
         {characterNames[character.id] || character.id}
       </div>

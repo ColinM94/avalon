@@ -14,7 +14,8 @@
     margin-bottom: calc(vars.$spacing-primary);
 
     .heading {
-      font-size: vars.$font-size-h1;
+      font-size: vars.$font-size-display;
+      margin-top: vars.$spacing-primary;
     }
 
     .numSelected {
@@ -37,15 +38,46 @@
     }
   }
 
-  .sectionHeading {
-    font-size: vars.$font-size-h2;
-    align-self: flex-start;
+  .section {
+    margin-bottom: vars.$spacing-primary;
+    width: 100%;
+
+    .sectionHeading {
+      font-size: vars.$font-size-h2;
+      align-self: flex-start;
+      margin-bottom: vars.$spacing-secondary;
+    }
+  }
+
+  .numPlayersOption {
+    flex-direction: row;
+    gap: vars.$spacing-primary;
+
+    .numPlayersOption {
+      padding: vars.$spacing-primary;
+      background-color: vars.$color-surface;
+      border-radius: vars.$roundness;
+      flex: 1;
+      cursor: pointer;
+      justify-content: center;
+      align-items: center;
+      aspect-ratio: 1;
+
+      &:hover {
+        filter: brightness(vars.$active-brightness-filter);
+      }
+    }
+
+    .numPlayersOptionActive {
+      background-color: vars.$color-primary;
+    }
   }
 
   .characters {
     flex-direction: row;
     gap: vars.$spacing-primary;
     flex-wrap: wrap;
+    width: 100%;
 
     .character {
       flex: 1;
@@ -55,5 +87,8 @@
       justify-content: center;
       align-items: center;
     }
+  }
+
+  .continueButton {
   }
 }

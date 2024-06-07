@@ -6,19 +6,20 @@
   // padding-right: vars.$spacing-primary;
 
   .incrementButton {
-    font-size: 2rem;
+    font-size: 3rem;
     cursor: pointer;
   }
 
   .input {
-    flex: 1;
     background-color: vars.$color-surface;
     border-radius: vars.$roundness;
     border-color: vars.$color-primary;
     color: vars.$color-text-primary;
-    font-size: vars.$font-size-body;
+    font-size: vars.$font-size-h3;
     padding-left: vars.$spacing-primary;
     padding-right: vars.$spacing-primary;
+    min-width: 0;
+    flex: 1;
 
     &:active {
     }
