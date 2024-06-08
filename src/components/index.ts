@@ -5,3 +5,4 @@ export * from "./splash/splash";
 export * from "./inputNumber/inputNumber";
 export * from "./backButton/backButton";
 export * from "./header/header";
+export * from "./inputText/inputText";

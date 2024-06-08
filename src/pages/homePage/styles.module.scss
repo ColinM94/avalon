@@ -1,4 +1,62 @@
-.menu {
+.container {
   flex: 1;
-  gap: vars.$spacing-primary;
+  width: 100%;
+  padding-top: vars.$spacing-primary;
+
+  .section {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$spacing-primary;
+    max-width: 300px;
+    align-self: center;
+
+    .sectionHeading {
+      font-size: vars.$font-size-h1;
+      text-align: center;
+    }
+
+    .lobbyInput {
+      align-self: center;
+    }
+  }
+
+  .divider {
+    background-color: vars.$color-surface3;
+    width: 80%;
+    height: 1px;
+    margin-top: vars.$spacing-primary;
+    margin-bottom: vars.$spacing-primary;
+    align-self: center;
+  }
+
+  .characters {
+    flex-direction: row;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: vars.$spacing-primary;
+
+    .character {
+      min-width: calc(25% - vars.$spacing-primary);
+      aspect-ratio: 0.5;
+    }
+  }
+
+  .footer {
+    margin-top: 20%;
+    width: 100%;
+    padding: vars.$spacing-primary;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .rulesLink {
+      color: vars.$color-text-secondary;
+    }
+
+    .createdBy {
+      color: vars.$color-text-secondary;
+      font-size: vars.$font-size-body2;
+    }
+  }
 }

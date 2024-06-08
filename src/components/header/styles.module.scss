@@ -3,10 +3,11 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: vars.$spacing-primary;
 
   .backButton {
     position: absolute;
-    left: 0;
+    left: vars.$spacing-primary;
     font-size: vars.$font-size-h1;
     cursor: pointer;
     z-index: 1;

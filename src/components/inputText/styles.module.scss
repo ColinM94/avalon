@@ -1,0 +1,21 @@
+.container {
+  flex-direction: row;
+  gap: vars.$spacing-primary;
+  width: 100%;
+  // padding-left: vars.$spacing-primary;
+  // padding-right: vars.$spacing-primary;
+
+  .input {
+    background-color: vars.$color-surface;
+    border-radius: vars.$roundness;
+    border-color: vars.$color-primary;
+    color: vars.$color-text-primary;
+    font-size: vars.$font-size-h3;
+    padding: vars.$spacing-primary;
+    min-width: 0;
+    flex: 1;
+
+    &:active {
+    }
+  }
+}
