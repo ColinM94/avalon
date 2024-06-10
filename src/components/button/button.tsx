@@ -14,7 +14,7 @@ export const Button = (props: Props) => {
 
   return (
     <div
-      onClick={onClick}
+      onClick={handleClick}
       className={classes(
         className,
         styles.container,

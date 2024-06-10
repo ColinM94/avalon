@@ -1,0 +1,21 @@
+.divider {
+  background-color: vars.$color-surface2;
+}
+
+.vertical {
+  @extend .divider;
+
+  margin-left: vars.$spacing-primary;
+  margin-right: vars.$spacing-primary;
+  width: 1px;
+  height: 80%;
+}
+
+.horizontal {
+  @extend .divider;
+
+  margin-top: vars.$spacing-primary;
+  margin-bottom: vars.$spacing-primary;
+  height: 1px;
+  width: 80%;
+}

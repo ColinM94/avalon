@@ -2,13 +2,23 @@
   position: fixed;
   justify-content: center;
   align-items: center;
+  text-align: center;
   padding: vars.$spacing-primary;
   flex: 1;
   height: 100%;
   width: 100%;
   background-color: vars.$color-background;
-  z-index: 1;
-  animation: fadeOut 2s forwards;
+  z-index: 9;
+  animation: fadeOut 3s forwards;
+
+  .headingSmall {
+    font-size: vars.$font-size-h1;
+  }
+
+  .heading {
+    font-size: 5rem;
+    text-align: center;
+  }
 
   @keyframes fadeOut {
     25% {
@@ -18,11 +28,8 @@
     to {
       opacity: 0;
       display: none;
+      pointer-events: none;
+      opacity: 0;
     }
-  }
-
-  .heading {
-    font-size: 3rem;
-    text-align: center;
   }
 }

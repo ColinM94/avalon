@@ -1,0 +1,11 @@
+.container {
+  justify-content: center;
+  width: min(100%, 300px);
+  align-self: center;
+
+  gap: vars.$spacing-primary;
+  background-color: vars.$color-surface;
+  border-radius: vars.$roundness;
+  padding: vars.$spacing-primary;
+  box-shadow: vars.$shadow;
+}

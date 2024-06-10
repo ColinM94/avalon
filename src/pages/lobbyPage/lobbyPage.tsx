@@ -1,20 +1,20 @@
 import * as React from "react";
 import { QRCode } from "react-qrcode-logo";
 import { useNavigate, useParams } from "react-router-dom";
+import { deleteField } from "firebase/firestore";
 
-import { getDocumentSnapshot, updateDocument } from "services";
+import { deleteDocument, getDocumentSnapshot, updateDocument } from "services";
 import { Button, NameEditor } from "components";
 import { classes } from "utils";
 import { Lobby } from "types";
 
 import styles from "./styles.module.scss";
-import { deleteField } from "firebase/firestore";
 
 export const LobbyPage = () => {
   const { code: lobbyId } = useParams();
   const navigate = useNavigate();
 
-  const [lobby, setLobby] = React.useState<Lobby>();
+  const [lobby, setLobby] = React.useState<Lobby | null>();
   const [showNameEditor, setShowNameEditor] = React.useState(false);
 
   const playerId = localStorage.getItem("playerId");
@@ -31,11 +31,16 @@ export const LobbyPage = () => {
     const unsubscribe = getDocumentSnapshot<Lobby>({
       id: lobbyId,
       collection: "lobbies",
-      callback: (value) => setLobby(value),
+      callback: (value) => {
+        setLobby(value);
+        if (!value) setLobby(null);
+      },
     });
 
     return () => unsubscribe?.();
   }, [lobbyId, playerId]);
+
+  if (lobby === null) navigate("/");
 
   React.useEffect(() => {
     if (!lobby || !lobbyId || !playerId) return;
@@ -61,7 +66,17 @@ export const LobbyPage = () => {
   }, [lobby, lobbyId, playerId, players.length]);
 
   const handleLeave = async () => {
-    if (!lobbyId) return;
+    if (!lobbyId || !playerId) return;
+
+    if (lobby?.players[playerId]?.isHost) {
+      deleteDocument({
+        id: lobbyId,
+        collection: "lobbies",
+      });
+
+      navigate("/");
+      return;
+    }
 
     updateDocument({
       id: lobbyId,
@@ -91,7 +106,7 @@ export const LobbyPage = () => {
     });
   };
 
-  if (!lobbyId || !playerId) return;
+  if (!lobbyId || !playerId) return "Loading";
 
   return (
     <>
@@ -109,7 +124,7 @@ export const LobbyPage = () => {
         <div className={styles.joinSection}>
           <div className={styles.joinCode}>{lobbyId}</div>
 
-          <QRCode value={`http://192.168.188.49:5173/lobby/${lobbyId}`} />
+          <QRCode value={`http://192.168.178.65:5173/lobby/${lobbyId}`} />
         </div>
 
         <div className={styles.divider} />
@@ -151,9 +166,8 @@ export const LobbyPage = () => {
 
         <div className={styles.buttons}>
           <Button
-            label="Leave"
+            label={lobby?.players[playerId]?.isHost ? "Close Lobby" : "Leave"}
             onClick={() => handleLeave()}
-            disabled={lobby?.players[playerId]?.isHost}
             className={styles.leaveButton}
           />
 

@@ -1,88 +1,19 @@
-import * as React from "react";
-import { useNavigate } from "react-router-dom";
-
-import { Button, InputText } from "components";
+import { HomeInfo } from "./components/homeInfo/homeInfo";
+import { HomeLobby } from "./components/homeLobby/homeLobby";
 
 import styles from "./styles.module.scss";
 
 export const HomePage = () => {
-  const navigate = useNavigate();
-
-  const [lobbyCode, setLobbyCode] = React.useState("");
-
-  const handleCreateLobby = () => {
-    navigate("/setup");
-  };
-
-  const handleJoinLobby = () => {
-    if (!lobbyCode) {
-      alert("Please enter a lobby code");
-      return;
-    }
-
-    navigate(`/lobby/${lobbyCode}`);
-  };
-
-  const handleRulesClick = () => {};
-
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.heading}>Avalon</div>
-      <div className={styles.container}>
-        <div className={styles.section}>
-          <div className={styles.sectionHeading}>Create a Lobby</div>
 
-          <Button label="Create" onClick={handleCreateLobby} />
-        </div>
+      <HomeLobby className={styles.lobby} />
+      {/* <HomeInfo className={styles.info} /> */}
 
-        <div className={styles.divider} />
-
-        <div className={styles.section}>
-          <div className={styles.sectionHeading}>Join a Lobby</div>
-
-          <InputText
-            value={lobbyCode}
-            setValue={setLobbyCode}
-            placeholder="Lobby Code"
-            className={styles.lobbyInput}
-          />
-
-          <Button label="Join" onClick={handleJoinLobby} />
-        </div>
-
-        {/* <div className={styles.divider} /> */}
-
-        {/* <div className={styles.section}>
-        <div className={styles.sectionHeading}>Info</div>
-
-        <Button label="Characters" onClick={handleJoinLobby} />
-
-        <div className={styles.characters}>
-          {Object.values(charactersDefault).map((character) => (
-            <CharacterCard
-              character={character}
-              alwaysActive
-              showName={false}
-              onClick={() => {}}
-              className={styles.character}
-            />
-          ))}
-        </div>
-        <Button label="Rules" onClick={handleJoinLobby} />
-      </div> */}
-
-        {/* <div className={styles.footer}>
-        <a
-          target="_blank"
-          href="https://fgbradleys.com/wp-content/uploads/Avalon-Big-Box-Rulebook.pdf"
-          className={styles.rulesLink}
-        >
-          Game Rules
-        </a>
-
+      <div className={styles.footer}>
         <div className={styles.createdBy}>Created by Colin Maher</div>
-      </div> */}
       </div>
-    </>
+    </div>
   );
 };
