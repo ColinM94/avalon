@@ -1,14 +1,20 @@
 import React from "react";
-import { Splash } from "components";
 import { Outlet } from "react-router-dom";
 
+import { Splash } from "components";
+import { generateUniqueId } from "utils";
+
 export const Root = () => {
-  const [showSplash, setShowSplash] = React.useState(true);
+  const deviceId = localStorage.getItem("deviceId");
+
+  if (!deviceId) {
+    localStorage.setItem("deviceId", generateUniqueId());
+  }
 
   return (
     <>
-      <Splash show={showSplash} setShow={setShowSplash} />
-      <Outlet />
+      {!deviceId && <Splash />}
+      {deviceId && <Outlet />}
     </>
   );
 };

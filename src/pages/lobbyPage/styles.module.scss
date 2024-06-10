@@ -45,5 +45,9 @@
       max-height: 200px;
       max-width: 200px;
     }
+
+    .currentPlayer {
+      border: 1px solid vars.$color-primary;
+    }
   }
 }

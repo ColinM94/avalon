@@ -1,6 +1,8 @@
 export type Player = {
   id: string;
   name: string;
+  joinedAt: number;
+  isHost: boolean;
 };
 
 export type Lobby = {
