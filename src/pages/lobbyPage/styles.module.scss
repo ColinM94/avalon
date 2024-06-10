@@ -29,6 +29,8 @@
     flex-direction: row;
     align-items: flex-start;
     gap: vars.$spacing-primary;
+    flex-wrap: wrap;
+    align-content: flex-start;
 
     .player {
       padding: vars.$spacing-primary;
@@ -38,6 +40,7 @@
       justify-content: center;
       align-items: center;
       flex: 0.33;
+      min-width: 30%;
       cursor: pointer;
       max-height: 200px;
       max-width: 200px;

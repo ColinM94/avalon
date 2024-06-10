@@ -1,84 +1,41 @@
-import * as React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button, CharacterCard, Header } from "components";
-import { Characters } from "types";
-import { classes, reactReducer } from "utils";
+import { Button, Header } from "components";
+import { Characters, Lobby } from "types";
+import { generateLobbyCode, reactReducer } from "utils";
 import { charactersDefault, maxCharacters } from "consts";
+import { setDocument } from "services";
 
+import { SetupCharacters } from "./components/setupCharacters/setupCharacters";
+import { SetupOptions } from "./components/setupOptions/setupOptions";
 import styles from "./styles.module.scss";
 
 export const SetupPage = () => {
   const navigate = useNavigate();
 
-  const [characters, udpateCharacters] =
+  const [lobby, updateLobby] = reactReducer<Lobby>({
+    id: "",
+    name: "",
+    players: {},
+    numPlayers: 5,
+  });
+
+  const [characters, updateCharacters] =
     reactReducer<Characters>(charactersDefault);
 
-  const [numPlayers, setNumPlayers] = React.useState(5);
+  const maxEvil = maxCharacters[lobby.numPlayers].evil;
+  const maxGood = maxCharacters[lobby.numPlayers].good;
 
-  const numActiveCharacters = React.useMemo(() => {
-    return Object.values(characters).filter((character) => character.isActive)
-      .length;
-  }, [characters]);
+  const handleContinue = async () => {
+    const lobbyCode = generateLobbyCode();
 
-  const numActiveGoodCharacters = React.useMemo(() => {
-    return Object.values(characters).filter(
-      (character) => character.allegiance === "good" && character.isActive
-    ).length;
-  }, [characters]);
-
-  const numActiveEvilCharacters = React.useMemo(() => {
-    return Object.values(characters).filter(
-      (character) => character.allegiance === "evil" && character.isActive
-    ).length;
-  }, [characters]);
-
-  const maxEvil = maxCharacters[numPlayers].evil;
-  const maxGood = maxCharacters[numPlayers].good;
-
-  const handleCharacterClick = (characterId: string) => {
-    const character = characters[characterId];
-
-    if (!character.isOptional) return;
-
-    if (
-      character.allegiance === "good" &&
-      !characters[characterId].isActive &&
-      numActiveGoodCharacters >= maxGood
-    ) {
-      return;
-    }
-
-    if (
-      character.allegiance === "evil" &&
-      !characters[characterId].isActive &&
-      numActiveEvilCharacters >= maxEvil
-    ) {
-      return;
-    }
-
-    udpateCharacters({
-      [characterId]: {
-        ...character,
-        isActive: !characters[characterId].isActive,
-      },
+    await setDocument({
+      id: lobbyCode,
+      collection: "lobbies",
+      data: lobby,
     });
-  };
 
-  const goodCharacters = React.useMemo(() => {
-    return Object.values(characters).filter(
-      (character) => character.allegiance === "good"
-    );
-  }, [characters]);
-
-  const evilCharacters = React.useMemo(() => {
-    return Object.values(characters).filter(
-      (character) => character.allegiance === "evil"
-    );
-  }, [characters]);
-
-  const handleContinue = () => {
-    navigate("/lobby");
+    navigate(`/lobby/${lobbyCode}`);
   };
 
   return (
@@ -86,58 +43,29 @@ export const SetupPage = () => {
       <Header heading="Avalon Setup" />
 
       <div className={styles.container}>
-        <div className={styles.section}>
-          <div className={styles.sectionHeading}>Number of Players</div>
+        <SetupOptions
+          lobby={lobby}
+          updateLobby={updateLobby}
+          headingClassName={styles.heading}
+        />
 
-          <div className={styles.numPlayersOption}>
-            {[5, 6, 7, 8, 9, 10].map((num) => (
-              <div
-                onClick={() => setNumPlayers(num)}
-                key={num}
-                className={classes(
-                  styles.numPlayersOption,
-                  numPlayers === num && styles.numPlayersOptionActive
-                )}
-              >
-                {num}
-              </div>
-            ))}
-          </div>
-        </div>
+        <SetupCharacters
+          heading="Good Characters"
+          allegiance="good"
+          characters={characters}
+          maxActiveCharacters={maxGood}
+          updateCharacters={updateCharacters}
+          headingClassName={styles.heading}
+        />
 
-        <div className={styles.section}>
-          <div className={styles.sectionHeading}>
-            Good Characters {numActiveGoodCharacters}/{maxGood}
-          </div>
-
-          <div className={styles.characters}>
-            {goodCharacters.map((character) => (
-              <CharacterCard
-                character={character}
-                onClick={handleCharacterClick}
-                key={character.id}
-                className={styles.character}
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.section}>
-          <div className={styles.sectionHeading}>
-            Evil Characters {numActiveEvilCharacters}/{maxEvil}
-          </div>
-
-          <div className={styles.characters}>
-            {evilCharacters.map((character) => (
-              <CharacterCard
-                character={character}
-                onClick={handleCharacterClick}
-                key={character.id}
-                className={styles.character}
-              />
-            ))}
-          </div>
-        </div>
+        <SetupCharacters
+          heading="Evil Characters"
+          allegiance="evil"
+          characters={characters}
+          maxActiveCharacters={maxEvil}
+          updateCharacters={updateCharacters}
+          headingClassName={styles.heading}
+        />
 
         <Button
           label="Continue"
