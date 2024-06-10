@@ -3,9 +3,9 @@ import * as React from "react";
 import { Button, CharacterCard, Header } from "components";
 import { Characters } from "types";
 import { classes, reactReducer } from "utils";
+import { charactersDefault, maxCharacters } from "consts";
 
 import styles from "./styles.module.scss";
-import { charactersDefault, maxCharacters } from "./data";
 
 export const SetupPage = () => {
   const [characters, udpateCharacters] =

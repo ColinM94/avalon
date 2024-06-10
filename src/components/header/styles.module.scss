@@ -4,6 +4,7 @@
   align-items: center;
   width: 100%;
   padding: vars.$spacing-primary;
+  // background-color: orange;
 
   .backButton {
     position: absolute;
@@ -14,6 +15,6 @@
   }
 
   .heading {
-    font-size: vars.$font-size-display;
+    font-size: vars.$font-size-header;
   }
 }

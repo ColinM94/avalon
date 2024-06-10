@@ -1,10 +1,9 @@
 import * as React from "react";
 
 import { useNavigate } from "react-router-dom";
-import { Button, CharacterCard, Header, InputText } from "components";
+import { Button, Header, InputText } from "components";
 
 import styles from "./styles.module.scss";
-import { charactersDefault } from "consts";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -27,33 +26,33 @@ export const HomePage = () => {
   const handleRulesClick = () => {};
 
   return (
-    <div className={styles.container}>
-      <Header heading="Avalon" hideBackButton />
+    <>
+      <div className={styles.heading}>Avalon</div>
+      <div className={styles.container}>
+        <div className={styles.section}>
+          <div className={styles.sectionHeading}>Create a Lobby</div>
 
-      <div className={styles.section}>
-        <div className={styles.sectionHeading}>Create a Lobby</div>
+          <Button label="Create" onClick={handleCreateLobby} />
+        </div>
 
-        <Button label="Create" onClick={handleCreateLobby} />
-      </div>
+        <div className={styles.divider} />
 
-      <div className={styles.divider} />
+        <div className={styles.section}>
+          <div className={styles.sectionHeading}>Join a Lobby</div>
 
-      <div className={styles.section}>
-        <div className={styles.sectionHeading}>Join a Lobby</div>
+          <InputText
+            value={lobbyCode}
+            setValue={setLobbyCode}
+            placeholder="Lobby Code"
+            className={styles.lobbyInput}
+          />
 
-        <InputText
-          value={lobbyCode}
-          setValue={setLobbyCode}
-          placeholder="Lobby Code"
-          className={styles.lobbyInput}
-        />
+          <Button label="Join" onClick={handleJoinLobby} />
+        </div>
 
-        <Button label="Join" onClick={handleJoinLobby} />
-      </div>
+        {/* <div className={styles.divider} /> */}
 
-      <div className={styles.divider} />
-
-      <div className={styles.section}>
+        {/* <div className={styles.section}>
         <div className={styles.sectionHeading}>Info</div>
 
         <Button label="Characters" onClick={handleJoinLobby} />
@@ -70,9 +69,9 @@ export const HomePage = () => {
           ))}
         </div>
         <Button label="Rules" onClick={handleJoinLobby} />
-      </div>
+      </div> */}
 
-      {/* <div className={styles.footer}>
+        {/* <div className={styles.footer}>
         <a
           target="_blank"
           href="https://fgbradleys.com/wp-content/uploads/Avalon-Big-Box-Rulebook.pdf"
@@ -83,6 +82,7 @@ export const HomePage = () => {
 
         <div className={styles.createdBy}>Created by Colin Maher</div>
       </div> */}
-    </div>
+      </div>
+    </>
   );
 };
