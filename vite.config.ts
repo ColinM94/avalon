@@ -8,13 +8,15 @@ export default defineConfig({
   resolve: {
     alias: {
       assets: path.resolve(__dirname, "src/assets"),
+      characters: path.resolve(__dirname, "src/characters"),
       components: path.resolve(__dirname, "src/components"),
       consts: path.resolve(__dirname, "src/consts"),
-      characters: path.resolve(__dirname, "src/characters"),
+      inits: path.resolve(__dirname, "src/inits"),
       layouts: path.resolve(__dirname, "src/layouts"),
       pages: path.resolve(__dirname, "src/pages"),
-      styles: path.resolve(__dirname, "src/styles"),
       utils: path.resolve(__dirname, "src/utils"),
+      styles: path.resolve(__dirname, "src/styles"),
+      services: path.resolve(__dirname, "src/services"),
     },
   },
   css: {

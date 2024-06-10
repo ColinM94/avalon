@@ -11,7 +11,7 @@ const routes = (
     <Route path="*" element={<InvalidPage />} />
     <Route index element={<HomePage />} />
     <Route path="setup" element={<SetupPage />} />
-    <Route path="lobby" element={<LobbyPage />} />
+    <Route path="lobby/:code" element={<LobbyPage />} />
   </Route>
 );
 
