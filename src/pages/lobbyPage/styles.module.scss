@@ -1,13 +1,13 @@
 .container {
-  padding: vars.$spacing-primary;
   width: 100%;
   flex: 1;
+  padding: vars.$spacing-primary;
 
   .joinSection {
     flex: 0.5;
     align-items: center;
     justify-content: center;
-    gap: vars.$spacing-primary;
+    gap: vars.$spacing-secondary;
 
     .joinCode {
       justify-content: center;
@@ -21,7 +21,12 @@
     height: 1px;
     background-color: vars.$color-surface3;
     margin-top: calc(vars.$spacing-primary * 2);
-    margin-bottom: calc(vars.$spacing-primary * 2);
+    margin-bottom: vars.$spacing-primary;
+  }
+
+  .numPlayers {
+    align-self: center;
+    margin-bottom: vars.$spacing-primary;
   }
 
   .playersSection {
@@ -33,14 +38,13 @@
     align-content: flex-start;
 
     .player {
-      padding: vars.$spacing-primary;
       border: 1px solid vars.$color-surface2;
       border-radius: vars.$roundness;
-      aspect-ratio: 1;
+      aspect-ratio: 1.25;
       justify-content: center;
       align-items: center;
       flex: 0.33;
-      min-width: 30%;
+      min-width: 25%;
       cursor: pointer;
       max-height: 200px;
       max-width: 200px;
@@ -48,6 +52,32 @@
 
     .currentPlayer {
       border: 1px solid vars.$color-primary;
+    }
+
+    .editButton {
+      position: absolute;
+      top: vars.$spacing-secondary;
+      right: vars.$spacing-secondary;
+    }
+
+    .checkmark {
+      position: absolute;
+      bottom: vars.$spacing-secondary;
+      right: vars.$spacing-secondary;
+      color: vars.$color-success;
+    }
+  }
+
+  .buttons {
+    flex-direction: row;
+    gap: vars.$spacing-primary;
+
+    .leaveButton {
+      background-color: vars.$color-danger;
+    }
+
+    .readyButton {
+      background-color: vars.$color-success;
     }
   }
 }

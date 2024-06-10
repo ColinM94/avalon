@@ -1,7 +1,7 @@
 import * as React from "react";
-
 import { useNavigate } from "react-router-dom";
-import { Button, Header, InputText } from "components";
+
+import { Button, InputText } from "components";
 
 import styles from "./styles.module.scss";
 
@@ -20,7 +20,7 @@ export const HomePage = () => {
       return;
     }
 
-    navigate("/lobby");
+    navigate(`/lobby/${lobbyCode}`);
   };
 
   const handleRulesClick = () => {};

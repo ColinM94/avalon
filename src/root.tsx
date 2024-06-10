@@ -5,16 +5,26 @@ import { Splash } from "components";
 import { generateUniqueId } from "utils";
 
 export const Root = () => {
-  const deviceId = localStorage.getItem("deviceId");
+  const [showSplash, setShowSplash] = React.useState(true);
 
-  if (!deviceId) {
-    localStorage.setItem("deviceId", generateUniqueId());
+  const playerId = localStorage.getItem("playerId");
+
+  if (!playerId) {
+    localStorage.setItem("playerId", generateUniqueId());
   }
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowSplash(false);
+    });
+
+    return clearTimeout(timeout);
+  }, []);
 
   return (
     <>
-      {!deviceId && <Splash />}
-      {deviceId && <Outlet />}
+      {(showSplash || !playerId) && <Splash />}
+      {(!showSplash || playerId) && <Outlet />}
     </>
   );
 };

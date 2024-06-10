@@ -6,3 +6,4 @@ export * from "./inputNumber/inputNumber";
 export * from "./backButton/backButton";
 export * from "./header/header";
 export * from "./inputText/inputText";
+export * from "./nameEditor/nameEditor";

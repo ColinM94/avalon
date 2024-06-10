@@ -1,0 +1,37 @@
+.background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: vars.$color-background-translucent;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.container {
+  position: fixed;
+  top: vars.$spacing-primary;
+  bottom: vars.$spacing-primary;
+  left: vars.$spacing-primary;
+  right: vars.$spacing-primary;
+  height: fit-content;
+  align-self: center;
+  padding: vars.$spacing-primary;
+  background-color: vars.$color-surface;
+  border-radius: vars.$roundness;
+  z-index: 2;
+
+  .heading {
+    margin-bottom: vars.$spacing-secondary;
+  }
+
+  .input {
+    background-color: vars.$color-surface2;
+  }
+
+  .saveButton {
+    margin-top: calc(vars.$spacing-primary * 2);
+  }
+}

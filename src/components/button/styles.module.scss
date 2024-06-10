@@ -25,3 +25,7 @@ $goodColor: #43839a;
     scale: 0.99;
   }
 }
+
+.disabled {
+  filter: brightness(0.25);
+}

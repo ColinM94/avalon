@@ -3,6 +3,7 @@ export type Player = {
   name: string;
   joinedAt: number;
   isHost: boolean;
+  isReady: boolean;
 };
 
 export type Lobby = {

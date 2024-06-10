@@ -13,6 +13,8 @@ import styles from "./styles.module.scss";
 export const SetupPage = () => {
   const navigate = useNavigate();
 
+  const playerId = localStorage.getItem("playerId");
+
   const [lobby, updateLobby] = reactReducer<Lobby>({
     id: "",
     name: "",
@@ -27,12 +29,24 @@ export const SetupPage = () => {
   const maxGood = maxCharacters[lobby.numPlayers].good;
 
   const handleContinue = async () => {
+    if (!playerId) return;
+
     const lobbyCode = generateLobbyCode();
 
-    await setDocument({
+    await setDocument<Lobby>({
       id: lobbyCode,
       collection: "lobbies",
-      data: lobby,
+      data: {
+        ...lobby,
+        players: {
+          [playerId]: {
+            id: playerId,
+            isHost: true,
+            joinedAt: Date.now(),
+            name: "Host",
+          },
+        },
+      },
     });
 
     navigate(`/lobby/${lobbyCode}`);
