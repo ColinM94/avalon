@@ -1,3 +1,46 @@
 .container {
   padding: vars.$spacing-primary;
+  width: 100%;
+  flex: 1;
+
+  .joinSection {
+    flex: 0.5;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$spacing-primary;
+
+    .joinCode {
+      justify-content: center;
+      align-items: center;
+      font-size: vars.$font-size-display;
+    }
+  }
+
+  .divider {
+    height: 100%;
+    height: 1px;
+    background-color: vars.$color-surface3;
+    margin-top: calc(vars.$spacing-primary * 2);
+    margin-bottom: calc(vars.$spacing-primary * 2);
+  }
+
+  .playersSection {
+    flex: 1;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: vars.$spacing-primary;
+
+    .player {
+      padding: vars.$spacing-primary;
+      border: 1px solid vars.$color-surface2;
+      border-radius: vars.$roundness;
+      aspect-ratio: 1;
+      justify-content: center;
+      align-items: center;
+      flex: 0.33;
+      cursor: pointer;
+      max-height: 200px;
+      max-width: 200px;
+    }
+  }
 }
