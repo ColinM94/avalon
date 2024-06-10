@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button, CharacterCard, Header } from "components";
 import { Characters } from "types";
@@ -8,6 +9,8 @@ import { charactersDefault, maxCharacters } from "consts";
 import styles from "./styles.module.scss";
 
 export const SetupPage = () => {
+  const navigate = useNavigate();
+
   const [characters, udpateCharacters] =
     reactReducer<Characters>(charactersDefault);
 
@@ -74,7 +77,9 @@ export const SetupPage = () => {
     );
   }, [characters]);
 
-  const handleContinue = () => {};
+  const handleContinue = () => {
+    navigate("/lobby");
+  };
 
   return (
     <>
