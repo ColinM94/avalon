@@ -15,6 +15,7 @@ export const CharacterCard = (props: Props) => {
     alwaysActive,
     showInfoButton,
     showDescription,
+    disableAnimation,
     className,
   } = props;
 
@@ -36,6 +37,7 @@ export const CharacterCard = (props: Props) => {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.stopPropagation();
+
     alert(
       `${characterNames[character.id]} is a character for ${
         character.allegiance
@@ -55,7 +57,8 @@ export const CharacterCard = (props: Props) => {
     character.allegiance === "good" && styles.good,
     character.allegiance === "evil" && styles.evil,
     orientation === "portrait" && styles.portrait,
-    orientation === "landscape" && styles.landscape
+    orientation === "landscape" && styles.landscape,
+    disableAnimation && styles.animationDisabled
   );
 
   return (

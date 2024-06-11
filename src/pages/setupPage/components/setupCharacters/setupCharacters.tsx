@@ -36,7 +36,7 @@ export const SetupCharacters = (props: Props) => {
   };
 
   const filteredCharacters = Object.values(characters).filter(
-    (character) => character.allegiance === allegiance
+    (character) => character.allegiance === allegiance && !character.disabled
   );
 
   return (

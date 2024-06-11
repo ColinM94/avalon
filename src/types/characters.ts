@@ -4,6 +4,7 @@ export interface Character {
   isActive: boolean;
   isOptional: boolean;
   description: string[];
+  disabled: boolean;
 }
 
 export type Characters = Record<string, Character>;

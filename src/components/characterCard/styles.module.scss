@@ -128,3 +128,9 @@ $goodColor: #43839a;
     }
   }
 }
+
+.animationDisabled {
+  .image {
+    transform: unset !important;
+  }
+}

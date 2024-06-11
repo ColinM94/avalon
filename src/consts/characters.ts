@@ -13,6 +13,7 @@ export const charactersDefault: Characters = {
       "Is a cool wizard",
       "Can do a backflip",
     ],
+    disabled: false,
   },
   percival: {
     id: "percival",
@@ -24,6 +25,7 @@ export const charactersDefault: Characters = {
       "Sees both Merlin and Morgana, but is not sure who is who.",
       "Makes Good more powerful.",
     ],
+    disabled: true,
   },
   cleric: {
     id: "cleric",
@@ -34,6 +36,7 @@ export const charactersDefault: Characters = {
       "Knows if the leader of the first quest is good or evil.",
       "Makes Good more powerful..",
     ],
+    disabled: true,
   },
   troublemaker: {
     id: "troublemaker",
@@ -44,6 +47,7 @@ export const charactersDefault: Characters = {
       "Must lie when their loyaly is checked by the cleric or any rules/ability.",
       "Makes Evil more powerful.",
     ],
+    disabled: true,
   },
   seniorMessenger: {
     id: "seniorMessenger",
@@ -51,6 +55,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
+    disabled: true,
   },
   juniorMessenger: {
     id: "juniorMessenger",
@@ -58,6 +63,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
+    disabled: true,
   },
   rogueGood: {
     id: "rogueGood",
@@ -65,6 +71,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
+    disabled: true,
   },
   sorcererGood: {
     id: "sorcererGood",
@@ -72,6 +79,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
+    disabled: true,
   },
   lancelotGood: {
     id: "lancelotGood",
@@ -79,6 +87,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
+    disabled: true,
   },
   untrustworthyServant: {
     id: "untrustworthyServant",
@@ -86,6 +95,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
+    disabled: true,
   },
   servant1: {
     id: "servant1",
@@ -93,6 +103,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
+    disabled: false,
   },
   servant2: {
     id: "servant2",
@@ -100,6 +111,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
+    disabled: false,
   },
   servant3: {
     id: "servant3",
@@ -107,6 +119,23 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
+    disabled: false,
+  },
+  servant4: {
+    id: "servant4",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    description: ["Has no special powers"],
+    disabled: false,
+  },
+  servant5: {
+    id: "servant5",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    description: ["Has no special powers"],
+    disabled: false,
   },
   assassin: {
     id: "assassin",
@@ -116,6 +145,7 @@ export const charactersDefault: Characters = {
     description: [
       "Can assasinate who they think is Merlin, at the end of the game.",
     ],
+    disabled: false,
   },
   morgana: {
     id: "morgana",
@@ -126,6 +156,7 @@ export const charactersDefault: Characters = {
       "Disguises herself as Merlin",
       "Percival sees both Merlin and Morgana with their thumbs up.",
     ],
+    disabled: true,
   },
   oberon: {
     id: "oberon",
@@ -136,6 +167,7 @@ export const charactersDefault: Characters = {
       "Does not reveal himself to other evil players.",
       "Makes Good more powerful.",
     ],
+    disabled: true,
   },
   mordred: {
     id: "mordred",
@@ -143,6 +175,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Makes evil more powerful."],
+    disabled: true,
   },
   lunatic: {
     id: "lunatic",
@@ -153,6 +186,7 @@ export const charactersDefault: Characters = {
       "Must fail every quest they are on.",
       "Recommended for games with 7+ players.",
     ],
+    disabled: true,
   },
   sorcererEvil: {
     id: "sorcererEvil",
@@ -160,6 +194,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: [],
+    disabled: true,
   },
   revealer: {
     id: "revealer",
@@ -167,6 +202,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: [],
+    disabled: true,
   },
   rogueEvil: {
     id: "rogueEvil",
@@ -174,6 +210,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: [],
+    disabled: true,
   },
   trickster: {
     id: "trickster",
@@ -181,6 +218,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Makes Evil more powerful."],
+    disabled: true,
   },
   brute: {
     id: "brute",
@@ -192,6 +230,7 @@ export const charactersDefault: Characters = {
       "May fail first three quests.",
       "Only allowed to fail the first 3 quests.",
     ],
+    disabled: true,
   },
   lancelotEvil: {
     id: "lancelotEvil",
@@ -199,6 +238,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: [],
+    disabled: true,
   },
   minion1: {
     id: "minion1",
@@ -206,6 +246,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Has no special powers"],
+    disabled: false,
   },
   minion2: {
     id: "minion2",
@@ -213,6 +254,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Has no special powers"],
+    disabled: false,
   },
   minion3: {
     id: "minion3",
@@ -220,6 +262,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Has no special powers"],
+    disabled: false,
   },
 };
 
@@ -261,9 +304,11 @@ export const characterNames: Record<string, string> = {
   sorcererGood: "Sorcerer",
   lancelotGood: "Lancelot",
   untrustworthyServant: "Untrustworthy Servant",
-  servant1: "Servant 1",
-  servant2: "Servant 2",
-  servant3: "Servant 3",
+  servant1: "Servant",
+  servant2: "Servant",
+  servant3: "Servant",
+  servant4: "Servant",
+  servant5: "Servant",
   morgana: "Morgana",
   oberon: "Oberon",
   mordred: "Mordred",
@@ -275,7 +320,7 @@ export const characterNames: Record<string, string> = {
   brute: "Brute",
   lancelotEvil: "Lancelot",
   assassin: "Assassin",
-  minion1: "Minion 1",
-  minion2: "Minion 2",
-  minion3: "Minion 3",
+  minion1: "Minion",
+  minion2: "Minion",
+  minion3: "Minion",
 };
