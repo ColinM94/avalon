@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { Button, Header } from "components";
-import { Characters, Lobby } from "types";
+import { Characters, GameSession } from "types";
 import { generateLobbyCode, reactReducer } from "utils";
 import { charactersDefault, maxCharacters } from "consts";
 import { setDocument } from "services";
@@ -15,7 +15,7 @@ export const SetupPage = () => {
 
   const playerId = localStorage.getItem("playerId");
 
-  const [lobby, updateLobby] = reactReducer<Lobby>({
+  const [session, updateSession] = reactReducer<GameSession>({
     id: "",
     name: "",
     players: {},
@@ -33,14 +33,14 @@ export const SetupPage = () => {
     (character) => character.allegiance === "evil" && character.isActive
   ).length;
 
-  const maxGoodCharacters = maxCharacters[lobby.numPlayers].good;
-  const maxEvilCharacters = maxCharacters[lobby.numPlayers].evil;
+  const maxGoodCharacters = maxCharacters[session.numPlayers].good;
+  const maxEvilCharacters = maxCharacters[session.numPlayers].evil;
 
   const handleContinue = async () => {
     if (!playerId) return;
 
     try {
-      if (!lobby.name) {
+      if (!session.name) {
         throw "Please enter a name";
       }
 
@@ -59,13 +59,13 @@ export const SetupPage = () => {
         }!`;
       }
 
-      const lobbyCode = generateLobbyCode();
+      const sessionCode = generateLobbyCode();
 
-      await setDocument<Lobby>({
-        id: lobbyCode,
-        collection: "lobbies",
+      await setDocument<GameSession>({
+        id: sessionCode,
+        collection: "sessions",
         data: {
-          ...lobby,
+          ...session,
           players: {
             [playerId]: {
               id: playerId,
@@ -78,7 +78,7 @@ export const SetupPage = () => {
         },
       });
 
-      navigate(`/lobby/${lobbyCode}`);
+      navigate(`/lobby/${sessionCode}`);
     } catch (error) {
       alert(error);
     }
@@ -90,8 +90,8 @@ export const SetupPage = () => {
 
       <div className={styles.container}>
         <SetupOptions
-          lobby={lobby}
-          updateLobby={updateLobby}
+          session={session}
+          updateSession={updateSession}
           headingClassName={styles.heading}
         />
 

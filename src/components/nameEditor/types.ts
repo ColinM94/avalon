@@ -1,5 +1,5 @@
 export interface Props {
-  lobbyId: string;
+  sessionId: string;
   playerId: string;
   nameDefault: string;
   show: boolean;

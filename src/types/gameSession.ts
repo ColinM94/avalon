@@ -6,7 +6,7 @@ export type Player = {
   isReady: boolean;
 };
 
-export type Lobby = {
+export type GameSession = {
   id: string;
   name: string;
   players: Record<string, Player>;

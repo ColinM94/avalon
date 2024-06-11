@@ -5,17 +5,17 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const SetupOptions = (props: Props) => {
-  const { lobby, updateLobby, headingClassName } = props;
+  const { session, updateSession, headingClassName } = props;
 
-  const { numPlayers } = lobby;
+  const { numPlayers } = session;
 
   return (
     <>
       <div className={headingClassName}>Name</div>
 
       <InputText
-        value={lobby.name}
-        setValue={(value) => updateLobby({ name: value })}
+        value={session.name}
+        setValue={(value) => updateSession({ name: value })}
       />
 
       <div className={headingClassName}>Number of Players</div>
@@ -23,7 +23,7 @@ export const SetupOptions = (props: Props) => {
       <div className={styles.numPlayersOptions}>
         {[5, 6, 7, 8, 9, 10].map((num) => (
           <div
-            onClick={() => updateLobby({ numPlayers: num })}
+            onClick={() => updateSession({ numPlayers: num })}
             key={num}
             className={classes(
               styles.numPlayersOption,

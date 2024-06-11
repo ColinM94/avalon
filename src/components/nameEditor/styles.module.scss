@@ -17,7 +17,10 @@
   left: vars.$spacing-primary;
   right: vars.$spacing-primary;
   height: fit-content;
+  max-width: 500px;
   align-self: center;
+  margin-left: auto;
+  margin-right: auto;
   padding: vars.$spacing-primary;
   background-color: vars.$color-surface;
   border-radius: vars.$roundness;

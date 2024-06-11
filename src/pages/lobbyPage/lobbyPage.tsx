@@ -6,57 +6,57 @@ import { deleteField } from "firebase/firestore";
 import { deleteDocument, getDocumentSnapshot, updateDocument } from "services";
 import { Button, NameEditor } from "components";
 import { classes } from "utils";
-import { Lobby } from "types";
+import { GameSession } from "types";
 
 import styles from "./styles.module.scss";
 
 export const LobbyPage = () => {
-  const { code: lobbyId } = useParams();
+  const { code: sessionId } = useParams();
   const navigate = useNavigate();
 
-  const [lobby, setLobby] = React.useState<Lobby | null>();
+  const [session, setSession] = React.useState<GameSession | null>();
   const [showNameEditor, setShowNameEditor] = React.useState(false);
 
   const playerId = localStorage.getItem("playerId");
 
-  const player = playerId ? lobby?.players[playerId] : null;
+  const player = playerId ? session?.players[playerId] : null;
 
-  const players = Object.values(lobby?.players || {}).sort(
+  const players = Object.values(session?.players || {}).sort(
     (a, b) => a.joinedAt - b.joinedAt
   );
 
   React.useEffect(() => {
-    if (!lobbyId) return;
+    if (!sessionId) return;
 
-    const unsubscribe = getDocumentSnapshot<Lobby>({
-      id: lobbyId,
-      collection: "lobbies",
+    const unsubscribe = getDocumentSnapshot<GameSession>({
+      id: sessionId,
+      collection: "sessions",
       callback: (value) => {
-        setLobby(value);
-        if (!value) setLobby(null);
+        setSession(value);
+        if (!value) setSession(null);
       },
     });
 
     return () => unsubscribe?.();
-  }, [lobbyId, playerId]);
+  }, [sessionId, playerId]);
 
-  if (lobby === null) {
+  if (session === null) {
     alert("Game not found!");
     navigate("/");
   }
 
   React.useEffect(() => {
-    if (!lobby || !lobbyId || !playerId) return;
+    if (!session || !sessionId || !playerId) return;
 
-    if (!lobby.players[playerId] && players.length >= lobby.numPlayers) {
+    if (!session.players[playerId] && players.length >= session.numPlayers) {
       alert("The lobby is full!");
       return;
     }
 
-    if (!lobby.players[playerId]) {
+    if (!session.players[playerId]) {
       updateDocument({
-        id: lobbyId,
-        collection: "lobbies",
+        id: sessionId,
+        collection: "sessions",
         data: {
           [`players.${playerId}`]: {
             id: playerId,
@@ -66,15 +66,15 @@ export const LobbyPage = () => {
         },
       });
     }
-  }, [lobby, lobbyId, playerId, players.length]);
+  }, [session, sessionId, playerId, players.length]);
 
   const handleLeave = async () => {
-    if (!lobbyId || !playerId) return;
+    if (!sessionId || !playerId) return;
 
-    if (lobby?.players[playerId]?.isHost) {
+    if (session?.players[playerId]?.isHost) {
       deleteDocument({
-        id: lobbyId,
-        collection: "lobbies",
+        id: sessionId,
+        collection: "sessions",
       });
 
       navigate("/");
@@ -82,8 +82,8 @@ export const LobbyPage = () => {
     }
 
     updateDocument({
-      id: lobbyId,
-      collection: "lobbies",
+      id: sessionId,
+      collection: "sessions",
       data: {
         [`players.${playerId}`]: deleteField(),
       },
@@ -93,13 +93,11 @@ export const LobbyPage = () => {
   };
 
   const handleReady = async () => {
-    if (!lobbyId) return;
-
-    console.log(lobby);
+    if (!sessionId) return;
 
     await updateDocument({
-      id: lobbyId,
-      collection: "lobbies",
+      id: sessionId,
+      collection: "sessions",
       data: {
         [`players.${playerId}`]: {
           ...player,
@@ -109,31 +107,31 @@ export const LobbyPage = () => {
     });
   };
 
-  if (!lobbyId || !playerId) return "Loading";
+  if (!sessionId || !playerId) return "Loading";
 
   return (
     <>
       {/* <Header heading={lobby?.name || "Lobby"} /> */}
 
       <NameEditor
-        lobbyId={lobbyId}
+        sessionId={sessionId}
         playerId={playerId}
         show={showNameEditor}
-        nameDefault={lobby?.players?.[playerId]?.name || ""}
+        nameDefault={session?.players?.[playerId]?.name || ""}
         setShow={setShowNameEditor}
       />
 
       <div className={styles.container}>
         <div className={styles.joinSection}>
-          <div className={styles.joinCode}>{lobbyId}</div>
+          <div className={styles.joinCode}>{sessionId}</div>
 
-          <QRCode value={`http://192.168.188.49:5173/lobby/${lobbyId}`} />
+          <QRCode value={`http://192.168.188.49:5173/lobby/${sessionId}`} />
         </div>
 
         <div className={styles.divider} />
 
         <div className={styles.numPlayers}>
-          {players.length} / {lobby?.numPlayers}
+          {players.length} / {session?.numPlayers}
         </div>
 
         <div className={styles.playersSection}>
@@ -169,7 +167,7 @@ export const LobbyPage = () => {
 
         <div className={styles.buttons}>
           <Button
-            label={lobby?.players[playerId]?.isHost ? "Close Lobby" : "Leave"}
+            label={session?.players[playerId]?.isHost ? "Close Lobby" : "Leave"}
             onClick={() => handleLeave()}
             className={styles.leaveButton}
           />
@@ -177,7 +175,7 @@ export const LobbyPage = () => {
           <Button
             label="Ready"
             onClick={() => handleReady()}
-            disabled={lobby?.players[playerId]?.isReady}
+            disabled={session?.players[playerId]?.isReady}
             className={styles.readyButton}
           />
         </div>

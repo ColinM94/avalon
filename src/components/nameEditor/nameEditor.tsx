@@ -7,7 +7,7 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const NameEditor = (props: Props) => {
-  const { show, setShow, playerId, lobbyId, nameDefault } = props;
+  const { show, setShow, playerId, sessionId, nameDefault } = props;
 
   const [name, setName] = React.useState(nameDefault);
 
@@ -15,8 +15,8 @@ export const NameEditor = (props: Props) => {
     setShow(false);
 
     await updateDocument({
-      id: lobbyId,
-      collection: "lobbies",
+      id: sessionId,
+      collection: "sessions",
       data: {
         [`players.${playerId}.name`]: name,
       },

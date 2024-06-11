@@ -1,7 +1,7 @@
-import { Lobby } from "types";
+import { GameSession } from "types";
 
 export interface Props {
-  lobby: Lobby;
-  updateLobby: (update: Partial<Lobby>) => void;
+  session: GameSession;
+  updateSession: (update: Partial<GameSession>) => void;
   headingClassName?: string;
 }

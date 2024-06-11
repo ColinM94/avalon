@@ -1,7 +1,9 @@
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./styles.module.scss";
+
 import { Button, Header, InputText } from "components";
-import React from "react";
+
+import styles from "./styles.module.scss";
 
 export const JoinPage = () => {
   const navigate = useNavigate();
