@@ -1,0 +1,85 @@
+.container {
+  width: min(100%, 300px);
+  height: 125px;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: vars.$roundness;
+  overflow: hidden;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(0.995);
+  }
+
+  &:active {
+    transform: scale(0.99);
+  }
+
+  .label {
+    font-size: 2.5rem;
+    background-color: vars.$color-background-translucent-light;
+    border-radius: vars.$roundness;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+    text-shadow: vars.$shadow;
+  }
+
+  .backgroundImage {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .characters {
+    position: absolute;
+    width: min(500px, 100%);
+    height: calc(100% - 4px);
+
+    .image {
+      position: absolute;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 0.5;
+    }
+
+    .clericImage {
+      @extend .image;
+      left: -4%;
+      z-index: 0;
+    }
+
+    .percivalImage {
+      @extend .image;
+      left: 10%;
+      z-index: 1;
+    }
+
+    .merlinImage {
+      @extend .image;
+      left: 24%;
+      z-index: 2;
+    }
+
+    .assassinImage {
+      @extend .image;
+      right: 24%;
+      z-index: 2;
+    }
+
+    .oberonImage {
+      @extend .image;
+      right: 10%;
+      z-index: 1;
+    }
+
+    .morganaImage {
+      @extend .image;
+      right: -4%;
+      z-index: 0;
+    }
+  }
+}

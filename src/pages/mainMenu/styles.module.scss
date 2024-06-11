@@ -1,23 +1,25 @@
 .container {
   justify-content: center;
+  align-items: center;
   padding: vars.$spacing-primary;
   width: 100%;
   height: 100%;
 
   .heading {
+    flex: 0.5;
     font-size: vars.$font-size-display;
     text-align: center;
-  }
-
-  .lobby {
-    flex: 1;
+    justify-content: center;
     margin-bottom: vars.$spacing-primary;
   }
 
-  .info {
-    // flex: 1;
-    justify-content: center;
+  .buttons {
+    margin-bottom: vars.$spacing-primary;
+    gap: vars.$spacing-primary;
     align-items: center;
+
+    .button {
+    }
   }
 }
 
@@ -26,8 +28,9 @@
   padding-bottom: vars.$spacing-primary;
   width: 100%;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  flex: 0.5;
 
   .createdBy {
     color: vars.$color-text-secondary;
