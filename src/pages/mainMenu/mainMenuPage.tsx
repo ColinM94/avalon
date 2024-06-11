@@ -12,11 +12,7 @@ export const MainMenuPage = () => {
   };
 
   const handleJoinLobby = () => {
-    // if (!lobbyCode) {
-    //   alert("Please enter a lobby code");
-    //   return;
-    // }
-    // navigate(`/lobby/${lobbyCode}`);
+    navigate(`/join`);
   };
 
   const handleRules = () => {

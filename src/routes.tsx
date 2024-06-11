@@ -3,6 +3,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+
 import {
   ErrorPage,
   MainMenuPage,
@@ -10,7 +11,9 @@ import {
   LobbyPage,
   SetupPage,
   CharactersPage,
+  JoinPage,
 } from "pages";
+
 import { Root } from "./root";
 
 const routes = (
@@ -18,6 +21,7 @@ const routes = (
     <Route path="*" element={<InvalidPage />} />
     <Route index element={<MainMenuPage />} />
     <Route path="setup" element={<SetupPage />} />
+    <Route path="join" element={<JoinPage />} />
     <Route path="characters" element={<CharactersPage />} />
     <Route path="lobby/:code" element={<LobbyPage />} />
   </Route>

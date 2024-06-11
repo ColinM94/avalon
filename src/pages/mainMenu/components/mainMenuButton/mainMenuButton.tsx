@@ -15,7 +15,7 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const MainMenuButton = (props: Props) => {
-  const { label, className, onClick, position, children } = props;
+  const { label, className, onClick, position } = props;
 
   const backgroundImage = () => {
     if (position === 1) return backgroundImage1;
@@ -28,8 +28,6 @@ export const MainMenuButton = (props: Props) => {
     <div onClick={onClick} className={classes(styles.container, className)}>
       <img src={backgroundImage()} className={styles.backgroundImage} />
       <div className={styles.label}>{label}</div>
-
-      {children}
 
       {position === 4 && (
         <div className={styles.characters}>
