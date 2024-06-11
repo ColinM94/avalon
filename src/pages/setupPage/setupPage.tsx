@@ -25,32 +25,63 @@ export const SetupPage = () => {
   const [characters, updateCharacters] =
     reactReducer<Characters>(charactersDefault);
 
-  const maxEvil = maxCharacters[lobby.numPlayers].evil;
-  const maxGood = maxCharacters[lobby.numPlayers].good;
+  const numActiveGoodCharacters = Object.values(characters).filter(
+    (character) => character.allegiance === "good" && character.isActive
+  ).length;
+
+  const numActiveEvilCharacters = Object.values(characters).filter(
+    (character) => character.allegiance === "evil" && character.isActive
+  ).length;
+
+  const maxGoodCharacters = maxCharacters[lobby.numPlayers].good;
+  const maxEvilCharacters = maxCharacters[lobby.numPlayers].evil;
 
   const handleContinue = async () => {
     if (!playerId) return;
 
-    const lobbyCode = generateLobbyCode();
+    try {
+      if (!lobby.name) {
+        throw "Please enter a name";
+      }
 
-    await setDocument<Lobby>({
-      id: lobbyCode,
-      collection: "lobbies",
-      data: {
-        ...lobby,
-        players: {
-          [playerId]: {
-            id: playerId,
-            isHost: true,
-            joinedAt: Date.now(),
-            name: "Host",
-            isReady: false,
+      if (numActiveGoodCharacters < maxGoodCharacters) {
+        const numRemaining = maxGoodCharacters - numActiveGoodCharacters;
+        throw `Please select ${numRemaining} more Good character${
+          numRemaining === 1 ? "" : "s"
+        }!`;
+      }
+
+      if (numActiveEvilCharacters < maxEvilCharacters) {
+        const numRemaining = maxEvilCharacters - numActiveEvilCharacters;
+
+        throw `Please select ${numRemaining} more Evil character${
+          numRemaining === 1 ? "" : "s"
+        }!`;
+      }
+
+      const lobbyCode = generateLobbyCode();
+
+      await setDocument<Lobby>({
+        id: lobbyCode,
+        collection: "lobbies",
+        data: {
+          ...lobby,
+          players: {
+            [playerId]: {
+              id: playerId,
+              isHost: true,
+              joinedAt: Date.now(),
+              name: "Host",
+              isReady: false,
+            },
           },
         },
-      },
-    });
+      });
 
-    navigate(`/lobby/${lobbyCode}`);
+      navigate(`/lobby/${lobbyCode}`);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
@@ -68,8 +99,9 @@ export const SetupPage = () => {
           heading="Good Characters"
           allegiance="good"
           characters={characters}
-          maxActiveCharacters={maxGood}
+          maxActiveCharacters={maxGoodCharacters}
           updateCharacters={updateCharacters}
+          numActiveCharacters={numActiveGoodCharacters}
           headingClassName={styles.heading}
         />
 
@@ -77,8 +109,9 @@ export const SetupPage = () => {
           heading="Evil Characters"
           allegiance="evil"
           characters={characters}
-          maxActiveCharacters={maxEvil}
+          maxActiveCharacters={maxEvilCharacters}
           updateCharacters={updateCharacters}
+          numActiveCharacters={numActiveEvilCharacters}
           headingClassName={styles.heading}
         />
 

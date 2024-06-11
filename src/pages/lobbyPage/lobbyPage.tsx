@@ -40,7 +40,10 @@ export const LobbyPage = () => {
     return () => unsubscribe?.();
   }, [lobbyId, playerId]);
 
-  if (lobby === null) navigate("/");
+  if (lobby === null) {
+    alert("Game not found!");
+    navigate("/");
+  }
 
   React.useEffect(() => {
     if (!lobby || !lobbyId || !playerId) return;
@@ -124,7 +127,7 @@ export const LobbyPage = () => {
         <div className={styles.joinSection}>
           <div className={styles.joinCode}>{lobbyId}</div>
 
-          <QRCode value={`http://192.168.178.65:5173/lobby/${lobbyId}`} />
+          <QRCode value={`http://192.168.188.49:5173/lobby/${lobbyId}`} />
         </div>
 
         <div className={styles.divider} />

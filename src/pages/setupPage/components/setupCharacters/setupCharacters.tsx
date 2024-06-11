@@ -8,14 +8,11 @@ export const SetupCharacters = (props: Props) => {
     heading,
     characters,
     maxActiveCharacters,
+    numActiveCharacters,
     allegiance,
     updateCharacters,
     headingClassName,
   } = props;
-
-  const numActiveCharacters = Object.values(characters).filter(
-    (character) => character.allegiance === allegiance && character.isActive
-  ).length;
 
   const handleCharacterClick = (characterId: string) => {
     const character = characters[characterId];
