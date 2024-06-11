@@ -55,6 +55,7 @@ export const SetupCharacters = (props: Props) => {
             onClick={handleCharacterClick}
             showName
             key={character.id}
+            orientation="portrait"
             className={styles.character}
           />
         ))}

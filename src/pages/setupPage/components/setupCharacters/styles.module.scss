@@ -7,6 +7,12 @@
     flex: 1;
     min-width: calc(33% - vars.$spacing-primary);
     max-width: calc(33% - vars.$spacing-primary * 0.5);
+
+    @media (min-width: vars.$breakpoint-medium) {
+      min-width: calc(25% - vars.$spacing-primary);
+      max-width: calc(25% - vars.$spacing-primary * 0.5);
+    }
+
     aspect-ratio: 0.75;
     justify-content: center;
     align-items: center;

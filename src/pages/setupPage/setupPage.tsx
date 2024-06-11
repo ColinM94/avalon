@@ -44,6 +44,7 @@ export const SetupPage = () => {
             isHost: true,
             joinedAt: Date.now(),
             name: "Host",
+            isReady: false,
           },
         },
       },

@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 export const CharactersPage = () => {
   const characters = Object.values(charactersDefault);
 
-  const handleCharacterClick = (characterId: string) => {};
+  // const handleCharacterClick = (characterId: string) => {};
 
   return (
     <>
@@ -16,7 +16,7 @@ export const CharactersPage = () => {
         {characters.map((character) => (
           <CharacterCard
             character={character}
-            onClick={handleCharacterClick}
+            // onClick={handleCharacterClick}
             alwaysActive
             showName
             orientation="landscape"

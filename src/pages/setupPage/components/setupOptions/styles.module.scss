@@ -14,6 +14,10 @@
     align-items: center;
     aspect-ratio: 1;
 
+    @media (min-width: vars.$breakpoint-medium) {
+      min-width: unset;
+    }
+
     &:hover {
       filter: brightness(vars.$active-brightness-filter);
     }

@@ -7,17 +7,6 @@
     margin-top: vars.$spacing-primary;
   }
 
-  .section {
-    margin-bottom: vars.$spacing-primary;
-    width: 100%;
-
-    .sectionHeading {
-      font-size: vars.$font-size-h2;
-      align-self: flex-start;
-      margin-bottom: vars.$spacing-secondary;
-    }
-  }
-
   .continueButton {
     margin-top: calc(vars.$spacing-primary * 2);
   }
