@@ -27,7 +27,9 @@ export const MainMenuPage = () => {
       ?.focus();
   };
 
-  const handleCharacters = () => {};
+  const handleCharacters = () => {
+    navigate("/characters");
+  };
 
   return (
     <div className={styles.container}>

@@ -10,9 +10,11 @@ export const CharacterCard = (props: Props) => {
   const {
     character,
     onClick,
-    showInfoButton,
     showName,
+    orientation,
     alwaysActive,
+    showInfoButton,
+    showDescription,
     className,
   } = props;
 
@@ -51,7 +53,9 @@ export const CharacterCard = (props: Props) => {
       character.allegiance === "evil" &&
       styles.activeEvil,
     character.allegiance === "good" && styles.good,
-    character.allegiance === "evil" && styles.evil
+    character.allegiance === "evil" && styles.evil,
+    orientation === "portrait" && styles.portrait,
+    orientation === "landscape" && styles.landscape
   );
 
   return (
@@ -61,11 +65,23 @@ export const CharacterCard = (props: Props) => {
           ?
         </div>
       )}
-      {showName && (
-        <div className={styles.name}>
-          {characterNames[character.id] || character.id}
-        </div>
-      )}
+
+      <div className={styles.info}>
+        {showName && (
+          <div className={styles.name}>
+            {characterNames[character.id] || character.id}
+          </div>
+        )}
+
+        {showDescription && (
+          <div className={styles.description}>
+            {character.description.map((item) => (
+              <div className={styles.descriptionItem}>• {item}</div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {image && <img loading="lazy" src={image} className={styles.image} />}
     </div>
   );

@@ -31,24 +31,6 @@ $goodColor: #43839a;
       transform: scale(1.1);
     }
   }
-
-  .name {
-    position: absolute;
-    bottom: vars.$spacing-tertiary;
-    left: vars.$spacing-secondary;
-    right: vars.$spacing-secondary;
-    z-index: 2;
-    text-align: center;
-    font-size: vars.$font-size-body2;
-  }
-
-  .image {
-    position: absolute;
-    height: 100%;
-    object-fit: contain;
-    bottom: 0;
-    transition: transform 0.2s;
-  }
 }
 
 .active {
@@ -89,4 +71,61 @@ $goodColor: #43839a;
 .activeEvil {
   @extend .active;
   background-color: $evilColor;
+}
+
+.portrait {
+  .image {
+    position: absolute;
+    height: 100%;
+    object-fit: contain;
+    bottom: 0;
+    transition: transform 0.2s;
+  }
+
+  .name {
+    position: absolute;
+    bottom: vars.$spacing-tertiary;
+    left: vars.$spacing-secondary;
+    right: vars.$spacing-secondary;
+    z-index: 2;
+    text-align: center;
+    font-size: vars.$font-size-body2;
+  }
+}
+
+.landscape {
+  .image {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    max-height: calc(100% - 2px);
+    width: 40%;
+    object-fit: contain;
+    transition: transform 0.2s;
+  }
+
+  .info {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60%;
+    background-color: vars.$color-background-translucent;
+    height: 100%;
+    padding: vars.$spacing-primary;
+    z-index: 2;
+  }
+
+  .name {
+    z-index: 2;
+    text-align: center;
+    font-size: vars.$font-size-h2;
+    margin-bottom: vars.$spacing-tertiary;
+  }
+
+  .description {
+    .descriptionItem {
+      font-size: vars.$font-size-body2;
+      color: vars.$color-text-secondary;
+    }
+  }
 }

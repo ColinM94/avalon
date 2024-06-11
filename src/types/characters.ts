@@ -3,6 +3,7 @@ export interface Character {
   allegiance: "good" | "evil";
   isActive: boolean;
   isOptional: boolean;
+  description: string[];
 }
 
 export type Characters = Record<string, Character>;
