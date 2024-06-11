@@ -19,6 +19,9 @@ export default defineConfig({
       services: path.resolve(__dirname, "src/services"),
     },
   },
+  esbuild: {
+    legalComments: "none",
+  },
   css: {
     preprocessorMaxWorkers: true,
     preprocessorOptions: {

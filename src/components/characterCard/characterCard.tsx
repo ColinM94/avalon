@@ -23,7 +23,7 @@ export const CharacterCard = (props: Props) => {
   React.useEffect(() => {
     const loadImage = async () => {
       const tempImage = await import(
-        `assets/images/characters/${character.id}.png`
+        `assets/images/characters/${character.id}.webp`
       );
 
       setImage(tempImage.default);

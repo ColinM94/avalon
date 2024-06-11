@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+
 import { MainMenuButton } from "./components/mainMenuButton/mainMenuButton";
 
 import styles from "./styles.module.scss";

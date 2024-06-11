@@ -1,15 +1,15 @@
 import { classes } from "utils";
 
-import backgroundImage1 from "assets/images/00.png";
-import backgroundImage2 from "assets/images/01.png";
-import backgroundImage3 from "assets/images/02.png";
-import backgroundImage4 from "assets/images/03.png";
-import merlinImage from "assets/images/characters/merlin.png";
-import percivalImage from "assets/images/characters/percival.png";
-import clericImage from "assets/images/characters/cleric.png";
-import assassinImage from "assets/images/characters/assassin.png";
-import morganaImage from "assets/images/characters/morgana.png";
-import oberonImage from "assets/images/characters/oberon.png";
+import backgroundImage1 from "assets/images/mainMenu/buttonBackground1.webp";
+import backgroundImage2 from "assets/images/mainMenu/buttonBackground2.webp";
+import backgroundImage3 from "assets/images/mainMenu/buttonBackground3.webp";
+import backgroundImage4 from "assets/images/mainMenu/buttonBackground4.webp";
+import merlinImage from "assets/images/characters/merlin.webp";
+import percivalImage from "assets/images/characters/percival.webp";
+import clericImage from "assets/images/characters/cleric.webp";
+import assassinImage from "assets/images/characters/assassin.webp";
+import morganaImage from "assets/images/characters/morgana.webp";
+import oberonImage from "assets/images/characters/oberon.webp";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
