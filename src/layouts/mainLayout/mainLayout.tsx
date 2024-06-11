@@ -1,11 +1,6 @@
-import { Outlet } from "react-router-dom";
-
 import styles from "./styles.module.scss";
+import { Props } from "./types";
 
-export const MainLayout = () => {
-  return (
-    <div className={styles.container}>
-      <Outlet />
-    </div>
-  );
+export const MainLayout = ({ children }: Props) => {
+  return <div className={styles.container}>{children}</div>;
 };

@@ -13,11 +13,13 @@
 
   .headingSmall {
     font-size: vars.$font-size-h1;
+    animation: fadeOut 2s forwards;
   }
 
   .heading {
     font-size: 5rem;
     text-align: center;
+    animation: fadeOut 2s forwards;
   }
 
   @keyframes fadeOut {
@@ -25,7 +27,7 @@
       opacity: 1;
     }
 
-    to {
+    100% {
       opacity: 0;
       display: none;
       pointer-events: none;
