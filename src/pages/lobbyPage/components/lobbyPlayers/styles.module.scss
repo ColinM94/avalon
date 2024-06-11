@@ -1,2 +1,43 @@
-.characters {
+.numPlayers {
+  align-self: center;
+  margin-bottom: vars.$spacing-primary;
+}
+
+.container {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: vars.$spacing-primary;
+  flex-wrap: wrap;
+  align-content: flex-start;
+
+  .player {
+    border: 1px solid vars.$color-surface2;
+    border-radius: vars.$roundness;
+    aspect-ratio: 1.25;
+    justify-content: center;
+    align-items: center;
+    flex: 0.33;
+    min-width: 25%;
+    cursor: pointer;
+    max-height: 200px;
+    max-width: 200px;
+  }
+
+  .currentPlayer {
+    border: 1px solid vars.$color-primary;
+  }
+
+  .editButton {
+    position: absolute;
+    top: vars.$spacing-secondary;
+    right: vars.$spacing-secondary;
+    font-size: vars.$font-size-body2;
+  }
+
+  .checkmark {
+    position: absolute;
+    bottom: vars.$spacing-secondary;
+    right: vars.$spacing-secondary;
+    color: vars.$color-success;
+  }
 }

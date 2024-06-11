@@ -1,12 +1,13 @@
 import * as React from "react";
-import { QRCode } from "react-qrcode-logo";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteField } from "firebase/firestore";
 
 import { deleteDocument, getDocumentSnapshot, updateDocument } from "services";
-import { Button, NameEditor } from "components";
-import { classes } from "utils";
+import { Button } from "components";
 import { GameSession } from "types";
+
+import { LobbyPlayers } from "./components/lobbyPlayers/lobbyPlayers";
+import { LobbyJoin } from "./components/lobbyJoin/lobbyJoin";
 
 import styles from "./styles.module.scss";
 
@@ -15,7 +16,6 @@ export const LobbyPage = () => {
   const navigate = useNavigate();
 
   const [session, setSession] = React.useState<GameSession | null>();
-  const [showNameEditor, setShowNameEditor] = React.useState(false);
 
   const playerId = localStorage.getItem("playerId");
 
@@ -107,63 +107,23 @@ export const LobbyPage = () => {
     });
   };
 
-  if (!sessionId || !playerId) return "Loading";
+  if (!sessionId || !playerId || !session) return "Loading";
 
   return (
     <>
       {/* <Header heading={lobby?.name || "Lobby"} /> */}
 
-      <NameEditor
-        sessionId={sessionId}
-        playerId={playerId}
-        show={showNameEditor}
-        nameDefault={session?.players?.[playerId]?.name || ""}
-        setShow={setShowNameEditor}
-      />
-
       <div className={styles.container}>
-        <div className={styles.joinSection}>
-          <div className={styles.joinCode}>{sessionId}</div>
-
-          <QRCode value={`http://192.168.188.49:5173/lobby/${sessionId}`} />
-        </div>
+        <LobbyJoin sessionId={session.id} className={styles.join} />
 
         <div className={styles.divider} />
 
-        <div className={styles.numPlayers}>
-          {players.length} / {session?.numPlayers}
-        </div>
-
-        <div className={styles.playersSection}>
-          {players.map((player) => {
-            const isCurrentPlayer = playerId === player.id;
-
-            return (
-              <div
-                key={player.id}
-                className={classes(
-                  styles.player,
-                  isCurrentPlayer && styles.currentPlayer
-                )}
-              >
-                {isCurrentPlayer && (
-                  <div
-                    onClick={() => setShowNameEditor(true)}
-                    key={player.id}
-                    className={styles.editButton}
-                  >
-                    Edit
-                  </div>
-                )}
-                {player.name}
-
-                {player.isReady && (
-                  <div className={styles.checkmark}>&#x2713;</div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+        <LobbyPlayers
+          players={players}
+          session={session}
+          playerId={playerId}
+          className={styles.players}
+        />
 
         <div className={styles.buttons}>
           <Button

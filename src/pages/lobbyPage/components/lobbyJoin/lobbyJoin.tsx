@@ -1,17 +1,18 @@
-import { CharacterCard } from "components";
+import { QRCode } from "react-qrcode-logo";
+
+import { classes } from "utils";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const LobbyPlayers = (props: Props) => {
-  const {
-    heading,
-    characters,
-    maxActiveCharacters,
-    allegiance,
-    updateCharacters,
-    headingClassName,
-  } = props;
+export const LobbyJoin = (props: Props) => {
+  const { sessionId, className } = props;
 
-  return <></>;
+  return (
+    <div className={classes(styles.container, className)}>
+      <div className={styles.joinCode}>{sessionId}</div>
+
+      <QRCode value={`http://192.168.188.49:5173/lobby/${sessionId}`} />
+    </div>
+  );
 };
