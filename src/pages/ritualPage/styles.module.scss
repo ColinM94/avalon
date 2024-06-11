@@ -1,0 +1,26 @@
+.container {
+  padding: vars.$spacing-primary;
+  flex: 1;
+}
+
+.audioPlayer {
+  display: none;
+}
+
+.instructions {
+  margin-top: vars.$spacing-primary;
+  padding: vars.$spacing-primary;
+  gap: vars.$spacing-secondary;
+  flex: 1;
+
+  .instruction {
+  }
+
+  .activeInstruction {
+    color: vars.$color-primary;
+  }
+}
+
+.startButton {
+  margin-top: vars.$spacing-primary * 2;
+}

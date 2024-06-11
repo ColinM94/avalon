@@ -107,6 +107,23 @@ export const LobbyPage = () => {
     });
   };
 
+  React.useEffect(() => {
+    console.log(session?.numPlayers);
+
+    if (session && players.every((player) => player.isReady)) {
+      navigate("/ritual");
+    }
+
+    if (
+      session &&
+      session?.numPlayers &&
+      players.length === session?.numPlayers &&
+      players.every((player) => player.isReady)
+    ) {
+      navigate("/ritual");
+    }
+  }, [navigate, players, session?.players]);
+
   if (!sessionId || !playerId || !session) return "Loading";
 
   return (
