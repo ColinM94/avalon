@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, Header } from "components";
 import { Characters, GameSession } from "types";
-import { generateLobbyCode, reactReducer } from "utils";
+import { generateLobbyCode, reactReducer, shuffleArray } from "utils";
 import { charactersDefault, maxCharacters } from "consts";
 import { setDocument } from "services";
 
@@ -20,6 +20,7 @@ export const SetupPage = () => {
     name: "",
     players: {},
     numPlayers: 5,
+    characters: [],
   });
 
   const [characters, updateCharacters] =
@@ -59,6 +60,12 @@ export const SetupPage = () => {
         }!`;
       }
 
+      const shuffledCharacters = shuffleArray(
+        Object.values(characters)
+          .filter((character) => character.isActive)
+          .map((character) => character.id)
+      );
+
       const sessionCode = generateLobbyCode();
 
       await setDocument<GameSession>({
@@ -73,8 +80,10 @@ export const SetupPage = () => {
               joinedAt: Date.now(),
               name: "Host",
               isReady: false,
+              characterId: "",
             },
           },
+          characters: shuffledCharacters,
         },
       });
 

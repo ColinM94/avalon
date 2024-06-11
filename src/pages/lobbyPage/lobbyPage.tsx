@@ -5,6 +5,7 @@ import { deleteField } from "firebase/firestore";
 import { deleteDocument, getDocumentSnapshot, updateDocument } from "services";
 import { Button } from "components";
 import { GameSession } from "types";
+import { characterNames } from "consts";
 
 import { LobbyPlayers } from "./components/lobbyPlayers/lobbyPlayers";
 import { LobbyJoin } from "./components/lobbyJoin/lobbyJoin";
@@ -108,10 +109,22 @@ export const LobbyPage = () => {
   };
 
   React.useEffect(() => {
-    console.log(session?.numPlayers);
+    if (!sessionId) return;
 
     if (session && players.every((player) => player.isReady)) {
-      navigate("/ritual");
+      // navigate("/ritual");
+      players.forEach((player, index) => {
+        updateDocument({
+          id: sessionId,
+          collection: "sessions",
+          data: {
+            [`players.${player.id}`]: {
+              ...session.players[player.id],
+              characterId: session.characters[index],
+            },
+          },
+        });
+      });
     }
 
     if (
@@ -120,7 +133,10 @@ export const LobbyPage = () => {
       players.length === session?.numPlayers &&
       players.every((player) => player.isReady)
     ) {
-      navigate("/ritual");
+      // navigate("/ritual");
+      players.forEach((player, index) => {
+        session.players[player.id].characterId = session.characters[index];
+      });
     }
   }, [navigate, players, session?.players]);
 
@@ -153,6 +169,19 @@ export const LobbyPage = () => {
             label="Ready"
             onClick={() => handleReady()}
             disabled={session?.players[playerId]?.isReady}
+            className={styles.readyButton}
+          />
+
+          <Button
+            label="View Character"
+            onClick={() =>
+              alert(
+                `You are ${
+                  characterNames[session.players[player.id].characterId]
+                }`
+              )
+            }
+            disabled={!session.players[player?.id].characterId}
             className={styles.readyButton}
           />
         </div>

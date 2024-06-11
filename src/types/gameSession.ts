@@ -4,6 +4,7 @@ export type Player = {
   joinedAt: number;
   isHost: boolean;
   isReady: boolean;
+  characterId: string;
 };
 
 export type GameSession = {
@@ -11,4 +12,5 @@ export type GameSession = {
   name: string;
   players: Record<string, Player>;
   numPlayers: number;
+  characters: string[];
 };
