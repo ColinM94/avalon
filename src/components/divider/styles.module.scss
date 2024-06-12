@@ -1,3 +1,14 @@
+.container {
+  align-items: center;
+  justify-content: center;
+
+  .label {
+    position: absolute;
+    background-color: vars.$color-background;
+    padding: vars.$spacing-secondary;
+  }
+}
+
 .divider {
   background-color: vars.$color-surface2;
 }
