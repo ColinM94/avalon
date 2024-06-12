@@ -1,14 +1,12 @@
 import * as React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteField } from "firebase/firestore";
-
 import { deleteDocument, getDocumentSnapshot, updateDocument } from "services";
 import { Button, CharacterRevealer } from "components";
 import { GameSession } from "types";
-
+import { characterNames } from "consts";
 import { LobbyPlayers } from "./components/lobbyPlayers/lobbyPlayers";
 import { LobbyJoin } from "./components/lobbyJoin/lobbyJoin";
-
 import styles from "./styles.module.scss";
 
 export const LobbyPage = () => {
@@ -16,7 +14,6 @@ export const LobbyPage = () => {
   const navigate = useNavigate();
 
   const [session, setSession] = React.useState<GameSession | null>();
-  const [showCharacter, setShowCharacter] = React.useState(false);
 
   const playerId = localStorage.getItem("playerId");
 
@@ -138,7 +135,7 @@ export const LobbyPage = () => {
         session.players[player.id].characterId = session.characters[index];
       });
     }
-  }, [navigate, players, session, session?.players, sessionId]);
+  }, [navigate, players, session?.players]);
 
   if (!sessionId || !playerId || !session) return "Loading";
 
@@ -146,11 +143,7 @@ export const LobbyPage = () => {
     <>
       {/* <Header heading={lobby?.name || "Lobby"} /> */}
 
-      <CharacterRevealer
-        characterId={session.players[playerId].characterId}
-        show={showCharacter}
-        setShow={setShowCharacter}
-      />
+      <CharacterRevealer />
 
       <div className={styles.container}>
         <LobbyJoin sessionId={session.id} className={styles.join} />
@@ -180,8 +173,14 @@ export const LobbyPage = () => {
 
           <Button
             label="View Character"
-            onClick={() => setShowCharacter(true)}
-            disabled={!session.players[playerId].characterId}
+            onClick={() =>
+              alert(
+                `You are ${
+                  characterNames[session.players[player.id].characterId]
+                }`
+              )
+            }
+            disabled={!session.players[player?.id].characterId}
             className={styles.readyButton}
           />
         </div>

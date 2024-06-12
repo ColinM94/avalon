@@ -1,0 +1,14 @@
+.container {
+  gap: vars.$spacing-primary;
+  width: 100%;
+
+  .description {
+  }
+
+  .card {
+    width: calc(100% - vars.$spacing-primary);
+    max-height: 400px;
+    max-width: 600px;
+    aspect-ratio: 1.4;
+  }
+}

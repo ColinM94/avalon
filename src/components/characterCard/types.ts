@@ -9,5 +9,6 @@ export interface Props {
   disableAnimation?: boolean;
   showName?: boolean;
   showDescription?: boolean;
+  clickToReveal?: boolean;
   className?: string;
 }

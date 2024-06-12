@@ -1,0 +1,62 @@
+.background {
+  background-color: vars.$color-background-translucent;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+  align-items: center;
+  justify-content: center;
+}
+
+.backgroundShown {
+  display: flex;
+  animation: fadeIn 0.5s forwards;
+}
+
+.backgroundHidden {
+  animation: fadeOut 0.5s forwards;
+}
+
+.container {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  padding: vars.$spacing-primary;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerShown {
+}
+
+.containerHidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+    // display: flex;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    // display: flex;
+  }
+
+  to {
+    opacity: 0;
+    display: none;
+    pointer-events: none;
+  }
+}

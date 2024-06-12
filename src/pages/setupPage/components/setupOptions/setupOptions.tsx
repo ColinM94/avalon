@@ -1,5 +1,4 @@
 import { classes } from "utils";
-import { InputText } from "components";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -11,12 +10,12 @@ export const SetupOptions = (props: Props) => {
 
   return (
     <>
-      <div className={headingClassName}>Name</div>
+      {/* <div className={headingClassName}>Name</div>
 
       <InputText
         value={session.name}
         setValue={(value) => updateSession({ name: value })}
-      />
+      /> */}
 
       <div className={headingClassName}>Number of Players</div>
 

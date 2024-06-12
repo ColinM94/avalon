@@ -11,15 +11,17 @@ export const CharacterCard = (props: Props) => {
     character,
     onClick,
     showName,
-    orientation,
+    orientation = "portrait",
     alwaysActive,
     showInfoButton,
     showDescription,
     disableAnimation,
+    clickToReveal,
     className,
   } = props;
 
   const [image, setImage] = React.useState<string | null>(null);
+  const [isRevealed, setIsReavealed] = React.useState(false);
 
   React.useEffect(() => {
     const loadImage = async () => {
@@ -63,6 +65,17 @@ export const CharacterCard = (props: Props) => {
 
   return (
     <div onClick={() => onClick?.(character.id)} className={classNames}>
+      {clickToReveal && (
+        <div
+          onClick={() => setIsReavealed(!isRevealed)}
+          className={classes(styles.cover, isRevealed && styles.coverRevealed)}
+        >
+          <div className={styles.coverText}>
+            {isRevealed ? "Click to Hide" : "Click to Show"}
+          </div>
+        </div>
+      )}
+
       {showInfoButton && (
         <div onClick={handleInfoClick} className={styles.infoButton}>
           ?
@@ -79,7 +92,9 @@ export const CharacterCard = (props: Props) => {
         {showDescription && (
           <div className={styles.description}>
             {character.description.map((item) => (
-              <div className={styles.descriptionItem}>• {item}</div>
+              <div key={item} className={styles.descriptionItem}>
+                • {item}
+              </div>
             ))}
           </div>
         )}

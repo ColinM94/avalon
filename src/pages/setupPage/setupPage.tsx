@@ -41,9 +41,9 @@ export const SetupPage = () => {
     if (!playerId) return;
 
     try {
-      if (!session.name) {
-        throw "Please enter a name";
-      }
+      // if (!session.name) {
+      //   throw "Please enter a name";
+      // }
 
       if (numActiveGoodCharacters < maxGoodCharacters) {
         const numRemaining = maxGoodCharacters - numActiveGoodCharacters;
