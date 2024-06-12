@@ -5,14 +5,15 @@ import { Characters, GameSession } from "types";
 import { generateLobbyCode, reactReducer, shuffleArray } from "utils";
 import { charactersDefault, maxCharacters } from "consts";
 import { setDocument } from "services";
+import { useToastStore } from "stores";
 
 import { SetupCharacters } from "./components/setupCharacters/setupCharacters";
 import { SetupOptions } from "./components/setupOptions/setupOptions";
 import styles from "./styles.module.scss";
-import React from "react";
 
 export const SetupPage = () => {
   const navigate = useNavigate();
+  const { showToast } = useToastStore();
 
   const playerId = localStorage.getItem("playerId");
 
@@ -90,7 +91,7 @@ export const SetupPage = () => {
 
       navigate(`/lobby/${sessionCode}`);
     } catch (error) {
-      alert(error);
+      showToast(String(error));
     }
   };
 

@@ -1,0 +1,44 @@
+.container {
+  position: fixed;
+  bottom: 0;
+  flex-direction: row;
+  padding: vars.$spacing-primary;
+  pointer-events: none;
+
+  .toast {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: vars.$roundness;
+    padding: vars.$spacing-secondary;
+    z-index: 9999;
+    text-shadow: vars.$shadow;
+    font-size: vars.$font-size-h3;
+    animation: fadeIn 1s forwards;
+  }
+}
+
+.fadeOut {
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+    pointer-events: none;
+    opacity: 0;
+  }
+}

@@ -11,3 +11,4 @@ export * from "./loadingOverlay/loadingOverlay";
 export * from "./modal/modal";
 export * from "./nameEditor/nameEditor";
 export * from "./splash/splash";
+export * from "./toast/toast";

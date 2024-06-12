@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Scanner } from "@yudiel/react-qr-scanner";
 
 import { Button, Divider, Header, InputText, Modal } from "components";
+import { useToastStore } from "stores";
 
 import styles from "./styles.module.scss";
 
 export const JoinPage = () => {
   const navigate = useNavigate();
+  const { showToast } = useToastStore();
 
   const cameraInputRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -16,7 +18,7 @@ export const JoinPage = () => {
 
   const handleJoin = () => {
     if (!code) {
-      alert("Please enter a code");
+      showToast("Please enter a code!");
       return;
     }
 
@@ -24,12 +26,10 @@ export const JoinPage = () => {
   };
 
   const handleScan = (value: string) => {
-    console.log(value);
     const sessionCode = value.substring(value.length - 4);
-    console.log(sessionCode);
 
     if (!/^\d{4}$/.test(sessionCode)) {
-      alert("Error scanning QR Code");
+      showToast("Error scanning QR Code");
       return;
     }
 

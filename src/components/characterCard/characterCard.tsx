@@ -5,6 +5,7 @@ import { characterNames } from "consts";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
+import { useToastStore } from "stores";
 
 export const CharacterCard = (props: Props) => {
   const {
@@ -20,6 +21,8 @@ export const CharacterCard = (props: Props) => {
     onReveal,
     className,
   } = props;
+
+  const { showToast } = useToastStore();
 
   const [image, setImage] = React.useState<string | null>(null);
   const [isRevealed, setIsReavealed] = React.useState(false);
@@ -41,7 +44,7 @@ export const CharacterCard = (props: Props) => {
   ) => {
     event.stopPropagation();
 
-    alert(
+    showToast(
       `${characterNames[character.id]} is a character for ${
         character.allegiance
       }`

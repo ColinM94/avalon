@@ -10,10 +10,12 @@ import { LobbyPlayers } from "./components/lobbyPlayers/lobbyPlayers";
 import { LobbyJoin } from "./components/lobbyJoin/lobbyJoin";
 
 import styles from "./styles.module.scss";
+import { useToastStore } from "stores";
 
 export const LobbyPage = () => {
   const { code: sessionId } = useParams();
   const navigate = useNavigate();
+  const { showToast } = useToastStore();
 
   const [session, setSession] = React.useState<GameSession | null>();
   const [showCharacter, setShowCharacter] = React.useState(false);
@@ -43,7 +45,7 @@ export const LobbyPage = () => {
   }, [sessionId, playerId]);
 
   if (session === null) {
-    alert("Game not found!");
+    showToast("Game not found!");
     navigate("/");
   }
 
@@ -51,7 +53,7 @@ export const LobbyPage = () => {
     if (!session || !sessionId || !playerId) return;
 
     if (!session.players[playerId] && players.length >= session.numPlayers) {
-      alert("The lobby is full!");
+      showToast("The lobby is full!");
       return;
     }
 
@@ -176,7 +178,7 @@ export const LobbyPage = () => {
           <Button
             label="Ready"
             onClick={() => handleReady()}
-            disabled={session?.players[playerId]?.isReady}
+            disabled={hasViewedCharacter || session?.players[playerId]?.isReady}
             className={styles.readyButton}
           />
 

@@ -1,1 +1,1 @@
-Website to help you with the Avalon Ritual.
+Adaption of the Avalon boardgame for web.

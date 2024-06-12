@@ -17,6 +17,7 @@ export default defineConfig({
       utils: path.resolve(__dirname, "src/utils"),
       styles: path.resolve(__dirname, "src/styles"),
       services: path.resolve(__dirname, "src/services"),
+      stores: path.resolve(__dirname, "src/stores"),
     },
   },
   esbuild: {
