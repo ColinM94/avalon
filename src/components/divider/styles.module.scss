@@ -5,7 +5,7 @@
   .label {
     position: absolute;
     background-color: vars.$color-background;
-    padding: vars.$spacing-secondary;
+    padding: vars.$spacing-primary;
   }
 }
 
@@ -19,7 +19,7 @@
   margin-left: vars.$spacing-primary;
   margin-right: vars.$spacing-primary;
   width: 1px;
-  height: 80%;
+  height: 100%;
 }
 
 .horizontal {
@@ -28,5 +28,5 @@
   margin-top: vars.$spacing-primary;
   margin-bottom: vars.$spacing-primary;
   height: 1px;
-  width: 80%;
+  width: 100%;
 }

@@ -4,7 +4,9 @@ import { charactersDefault } from "consts";
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
-export const CharacterRevealer = ({ characterId, show, setShow }: Props) => {
+export const CharacterRevealer = (props: Props) => {
+  const { characterId, show, setShow, onReveal } = props;
+
   return (
     <Modal show={show} setShow={setShow} className={styles.container}>
       <div className={styles.description}>
@@ -20,6 +22,7 @@ export const CharacterRevealer = ({ characterId, show, setShow }: Props) => {
           showDescription
           alwaysActive
           orientation="landscape"
+          onReveal={onReveal}
           className={styles.card}
         />
       )}

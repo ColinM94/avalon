@@ -17,6 +17,7 @@ export const CharacterCard = (props: Props) => {
     showDescription,
     disableAnimation,
     clickToReveal,
+    onReveal,
     className,
   } = props;
 
@@ -47,6 +48,11 @@ export const CharacterCard = (props: Props) => {
     );
   };
 
+  const handleReveal = () => {
+    onReveal?.();
+    setIsReavealed(!isRevealed);
+  };
+
   const classNames = classes(
     styles.container,
     className,
@@ -67,7 +73,7 @@ export const CharacterCard = (props: Props) => {
     <div onClick={() => onClick?.(character.id)} className={classNames}>
       {clickToReveal && (
         <div
-          onClick={() => setIsReavealed(!isRevealed)}
+          onClick={handleReveal}
           className={classes(styles.cover, isRevealed && styles.coverRevealed)}
         >
           <div className={styles.coverText}>

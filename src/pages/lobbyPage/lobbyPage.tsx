@@ -17,6 +17,7 @@ export const LobbyPage = () => {
 
   const [session, setSession] = React.useState<GameSession | null>();
   const [showCharacter, setShowCharacter] = React.useState(false);
+  const [hasViewedCharacter, setHasViewedCharacter] = React.useState(false);
 
   const playerId = localStorage.getItem("playerId");
 
@@ -111,45 +112,46 @@ export const LobbyPage = () => {
   React.useEffect(() => {
     if (!sessionId) return;
 
-    if (session && players.every((player) => player.isReady)) {
-      // navigate("/ritual");
-      players.forEach((player, index) => {
-        updateDocument({
-          id: sessionId,
-          collection: "sessions",
-          data: {
-            [`players.${player.id}`]: {
-              ...session.players[player.id],
-              characterId: session.characters[index],
-            },
-          },
-        });
-      });
-    }
+    // if (session && players.every((player) => player.isReady)) {
+    //   // navigate("/ritual");
+    //   players.forEach((player, index) => {
+    //     updateDocument({
+    //       id: sessionId,
+    //       collection: "sessions",
+    //       data: {
+    //         [`players.${player.id}`]: {
+    //           ...session.players[player.id],
+    //           characterId: session.characters[index],
+    //         },
+    //       },
+    //     });
+    //   });
+    // }
 
+    // return;
     if (
       session &&
       session?.numPlayers &&
       players.length === session?.numPlayers &&
       players.every((player) => player.isReady)
     ) {
-      // navigate("/ritual");
       players.forEach((player, index) => {
         session.players[player.id].characterId = session.characters[index];
       });
+
+      navigate("/ritual");
     }
   }, [navigate, players, session, session?.players, sessionId]);
 
-  if (!sessionId || !playerId || !session) return "Loading";
+  if (!sessionId || !playerId || !session?.players[playerId]) return "Loading";
 
   return (
     <>
-      {/* <Header heading={lobby?.name || "Lobby"} /> */}
-
       <CharacterRevealer
         characterId={session.players[playerId].characterId}
         show={showCharacter}
         setShow={setShowCharacter}
+        onReveal={() => setHasViewedCharacter(true)}
       />
 
       <div className={styles.container}>

@@ -10,5 +10,6 @@ export interface Props {
   showName?: boolean;
   showDescription?: boolean;
   clickToReveal?: boolean;
+  onReveal?: () => void;
   className?: string;
 }

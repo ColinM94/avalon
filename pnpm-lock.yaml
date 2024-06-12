@@ -11,6 +11,9 @@ importers:
       '@types/node':
         specifier: ^20.14.2
         version: 20.14.2
+      '@yudiel/react-qr-scanner':
+        specifier: ^2.0.3
+        version: 2.0.3(react-dom@19.0.0-rc-cc1ec60d0d-20240607(react@19.0.0-rc-cc1ec60d0d-20240607))(react@19.0.0-rc-cc1ec60d0d-20240607)
       firebase:
         specifier: ^10.12.2
         version: 10.12.2
@@ -717,6 +720,12 @@ packages:
   '@types/babel__traverse@7.20.6':
     resolution: {integrity: sha512-r1bzfrm0tomOI8g1SzvCaQHo6Lcv6zu0EA+W2kHrt8dyrHQxGzBBL4kdkzIS+jBMV+EYcMAEAqXqYaLJq5rOZg==}
 
+  '@types/dom-webcodecs@0.1.11':
+    resolution: {integrity: sha512-yPEZ3z7EohrmOxbk/QTAa0yonMFkNkjnVXqbGb7D4rMr+F1dGQ8ZUFxXkyLLJuiICPejZ0AZE9Rrk9wUCczx4A==}
+
+  '@types/emscripten@1.39.13':
+    resolution: {integrity: sha512-cFq+fO/isvhvmuP/+Sl4K4jtU6E23DoivtbO4r50e3odaxAiVdbfSYRDdJ4gCdxx+3aRjhphS5ZMwIH4hFy/Cw==}
+
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
@@ -799,6 +808,12 @@ packages:
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0
 
+  '@yudiel/react-qr-scanner@2.0.3':
+    resolution: {integrity: sha512-/fLwlLQDTNALChUtTs6/SD2Kbg6InbNMRfrJVWHC4ChIb08KUrb+LChewGF21vuRu7B2z+fj22tkJoyUeNp7aw==}
+    peerDependencies:
+      react: ^17 || ^18
+      react-dom: ^17 || ^18
+
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
@@ -844,6 +859,9 @@ packages:
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  barcode-detector@2.2.7:
+    resolution: {integrity: sha512-+6PJNcMtdVehX5i2LQUE9L+mS6C3cG00Vsuc4Ynj3Mls5GNKIAFkE0IFGtw4s6vu8SXeogrzTj4btm44oD+gNw==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -1379,6 +1397,9 @@ packages:
   scheduler@0.25.0-rc-cc1ec60d0d-20240607:
     resolution: {integrity: sha512-yFVKy6SDJkN2bOJSeH6gNo4+1MTygTZXnLRY5IHvEB6P9+O6WYRWz9PkELLjnl64lQwRgiigwzWQRSMNEboOGQ==}
 
+  sdp@3.2.0:
+    resolution: {integrity: sha512-d7wDPgDV3DDiqulJjKiV2865wKsJ34YI+NDREbm+FySq6WuKOikwyNQcm+doLAZ1O6ltdO0SeKle2xMpN3Brgw==}
+
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
@@ -1518,6 +1539,10 @@ packages:
       terser:
         optional: true
 
+  webrtc-adapter@9.0.1:
+    resolution: {integrity: sha512-1AQO+d4ElfVSXyzNVTOewgGT/tAomwwztX/6e3totvyyzXPvXIIuUUjAmyZGbKBKbZOXauuJooZm3g6IuFuiNQ==}
+    engines: {node: '>=6.0.0', npm: '>=3.10.0'}
+
   websocket-driver@0.7.4:
     resolution: {integrity: sha512-b17KeDIQVjvb0ssuSDF2cYXSg2iztliJ4B9WdsuB6J952qCPKmnVq4DyW5motImXHDC1cBT/1UezrJVsKw5zjg==}
     engines: {node: '>=0.8.0'}
@@ -1564,6 +1589,9 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zxing-wasm@1.2.11:
+    resolution: {integrity: sha512-rNSMkIU310sK5cCPSjZA58FEhGZUtNx+f0CmtZ3SZzpdwZE6IzzKFdkbFkl8CFnxiUrx1VMVl/2WULDnwwJbfg==}
 
 snapshots:
 
@@ -2288,6 +2316,10 @@ snapshots:
     dependencies:
       '@babel/types': 7.24.7
 
+  '@types/dom-webcodecs@0.1.11': {}
+
+  '@types/emscripten@1.39.13': {}
+
   '@types/estree@1.0.5': {}
 
   '@types/node@20.14.2':
@@ -2399,6 +2431,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@yudiel/react-qr-scanner@2.0.3(react-dom@19.0.0-rc-cc1ec60d0d-20240607(react@19.0.0-rc-cc1ec60d0d-20240607))(react@19.0.0-rc-cc1ec60d0d-20240607)':
+    dependencies:
+      barcode-detector: 2.2.7
+      react: 19.0.0-rc-cc1ec60d0d-20240607
+      react-dom: 19.0.0-rc-cc1ec60d0d-20240607(react@19.0.0-rc-cc1ec60d0d-20240607)
+      webrtc-adapter: 9.0.1
+
   acorn-jsx@5.3.2(acorn@8.11.3):
     dependencies:
       acorn: 8.11.3
@@ -2436,6 +2475,11 @@ snapshots:
   array-union@2.1.0: {}
 
   balanced-match@1.0.2: {}
+
+  barcode-detector@2.2.7:
+    dependencies:
+      '@types/dom-webcodecs': 0.1.11
+      zxing-wasm: 1.2.11
 
   binary-extensions@2.3.0: {}
 
@@ -3020,6 +3064,8 @@ snapshots:
 
   scheduler@0.25.0-rc-cc1ec60d0d-20240607: {}
 
+  sdp@3.2.0: {}
+
   semver@6.3.1: {}
 
   semver@7.6.2: {}
@@ -3122,6 +3168,10 @@ snapshots:
       fsevents: 2.3.3
       sass: 1.77.4
 
+  webrtc-adapter@9.0.1:
+    dependencies:
+      sdp: 3.2.0
+
   websocket-driver@0.7.4:
     dependencies:
       http-parser-js: 0.5.8
@@ -3163,3 +3213,7 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
+
+  zxing-wasm@1.2.11:
+    dependencies:
+      '@types/emscripten': 1.39.13

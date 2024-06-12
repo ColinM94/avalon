@@ -22,6 +22,7 @@ export const CharactersPage = () => {
             orientation="landscape"
             showDescription
             disableAnimation
+            key={character.id}
             className={styles.character}
           />
         ))}

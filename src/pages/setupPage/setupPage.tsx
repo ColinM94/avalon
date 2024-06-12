@@ -9,6 +9,7 @@ import { setDocument } from "services";
 import { SetupCharacters } from "./components/setupCharacters/setupCharacters";
 import { SetupOptions } from "./components/setupOptions/setupOptions";
 import styles from "./styles.module.scss";
+import React from "react";
 
 export const SetupPage = () => {
   const navigate = useNavigate();
