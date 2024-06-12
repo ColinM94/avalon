@@ -8,10 +8,10 @@ export const CharacterRevealer = ({ characterId, show, setShow }: Props) => {
   return (
     <Modal show={show} setShow={setShow} className={styles.container}>
       <div className={styles.description}>
-        Do not show anyone your character
+        Do not show anyone your character!
       </div>
 
-      {charactersDefault[characterId] && (
+      {show && charactersDefault[characterId] && (
         <CharacterCard
           character={charactersDefault[characterId]}
           clickToReveal
