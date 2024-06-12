@@ -47,19 +47,32 @@ export const SetupPage = () => {
       //   throw "Please enter a name";
       // }
 
-      if (numActiveGoodCharacters < maxGoodCharacters) {
+      if (numActiveGoodCharacters !== maxGoodCharacters) {
         const numRemaining = maxGoodCharacters - numActiveGoodCharacters;
-        throw `Please select ${numRemaining} more Good character${
-          numRemaining === 1 ? "" : "s"
-        }!`;
+
+        if (Math.sign(numRemaining) === 1) {
+          throw `Please select ${numRemaining} more Good character${
+            numRemaining === 1 ? "" : "s"
+          }!`;
+        } else {
+          throw `You have selected too many Good character${
+            numRemaining === 1 ? "" : "s"
+          }!`;
+        }
       }
 
-      if (numActiveEvilCharacters < maxEvilCharacters) {
+      if (numActiveEvilCharacters !== maxEvilCharacters) {
         const numRemaining = maxEvilCharacters - numActiveEvilCharacters;
 
-        throw `Please select ${numRemaining} more Evil character${
-          numRemaining === 1 ? "" : "s"
-        }!`;
+        if (Math.sign(numRemaining) === 1) {
+          throw `Please select ${numRemaining} more Evil character${
+            numRemaining === 1 ? "" : "s"
+          }!`;
+        } else {
+          throw `You have selected too many Evil character${
+            numRemaining === 1 ? "" : "s"
+          }!`;
+        }
       }
 
       const shuffledCharacters = shuffleArray(
