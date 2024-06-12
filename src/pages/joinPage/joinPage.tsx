@@ -11,8 +11,6 @@ export const JoinPage = () => {
   const navigate = useNavigate();
   const { showToast } = useToastStore();
 
-  const cameraInputRef = React.useRef<HTMLInputElement | null>(null);
-
   const [code, setCode] = React.useState("");
   const [showScanner, setShowScanner] = React.useState(false);
 
@@ -59,11 +57,7 @@ export const JoinPage = () => {
         <div className={styles.section}>
           <div className={styles.instruction}>Scan QR Code</div>
 
-          <Button
-            label="Scan"
-            onClick={openCamera}
-            className={styles.scanButton}
-          />
+          <Button label="Scan" onClick={openCamera} />
 
           {/*
           <input
@@ -81,7 +75,7 @@ export const JoinPage = () => {
         <div className={styles.section}>
           <div className={styles.instruction}>Enter the Game Code</div>
           <InputText value={code} setValue={setCode} placeholder="Code" />
-          <Button label="Join" onClick={() => handleJoin(code)} />
+          <Button label="Join" onClick={() => handleJoin()} />
         </div>
       </div>
     </>

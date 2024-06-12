@@ -5,12 +5,12 @@ import { deleteField } from "firebase/firestore";
 import { deleteDocument, getDocumentSnapshot, updateDocument } from "services";
 import { Button, CharacterRevealer } from "components";
 import { GameSession } from "types";
+import { useToastStore } from "stores";
 
 import { LobbyPlayers } from "./components/lobbyPlayers/lobbyPlayers";
 import { LobbyJoin } from "./components/lobbyJoin/lobbyJoin";
 
 import styles from "./styles.module.scss";
-import { useToastStore } from "stores";
 
 export const LobbyPage = () => {
   const { code: sessionId } = useParams();
@@ -70,7 +70,7 @@ export const LobbyPage = () => {
         },
       });
     }
-  }, [session, sessionId, playerId, players.length]);
+  }, [session, sessionId, playerId, players.length, showToast]);
 
   const handleLeave = async () => {
     if (!sessionId || !playerId) return;
