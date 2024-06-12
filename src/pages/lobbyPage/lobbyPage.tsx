@@ -4,7 +4,7 @@ import { deleteField } from "firebase/firestore";
 
 import { deleteDocument, getDocumentSnapshot, updateDocument } from "services";
 import { Button, CharacterRevealer } from "components";
-import { GameSession } from "types";
+import { GameSession, Player } from "types";
 import { useToastStore } from "stores";
 
 import { LobbyPlayers } from "./components/lobbyPlayers/lobbyPlayers";
@@ -66,7 +66,10 @@ export const LobbyPage = () => {
             id: playerId,
             name: "Player",
             joinedAt: Date.now(),
-          },
+            characterId: session.characters,
+            isHost: false,
+            isReady: false,
+          } as Player,
         },
       });
     }
@@ -144,6 +147,8 @@ export const LobbyPage = () => {
       navigate("/ritual");
     }
   }, [navigate, players, session, session?.players, sessionId]);
+
+  console.log(session);
 
   if (!sessionId || !playerId || !session?.players[playerId]) return "Loading";
 
