@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Scanner } from "@yudiel/react-qr-scanner";
 
-import { Button, Divider, Header, InputText, Modal } from "components";
+import { Button, Divider, Header, InputText } from "components";
 import { useToastStore } from "stores";
 
+import { JoinScanner } from "./components/joinScanner/joinScanner";
 import styles from "./styles.module.scss";
 
 export const JoinPage = () => {
@@ -23,17 +23,6 @@ export const JoinPage = () => {
     navigate(`/lobby/${code}`);
   };
 
-  const handleScan = (value: string) => {
-    const sessionCode = value.substring(value.length - 4);
-
-    if (!/^\d{4}$/.test(sessionCode)) {
-      showToast("Error scanning QR Code");
-      return;
-    }
-
-    navigate(`/lobby/${sessionCode}`);
-  };
-
   const openCamera = () => {
     setShowScanner(true);
   };
@@ -42,20 +31,15 @@ export const JoinPage = () => {
     <>
       <Header heading="Join Game" />
 
-      <Modal
-        show={showScanner}
-        setShow={setShowScanner}
-        className={styles.scannerContainer}
-      >
-        <Scanner
-          onScan={(result) => handleScan(result[0].rawValue)}
-          allowMultiple
-        />
-      </Modal>
-
       <div className={styles.container}>
         <div className={styles.section}>
           <div className={styles.instruction}>Scan QR Code</div>
+
+          <JoinScanner
+            showScanner={showScanner}
+            setShowScanner={setShowScanner}
+            className={styles.scanner}
+          />
 
           <Button label="Scan" onClick={openCamera} />
 

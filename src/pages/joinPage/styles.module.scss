@@ -1,14 +1,6 @@
-.scannerContainer {
-  aspect-ratio: 1;
-  align-items: center;
-  justify-content: center;
+.scanner {
   height: 100%;
   max-height: 400px;
-
-  * {
-    position: absolute;
-    height: 100%;
-  }
 }
 
 .container {
