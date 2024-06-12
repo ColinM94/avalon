@@ -1,17 +1,11 @@
 import { SessionState } from "./types";
 import { createZustandStore } from "../createZustandStore";
+import { sessionDefault } from "consts";
 
 export const useSessionStore = createZustandStore<SessionState>({
-  name: "app",
-  data: (set, get) => ({
-    myPlayer: {
-      characterId: "",
-      id: "",
-      name: "",
-      isHost: false,
-      isReady: false,
-      joinedAt: 0,
-    },
+  name: "session",
+  data: (set) => ({
+    ...sessionDefault(),
     updateSessionStore: (update) => set({ ...update }),
   }),
   storageType: "localStorage",

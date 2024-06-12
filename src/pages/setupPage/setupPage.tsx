@@ -2,10 +2,9 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, Header } from "components";
 import { Characters, GameSession } from "types";
-import { generateLobbyCode, reactReducer, shuffleArray } from "utils";
+import { generateLobbyCode, reactReducer } from "utils";
 import { charactersDefault, maxCharacters } from "consts";
-import { setDocument } from "services";
-import { useToastStore } from "stores";
+import { useSessionStore, useToastStore } from "stores";
 
 import { SetupCharacters } from "./components/setupCharacters/setupCharacters";
 import { SetupOptions } from "./components/setupOptions/setupOptions";
@@ -17,12 +16,16 @@ export const SetupPage = () => {
 
   const playerId = localStorage.getItem("playerId");
 
+  const { player, updateSessionStore } = useSessionStore();
+
   const [session, updateSession] = reactReducer<GameSession>({
     id: "",
     name: "",
-    players: {},
     numPlayers: 5,
-    characters: [],
+    createdBy: player?.id,
+    players: {
+      [player.id]: player,
+    },
   });
 
   const [characters, updateCharacters] =
@@ -75,32 +78,21 @@ export const SetupPage = () => {
         }
       }
 
-      const shuffledCharacters = shuffleArray(
-        Object.values(characters)
-          .filter((character) => character.isActive)
-          .map((character) => character.id)
-      );
-
       const sessionCode = generateLobbyCode();
 
-      await setDocument<GameSession>({
-        id: sessionCode,
-        collection: "sessions",
-        data: {
-          ...session,
-          players: {
-            [playerId]: {
-              id: playerId,
-              isHost: true,
-              joinedAt: Date.now(),
-              name: "Host",
-              isReady: false,
-              characterId: "",
-            },
-          },
-          characters: shuffledCharacters,
+      updateSessionStore({
+        session: session,
+        player: {
+          ...player,
+          sessionId: sessionCode,
         },
       });
+
+      // await setDocument<GameSession>({
+      //   id: sessionCode,
+      //   collection: "sessions",
+      //   data: session,
+      // });
 
       navigate(`/lobby/${sessionCode}`);
     } catch (error) {

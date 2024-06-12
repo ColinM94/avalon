@@ -29,6 +29,12 @@ export const LobbyPage = () => {
     (a, b) => a.joinedAt - b.joinedAt
   );
 
+  // const shuffledCharacters = shuffleArray(
+  //   Object.values(characters)
+  //     .filter((character) => character.isActive)
+  //     .map((character) => character.id)
+  // );
+
   React.useEffect(() => {
     if (!sessionId) return;
 
