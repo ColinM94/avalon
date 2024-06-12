@@ -23,6 +23,8 @@ export const Toast = ({ className }: Props) => {
     setFadeOut(false);
   }, [toast?.createdAt]);
 
+  if (!toast) return null;
+
   return (
     <div
       className={classes(

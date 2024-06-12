@@ -1,3 +1,9 @@
+import { GameSession, Player } from "types";
+
 export interface AppState {
-  updateAppStore: (update: Partial<AppState>) => void;
+  player: Player;
+  session: GameSession;
+
+  updatePlayer: (update: Partial<Player>) => void;
+  updateSession: (update: Partial<GameSession>) => void;
 }

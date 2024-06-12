@@ -12,7 +12,7 @@ export const LobbyJoin = (props: Props) => {
     <div className={classes(styles.container, className)}>
       <div className={styles.joinCode}>{sessionId}</div>
 
-      <QRCode value={`http://192.168.188.49:5173/lobby/${sessionId}`} />
+      <QRCode value={`http://192.168.178.65:5173//lobby/${sessionId}`} />
     </div>
   );
 };

@@ -4,16 +4,15 @@ import { Outlet } from "react-router-dom";
 import { Splash, Toast } from "components";
 import { getDocumentSnapshot, setDocument } from "services";
 import { GameSession, Player } from "types";
-import { usePlayerStore, useSessionStore } from "stores";
+import { useAppStore } from "stores";
 import { playerDefault, sessionDefault } from "consts";
 import { MainLayout } from "layouts/mainLayout/mainLayout";
 import { generateUniqueId } from "utils";
 
 export const Root = () => {
-  const { updateSessionStore } = useSessionStore();
-  const { id: playerId, sessionId, updatePlayerStore } = usePlayerStore();
+  const { player, session, updatePlayer, updateSession } = useAppStore();
 
-  console.log(playerId);
+  console.log(player, session);
 
   React.useEffect(() => {
     let existingPlayerId = localStorage.getItem("playerId");
@@ -39,26 +38,26 @@ export const Root = () => {
           });
         }
 
-        updatePlayerStore(value || playerDefault());
+        updatePlayer(value || playerDefault());
       },
     });
 
     return () => unsubscribe?.();
-  }, [playerId, updatePlayerStore]);
+  }, [player.id, updatePlayer]);
 
   React.useEffect(() => {
-    if (!sessionId) return;
+    if (!player.sessionId) return;
 
     const unsubscribe = getDocumentSnapshot<GameSession>({
-      id: sessionId,
+      id: player.sessionId,
       collection: "sessions",
       callback: (value) => {
-        updateSessionStore(value || sessionDefault());
+        updateSession(value || sessionDefault());
       },
     });
 
     return () => unsubscribe?.();
-  }, [sessionId]);
+  }, [player.sessionId, updateSession]);
 
   return (
     <MainLayout>

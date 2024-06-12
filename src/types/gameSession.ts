@@ -11,7 +11,7 @@ export type Player = {
 export type GameSession = {
   id: string;
   name: string;
-  players: Record<string, Player>;
+  players: string[];
   numPlayers: number;
   createdBy: string;
 };
