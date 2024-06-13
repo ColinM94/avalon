@@ -5,7 +5,7 @@ import { deleteField } from "firebase/firestore";
 import { deleteDocument, getDocumentSnapshot, updateDocument } from "services";
 import { Button, CharacterRevealer } from "components";
 import { GameSession, Player } from "types";
-import { useToastStore } from "stores";
+import { useAppStore, useToastStore } from "stores";
 
 import { LobbyPlayers } from "./components/lobbyPlayers/lobbyPlayers";
 import { LobbyJoin } from "./components/lobbyJoin/lobbyJoin";
@@ -16,14 +16,10 @@ export const LobbyPage = () => {
   const { code: sessionId } = useParams();
   const navigate = useNavigate();
   const { showToast } = useToastStore();
+  const { player, session } = useAppStore();
 
-  const [session, setSession] = React.useState<GameSession | null>();
   const [showCharacter, setShowCharacter] = React.useState(false);
   const [hasViewedCharacter, setHasViewedCharacter] = React.useState(false);
-
-  const playerId = localStorage.getItem("playerId");
-
-  const player = playerId ? session?.players[playerId] : null;
 
   const players = Object.values(session?.players || {}).sort(
     (a, b) => a.joinedAt - b.joinedAt

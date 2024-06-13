@@ -2,17 +2,19 @@ import * as React from "react";
 import { Outlet } from "react-router-dom";
 
 import { Splash, Toast } from "components";
-import { getDocumentSnapshot, setDocument } from "services";
+import {
+  getDocumentSnapshot,
+  getDocumentsSnapshot,
+  setDocument,
+} from "services";
 import { GameSession, Player } from "types";
 import { useAppStore } from "stores";
 import { playerDefault, sessionDefault } from "consts";
-import { MainLayout } from "layouts/mainLayout/mainLayout";
 import { generateUniqueId } from "utils";
+import { MainLayout } from "layouts/mainLayout/mainLayout";
 
 export const Root = () => {
-  const { player, session, updatePlayer, updateSession } = useAppStore();
-
-  console.log(player, session);
+  const { player, updatePlayer, updateSession } = useAppStore();
 
   React.useEffect(() => {
     let existingPlayerId = localStorage.getItem("playerId");
@@ -27,7 +29,6 @@ export const Root = () => {
       collection: "players",
       callback: (value) => {
         if (!value) {
-          console.log("No player fgound");
           setDocument<Player>({
             id: existingPlayerId,
             collection: "players",
@@ -46,18 +47,17 @@ export const Root = () => {
   }, [player.id, updatePlayer]);
 
   React.useEffect(() => {
-    if (!player.sessionId) return;
-
-    const unsubscribe = getDocumentSnapshot<GameSession>({
-      id: player.sessionId,
+    const unsubscribe = getDocumentsSnapshot<GameSession>({
       collection: "sessions",
-      callback: (value) => {
-        updateSession(value || sessionDefault());
+      where: [["players", "array-contains", player.id]],
+      callback: (sessions) => {
+        console.log(sessions);
+        updateSession(sessions[0] || null);
       },
     });
 
     return () => unsubscribe?.();
-  }, [player.sessionId, updateSession]);
+  }, [player.id, player.sessionId, updateSession]);
 
   return (
     <MainLayout>
