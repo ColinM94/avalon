@@ -11,9 +11,12 @@ import { GameSession, User } from "types";
 import { useAppStore } from "stores";
 
 export const Root = () => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
   const { user, session, updateUser, updateSession } = useAppStore();
+
+  console.log(session);
+
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   // User
   React.useEffect(() => {
@@ -50,60 +53,16 @@ export const Root = () => {
     return () => unsubscribe?.();
   }, [user.id]);
 
-  // React.useEffect(() => {
-  //   // if(!session &&) {
-  //   //   navigate()
-  //   // }
+  React.useEffect(() => {
+    if (session?.id && pathname !== "/play") {
+      navigate("/play");
+      return;
+    }
 
-  //   if (
-  //     !session &&
-  //     pathname !== "/" &&
-  //     pathname !== "/characters" &&
-  //     pathname !== "/join" &&
-  //     pathname !== "/setup"
-  //   ) {
-  //     navigate("/");
-  //     return;
-  //   }
-
-  //   if (!session) {
-  //     return;
-  //   }
-
-  //   const step = session.step;
-
-  //   if (step === "lobby" && !pathname.includes("/lobby")) {
-  //     navigate(`/lobby/${session.id}`);
-  //     return;
-  //   }
-
-  //   console.log(step);
-
-  //   if (step === "characterReveal" && !pathname.includes("/characterReveal")) {
-  //     navigate(`/characterReveal`);
-  //     return;
-  //   }
-
-  //   if (step === "ritual" && !pathname.includes("/ritual")) {
-  //     navigate("/ritual");
-  //     return;
-  //   }
-
-  //   if (step === "quests" && !pathname.includes("/quests")) {
-  //     navigate("/quests");
-  //     return;
-  //   }
-  // }, [session, pathname]);
-
-  // React.useEffect(() => {
-  //   if (session.createdBy === player.id) {
-  //     updateDocument({
-  //       id: session.id,
-  //       collection: "sessions",
-  //       data: session,
-  //     });
-  //   }
-  // }, [player.id, session]);
+    if (!session?.id && pathname === "/play") {
+      navigate("/");
+    }
+  }, [session?.id]);
 
   return (
     <>

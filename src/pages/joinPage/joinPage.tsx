@@ -7,6 +7,7 @@ import { useToastStore } from "stores";
 import { JoinScanner } from "./components/joinScanner/joinScanner";
 import styles from "./styles.module.scss";
 import { MainLayout } from "layouts";
+import { joinSession } from "services";
 
 export const JoinPage = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export const JoinPage = () => {
       return;
     }
 
-    navigate(`/lobby/${code}`);
+    joinSession(code);
   };
 
   const openCamera = () => {

@@ -8,12 +8,10 @@ import {
   ErrorPage,
   MainMenuPage,
   InvalidPage,
-  LobbyPage,
   SetupPage,
   CharactersPage,
   JoinPage,
-  RitualPage,
-  CharacterRevealPage,
+  PlayPage,
 } from "pages";
 
 import { Root } from "./main";
@@ -25,9 +23,7 @@ const routes = (
     <Route path="setup" element={<SetupPage />} />
     <Route path="join" element={<JoinPage />} />
     <Route path="characters" element={<CharactersPage />} />
-    <Route path="lobby/:code" element={<LobbyPage />} />
-    <Route path="ritual" element={<RitualPage />} />
-    <Route path="characterReveal" element={<CharacterRevealPage />} />
+    <Route path="play" element={<PlayPage />} />
   </Route>
 );
 

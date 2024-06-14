@@ -1,0 +1,25 @@
+$width: calc(100% / 5 - vars.$spacing-primary * 0.8);
+
+.container {
+  border-radius: vars.$roundness;
+  background-color: vars.$color-surface;
+  border: 1px solid vars.$color-surface2;
+  aspect-ratio: 1;
+  flex: 1;
+  min-width: $width;
+  max-width: $width;
+  justify-content: center;
+  align-items: center;
+  font-size: vars.$font-size-body2;
+  text-align: center;
+}
+
+.connected {
+  // border: 1px solid vars.$color-primary;
+
+  background-color: vars.$color-surface2;
+}
+
+.host {
+  // border: 5px solid gold !important;
+}

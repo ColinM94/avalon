@@ -1,0 +1,10 @@
+.container {
+  background-color: vars.$color-surface;
+  width: 100%;
+  border-top-left-radius: vars.$roundness;
+  border-top-right-radius: vars.$roundness;
+  padding: vars.$spacing-primary;
+  gap: vars.$spacing-primary;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

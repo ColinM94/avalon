@@ -7,12 +7,15 @@ import { userDefault } from "consts/userDefault";
 export const useAppStore = createZustandStore<AppState>({
   name: "app",
   data: (set, get) => ({
-    session: sessionDefault(),
+    session: null,
     player: playerDefault(),
     user: userDefault(),
     updateUser: (update) => set({ user: { ...get().user, ...update } }),
-    updateSession: (update) =>
-      set({ session: { ...get().session, ...update } }),
+    updateSession: (update) => {
+      set({
+        session: update === null ? null : { ...get().session, ...update },
+      });
+    },
     updatePlayer: (update) => set({ player: { ...get().player, ...update } }),
   }),
   storageType: "localStorage",

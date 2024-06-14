@@ -7,3 +7,4 @@ export * from "./mainMenu/mainMenuPage";
 export * from "./setupPage/setupPage";
 export * from "./ritualPage/ritualPage";
 export * from "./characterRevealPage/characterRevealPage";
+export * from "./playPage/playPage";

@@ -18,9 +18,16 @@
     text-shadow: vars.$shadow;
     font-size: vars.$font-size-h3;
     animation: fadeIn 1s forwards;
-    border: 2px solid vars.$color-danger;
     align-self: center;
   }
+}
+
+.error {
+  border: 2px solid vars.$color-danger;
+}
+
+.info {
+  border: 2px solid vars.$color-primary;
 }
 
 .fadeOut {

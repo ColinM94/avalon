@@ -1,0 +1,11 @@
+.container {
+  align-items: center;
+  justify-content: center;
+  gap: vars.$spacing-secondary;
+
+  .joinCode {
+    justify-content: center;
+    align-items: center;
+    font-size: vars.$font-size-display;
+  }
+}

@@ -1,0 +1,24 @@
+.container {
+  flex: 1;
+  max-width: 800px;
+  width: 100%;
+  align-self: center;
+
+  .leaveButton {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: vars.$spacing-primary;
+    z-index: 1;
+  }
+
+  .content {
+    gap: vars.$spacing-primary;
+    padding: vars.$spacing-primary;
+    flex: 1;
+  }
+
+  .players {
+  }
+}
