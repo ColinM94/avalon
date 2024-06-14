@@ -1,25 +1,21 @@
 import * as React from "react";
 
 import { Button, InputText } from "components";
-import { updateDocument } from "services";
+import { updateMyPlayer } from "services";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const NameEditor = (props: Props) => {
-  const { show, setShow, playerId, sessionId, nameDefault } = props;
+  const { show, setShow, nameDefault } = props;
 
   const [name, setName] = React.useState(nameDefault);
 
   const handleSave = async () => {
     setShow(false);
 
-    await updateDocument({
-      id: sessionId,
-      collection: "sessions",
-      data: {
-        [`players.${playerId}.name`]: name,
-      },
+    updateMyPlayer({
+      name,
     });
   };
 

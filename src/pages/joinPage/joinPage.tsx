@@ -61,7 +61,12 @@ export const JoinPage = () => {
 
       <div className={styles.section}>
         <div className={styles.instruction}>Enter the Game Code</div>
-        <InputText value={code} setValue={setCode} placeholder="Code" />
+        <InputText
+          type="number"
+          value={code}
+          setValue={setCode}
+          placeholder="Code"
+        />
         <Button label="Join" onClick={() => handleJoin()} />
       </div>
     </MainLayout>

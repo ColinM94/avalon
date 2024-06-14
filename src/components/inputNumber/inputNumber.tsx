@@ -21,18 +21,20 @@ export const InputNumber = (props: Props) => {
 
   return (
     <div className={classNames}>
-      <div onClick={handleDecrement} className={styles.incrementButton}>
+      {/* <div onClick={handleDecrement} className={styles.incrementButton}>
         -
-      </div>
+      </div> */}
       <input
         type="number"
+        pattern="[0-9]*"
+        inputMode="numeric"
         value={value}
         onChange={(e) => setValue(Number(e.target.value))}
         className={styles.input}
       />
-      <div onClick={handleIncrement} className={styles.incrementButton}>
+      {/* <div onClick={handleIncrement} className={styles.incrementButton}>
         +
-      </div>
+      </div> */}
     </div>
   );
 };

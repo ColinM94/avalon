@@ -2,10 +2,9 @@ import { useAppStore, useToastStore } from "stores";
 import { getDocument, updateDocument } from "services";
 import { GameSession } from "types";
 import { playerDefault } from "consts";
-import { useNavigate } from "react-router-dom";
 
 export const joinSession = async (sessionId: string) => {
-  const { user } = useAppStore();
+  const { user } = useAppStore.getState();
   const { showToast } = useToastStore.getState();
 
   try {
@@ -16,8 +15,16 @@ export const joinSession = async (sessionId: string) => {
 
     if (!session) throw `Game ${sessionId} not found!`;
 
+    if (Object.values(session.players).length >= session.numPlayers) {
+      throw "The game is full!";
+    }
+
     if (session.step !== "lobby") {
       throw "This game has already started!";
+    }
+
+    if (session.players[user.id]) {
+      return;
     }
 
     if (session?.step === "lobby") {

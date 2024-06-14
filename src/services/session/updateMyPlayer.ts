@@ -1,6 +1,6 @@
 import { updateDocument } from "services/firestore/updateDocument";
 import { useAppStore, useToastStore } from "stores";
-import { GameSession, Player } from "types";
+import { GameSession, Player, User } from "types";
 
 export const updateMyPlayer = async (update: Partial<Player>) => {
   const { session, user } = useAppStore.getState();
@@ -17,6 +17,16 @@ export const updateMyPlayer = async (update: Partial<Player>) => {
         },
       },
     });
+
+    if (update.name) {
+      await updateDocument<User>({
+        id: user.id,
+        collection: "users",
+        data: {
+          name: update.name,
+        },
+      });
+    }
   } catch (error) {
     showToast(String(error));
   }

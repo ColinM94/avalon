@@ -9,4 +9,11 @@
     gap: vars.$spacing-primary;
     padding: vars.$spacing-primary;
   }
+
+  .leaveButton {
+    cursor: pointer;
+    position: absolute;
+    top: vars.$spacing-primary;
+    right: vars.$spacing-primary;
+  }
 }

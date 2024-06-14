@@ -7,5 +7,5 @@ export interface AppState {
 
   updateUser: (update: Partial<User>) => void;
   updatePlayer: (update: Partial<Player>) => void;
-  updateSession: (update: Partial<GameSession> | null) => void;
+  updateSession: (update: Partial<GameSession>) => void;
 }

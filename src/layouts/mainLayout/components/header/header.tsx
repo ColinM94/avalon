@@ -9,8 +9,6 @@ import styles from "./styles.module.scss";
 export const Header = (props: Props) => {
   const { heading, showBackButton, className } = props;
 
-  const { session } = useAppStore();
-
   const navigate = useNavigate();
 
   return (

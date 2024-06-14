@@ -5,6 +5,11 @@
   padding: vars.$spacing-primary;
   pointer-events: none;
   z-index: 9999;
+  left: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 
   .toast {
     background-color: rgba(0, 0, 0, 0.8);
@@ -14,6 +19,7 @@
     font-size: vars.$font-size-h3;
     animation: fadeIn 1s forwards;
     border: 2px solid vars.$color-danger;
+    align-self: center;
   }
 }
 

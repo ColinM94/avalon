@@ -92,8 +92,6 @@ export const SetupPage = () => {
         data: tempSession,
       });
 
-      console.log(tempSession);
-
       navigate(`/lobby/${tempSession.id}`);
     } catch (error) {
       showToast(String(error));

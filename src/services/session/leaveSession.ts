@@ -8,20 +8,22 @@ export const leaveSession = async () => {
   const { showToast } = useToastStore.getState();
 
   try {
-    if (session.step === "lobby") {
-      await updateDocument({
-        id: session.id,
-        collection: "sessions",
-        data: {
-          [`players.${user.id}`]: deleteField(),
-        },
-      });
-    } else {
+    if (session.createdBy === user.id || session.step !== "lobby") {
       await deleteDocument({
         id: session.id,
         collection: "sessions",
       });
+
+      return;
     }
+
+    await updateDocument({
+      id: session.id,
+      collection: "sessions",
+      data: {
+        [`players.${user.id}`]: deleteField(),
+      },
+    });
   } catch (error) {
     showToast(String(error));
   }

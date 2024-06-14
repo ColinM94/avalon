@@ -2,26 +2,37 @@ import * as React from "react";
 
 import { NameEditor } from "components";
 import { classes } from "utils";
+import { useAppStore } from "stores";
+import { Player } from "types";
+import { kickPlayer } from "services/session/kickPlayer";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const LobbyPlayers = (props: Props) => {
-  const { session, playerId, className } = props;
+  const { session, userId, className } = props;
+
+  const { user } = useAppStore();
 
   const [showNameEditor, setShowNameEditor] = React.useState(false);
 
-  const players = Object.values(session.players).sort(
-    (a, b) => a.joinedAt - b.joinedAt
-  );
+  const isHost = session.createdBy === user.id;
+
+  const players = Object.values(session?.players)
+    .filter((player) => player.isHost !== true)
+    .sort((a, b) => a.joinedAt - b.joinedAt);
+
+  const handleKick = (player: Player) => {
+    const shouldKick = prompt(`Are you sure you want to kick ${player.name}`);
+    if (shouldKick) kickPlayer(player.id);
+  };
 
   return (
     <>
       <NameEditor
-        sessionId={session.id}
-        playerId={playerId}
+        userId={userId}
         show={showNameEditor}
-        nameDefault={session?.players?.[playerId]?.name || ""}
+        nameDefault={user.name}
         setShow={setShowNameEditor}
       />
 
@@ -31,29 +42,34 @@ export const LobbyPlayers = (props: Props) => {
 
       <div className={classes(styles.container, className)}>
         {players.map((player) => {
-          const isCurrentPlayer = playerId === player.id;
+          const isCurrentPlayer = userId === player.id;
 
           return (
             <div
               key={player.id}
+              onClick={
+                isCurrentPlayer ? () => setShowNameEditor(true) : undefined
+              }
               className={classes(
                 styles.player,
                 isCurrentPlayer && styles.currentPlayer
               )}
             >
-              {isCurrentPlayer && (
-                <div
-                  onClick={() => setShowNameEditor(true)}
-                  key={player.id}
-                  className={styles.editButton}
-                >
-                  Edit
-                </div>
-              )}
+              {isCurrentPlayer && <div className={styles.editButton}>Edit</div>}
+
               {player.name}
 
               {player.isReady && (
                 <div className={styles.checkmark}>&#x2713;</div>
+              )}
+
+              {isHost && player.id !== user.id && (
+                <div
+                  onClick={() => handleKick(player)}
+                  className={styles.kickButton}
+                >
+                  Kick
+                </div>
               )}
             </div>
           );

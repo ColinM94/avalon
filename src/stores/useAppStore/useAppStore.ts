@@ -12,7 +12,7 @@ export const useAppStore = createZustandStore<AppState>({
     user: userDefault(),
     updateUser: (update) => set({ user: { ...get().user, ...update } }),
     updateSession: (update) =>
-      set({ session: update ? { ...get().session, ...update } : null }),
+      set({ session: { ...get().session, ...update } }),
     updatePlayer: (update) => set({ player: { ...get().player, ...update } }),
   }),
   storageType: "localStorage",

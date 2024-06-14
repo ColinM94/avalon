@@ -40,4 +40,10 @@
     right: vars.$spacing-secondary;
     color: vars.$color-success;
   }
+
+  .kickButton {
+    position: absolute;
+    top: vars.$spacing-secondary;
+    left: vars.$spacing-secondary;
+  }
 }

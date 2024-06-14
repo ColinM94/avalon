@@ -15,8 +15,6 @@ export const Root = () => {
   const { pathname } = useLocation();
   const { user, session, updateUser, updateSession } = useAppStore();
 
-  console.log(session);
-
   // User
   React.useEffect(() => {
     const unsubscribe = getDocumentSnapshot<User>({
@@ -45,9 +43,6 @@ export const Root = () => {
       collection: "sessions",
       where: [[`players.${user.id}`, "!=", null]],
       callback: (sessions) => {
-        console.log(sessions[0]);
-
-        console.log("setting ot null");
         updateSession(sessions?.[0] || null);
       },
     });
@@ -55,35 +50,50 @@ export const Root = () => {
     return () => unsubscribe?.();
   }, [user.id]);
 
-  React.useEffect(() => {
-    // if(!session &&) {
-    //   navigate()
-    // }
+  // React.useEffect(() => {
+  //   // if(!session &&) {
+  //   //   navigate()
+  //   // }
 
-    if (!session) return;
+  //   if (
+  //     !session &&
+  //     pathname !== "/" &&
+  //     pathname !== "/characters" &&
+  //     pathname !== "/join" &&
+  //     pathname !== "/setup"
+  //   ) {
+  //     navigate("/");
+  //     return;
+  //   }
 
-    const step = session.step;
+  //   if (!session) {
+  //     return;
+  //   }
 
-    if (step === "lobby" && !pathname.includes("/lobby/")) {
-      navigate(`/lobby/${session.id}`);
-      return;
-    }
+  //   const step = session.step;
 
-    if (step === "characterReveal" && !pathname.includes("/characterReveal/")) {
-      navigate(`/characterReveal`);
-      return;
-    }
+  //   if (step === "lobby" && !pathname.includes("/lobby")) {
+  //     navigate(`/lobby/${session.id}`);
+  //     return;
+  //   }
 
-    if (step === "ritual" && !pathname.includes("/ritual/")) {
-      navigate("/ritual");
-      return;
-    }
+  //   console.log(step);
 
-    if (step === "quests" && !pathname.includes("/quests/")) {
-      navigate("/quests");
-      return;
-    }
-  }, [session]);
+  //   if (step === "characterReveal" && !pathname.includes("/characterReveal")) {
+  //     navigate(`/characterReveal`);
+  //     return;
+  //   }
+
+  //   if (step === "ritual" && !pathname.includes("/ritual")) {
+  //     navigate("/ritual");
+  //     return;
+  //   }
+
+  //   if (step === "quests" && !pathname.includes("/quests")) {
+  //     navigate("/quests");
+  //     return;
+  //   }
+  // }, [session, pathname]);
 
   // React.useEffect(() => {
   //   if (session.createdBy === player.id) {
