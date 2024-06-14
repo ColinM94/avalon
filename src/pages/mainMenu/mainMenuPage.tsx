@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MainMenuButton } from "./components/mainMenuButton/mainMenuButton";
 
 import styles from "./styles.module.scss";
+import { MainLayout } from "layouts";
 
 export const MainMenuPage = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export const MainMenuPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <MainLayout className={styles.container}>
       <div className={styles.heading}>Avalon</div>
 
       <div className={styles.buttons}>
@@ -65,6 +66,6 @@ export const MainMenuPage = () => {
       <div className={styles.footer}>
         <div className={styles.createdBy}>Created by Colin Maher</div>
       </div>
-    </div>
+    </MainLayout>
   );
 };

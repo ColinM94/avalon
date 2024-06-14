@@ -1,34 +1,40 @@
 import { useNavigate } from "react-router-dom";
 
-import { Button, Header } from "components";
-import { Characters } from "types";
-import { generateLobbyCode, reactReducer } from "utils";
-import { charactersDefault, maxCharacters } from "consts";
+import { Button } from "components";
+import { Characters, GameSession } from "types";
+import { reactReducer } from "utils";
+import {
+  charactersDefault,
+  maxCharacters,
+  playerDefault,
+  sessionDefault,
+} from "consts";
 import { useAppStore, useToastStore } from "stores";
+import { MainLayout } from "layouts";
+import { setDocument } from "services";
 
 import { SetupCharacters } from "./components/setupCharacters/setupCharacters";
 import { SetupOptions } from "./components/setupOptions/setupOptions";
+
 import styles from "./styles.module.scss";
 
 export const SetupPage = () => {
   const navigate = useNavigate();
   const { showToast } = useToastStore();
+  const { user } = useAppStore();
 
-  const { player, session, updatePlayer, updateSession } = useAppStore();
-
-  if (!session.createdBy) {
-    updateSession({
-      id: generateLobbyCode(),
-      createdBy: player.id,
-      name: "",
-      numPlayers: 5,
-      players: [player.id],
-    });
-
-    updatePlayer({
-      sessionId: session.id,
-    });
-  }
+  const [tempSession, updateTempSession] = reactReducer<GameSession>({
+    ...sessionDefault(),
+    players: {
+      [user.id]: {
+        ...playerDefault(),
+        id: user.id,
+        name: user.name,
+        joinedAt: Date.now(),
+      },
+    },
+    createdBy: user.id,
+  });
 
   const [characters, updateCharacters] =
     reactReducer<Characters>(charactersDefault);
@@ -41,11 +47,11 @@ export const SetupPage = () => {
     (character) => character.allegiance === "evil" && character.isActive
   ).length;
 
-  const maxGoodCharacters = maxCharacters[session.numPlayers]?.good;
-  const maxEvilCharacters = maxCharacters[session.numPlayers]?.evil;
+  const maxGoodCharacters = maxCharacters[tempSession.numPlayers]?.good;
+  const maxEvilCharacters = maxCharacters[tempSession.numPlayers]?.evil;
 
   const handleContinue = async () => {
-    if (!player.id) return;
+    if (!user.id) return;
 
     try {
       // if (!session.name) {
@@ -80,54 +86,58 @@ export const SetupPage = () => {
         }
       }
 
-      updatePlayer({
-        ...player,
-        sessionId: session.id,
+      await setDocument({
+        id: tempSession.id,
+        collection: "sessions",
+        data: tempSession,
       });
 
-      navigate(`/lobby/${session.id}`);
+      console.log(tempSession);
+
+      navigate(`/lobby/${tempSession.id}`);
     } catch (error) {
       showToast(String(error));
     }
   };
 
   return (
-    <>
-      <Header heading="Avalon Setup" />
+    <MainLayout
+      showHeader
+      showBackButton
+      heading="Game Setup"
+      className={styles.container}
+    >
+      <SetupOptions
+        session={tempSession}
+        updateSession={updateTempSession}
+        headingClassName={styles.heading}
+      />
 
-      <div className={styles.container}>
-        <SetupOptions
-          session={session}
-          updateSession={updateSession}
-          headingClassName={styles.heading}
-        />
+      <SetupCharacters
+        heading="Good Characters"
+        allegiance="good"
+        characters={characters}
+        maxActiveCharacters={maxGoodCharacters}
+        updateCharacters={updateCharacters}
+        numActiveCharacters={numActiveGoodCharacters}
+        headingClassName={styles.heading}
+      />
 
-        <SetupCharacters
-          heading="Good Characters"
-          allegiance="good"
-          characters={characters}
-          maxActiveCharacters={maxGoodCharacters}
-          updateCharacters={updateCharacters}
-          numActiveCharacters={numActiveGoodCharacters}
-          headingClassName={styles.heading}
-        />
+      <SetupCharacters
+        heading="Evil Characters"
+        allegiance="evil"
+        characters={characters}
+        maxActiveCharacters={maxEvilCharacters}
+        updateCharacters={updateCharacters}
+        numActiveCharacters={numActiveEvilCharacters}
+        headingClassName={styles.heading}
+      />
 
-        <SetupCharacters
-          heading="Evil Characters"
-          allegiance="evil"
-          characters={characters}
-          maxActiveCharacters={maxEvilCharacters}
-          updateCharacters={updateCharacters}
-          numActiveCharacters={numActiveEvilCharacters}
-          headingClassName={styles.heading}
-        />
-
-        <Button
-          label="Continue"
-          onClick={handleContinue}
-          className={styles.continueButton}
-        />
-      </div>
-    </>
+      <Button
+        label="Continue"
+        onClick={handleContinue}
+        className={styles.continueButton}
+      />
+    </MainLayout>
   );
 };

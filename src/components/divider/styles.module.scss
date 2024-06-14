@@ -20,6 +20,7 @@
   margin-right: vars.$spacing-primary;
   width: 1px;
   height: 100%;
+  max-width: 90vh;
 }
 
 .horizontal {
@@ -29,4 +30,5 @@
   margin-bottom: vars.$spacing-primary;
   height: 1px;
   width: 100%;
+  max-width: 90vw;
 }

@@ -1,5 +1,6 @@
 import { charactersDefault } from "consts";
 import { CharacterCard, Header } from "components";
+import { MainLayout } from "layouts";
 
 import styles from "./styles.module.scss";
 
@@ -9,24 +10,25 @@ export const CharactersPage = () => {
   // const handleCharacterClick = (characterId: string) => {};
 
   return (
-    <>
-      <Header heading="Characters" />
-
-      <div className={styles.container}>
-        {characters.map((character) => (
-          <CharacterCard
-            character={character}
-            // onClick={handleCharacterClick}
-            alwaysActive
-            showName
-            orientation="landscape"
-            showDescription
-            disableAnimation
-            key={character.id}
-            className={styles.character}
-          />
-        ))}
-      </div>
-    </>
+    <MainLayout
+      showHeader
+      showBackButton
+      heading="Characters"
+      className={styles.container}
+    >
+      {characters.map((character) => (
+        <CharacterCard
+          character={character}
+          // onClick={handleCharacterClick}
+          alwaysActive
+          showName
+          orientation="landscape"
+          showDescription
+          disableAnimation
+          key={character.id}
+          className={styles.character}
+        />
+      ))}
+    </MainLayout>
   );
 };

@@ -7,9 +7,13 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const LobbyPlayers = (props: Props) => {
-  const { session, players, playerId, className } = props;
+  const { session, playerId, className } = props;
 
   const [showNameEditor, setShowNameEditor] = React.useState(false);
+
+  const players = Object.values(session.players).sort(
+    (a, b) => a.joinedAt - b.joinedAt
+  );
 
   return (
     <>

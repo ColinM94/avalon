@@ -6,7 +6,7 @@
 .container {
   gap: vars.$spacing-primary;
   flex: 1;
-  padding-bottom: 25%;
+  padding-bottom: 25% !important;
 
   .section {
     flex: 1;

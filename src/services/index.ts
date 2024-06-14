@@ -1,3 +1,4 @@
+// Firestore
 export * from "./firestore/addDocument";
 export * from "./firestore/countDocuments";
 export * from "./firestore/deleteDocument";
@@ -9,3 +10,9 @@ export * from "./firestore/getDocumentsSnapshot";
 export * from "./firestore/getDocument";
 export * from "./firestore/updateDocument";
 export * from "./firestore/setDocument";
+
+// Session
+export * from "./session/updateMyPlayer";
+export * from "./session/updateSession";
+export * from "./session/leaveSession";
+export * from "./session/joinSession";

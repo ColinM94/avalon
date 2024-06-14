@@ -4,7 +4,7 @@ export * from "./characterCard/characterCard";
 export * from "./characterRevealer/characterRevealer";
 export * from "./divider/divider";
 export * from "./heading/heading";
-export * from "./header/header";
+export * from "../layouts/mainLayout/components/header/header";
 export * from "./inputText/inputText";
 export * from "./inputNumber/inputNumber";
 export * from "./loadingOverlay/loadingOverlay";

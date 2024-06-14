@@ -1,7 +1,6 @@
 export type Player = {
   id: string;
   name: string;
-  sessionId: string;
   isHost: boolean;
   isReady: boolean;
   joinedAt: number;
@@ -11,7 +10,10 @@ export type Player = {
 export type GameSession = {
   id: string;
   name: string;
-  players: string[];
+  // players: string[];
+  players: Record<string, Player>;
+  step: "lobby" | "characterReveal" | "ritual" | "quests";
   numPlayers: number;
+  characters: string[];
   createdBy: string;
 };

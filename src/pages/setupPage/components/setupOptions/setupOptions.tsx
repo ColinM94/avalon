@@ -9,7 +9,7 @@ export const SetupOptions = (props: Props) => {
   const { numPlayers } = session;
 
   return (
-    <>
+    <div className={styles.container}>
       {/* <div className={headingClassName}>Name</div>
 
       <InputText
@@ -33,6 +33,6 @@ export const SetupOptions = (props: Props) => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };

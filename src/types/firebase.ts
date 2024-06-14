@@ -7,4 +7,4 @@ export type FirestoreWhereGeneric<T> =
 
 export type FirestoreOrderByGeneric<T> = [KeyOf<T>, OrderByDirection];
 
-export type FirestoreCollection = "sessions" | "players";
+export type FirestoreCollection = "sessions" | "players" | "users";

@@ -40,7 +40,7 @@ export const SetupCharacters = (props: Props) => {
   );
 
   return (
-    <>
+    <div className={styles.container}>
       <div className={headingClassName}>
         {heading} {numActiveCharacters}/{maxActiveCharacters}
       </div>
@@ -57,6 +57,6 @@ export const SetupCharacters = (props: Props) => {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };

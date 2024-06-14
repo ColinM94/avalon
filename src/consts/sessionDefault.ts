@@ -1,11 +1,13 @@
 import { GameSession } from "types";
+import { generateLobbyCode } from "utils";
 
 export const sessionDefault = (): GameSession => {
   return {
-    id: "",
+    id: generateLobbyCode(),
     name: "",
     players: {},
-    numPlayers: 0,
+    numPlayers: 5,
     createdBy: "",
+    step: "lobby",
   };
 };

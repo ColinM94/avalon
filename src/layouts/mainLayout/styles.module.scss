@@ -1,7 +1,19 @@
 .container {
+  flex: 1;
   align-items: center;
-  align-self: center;
-  max-width: 800px;
-  height: 100%;
   width: 100%;
+  max-width: 600px;
+  align-self: center;
+
+  .content {
+    gap: vars.$spacing-primary;
+    padding: vars.$spacing-primary;
+  }
+
+  .leaveButton {
+    cursor: pointer;
+    position: absolute;
+    top: vars.$spacing-primary;
+    right: vars.$spacing-primary;
+  }
 }

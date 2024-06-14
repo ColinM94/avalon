@@ -5,10 +5,9 @@
 
   .heading {
     margin-bottom: vars.$spacing-secondary;
-    margin-top: vars.$spacing-primary;
   }
 
   .continueButton {
-    margin-top: calc(vars.$spacing-primary * 2);
+    margin-top: vars.$spacing-primary;
   }
 }

@@ -1,7 +1,5 @@
 .container {
   flex-direction: row;
-  gap: vars.$spacing-primary;
-  padding: vars.$spacing-primary;
   flex-wrap: wrap;
 
   .character {

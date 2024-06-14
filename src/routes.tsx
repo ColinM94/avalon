@@ -13,9 +13,10 @@ import {
   CharactersPage,
   JoinPage,
   RitualPage,
+  CharacterRevealPage,
 } from "pages";
 
-import { Root } from "./root";
+import { Root } from "./main";
 
 const routes = (
   <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
@@ -26,6 +27,7 @@ const routes = (
     <Route path="characters" element={<CharactersPage />} />
     <Route path="lobby/:code" element={<LobbyPage />} />
     <Route path="ritual" element={<RitualPage />} />
+    <Route path="characterReveal" element={<CharacterRevealPage />} />
   </Route>
 );
 

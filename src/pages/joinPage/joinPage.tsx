@@ -1,11 +1,12 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Divider, Header, InputText } from "components";
+import { Button, Divider, InputText } from "components";
 import { useToastStore } from "stores";
 
 import { JoinScanner } from "./components/joinScanner/joinScanner";
 import styles from "./styles.module.scss";
+import { MainLayout } from "layouts";
 
 export const JoinPage = () => {
   const navigate = useNavigate();
@@ -28,22 +29,24 @@ export const JoinPage = () => {
   };
 
   return (
-    <>
-      <Header heading="Join Game" />
+    <MainLayout
+      showHeader
+      showBackButton
+      heading="Join Game"
+      className={styles.container}
+    >
+      <div className={styles.section}>
+        <div className={styles.instruction}>Scan QR Code</div>
 
-      <div className={styles.container}>
-        <div className={styles.section}>
-          <div className={styles.instruction}>Scan QR Code</div>
+        <JoinScanner
+          showScanner={showScanner}
+          setShowScanner={setShowScanner}
+          className={styles.scanner}
+        />
 
-          <JoinScanner
-            showScanner={showScanner}
-            setShowScanner={setShowScanner}
-            className={styles.scanner}
-          />
+        <Button label="Scan" onClick={openCamera} />
 
-          <Button label="Scan" onClick={openCamera} />
-
-          {/*
+        {/*
           <input
             type="file"
             accept="image/*"
@@ -52,16 +55,15 @@ export const JoinPage = () => {
             ref={cameraInputRef}
             style={{ display: "none" }}
           /> */}
-        </div>
-
-        <Divider label="or" className={styles.divider} />
-
-        <div className={styles.section}>
-          <div className={styles.instruction}>Enter the Game Code</div>
-          <InputText value={code} setValue={setCode} placeholder="Code" />
-          <Button label="Join" onClick={() => handleJoin()} />
-        </div>
       </div>
-    </>
+
+      <Divider label="or" className={styles.divider} />
+
+      <div className={styles.section}>
+        <div className={styles.instruction}>Enter the Game Code</div>
+        <InputText value={code} setValue={setCode} placeholder="Code" />
+        <Button label="Join" onClick={() => handleJoin()} />
+      </div>
+    </MainLayout>
   );
 };
