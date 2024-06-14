@@ -49,9 +49,16 @@ export const LobbyPage = () => {
     );
 
     if (players.every((player) => player.isReady)) {
+      const tempPlayers = session.players;
+
+      players.forEach((player, index) => {
+        tempPlayers[player.id].characterId = shuffledCharacters[index];
+      });
+
       updateSession({
         step: "characterReveal",
         characters: shuffledCharacters,
+        players: tempPlayers,
       });
     }
   }, []);

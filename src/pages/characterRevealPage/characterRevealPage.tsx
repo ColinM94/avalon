@@ -19,9 +19,6 @@ export const CharacterRevealPage = () => {
   const [showCharacter, setShowCharacter] = React.useState(false);
   const [hasViewedCharacter, setHasViewedCharacter] = React.useState(false);
 
-  const myPlayer = session.players[user.id];
-  const myCharacterId = session.players?.[user.id]?.characterId || undefined;
-
   return (
     <MainLayout showLeaveButton className={styles.container}>
       <CharacterRevealer
@@ -33,6 +30,12 @@ export const CharacterRevealPage = () => {
 
       <Button
         label="View Character"
+        onClick={() => setShowCharacter(true)}
+        className={styles.readyButton}
+      />
+
+      <Button
+        label="Ready"
         onClick={() => setShowCharacter(true)}
         className={styles.readyButton}
       />
