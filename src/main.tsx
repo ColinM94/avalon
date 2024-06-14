@@ -13,8 +13,6 @@ import { useAppStore } from "stores";
 export const Root = () => {
   const { user, session, updateUser, updateSession } = useAppStore();
 
-  console.log(session);
-
   const { pathname } = useLocation();
   const navigate = useNavigate();
 

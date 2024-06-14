@@ -7,6 +7,7 @@ import { PlayRitual } from "./components/playRitual/ritualPage";
 import { PlayPlayers } from "./components/playPlayers/playPlayers";
 
 import styles from "./styles.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const PlayPage = () => {
   const { session } = useAppStore();
@@ -28,7 +29,7 @@ export const PlayPage = () => {
   return (
     <div className={styles.container}>
       <div onClick={handleLeave} className={styles.leaveButton}>
-        X
+        <FontAwesomeIcon icon="x" className={styles.leaveButtonIcon} />
       </div>
 
       <div className={styles.content}>

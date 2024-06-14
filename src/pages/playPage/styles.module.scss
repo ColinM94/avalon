@@ -7,10 +7,13 @@
   .leaveButton {
     cursor: pointer;
     position: absolute;
-    top: 0;
-    right: 0;
-    padding: vars.$spacing-primary;
-    z-index: 1;
+    top: vars.$spacing-primary;
+    right: vars.$spacing-primary;
+    z-index: 9;
+
+    .leaveButtonIcon {
+      font-size: vars.$icon-size-large;
+    }
   }
 
   .content {
