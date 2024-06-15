@@ -2,14 +2,14 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { QRCode } from "react-qrcode-logo";
 
-import { classes, shuffleArray } from "utils";
+import { classes } from "utils";
 import { useToastStore } from "stores";
 import { Button } from "components";
-import { updateMyPlayer, updateSession } from "services";
+import { updatePlayer } from "services";
+import { baseUrl } from "consts";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
-import { baseUrl } from "consts";
 
 export const PlayJoin = (props: Props) => {
   const { session, players, isHost, user, className } = props;
@@ -17,8 +17,6 @@ export const PlayJoin = (props: Props) => {
   const { showToast } = useToastStore();
 
   const url = `${baseUrl}/join/${session.id}`;
-
-  console.log(baseUrl);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(url);
@@ -31,14 +29,20 @@ export const PlayJoin = (props: Props) => {
       players.length === session.numPlayers &&
       players.every((player) => player.isReady)
     ) {
-      updateSession(session.id, {
-        step: "characterReveal",
-      });
+      handleAllReady();
     }
   }, [session.players]);
 
+  const handleAllReady = async () => {
+    for (let i = 0; i < players.length; i++) {
+      await updatePlayer(user.id, session, {
+        characterId: session.characters[i],
+      });
+    }
+  };
+
   const handleReady = () => {
-    updateMyPlayer({
+    updatePlayer(user.id, session, {
       isReady: true,
     });
   };
