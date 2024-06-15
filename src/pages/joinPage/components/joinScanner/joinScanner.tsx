@@ -15,14 +15,14 @@ export const JoinScanner = (props: Props) => {
   const { showToast } = useToastStore();
 
   const handleScan = (value: string) => {
-    const sessionCode = value.substring(value.length - 4);
+    const sessionId = value.substring(value.length - 4);
 
-    if (!/^\d{4}$/.test(sessionCode)) {
-      showToast("Error scanning QR Code");
+    if (!/^\d{4}$/.test(sessionId)) {
+      showToast("Error scanning QR Code", "error");
       return;
     }
 
-    navigate(`/lobby/${sessionCode}`);
+    navigate(`/join/${sessionId}`);
   };
 
   if (!showScanner) return null;

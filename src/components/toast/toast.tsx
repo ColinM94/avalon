@@ -30,12 +30,18 @@ export const Toast = ({ className }: Props) => {
       className={classes(
         styles.container,
         className,
-        fadeOut && styles.fadeOut,
-        toast.type === "error" && styles.error,
-        toast.type === "info" && styles.info
+        fadeOut && styles.fadeOut
       )}
     >
-      <div className={styles.toast}>{toast?.text}</div>
+      <div
+        className={classes(
+          styles.toast,
+          toast.type === "error" && styles.error,
+          toast.type === "info" && styles.info
+        )}
+      >
+        {toast?.text}
+      </div>
     </div>
   );
 };

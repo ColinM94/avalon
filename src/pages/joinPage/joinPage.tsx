@@ -1,24 +1,30 @@
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Divider, InputText } from "components";
 import { useToastStore } from "stores";
-
-import { JoinScanner } from "./components/joinScanner/joinScanner";
-import styles from "./styles.module.scss";
 import { MainLayout } from "layouts";
 import { joinSession } from "services";
 
+import { JoinScanner } from "./components/joinScanner/joinScanner";
+import styles from "./styles.module.scss";
+
 export const JoinPage = () => {
-  const navigate = useNavigate();
+  const { sessionId } = useParams();
   const { showToast } = useToastStore();
 
   const [code, setCode] = React.useState("");
   const [showScanner, setShowScanner] = React.useState(false);
 
+  if (sessionId) {
+    joinSession(sessionId);
+
+    return "...joining";
+  }
+
   const handleJoin = () => {
     if (!code) {
-      showToast("Please enter a code!");
+      showToast("Please enter a code!", "error");
       return;
     }
 
@@ -62,12 +68,14 @@ export const JoinPage = () => {
 
       <div className={styles.section}>
         <div className={styles.instruction}>Enter the Game Code</div>
+
         <InputText
           type="number"
           value={code}
           setValue={setCode}
           placeholder="Code"
         />
+
         <Button label="Join" onClick={() => handleJoin()} />
       </div>
     </MainLayout>

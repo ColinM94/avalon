@@ -45,6 +45,6 @@ export const joinSession = async (sessionId: string) => {
       });
     }
   } catch (error) {
-    showToast(String(error));
+    showToast(String(error), "error");
   }
 };

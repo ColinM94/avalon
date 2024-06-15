@@ -21,7 +21,7 @@ const routes = (
     <Route path="*" element={<InvalidPage />} />
     <Route index element={<MainMenuPage />} />
     <Route path="setup" element={<SetupPage />} />
-    <Route path="join" element={<JoinPage />} />
+    <Route path="join/:sessionId?" element={<JoinPage />} />
     <Route path="characters" element={<CharactersPage />} />
     <Route path="play" element={<PlayPage />} />
   </Route>

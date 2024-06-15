@@ -1,14 +1,16 @@
 import { updateDocument } from "services";
-import { useAppStore, useToastStore } from "stores";
+import { useToastStore } from "stores";
 import { GameSession } from "types";
 
-export const updateSession = async (update: Partial<GameSession>) => {
-  const { session } = useAppStore.getState();
+export const updateSession = async (
+  sessionId: string,
+  update: Partial<GameSession>
+) => {
   const { showToast } = useToastStore.getState();
 
   try {
     await updateDocument<GameSession>({
-      id: session.id,
+      id: sessionId,
       collection: "sessions",
       data: update,
     });

@@ -17,6 +17,6 @@ export const kickPlayer = async (userId: string) => {
       });
     }
   } catch (error) {
-    showToast(String(error));
+    showToast(String(error), "error");
   }
 };

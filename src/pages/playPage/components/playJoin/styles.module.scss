@@ -1,15 +1,32 @@
 .container {
   align-items: center;
   justify-content: center;
-  gap: vars.$spacing-secondary;
+  gap: vars.$spacing-primary;
   flex: 1;
 
   .joinCode {
     justify-content: center;
     align-items: center;
     font-size: vars.$font-size-display;
+    margin-top: auto;
   }
 
   .copyToClipboard {
+    flex-direction: row;
+    margin-top: vars.$spacing-primary;
+    gap: vars.$spacing-secondary;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: auto;
+
+    .copyIcon {
+      font-size: vars.$icon-size-large;
+      margin-bottom: 4px;
+    }
+  }
+
+  .readyButton {
+    align-self: center;
+    max-width: 200px;
   }
 }

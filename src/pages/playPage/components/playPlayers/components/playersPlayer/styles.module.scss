@@ -12,6 +12,37 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
   align-items: center;
   font-size: vars.$font-size-body2;
   text-align: center;
+  cursor: pointer;
+
+  .editIcon {
+    font-size: vars.$icon-size-small;
+    position: absolute;
+    top: calc(vars.$spacing-secondary * -1);
+    right: calc(vars.$spacing-secondary * -1);
+    background-color: vars.$color-surface2;
+    border-radius: vars.$roundness;
+    padding: vars.$spacing-tertiary;
+  }
+
+  .waitingIcon {
+    font-size: vars.$icon-size-large;
+    color: vars.$color-text-secondary;
+  }
+
+  .hostIcon {
+    position: absolute;
+    top: 2px;
+    color: yellow;
+    font-size: vars.$icon-size-small;
+  }
+
+  .readyIcon {
+    position: absolute;
+    right: vars.$spacing-tertiary;
+    bottom: vars.$spacing-tertiary;
+    color: vars.$color-success;
+    font-size: vars.$icon-size-medium;
+  }
 }
 
 .connected {
@@ -22,4 +53,8 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
 
 .host {
   // border: 5px solid gold !important;
+}
+
+.user {
+  border: 1px solid vars.$color-primary;
 }

@@ -1,11 +1,14 @@
 .container {
-  align-items: center;
+  gap: vars.$spacing-primary;
+  flex: 1;
   justify-content: center;
-  gap: vars.$spacing-secondary;
 
-  .joinCode {
-    justify-content: center;
-    align-items: center;
-    font-size: vars.$font-size-display;
+  .description {
+    text-align: center;
+  }
+
+  .revealButton {
+    align-self: center;
+    max-width: 200px;
   }
 }

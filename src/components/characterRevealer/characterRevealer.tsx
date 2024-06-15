@@ -1,4 +1,4 @@
-import { CharacterCard, Modal } from "components";
+import { Button, CharacterCard, Modal } from "components";
 import { charactersDefault } from "consts";
 
 import { Props } from "./types";

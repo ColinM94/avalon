@@ -1,20 +1,20 @@
 import * as React from "react";
 
 import { Button, InputText } from "components";
-import { updateMyPlayer } from "services";
+import { updatePlayer } from "services";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const NameEditor = (props: Props) => {
-  const { show, setShow, nameDefault } = props;
+  const { show, setShow, user, session } = props;
 
-  const [name, setName] = React.useState(nameDefault);
+  const [name, setName] = React.useState(user.name);
 
   const handleSave = async () => {
     setShow(false);
 
-    updateMyPlayer({
+    updatePlayer(user.id, session, {
       name,
     });
   };
@@ -31,6 +31,7 @@ export const NameEditor = (props: Props) => {
         <InputText
           value={name}
           setValue={setName}
+          type="text"
           inputClassName={styles.input}
         />
 

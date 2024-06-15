@@ -13,6 +13,8 @@ import { useAppStore } from "stores";
 export const Root = () => {
   const { user, session, updateUser, updateSession } = useAppStore();
 
+  console.log(session);
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -60,7 +62,7 @@ export const Root = () => {
     if (!session?.id && pathname === "/play") {
       navigate("/");
     }
-  }, [session?.id]);
+  }, [session]);
 
   return (
     <>

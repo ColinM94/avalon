@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { useAppStore } from "stores";
 import { leaveSession } from "services";
 
@@ -7,10 +9,9 @@ import { PlayRitual } from "./components/playRitual/ritualPage";
 import { PlayPlayers } from "./components/playPlayers/playPlayers";
 
 import styles from "./styles.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const PlayPage = () => {
-  const { session } = useAppStore();
+  const { session, user } = useAppStore();
 
   if (!session) return "Session not found!";
 
@@ -23,8 +24,10 @@ export const PlayPage = () => {
       "Are you sure you want to leave? This will end the game for everyone!"
     );
 
-    if (confirmed) await leaveSession();
+    if (confirmed) await leaveSession(session);
   };
+
+  const isHost = user.id === session.createdBy;
 
   return (
     <div className={styles.container}>
@@ -33,7 +36,14 @@ export const PlayPage = () => {
       </div>
 
       <div className={styles.content}>
-        {session.step === "lobby" && <PlayJoin session={session} />}
+        {session.step === "lobby" && (
+          <PlayJoin
+            session={session}
+            players={players}
+            isHost={isHost}
+            user={user}
+          />
+        )}
         {session.step === "characterReveal" && <PlayReveal session={session} />}
         {session.step === "ritual" && <PlayRitual session={session} />}
       </div>
@@ -41,6 +51,7 @@ export const PlayPage = () => {
       <PlayPlayers
         session={session}
         players={players}
+        isHost={isHost}
         className={styles.players}
       />
     </div>

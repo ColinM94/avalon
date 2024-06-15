@@ -2,9 +2,10 @@ import { deleteField } from "firebase/firestore";
 
 import { useAppStore, useToastStore } from "stores";
 import { deleteDocument, updateDocument } from "services";
+import { GameSession } from "types";
 
-export const leaveSession = async () => {
-  const { user, session } = useAppStore.getState();
+export const leaveSession = async (session: GameSession) => {
+  const { user } = useAppStore.getState();
   const { showToast } = useToastStore.getState();
 
   try {

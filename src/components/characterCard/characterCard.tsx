@@ -2,10 +2,10 @@ import * as React from "react";
 
 import { classes } from "utils";
 import { characterNames } from "consts";
+import { useToastStore } from "stores";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
-import { useToastStore } from "stores";
 
 export const CharacterCard = (props: Props) => {
   const {
@@ -47,7 +47,8 @@ export const CharacterCard = (props: Props) => {
     showToast(
       `${characterNames[character.id]} is a character for ${
         character.allegiance
-      }`
+      }`,
+      "info"
     );
   };
 

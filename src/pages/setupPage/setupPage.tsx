@@ -1,8 +1,6 @@
-import { useNavigate } from "react-router-dom";
-
 import { Button } from "components";
 import { Characters, GameSession } from "types";
-import { reactReducer } from "utils";
+import { reactReducer, shuffleArray } from "utils";
 import {
   charactersDefault,
   maxCharacters,
@@ -19,7 +17,6 @@ import { SetupOptions } from "./components/setupOptions/setupOptions";
 import styles from "./styles.module.scss";
 
 export const SetupPage = () => {
-  const navigate = useNavigate();
   const { showToast } = useToastStore();
   const { user } = useAppStore();
 
@@ -87,15 +84,22 @@ export const SetupPage = () => {
         }
       }
 
+      const shuffledCharacters = shuffleArray(
+        Object.values(characters)
+          .filter((character) => character.isActive)
+          .map((character) => character.id)
+      );
+
       await setDocument({
         id: tempSession.id,
         collection: "sessions",
-        data: tempSession,
+        data: {
+          ...tempSession,
+          characters: shuffledCharacters,
+        },
       });
-
-      navigate(`/lobby/${tempSession.id}`);
     } catch (error) {
-      showToast(String(error));
+      showToast(String(error), "error");
     }
   };
 
