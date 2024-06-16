@@ -21,21 +21,13 @@ $goodColor: #43839a;
     justify-content: center;
     align-items: center;
     border-radius: vars.$roundness;
-    background-color: vars.$color-primary;
+    background-color: vars.$color-surface2;
   }
 
   .coverRevealed {
     background-color: unset;
     align-items: flex-start;
     justify-content: flex-start;
-
-    .coverText {
-      pointer-events: none;
-      width: 40%;
-      padding: vars.$spacing-primary;
-      text-align: center;
-      white-space: nowrap;
-    }
   }
 
   .infoButton {

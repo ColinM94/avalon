@@ -1,7 +1,10 @@
 import * as React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Button, Header } from "components";
+import { Button } from "components";
 import { classes } from "utils";
+import { GameSession } from "types";
+import { updateDocument, updatePlayer } from "services";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -16,12 +19,48 @@ const instructions = [
   "7. Everyone, open your eyes.",
 ];
 
-export const GameRitual = ({ session }: Props) => {
+export const GameRitual = (props: Props) => {
+  const { session, isHost, user, players } = props;
+
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
   const currentInstruction = React.useRef(-1);
 
   const [audio, setAudio] = React.useState();
-  const [isFinished, setIsFinished] = React.useState(false);
+  const [isPaused, setIsPaused] = React.useState(true);
+
+  const handleRestart = () => {
+    setIsPaused(true);
+    setAudio(undefined);
+    currentInstruction.current = -1;
+  };
+
+  const handlePlay = () => {
+    if (!audioPlayer.current) return;
+
+    if (!audio) {
+      handleNextStep();
+    }
+
+    setIsPaused(false);
+    audioPlayer.current.play();
+  };
+
+  const handlePause = () => {
+    if (!audioPlayer.current) return;
+
+    setIsPaused(true);
+    audioPlayer.current.pause();
+  };
+
+  const setIsFinished = (isFinished: boolean) => {
+    updateDocument<GameSession>({
+      id: session.id,
+      collection: "sessions",
+      data: {
+        isRitualFinished: isFinished,
+      },
+    });
+  };
 
   const handleNextStep = async () => {
     setIsFinished(false);
@@ -30,6 +69,7 @@ export const GameRitual = ({ session }: Props) => {
     if (currentInstruction.current === instructions.length) {
       setAudio(undefined);
       setIsFinished(true);
+      setIsPaused(true);
       currentInstruction.current = -1;
       return;
     }
@@ -51,48 +91,100 @@ export const GameRitual = ({ session }: Props) => {
     audioPlayer.current.play();
   }, [audio]);
 
+  const handleStartGame = () => {
+    updateDocument<GameSession>({
+      id: session.id,
+      collection: "sessions",
+      data: {
+        step: "quests",
+      },
+    });
+  };
+
+  const handleReady = () => {
+    updatePlayer(user.id, session, {
+      isReadyRitual: true,
+    });
+  };
+
+  const isAllReady = players.every((player) => player.isReadyRitual);
+
+  const handleAllReady = async () => {
+    await updateDocument<GameSession>({
+      id: session.id,
+      collection: "sessions",
+      data: {
+        step: "quests",
+      },
+    });
+  };
+
+  React.useEffect(() => {
+    if (isHost && isAllReady) handleAllReady();
+  }, [isAllReady]);
+
   return (
-    <>
-      <div className={styles.container}>
-        <audio
-          controls
-          ref={audioPlayer}
-          onEnded={handleNextStep}
-          className={styles.audioPlayer}
-        >
-          <source src={audio} type="audio/mpeg" />
-        </audio>
+    <div className={styles.container}>
+      {isHost && (
+        <>
+          <audio
+            controls
+            ref={audioPlayer}
+            onEnded={handleNextStep}
+            className={styles.audioPlayer}
+          >
+            <source src={audio} type="audio/mpeg" />
+          </audio>
 
-        {
-          <div className={styles.instructions}>
-            {instructions.map((instruction, index) => (
-              <div
-                key={index}
-                className={classes(
-                  styles.instruction,
-                  currentInstruction.current === index &&
-                    styles.activeInstruction
-                )}
-              >
-                {instruction}
+          {
+            <div className={styles.instructions}>
+              {instructions.map((instruction, index) => (
+                <div
+                  key={index}
+                  className={classes(
+                    styles.instruction,
+                    currentInstruction.current === index &&
+                      styles.activeInstruction
+                  )}
+                >
+                  {instruction}
+                </div>
+              ))}
+
+              <div className={styles.buttons}>
+                <div
+                  onClick={isPaused ? handlePlay : handlePause}
+                  className={styles.playButton}
+                >
+                  <FontAwesomeIcon
+                    icon={isPaused ? "play" : "pause"}
+                    className={styles.playButtonIcon}
+                  />
+                </div>
+
+                <div
+                  onClick={() => handleRestart()}
+                  className={styles.playButton}
+                >
+                  <FontAwesomeIcon
+                    icon="arrow-rotate-backward"
+                    className={styles.playButtonIcon}
+                  />
+                </div>
               </div>
-            ))}
+            </div>
+          }
+        </>
+      )}
 
-            <Button
-              label={isFinished ? "Restart Ritual" : "Start Ritual"}
-              onClick={handleNextStep}
-              className={styles.startButton}
-            />
-          </div>
+      <Button
+        label="Ready"
+        onClick={handleReady}
+        disabled={
+          !session.isRitualFinished || session.players[user.id].isReadyRitual
         }
-
-        <Button
-          label="Start Game"
-          onClick={handleNextStep}
-          disabled={!isFinished}
-          className={styles.startButton}
-        />
-      </div>
-    </>
+        className={styles.readyButton}
+      />
+    </div>
   );
 };

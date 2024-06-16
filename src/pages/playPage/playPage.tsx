@@ -38,7 +38,8 @@ export const PlayPage = () => {
     }
   }, [session]);
 
-  if (!session) return <div className={styles.message}>...loading</div>;
+  if (!session || !user || !session.players[user.id])
+    return <div className={styles.message}>...loading</div>;
 
   const players = Object.values(session?.players).sort(
     (a, b) => a.joinedAt - b.joinedAt

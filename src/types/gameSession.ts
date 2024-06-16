@@ -2,7 +2,9 @@ export type Player = {
   id: string;
   name: string;
   isHost: boolean;
-  isReady: boolean;
+  isReadyLobby: boolean;
+  isReadyCharacterReveal: boolean;
+  isReadyRitual: boolean;
   joinedAt: number;
   characterId: string;
 };
@@ -13,6 +15,7 @@ export type GameSession = {
   // players: string[];
   players: Record<string, Player>;
   step: "lobby" | "characterReveal" | "ritual" | "quests";
+  isRitualFinished: boolean;
   numPlayers: number;
   characters: string[];
   createdBy: string;

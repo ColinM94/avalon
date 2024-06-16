@@ -9,6 +9,7 @@ import { updateDocument } from "services";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
+import { isRegExp } from "util/types";
 
 export const PlayersPlayer = (props: Props) => {
   const { session, player, connected, isHost, className } = props;
@@ -21,6 +22,8 @@ export const PlayersPlayer = (props: Props) => {
   const showKick = isHost && player.id !== user.id && connected;
 
   const handleKick = async () => {
+    if (session.step !== "lobby") return;
+
     const shouldKick = confirm(`Are you sure you want to kick ${player.name}`);
 
     if (!shouldKick) return;
@@ -38,6 +41,11 @@ export const PlayersPlayer = (props: Props) => {
     if (showKick) handleKick();
     else setShowNameEditor(true);
   };
+
+  const isReady =
+    (session.step === "lobby" && player.isReadyLobby) ||
+    (session.step === "characterReveal" && player.isReadyCharacterReveal) ||
+    (session.step === "ritual" && player.isReadyRitual);
 
   return (
     <>
@@ -64,11 +72,14 @@ export const PlayersPlayer = (props: Props) => {
         {player.isHost && styles.hostIcon && (
           <FontAwesomeIcon icon="crown" className={styles.hostIcon} />
         )}
-        {isUser && (
+
+        {isUser && session.step === "lobby" && (
           <FontAwesomeIcon icon="pencil" className={styles.editIcon} />
         )}
 
-        {showKick && <FontAwesomeIcon icon="x" className={styles.editIcon} />}
+        {showKick && session.step === "lobby" && (
+          <FontAwesomeIcon icon="x" className={styles.editIcon} />
+        )}
 
         {connected ? (
           player.name
@@ -76,7 +87,7 @@ export const PlayersPlayer = (props: Props) => {
           <FontAwesomeIcon icon="hourglass" className={styles.waitingIcon} />
         )}
 
-        {player.isReady && (
+        {isReady && (
           <FontAwesomeIcon icon="check" className={styles.readyIcon} />
         )}
 

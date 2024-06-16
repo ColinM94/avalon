@@ -1,5 +1,4 @@
 import { classes } from "utils";
-import { leaveSession } from "services";
 
 import { Header } from "./components/header/header";
 

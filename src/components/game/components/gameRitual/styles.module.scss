@@ -1,26 +1,60 @@
 .container {
-  padding: vars.$spacing-primary;
   flex: 1;
-}
+  gap: vars.$spacing-primary;
 
-.audioPlayer {
-  display: none;
-}
-
-.instructions {
-  margin-top: vars.$spacing-primary;
-  padding: vars.$spacing-primary;
-  gap: vars.$spacing-secondary;
-  flex: 1;
-
-  .instruction {
+  .audioPlayer {
+    display: none;
   }
 
-  .activeInstruction {
-    color: vars.$color-primary;
-  }
-}
+  .instructions {
+    margin-top: vars.$spacing-primary;
+    padding: vars.$spacing-primary;
+    gap: vars.$spacing-secondary;
+    flex: 1;
+    justify-content: center;
 
-.startButton {
-  margin-top: vars.$spacing-primary;
+    .instruction {
+    }
+
+    .activeInstruction {
+      color: vars.$color-primary;
+    }
+
+    .buttons {
+      flex-direction: row;
+      gap: vars.$spacing-primary;
+      justify-content: center;
+
+      .playButton {
+        background-color: vars.$color-surface;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        height: 75px;
+        align-self: center;
+        justify-content: center;
+        align-items: center;
+        margin-top: vars.$spacing-primary;
+        cursor: pointer;
+
+        .playButtonIcon {
+          font-size: vars.$icon-size-extraLarge;
+        }
+      }
+    }
+
+    .startButton {
+      margin-top: vars.$spacing-primary;
+    }
+
+    .startGameButton {
+      background-color: vars.$color-success;
+    }
+  }
+
+  .readyButton {
+    align-self: center;
+    max-width: 200px;
+    margin-top: auto;
+    background-color: vars.$color-success;
+  }
 }

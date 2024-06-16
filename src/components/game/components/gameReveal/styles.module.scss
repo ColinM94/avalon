@@ -2,13 +2,31 @@
   gap: vars.$spacing-primary;
   flex: 1;
   justify-content: center;
+  align-items: center;
 
   .description {
     text-align: center;
+    font-size: vars.$font-size-h3;
+    margin-top: auto;
   }
 
   .revealButton {
     align-self: center;
     max-width: 200px;
+  }
+
+  .card {
+    pointer-events: auto;
+    width: 100%;
+    max-height: 400px;
+    max-width: 600px;
+    aspect-ratio: 1.4;
+  }
+
+  .readyButton {
+    align-self: center;
+    max-width: 200px;
+    margin-top: auto;
+    background-color: vars.$color-success;
   }
 }

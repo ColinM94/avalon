@@ -1,40 +1,80 @@
 import * as React from "react";
 
-import { Button, CharacterRevealer } from "components";
-import { useAppStore } from "stores";
+import { Button, CharacterCard } from "components";
+import { charactersDefault } from "consts";
+import { updateDocument, updatePlayer } from "services";
+import { GameSession } from "types";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const GameReveal = (props: Props) => {
-  const { session, className } = props;
+  const { session, user, players, isHost, className } = props;
 
   const [showCharacter, setShowCharacter] = React.useState(false);
-
-  const { user } = useAppStore();
+  const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false);
 
   const characterId = session.players[user.id].characterId;
 
-  return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.description}>
-          Do not let anyone see your screen!
-        </div>
+  const isAllReady = players.every((player) => player.isReadyCharacterReveal);
 
-        <Button
-          label="Reveal Character"
-          onClick={() => setShowCharacter(true)}
-          className={styles.revealButton}
-        />
+  const handleReveal = () => {
+    setIsCharacterRevealed(true);
+    setShowCharacter(!showCharacter);
+  };
+
+  const handleReady = () => {
+    updatePlayer(user.id, session, {
+      isReadyCharacterReveal: true,
+    });
+  };
+
+  const handleAllReady = async () => {
+    await updateDocument<GameSession>({
+      id: session.id,
+      collection: "sessions",
+      data: {
+        step: "ritual",
+      },
+    });
+  };
+
+  React.useEffect(() => {
+    if (isHost && isAllReady) handleAllReady();
+  }, [isAllReady]);
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.description}>
+        Do not let anyone see your character!
       </div>
 
-      <CharacterRevealer
-        characterId={characterId}
-        show={showCharacter}
-        setShow={setShowCharacter}
-        // onReveal={() => setHasViewedCharacter(true)}
+      <CharacterCard
+        character={charactersDefault[characterId]}
+        showName
+        disableAnimation
+        showDescription
+        alwaysActive
+        orientation="landscape"
+        revealed={showCharacter}
+        className={styles.card}
       />
-    </>
+
+      <Button
+        label={showCharacter ? "Hide Character" : "Reveal Character"}
+        onClick={handleReveal}
+        className={styles.revealButton}
+      />
+
+      <Button
+        label="Ready"
+        onClick={handleReady}
+        disabled={
+          !isCharacterRevealed ||
+          session.players[user.id].isReadyCharacterReveal
+        }
+        className={styles.readyButton}
+      />
+    </div>
   );
 };

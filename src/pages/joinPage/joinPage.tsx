@@ -1,10 +1,12 @@
 import * as React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { Button, Divider, InputText } from "components";
-import { useToastStore } from "stores";
+import { useAppStore, useToastStore } from "stores";
 import { MainLayout } from "layouts";
-import { joinSession } from "services";
+import { playerDefault } from "consts";
+import { getDocument, updateDocument } from "services";
+import { GameSession, User } from "types";
 
 import { JoinScanner } from "./components/joinScanner/joinScanner";
 import styles from "./styles.module.scss";
@@ -12,30 +14,81 @@ import styles from "./styles.module.scss";
 export const JoinPage = () => {
   const { sessionId } = useParams();
   const { showToast } = useToastStore();
+  const { user } = useAppStore();
 
   const [code, setCode] = React.useState("");
   const [showScanner, setShowScanner] = React.useState(false);
 
-  if (sessionId) {
-    joinSession(sessionId);
-
-    return <div className={styles.joiningMessage}>...joining</div>;
-  }
+  React.useEffect(() => {
+    if (sessionId) handleJoin();
+  }, [sessionId]);
 
   const handleJoin = async () => {
+    if (!code && !sessionId) return;
+
     setCode("");
 
-    if (!code) {
-      showToast("Please enter a code!", "error");
-      return;
-    }
+    try {
+      if (!code) throw "Please enter a code!";
 
-    await joinSession(code);
+      const id = sessionId || code;
+
+      const session = await getDocument<GameSession>({
+        id,
+        collection: "sessions",
+      });
+
+      if (!session) throw `Game ${id} not found!`;
+
+      const isAlreadyInLobby = session.players[user.id];
+
+      if (
+        !isAlreadyInLobby &&
+        Object.values(session.players).length >= session.numPlayers
+      ) {
+        throw "The game is full!";
+      }
+
+      if (!isAlreadyInLobby && session.step !== "lobby") {
+        throw "This game has already started!";
+      }
+
+      await updateDocument<User>({
+        id: user.id,
+        collection: "users",
+        data: {
+          sessionId: id,
+        },
+      });
+
+      if (
+        !isAlreadyInLobby &&
+        !session.players[user.id] &&
+        session?.step === "lobby"
+      ) {
+        await updateDocument({
+          id: id,
+          collection: "sessions",
+          data: {
+            [`players.${user.id}`]: {
+              ...playerDefault(),
+              id: user.id,
+              name: user.name || "Player",
+              joinedAt: Date.now(),
+            },
+          },
+        });
+      }
+    } catch (error) {
+      showToast(String(error), "error");
+    }
   };
 
   const openCamera = () => {
     setShowScanner(true);
   };
+
+  if (sessionId) return <div className={styles.joiningMessage}>...joining</div>;
 
   return (
     <MainLayout
@@ -54,16 +107,6 @@ export const JoinPage = () => {
         />
 
         <Button label="Scan" onClick={openCamera} />
-
-        {/*
-          <input
-            type="file"
-            accept="image/*"
-            capture="environment"
-            id="cameraInput"
-            ref={cameraInputRef}
-            style={{ display: "none" }}
-          /> */}
       </div>
 
       <Divider label="or" className={styles.divider} />

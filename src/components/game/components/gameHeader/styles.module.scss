@@ -1,0 +1,19 @@
+.container {
+  padding: vars.$spacing-primary;
+
+  .heading {
+    font-size: vars.$font-size-h1;
+  }
+
+  .leaveButton {
+    cursor: pointer;
+    position: absolute;
+    right: vars.$spacing-primary;
+    z-index: 9;
+    flex-direction: row;
+
+    .leaveButtonIcon {
+      font-size: vars.$icon-size-large;
+    }
+  }
+}

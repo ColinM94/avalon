@@ -1,5 +1,5 @@
 import { updateDocument } from "services/firestore/updateDocument";
-import { useAppStore, useToastStore } from "stores";
+import { useToastStore } from "stores";
 import { GameSession, Player, User } from "types";
 
 export const updatePlayer = async (

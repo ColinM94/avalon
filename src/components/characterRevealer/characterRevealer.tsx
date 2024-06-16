@@ -8,7 +8,7 @@ export const CharacterRevealer = (props: Props) => {
   const { characterId, show, setShow, onReveal } = props;
 
   return (
-    <Modal show={show} setShow={setShow} className={styles.container}>
+    <>
       <div className={styles.description}>
         Do not show anyone your character!
       </div>
@@ -26,6 +26,6 @@ export const CharacterRevealer = (props: Props) => {
           className={styles.card}
         />
       )}
-    </Modal>
+    </>
   );
 };

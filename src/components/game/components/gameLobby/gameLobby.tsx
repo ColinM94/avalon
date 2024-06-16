@@ -5,13 +5,14 @@ import { QRCode } from "react-qrcode-logo";
 import { classes } from "utils";
 import { useToastStore } from "stores";
 import { Button } from "components";
-import { updatePlayer } from "services";
+import { updateDocument, updatePlayer } from "services";
 import { baseUrl } from "consts";
+import { GameSession, Player } from "types";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const GameJoin = (props: Props) => {
+export const GameLobby = (props: Props) => {
   const { session, players, isHost, user, className } = props;
 
   const { showToast } = useToastStore();
@@ -23,27 +24,35 @@ export const GameJoin = (props: Props) => {
     showToast("Url copied to clipboard", "info");
   };
 
+  const isAllReady = players.every((player) => player.isReadyLobby);
+
   React.useEffect(() => {
-    if (
-      isHost &&
-      players.length === session.numPlayers &&
-      players.every((player) => player.isReady)
-    ) {
-      handleAllReady();
-    }
-  }, [session.players]);
+    if (isHost && isAllReady) handleAllReady();
+  }, [isAllReady]);
 
   const handleAllReady = async () => {
-    for (let i = 0; i < players.length; i++) {
-      await updatePlayer(user.id, session, {
-        characterId: session.characters[i],
-      });
-    }
+    const updatedPlayers: Record<string, Player> = {};
+
+    players.forEach((player, index) => {
+      updatedPlayers[player.id] = {
+        ...player,
+        characterId: session.characters[index],
+      };
+    });
+
+    await updateDocument<GameSession>({
+      id: session.id,
+      collection: "sessions",
+      data: {
+        step: "characterReveal",
+        players: updatedPlayers,
+      },
+    });
   };
 
   const handleReady = () => {
     updatePlayer(user.id, session, {
-      isReady: true,
+      isReadyLobby: true,
     });
   };
 
@@ -61,7 +70,7 @@ export const GameJoin = (props: Props) => {
       <Button
         label="Ready"
         onClick={handleReady}
-        disabled={session.players[user.id].isReady}
+        disabled={session.players[user.id].isReadyLobby}
         className={styles.readyButton}
       />
     </div>

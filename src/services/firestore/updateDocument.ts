@@ -9,6 +9,7 @@ interface Config<T> {
 }
 
 export const updateDocument = async <T>(config: Config<T>) => {
+  console.log(config);
   console.log("updateDocument");
   try {
     const collectionRef = collection(db, config.collection);

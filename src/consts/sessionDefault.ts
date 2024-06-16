@@ -9,5 +9,7 @@ export const sessionDefault = (): GameSession => {
     numPlayers: 5,
     createdBy: "",
     step: "lobby",
+    characters: [],
+    isRitualFinished: false,
   };
 };

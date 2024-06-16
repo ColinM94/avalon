@@ -52,6 +52,8 @@ export const Root = () => {
   React.useEffect(() => {
     if (user.sessionId && !pathname.includes("/play/")) {
       navigate(`play/${user.sessionId}`);
+    } else if (!user.sessionId && pathname.includes("/play/")) {
+      navigate("/");
     }
   }, [user.sessionId]);
 
