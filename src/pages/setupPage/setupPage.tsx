@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { Button } from "components";
 import { Characters, GameSession } from "types";
 import { reactReducer, shuffleArray } from "utils";
@@ -19,6 +21,7 @@ import styles from "./styles.module.scss";
 export const SetupPage = () => {
   const { showToast } = useToastStore();
   const { user } = useAppStore();
+  const navigate = useNavigate();
 
   const [tempSession, updateTempSession] = reactReducer<GameSession>({
     ...sessionDefault(),
@@ -98,6 +101,8 @@ export const SetupPage = () => {
           characters: shuffledCharacters,
         },
       });
+
+      navigate(`/play/${tempSession.id}`);
     } catch (error) {
       showToast(String(error), "error");
     }

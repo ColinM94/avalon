@@ -5,5 +5,6 @@ export const userDefault = (): User => {
   return {
     id: generateUniqueId(),
     name: "",
+    sessionId: null,
   };
 };

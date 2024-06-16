@@ -11,7 +11,7 @@ import { baseUrl } from "consts";
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const PlayJoin = (props: Props) => {
+export const GameJoin = (props: Props) => {
   const { session, players, isHost, user, className } = props;
 
   const { showToast } = useToastStore();

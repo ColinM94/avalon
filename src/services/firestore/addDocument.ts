@@ -1,4 +1,4 @@
-import { collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db } from "inits/firebase";
 import { FirestoreCollection } from "types";
 
@@ -8,6 +8,8 @@ interface Config<T> {
 }
 
 export const addDocument = async <T>(config: Config<T>) => {
+  console.log("addDocument");
+
   try {
     const document = doc(collection(db, config.collection));
 

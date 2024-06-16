@@ -19,16 +19,18 @@ export const JoinPage = () => {
   if (sessionId) {
     joinSession(sessionId);
 
-    return "...joining";
+    return <div className={styles.joiningMessage}>...joining</div>;
   }
 
-  const handleJoin = () => {
+  const handleJoin = async () => {
+    setCode("");
+
     if (!code) {
       showToast("Please enter a code!", "error");
       return;
     }
 
-    joinSession(code);
+    await joinSession(code);
   };
 
   const openCamera = () => {
@@ -74,6 +76,7 @@ export const JoinPage = () => {
           value={code}
           setValue={setCode}
           placeholder="Code"
+          onEnterClick={handleJoin}
         />
 
         <Button label="Join" onClick={() => handleJoin()} />

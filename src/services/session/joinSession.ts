@@ -1,6 +1,6 @@
 import { useAppStore, useToastStore } from "stores";
 import { getDocument, updateDocument } from "services";
-import { GameSession } from "types";
+import { GameSession, User } from "types";
 import { playerDefault } from "consts";
 
 export const joinSession = async (sessionId: string) => {
@@ -23,8 +23,16 @@ export const joinSession = async (sessionId: string) => {
       throw "This game has already started!";
     }
 
+    await updateDocument<User>({
+      id: user.id,
+      collection: "users",
+      data: {
+        sessionId: session.id,
+      },
+    });
+
     if (session.players[user.id]) {
-      return;
+      return true;
     }
 
     if (session?.step === "lobby") {
@@ -44,7 +52,10 @@ export const joinSession = async (sessionId: string) => {
         },
       });
     }
+
+    return true;
   } catch (error) {
     showToast(String(error), "error");
+    return false;
   }
 };

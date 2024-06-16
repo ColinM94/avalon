@@ -9,10 +9,14 @@ interface Config<T> {
 }
 
 export const getDocumentSnapshot = <T>(config: Config<T>) => {
+  console.log("getDocumentsSnapshot");
+
   try {
     const docRef = doc(db, config.collection, config.id);
 
     const unsubscribe = onSnapshot(docRef, (document) => {
+      console.log("getDocumentsSnapshot: onSnapshot");
+
       const data = { ...document.data(), id: document.id } as T;
 
       if (document.exists()) {

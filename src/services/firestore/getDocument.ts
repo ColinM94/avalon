@@ -10,6 +10,8 @@ interface Config {
 export const getDocument = async <T>(config: Config) => {
   const { collection: collectionName } = config;
 
+  console.log("getDocument");
+
   try {
     const document = await getDoc(doc(db, collectionName, config.id));
 

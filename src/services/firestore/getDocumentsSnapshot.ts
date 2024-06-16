@@ -31,6 +31,8 @@ export const getDocumentsSnapshot = <T>(config: Config<T>) => {
     limit: limitAmount,
   } = config;
 
+  console.log("getDocumentsSnapshot");
+
   try {
     const conditions: QueryConstraint[] = [];
 
@@ -59,6 +61,8 @@ export const getDocumentsSnapshot = <T>(config: Config<T>) => {
     }
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("getDocumentsSnapshot: onSnapshot");
+
       const items: T[] = [];
 
       querySnapshot.forEach((doc) => {

@@ -6,7 +6,7 @@ import { useAppStore } from "stores";
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
-export const PlayReveal = (props: Props) => {
+export const GameReveal = (props: Props) => {
   const { session, className } = props;
 
   const [showCharacter, setShowCharacter] = React.useState(false);

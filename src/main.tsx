@@ -2,18 +2,12 @@ import * as React from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { Splash, Toast } from "components";
-import {
-  getDocumentSnapshot,
-  getDocumentsSnapshot,
-  setDocument,
-} from "services";
-import { GameSession, User } from "types";
+import { getDocumentSnapshot, setDocument } from "services";
+import { User } from "types";
 import { useAppStore } from "stores";
 
 export const Root = () => {
-  const { user, session, updateUser, updateSession } = useAppStore();
-
-  console.log(session);
+  const { user, updateUser } = useAppStore();
 
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -24,16 +18,18 @@ export const Root = () => {
       id: user.id,
       collection: "users",
       callback: (value) => {
-        if (value) {
-          updateUser(value);
+        if (!value) {
+          setDocument<{ id: string; name: string }>({
+            id: user.id,
+            collection: "users",
+            data: user,
+          });
+
           return;
         }
 
-        setDocument<{ id: string; name: string }>({
-          id: user.id,
-          collection: "users",
-          data: user,
-        });
+        updateUser(value);
+        return;
       },
     });
 
@@ -41,28 +37,23 @@ export const Root = () => {
   }, [user.id]);
 
   // Session
+  // React.useEffect(() => {
+  //   const unsubscribe = getDocumentsSnapshot<GameSession>({
+  //     collection: "sessions",
+  //     where: [[`players.${user.id}`, "!=", null]],
+  //     callback: (sessions) => {
+  //       updateSession(sessions?.[0] || null);
+  //     },
+  //   });
+
+  //   return () => unsubscribe?.();
+  // }, [user.id]);
+
   React.useEffect(() => {
-    const unsubscribe = getDocumentsSnapshot<GameSession>({
-      collection: "sessions",
-      where: [[`players.${user.id}`, "!=", null]],
-      callback: (sessions) => {
-        updateSession(sessions?.[0] || null);
-      },
-    });
-
-    return () => unsubscribe?.();
-  }, [user.id]);
-
-  React.useEffect(() => {
-    if (session?.id && pathname !== "/play") {
-      navigate("/play");
-      return;
+    if (user.sessionId && !pathname.includes("/play/")) {
+      navigate(`play/${user.sessionId}`);
     }
-
-    if (!session?.id && pathname === "/play") {
-      navigate("/");
-    }
-  }, [session]);
+  }, [user.sessionId]);
 
   return (
     <>

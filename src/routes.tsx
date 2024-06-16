@@ -23,7 +23,7 @@ const routes = (
     <Route path="setup" element={<SetupPage />} />
     <Route path="join/:sessionId?" element={<JoinPage />} />
     <Route path="characters" element={<CharactersPage />} />
-    <Route path="play" element={<PlayPage />} />
+    <Route path="play/:sessionId" element={<PlayPage />} />
   </Route>
 );
 

@@ -31,9 +31,11 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
 
   .hostIcon {
     position: absolute;
-    top: 2px;
-    color: yellow;
-    font-size: vars.$icon-size-small;
+    top: -8px;
+    left: -4px;
+    color: gold;
+    font-size: vars.$icon-size-medium;
+    rotate: -30deg;
   }
 
   .readyIcon {

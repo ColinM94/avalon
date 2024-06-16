@@ -1,27 +1,7 @@
-.container {
-  flex: 1;
-  max-width: 800px;
+.message {
+  height: 100%;
   width: 100%;
-  align-self: center;
-
-  .leaveButton {
-    cursor: pointer;
-    position: absolute;
-    top: vars.$spacing-primary;
-    right: vars.$spacing-primary;
-    z-index: 9;
-
-    .leaveButtonIcon {
-      font-size: vars.$icon-size-large;
-    }
-  }
-
-  .content {
-    gap: vars.$spacing-primary;
-    padding: vars.$spacing-primary;
-    flex: 1;
-  }
-
-  .players {
-  }
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }

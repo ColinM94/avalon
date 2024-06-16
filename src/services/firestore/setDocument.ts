@@ -10,6 +10,7 @@ interface Config<T> {
 }
 
 export const setDocument = async <T>(config: Config<T>) => {
+  console.log("setDocument");
   try {
     const shouldMerge = config.merge === undefined || config.merge === true;
 

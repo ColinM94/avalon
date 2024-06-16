@@ -16,7 +16,7 @@ const instructions = [
   "7. Everyone, open your eyes.",
 ];
 
-export const PlayRitual = ({ session }: Props) => {
+export const GameRitual = ({ session }: Props) => {
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
   const currentInstruction = React.useRef(-1);
 

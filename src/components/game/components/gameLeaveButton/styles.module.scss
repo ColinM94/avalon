@@ -1,0 +1,11 @@
+.container {
+  cursor: pointer;
+  position: absolute;
+  top: vars.$spacing-primary;
+  right: vars.$spacing-primary;
+  z-index: 9;
+
+  .leaveButtonIcon {
+    font-size: vars.$icon-size-large;
+  }
+}

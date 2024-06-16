@@ -9,6 +9,7 @@ export const InputText = (props: Props) => {
     setValue,
     type = "text",
     placeholder,
+    onEnterClick,
     inputClassName,
     className,
   } = props;
@@ -23,6 +24,7 @@ export const InputText = (props: Props) => {
         inputMode={type === "text" ? "text" : "numeric"}
         placeholder={placeholder}
         onChange={(e) => setValue(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && onEnterClick?.()}
         className={classes(styles.input, inputClassName)}
       />
     </div>
