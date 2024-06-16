@@ -16,13 +16,11 @@ export const CharacterRevealer = (props: Props) => {
       {show && charactersDefault[characterId] && (
         <CharacterCard
           character={charactersDefault[characterId]}
-          clickToReveal
           showName
           disableAnimation
           showDescription
           alwaysActive
           orientation="landscape"
-          onReveal={onReveal}
           className={styles.card}
         />
       )}

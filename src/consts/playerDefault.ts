@@ -9,6 +9,7 @@ export const playerDefault = (): Player => {
     isHost: false,
     isReadyLobby: false,
     isReadyCharacterReveal: false,
+    isReadyRitual: false,
     joinedAt: 0,
   };
 };
