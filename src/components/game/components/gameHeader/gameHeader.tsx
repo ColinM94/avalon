@@ -1,10 +1,10 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteField } from "firebase/firestore";
 
 import { classes } from "utils";
 import { useToastStore } from "stores";
 import { deleteDocument, updateDocument } from "services";
 import { User } from "types";
+import { Button } from "components";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -70,9 +70,8 @@ export const GameHeader = (props: Props) => {
   return (
     <div className={classes(styles.container, className)}>
       <div className={styles.heading}>{heading()}</div>
-      <div onClick={handleLeave} className={styles.leaveButton}>
-        <FontAwesomeIcon icon="x" className={styles.leaveButtonIcon} />
-      </div>
+
+      <Button icon="x" onClick={handleLeave} className={styles.leaveButton} />
     </div>
   );
 };

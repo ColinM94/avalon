@@ -8,6 +8,7 @@ import {
   faPause,
   faPencil,
   faPlay,
+  faSpinner,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,6 +22,7 @@ export const initIcons = () => {
     faCheck,
     faPlay,
     faArrowRotateBack,
-    faPause
+    faPause,
+    faSpinner
   );
 };

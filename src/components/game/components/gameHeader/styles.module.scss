@@ -1,19 +1,16 @@
 .container {
   padding: vars.$spacing-primary;
+  align-items: center;
+  justify-content: center;
 
   .heading {
     font-size: vars.$font-size-h1;
   }
 
   .leaveButton {
-    cursor: pointer;
     position: absolute;
-    right: vars.$spacing-primary;
-    z-index: 9;
-    flex-direction: row;
-
-    .leaveButtonIcon {
-      font-size: vars.$icon-size-large;
-    }
+    right: 0;
+    top: 0;
+    bottom: 0;
   }
 }

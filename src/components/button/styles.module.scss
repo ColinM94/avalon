@@ -2,7 +2,6 @@ $evilColor: #f07e0a;
 $goodColor: #43839a;
 
 .container {
-  width: 100%;
   box-shadow: vars.$shadow;
   background-color: vars.$color-surface;
   border-radius: vars.$roundness;
@@ -12,6 +11,10 @@ $goodColor: #43839a;
   justify-content: center;
   align-items: center;
   transition: scale 0.2s;
+
+  .icon {
+    font-size: vars.$icon-size-large;
+  }
 
   &:hover {
     scale: 1.01;
@@ -24,6 +27,14 @@ $goodColor: #43839a;
   &:active {
     scale: 0.99;
   }
+}
+
+.iconContainer {
+  aspect-ratio: 1;
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: unset;
+  text-shadow: vars.$color-text-shadow;
+  padding: 0 !important;
 }
 
 .disabled {

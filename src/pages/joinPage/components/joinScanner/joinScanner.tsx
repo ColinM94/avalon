@@ -9,9 +9,8 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const JoinScanner = (props: Props) => {
-  const { showScanner, setShowScanner, className } = props;
+  const { showScanner, setShowScanner, onScanSuccess, className } = props;
 
-  const navigate = useNavigate();
   const { showToast } = useToastStore();
 
   const handleScan = (value: string) => {
@@ -22,7 +21,7 @@ export const JoinScanner = (props: Props) => {
       return;
     }
 
-    navigate(`/join/${sessionId}`);
+    onScanSuccess(value);
   };
 
   if (!showScanner) return null;

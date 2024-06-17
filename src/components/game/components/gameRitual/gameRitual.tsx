@@ -177,6 +177,12 @@ export const GameRitual = (props: Props) => {
         </>
       )}
 
+      {!isHost && (
+        <div className={styles.description}>
+          The Host will perform the ritual!
+        </div>
+      )}
+
       <Button
         label="Ready"
         onClick={handleReady}

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
 
-import { Button, Divider, InputText } from "components";
+import { Button, Divider, InputText, LoadingOverlay } from "components";
 import { useAppStore, useToastStore } from "stores";
 import { MainLayout } from "layouts";
 import { playerDefault } from "consts";
@@ -20,16 +20,15 @@ export const JoinPage = () => {
   const [showScanner, setShowScanner] = React.useState(false);
 
   React.useEffect(() => {
-    if (sessionId) handleJoin();
+    if (sessionId) {
+      alert(sessionId);
+      handleJoin(sessionId);
+    }
   }, [sessionId]);
 
-  const handleJoin = async () => {
-    if (!code && !sessionId) return;
-
-    setCode("");
-
+  const handleJoin = async (code: string) => {
     try {
-      if (!code) throw "Please enter a code!";
+      if (!code) throw "Invalid code!";
 
       const id = sessionId || code;
 
@@ -88,7 +87,7 @@ export const JoinPage = () => {
     setShowScanner(true);
   };
 
-  if (sessionId) return <div className={styles.joiningMessage}>...joining</div>;
+  if (sessionId) return <LoadingOverlay />;
 
   return (
     <MainLayout
@@ -103,6 +102,7 @@ export const JoinPage = () => {
         <JoinScanner
           showScanner={showScanner}
           setShowScanner={setShowScanner}
+          onScanSuccess={(value) => handleJoin(value)}
           className={styles.scanner}
         />
 
@@ -119,10 +119,10 @@ export const JoinPage = () => {
           value={code}
           setValue={setCode}
           placeholder="Code"
-          onEnterClick={handleJoin}
+          onEnterClick={() => handleJoin(code)}
         />
 
-        <Button label="Join" onClick={() => handleJoin()} />
+        <Button label="Join" onClick={() => handleJoin(code)} />
       </div>
     </MainLayout>
   );

@@ -6,6 +6,13 @@
     display: none;
   }
 
+  .description {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-size: vars.$font-size-h1;
+  }
+
   .instructions {
     margin-top: vars.$spacing-primary;
     padding: vars.$spacing-primary;

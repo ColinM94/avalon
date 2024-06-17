@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
-import { Splash, Toast } from "components";
+import { LoadingOverlay, Splash, Toast } from "components";
 import { getDocumentSnapshot, setDocument } from "services";
 import { User } from "types";
 import { useAppStore } from "stores";
@@ -51,7 +51,7 @@ export const Root = () => {
 
   React.useEffect(() => {
     if (user.sessionId && !pathname.includes("/play/")) {
-      navigate(`play/${user.sessionId}`);
+      navigate(`/play/${user.sessionId}`);
     } else if (!user.sessionId && pathname.includes("/play/")) {
       navigate("/");
     }

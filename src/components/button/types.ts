@@ -1,5 +1,8 @@
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+
 export interface Props {
-  label: string;
+  label?: string;
+  icon?: IconProp;
   onClick: () => void;
   disabled?: boolean;
   className?: string;

@@ -1,4 +1,1 @@
-export const baseUrl = location.href.substring(
-  0,
-  location.href.lastIndexOf("/") + 1
-);
+export const baseUrl = window.location.origin;

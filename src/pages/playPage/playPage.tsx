@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppStore, useToastStore } from "stores";
 import { GameSession } from "types";
 import { getDocumentSnapshot } from "services";
-import { Game } from "components";
+import { Game, LoadingOverlay, Splash } from "components";
 
 import styles from "./styles.module.scss";
 
@@ -38,8 +38,7 @@ export const PlayPage = () => {
     }
   }, [session]);
 
-  if (!session || !user || !session.players[user.id])
-    return <div className={styles.message}>...loading</div>;
+  if (!session || !user || !session.players[user.id]) return <LoadingOverlay />;
 
   const players = Object.values(session?.players).sort(
     (a, b) => a.joinedAt - b.joinedAt
