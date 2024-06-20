@@ -1,22 +1,15 @@
 .container {
-  .leaveButton {
-    position: absolute;
-    top: vars.$spacing-primary;
-    right: vars.$spacing-primary;
-    z-index: 9;
+  opacity: 1;
 
-    .leaveButtonIcon {
-      font-size: vars.$icon-size-large;
-    }
+  .readyButtonHidden {
+    transition: opacity 0.5s;
+    opacity: 0;
   }
+}
 
-  .content {
-    gap: vars.$spacing-primary;
-    padding: vars.$spacing-primary;
-    flex: 1;
-  }
+.readyButton {
+  background-color: vars.$color-primary;
+}
 
-  .players {
-    background-color: red;
-  }
+.players {
 }

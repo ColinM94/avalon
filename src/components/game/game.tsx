@@ -1,9 +1,12 @@
+import * as React from "react";
 import { deleteField } from "firebase/firestore";
 
 import { MainLayout } from "layouts";
 import { useToastStore } from "stores";
 import { User } from "types";
-import { deleteDocument, updateDocument } from "services";
+import { deleteDocument, updateDocument, updatePlayer } from "services";
+import { Button } from "components";
+import { classes } from "utils";
 
 import { PlayPlayers } from "./components/gamePlayers/playPlayers";
 import { GameRitual } from "./components/gameRitual/gameRitual";
@@ -15,7 +18,7 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const Game = (props: Props) => {
-  const { session, user, players, isHost } = props;
+  const { session, user, players, isHost, player } = props;
 
   const { showToast } = useToastStore();
 
@@ -72,6 +75,12 @@ export const Game = (props: Props) => {
     }
   };
 
+  const setIsReady = () => {
+    updatePlayer(user.id, session, {
+      isReady: true,
+    });
+  };
+
   return (
     <>
       <MainLayout
@@ -80,38 +89,37 @@ export const Game = (props: Props) => {
         onCloseClick={handleLeave}
         className={styles.container}
       >
-        <div className={styles.content}>
-          {session.step === "lobby" && (
-            <GameLobby
-              session={session}
-              players={players}
-              isHost={isHost}
-              user={user}
-            />
-          )}
+        {session.step === "lobby" && (
+          <GameLobby
+            session={session}
+            players={players}
+            player={player}
+            isHost={isHost}
+            setIsReady={setIsReady}
+          />
+        )}
 
-          {session.step === "characterReveal" && (
-            <GameReveal
-              session={session}
-              players={players}
-              user={user}
-              isHost={isHost}
-            />
-          )}
+        {session.step === "characterReveal" && (
+          <GameReveal
+            session={session}
+            players={players}
+            user={user}
+            isHost={isHost}
+          />
+        )}
 
-          {session.step === "ritual" && (
-            <GameRitual
-              session={session}
-              isHost={isHost}
-              user={user}
-              players={players}
-            />
-          )}
+        {session.step === "ritual" && (
+          <GameRitual
+            session={session}
+            isHost={isHost}
+            user={user}
+            players={players}
+          />
+        )}
 
-          {session.step === "quests" && (
-            <GameQuests session={session} isHost={isHost} />
-          )}
-        </div>
+        {session.step === "quests" && (
+          <GameQuests session={session} isHost={isHost} />
+        )}
       </MainLayout>
 
       <PlayPlayers

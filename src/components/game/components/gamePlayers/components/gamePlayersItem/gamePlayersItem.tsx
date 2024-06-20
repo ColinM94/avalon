@@ -41,11 +41,6 @@ export const GamePlayersItem = (props: Props) => {
     else setShowNameEditor(true);
   };
 
-  const isReady =
-    (session.step === "lobby" && player.isReadyLobby) ||
-    (session.step === "characterReveal" && player.isReadyCharacterReveal) ||
-    (session.step === "ritual" && player.isReadyRitual);
-
   return (
     <>
       {player.id === user.id && (
@@ -86,11 +81,9 @@ export const GamePlayersItem = (props: Props) => {
 
         {player.name}
 
-        {isReady && (
+        {player.isReady && (
           <FontAwesomeIcon icon="check" className={styles.readyIcon} />
         )}
-
-        {/* {isUser && <div className={styles.editText}>Edit</div>} */}
       </div>
     </>
   );

@@ -4,16 +4,16 @@ import { QRCode } from "react-qrcode-logo";
 
 import { classes } from "utils";
 import { useToastStore } from "stores";
-import { Button } from "components";
-import { updateDocument, updatePlayer } from "services";
+import { updateDocument } from "services";
 import { baseUrl } from "consts";
 import { GameSession, Player } from "types";
+import { ReadyButton } from "components";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const GameLobby = (props: Props) => {
-  const { session, players, isHost, user, className } = props;
+  const { session, players, player, isHost, setIsReady, className } = props;
 
   const { showToast } = useToastStore();
 
@@ -24,7 +24,7 @@ export const GameLobby = (props: Props) => {
     showToast("Url copied to clipboard", "info");
   };
 
-  const isAllReady = players.every((player) => player.isReadyLobby);
+  const isAllReady = players.every((player) => player.isReady);
 
   React.useEffect(() => {
     if (isHost && isAllReady) handleAllReady();
@@ -37,6 +37,7 @@ export const GameLobby = (props: Props) => {
       updatedPlayers[player.id] = {
         ...player,
         characterId: session.characters[index],
+        isReady: false,
       };
     });
 
@@ -47,12 +48,6 @@ export const GameLobby = (props: Props) => {
         step: "characterReveal",
         players: updatedPlayers,
       },
-    });
-  };
-
-  const handleReady = () => {
-    updatePlayer(user.id, session, {
-      isReadyLobby: true,
     });
   };
 
@@ -67,12 +62,7 @@ export const GameLobby = (props: Props) => {
         <FontAwesomeIcon icon="copy" className={styles.copyIcon} />
       </div>
 
-      <Button
-        label="Ready"
-        onClick={handleReady}
-        disabled={session.players[user.id].isReadyLobby}
-        className={styles.readyButton}
-      />
+      <ReadyButton isReady={player.isReady} onClick={setIsReady} />
     </div>
   );
 };
