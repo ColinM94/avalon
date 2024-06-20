@@ -1,6 +1,25 @@
 .container {
   font-size: vars.$font-size-h1;
   margin-bottom: vars.$spacing-secondary;
-  text-align: center;
-  align-self: center;
+
+  flex-direction: row;
+  align-items: center;
+
+  .heading {
+    flex: 1;
+
+    .headingTitle {
+      font-size: vars.$font-size-h2;
+    }
+
+    .headingSubtitle {
+      font-size: vars.$font-size-body2;
+      color: vars.$color-text-secondary;
+    }
+  }
+
+  .rightText {
+    font-size: vars.$font-size-h3;
+    color: vars.$color-text-secondary;
+  }
 }

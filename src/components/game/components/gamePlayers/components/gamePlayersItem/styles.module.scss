@@ -16,6 +16,10 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
 
   .editIcon {
     font-size: vars.$icon-size-small;
+  }
+
+  .kickIcon {
+    font-size: vars.$icon-size-small;
     position: absolute;
     top: calc(vars.$spacing-secondary * -1);
     right: calc(vars.$spacing-secondary * -1);
@@ -25,7 +29,7 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
   }
 
   .waitingIcon {
-    font-size: vars.$icon-size-large;
+    font-size: vars.$icon-size-medium;
     color: vars.$color-text-secondary;
   }
 
@@ -34,16 +38,16 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
     top: -8px;
     left: -4px;
     color: gold;
-    font-size: vars.$icon-size-medium;
+    font-size: vars.$icon-size-small;
     rotate: -30deg;
   }
 
   .readyIcon {
     position: absolute;
-    right: vars.$spacing-tertiary;
-    bottom: vars.$spacing-tertiary;
+    right: 2px;
+    bottom: 2px;
     color: vars.$color-success;
-    font-size: vars.$icon-size-medium;
+    font-size: vars.$icon-size-small;
   }
 }
 

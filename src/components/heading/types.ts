@@ -1,4 +1,6 @@
 export interface Props {
-  heading: string;
+  headingTitle: string;
+  headingSubtitle?: string;
+  rightText?: string;
   className?: string;
 }

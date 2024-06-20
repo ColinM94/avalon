@@ -8,5 +8,6 @@
   .content {
     gap: vars.$spacing-primary;
     padding: vars.$spacing-primary;
+    flex: 1;
   }
 }

@@ -20,7 +20,6 @@ export const GameLobby = (props: Props) => {
   const url = `${baseUrl}/join/${session.id}`;
 
   const copyToClipboard = () => {
-    alert(url);
     navigator.clipboard.writeText(url);
     showToast("Url copied to clipboard", "info");
   };

@@ -1,9 +1,4 @@
 .container {
-  flex: 1;
-  max-width: 800px;
-  width: 100%;
-  align-self: center;
-
   .leaveButton {
     position: absolute;
     top: vars.$spacing-primary;
@@ -22,5 +17,6 @@
   }
 
   .players {
+    background-color: red;
   }
 }

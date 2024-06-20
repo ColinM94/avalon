@@ -115,11 +115,7 @@ export const SetupPage = () => {
       heading="Game Setup"
       className={styles.container}
     >
-      <SetupOptions
-        session={tempSession}
-        updateSession={updateTempSession}
-        headingClassName={styles.heading}
-      />
+      <SetupOptions session={tempSession} updateSession={updateTempSession} />
 
       <SetupCharacters
         heading="Good Characters"
@@ -128,7 +124,6 @@ export const SetupPage = () => {
         maxActiveCharacters={maxGoodCharacters}
         updateCharacters={updateCharacters}
         numActiveCharacters={numActiveGoodCharacters}
-        headingClassName={styles.heading}
       />
 
       <SetupCharacters
@@ -138,7 +133,6 @@ export const SetupPage = () => {
         maxActiveCharacters={maxEvilCharacters}
         updateCharacters={updateCharacters}
         numActiveCharacters={numActiveEvilCharacters}
-        headingClassName={styles.heading}
       />
 
       <Button

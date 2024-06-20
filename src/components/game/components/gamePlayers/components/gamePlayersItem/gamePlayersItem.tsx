@@ -9,9 +9,8 @@ import { updateDocument } from "services";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
-import { isRegExp } from "util/types";
 
-export const PlayersPlayer = (props: Props) => {
+export const GamePlayersItem = (props: Props) => {
   const { session, player, connected, isHost, className } = props;
 
   const { user } = useAppStore();
@@ -73,19 +72,19 @@ export const PlayersPlayer = (props: Props) => {
           <FontAwesomeIcon icon="crown" className={styles.hostIcon} />
         )}
 
-        {isUser && session.step === "lobby" && (
+        {showKick && session.step === "lobby" && (
+          <FontAwesomeIcon icon="x" className={styles.kickIcon} />
+        )}
+
+        {!connected && (
+          <FontAwesomeIcon icon="hourglass" className={styles.waitingIcon} />
+        )}
+
+        {isUser && !player.name && (
           <FontAwesomeIcon icon="pencil" className={styles.editIcon} />
         )}
 
-        {showKick && session.step === "lobby" && (
-          <FontAwesomeIcon icon="x" className={styles.editIcon} />
-        )}
-
-        {connected ? (
-          player.name
-        ) : (
-          <FontAwesomeIcon icon="hourglass" className={styles.waitingIcon} />
-        )}
+        {player.name}
 
         {isReady && (
           <FontAwesomeIcon icon="check" className={styles.readyIcon} />

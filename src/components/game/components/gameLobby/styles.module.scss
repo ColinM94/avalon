@@ -15,12 +15,13 @@
     flex-direction: row;
     margin-top: vars.$spacing-primary;
     gap: vars.$spacing-secondary;
+    font-size: vars.$font-size-h3;
     align-items: center;
     cursor: pointer;
     margin-bottom: auto;
 
     .copyIcon {
-      font-size: vars.$icon-size-large;
+      font-size: vars.$font-size-h3;
       margin-bottom: 4px;
     }
   }
