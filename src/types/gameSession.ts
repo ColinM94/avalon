@@ -2,6 +2,7 @@ export type Player = {
   id: string;
   name: string;
   isHost: boolean;
+  isReady: boolean;
   isReadyLobby: boolean;
   isReadyCharacterReveal: boolean;
   isReadyRitual: boolean;

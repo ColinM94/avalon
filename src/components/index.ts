@@ -13,3 +13,4 @@ export * from "./nameEditor/nameEditor";
 export * from "./splash/splash";
 export * from "./toast/toast";
 export * from "./game/game";
+export * from "./readyButton/readyButton";

@@ -7,5 +7,4 @@ export interface Props {
   numActiveCharacters: number;
   allegiance: "evil" | "good";
   updateCharacters: (update: Partial<Record<string, Character>>) => void;
-  headingClassName?: string;
 }

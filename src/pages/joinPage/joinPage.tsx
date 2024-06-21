@@ -20,10 +20,7 @@ export const JoinPage = () => {
   const [showScanner, setShowScanner] = React.useState(false);
 
   React.useEffect(() => {
-    if (sessionId) {
-      alert(sessionId);
-      handleJoin(sessionId);
-    }
+    if (sessionId) handleJoin(sessionId);
   }, [sessionId]);
 
   const handleJoin = async (code: string) => {

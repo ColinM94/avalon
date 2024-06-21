@@ -1,11 +1,7 @@
 .container {
   padding: vars.$spacing-primary;
-  padding-top: 0;
   flex: 1;
-
-  .heading {
-    margin-bottom: vars.$spacing-secondary;
-  }
+  gap: vars.$spacing-primary * 2 !important;
 
   .continueButton {
     margin-top: vars.$spacing-primary;

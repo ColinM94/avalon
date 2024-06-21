@@ -1,5 +1,6 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faArrowLeft,
   faArrowRotateBack,
   faCheck,
   faCopy,
@@ -23,6 +24,7 @@ export const initIcons = () => {
     faPlay,
     faArrowRotateBack,
     faPause,
-    faSpinner
+    faSpinner,
+    faArrowLeft
   );
 };

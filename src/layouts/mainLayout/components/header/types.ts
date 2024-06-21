@@ -1,5 +1,6 @@
 export interface Props {
   heading?: string;
   showBackButton?: boolean;
-  className?: string;
+  showCloseButton?: boolean;
+  onCloseClick?: () => void;
 }

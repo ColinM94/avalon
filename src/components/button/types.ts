@@ -5,5 +5,6 @@ export interface Props {
   icon?: IconProp;
   onClick: () => void;
   disabled?: boolean;
+  iconClassName?: string;
   className?: string;
 }

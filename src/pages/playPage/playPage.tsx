@@ -44,11 +44,19 @@ export const PlayPage = () => {
     (a, b) => a.joinedAt - b.joinedAt
   );
 
+  const player = session.players[user.id];
+
   const isHost = user.id === session.createdBy;
 
   return (
     <div className={styles.message}>
-      <Game session={session} user={user} isHost={isHost} players={players} />
+      <Game
+        session={session}
+        user={user}
+        isHost={isHost}
+        players={players}
+        player={player}
+      />
     </div>
   );
 };

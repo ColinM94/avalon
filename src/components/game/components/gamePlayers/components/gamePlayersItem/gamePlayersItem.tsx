@@ -9,9 +9,8 @@ import { updateDocument } from "services";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
-import { isRegExp } from "util/types";
 
-export const PlayersPlayer = (props: Props) => {
+export const GamePlayersItem = (props: Props) => {
   const { session, player, connected, isHost, className } = props;
 
   const { user } = useAppStore();
@@ -42,11 +41,6 @@ export const PlayersPlayer = (props: Props) => {
     else setShowNameEditor(true);
   };
 
-  const isReady =
-    (session.step === "lobby" && player.isReadyLobby) ||
-    (session.step === "characterReveal" && player.isReadyCharacterReveal) ||
-    (session.step === "ritual" && player.isReadyRitual);
-
   return (
     <>
       {player.id === user.id && (
@@ -73,25 +67,23 @@ export const PlayersPlayer = (props: Props) => {
           <FontAwesomeIcon icon="crown" className={styles.hostIcon} />
         )}
 
-        {isUser && session.step === "lobby" && (
-          <FontAwesomeIcon icon="pencil" className={styles.editIcon} />
-        )}
-
         {showKick && session.step === "lobby" && (
-          <FontAwesomeIcon icon="x" className={styles.editIcon} />
+          <FontAwesomeIcon icon="x" className={styles.kickIcon} />
         )}
 
-        {connected ? (
-          player.name
-        ) : (
+        {!connected && (
           <FontAwesomeIcon icon="hourglass" className={styles.waitingIcon} />
         )}
 
-        {isReady && (
-          <FontAwesomeIcon icon="check" className={styles.readyIcon} />
+        {isUser && !player.name && (
+          <FontAwesomeIcon icon="pencil" className={styles.editIcon} />
         )}
 
-        {/* {isUser && <div className={styles.editText}>Edit</div>} */}
+        {player.name}
+
+        {player.isReady && (
+          <FontAwesomeIcon icon="check" className={styles.readyIcon} />
+        )}
       </div>
     </>
   );

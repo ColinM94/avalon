@@ -1,7 +1,7 @@
 import { classes } from "utils";
 import { playerDefault } from "consts";
 
-import { PlayersPlayer } from "./components/playersPlayer/playersPlayer";
+import { GamePlayersItem } from "./components/gamePlayersItem/gamePlayersItem";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -16,7 +16,7 @@ export const PlayPlayers = (props: Props) => {
       const tempPlayer = players[i] || playerDefault();
 
       items.push(
-        <PlayersPlayer
+        <GamePlayersItem
           player={tempPlayer}
           session={session}
           connected={!!players[i]}
@@ -28,8 +28,6 @@ export const PlayPlayers = (props: Props) => {
 
     return items;
   };
-
-  <div>Click your player to edit the name</div>;
 
   return (
     <div className={classes(styles.container, className)}>

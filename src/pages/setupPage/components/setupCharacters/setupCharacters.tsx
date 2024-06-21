@@ -1,4 +1,4 @@
-import { CharacterCard } from "components";
+import { CharacterCard, Heading } from "components";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -11,7 +11,6 @@ export const SetupCharacters = (props: Props) => {
     numActiveCharacters,
     allegiance,
     updateCharacters,
-    headingClassName,
   } = props;
 
   const handleCharacterClick = (characterId: string) => {
@@ -41,9 +40,10 @@ export const SetupCharacters = (props: Props) => {
 
   return (
     <div className={styles.container}>
-      <div className={headingClassName}>
-        {heading} {numActiveCharacters}/{maxActiveCharacters}
-      </div>
+      <Heading
+        headingTitle={heading}
+        rightText={`${numActiveCharacters}/${maxActiveCharacters}`}
+      />
 
       <div className={styles.characters}>
         {filteredCharacters.map((character) => (
