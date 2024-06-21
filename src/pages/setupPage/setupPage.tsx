@@ -102,7 +102,7 @@ export const SetupPage = () => {
         },
       });
 
-      navigate(`/play/${tempSession.id}`);
+      navigate(`/join/${tempSession.id}`);
     } catch (error) {
       showToast(String(error), "error");
     }

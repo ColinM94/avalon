@@ -23,7 +23,6 @@ export const PlayPage = () => {
       id: sessionId,
       collection: "sessions",
       callback: (data) => {
-        console.log(sessionId, data);
         setSession(data || null);
       },
     });

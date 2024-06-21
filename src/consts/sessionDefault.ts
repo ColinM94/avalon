@@ -11,5 +11,25 @@ export const sessionDefault = (): GameSession => {
     step: "lobby",
     characters: [],
     isRitualFinished: false,
+    quest1: {
+      index: 1,
+      status: "incomplete",
+    },
+    quest2: {
+      index: 2,
+      status: "incomplete",
+    },
+    quest3: {
+      index: 3,
+      status: "incomplete",
+    },
+    quest4: {
+      index: 4,
+      status: "incomplete",
+    },
+    quest5: {
+      index: 5,
+      status: "incomplete",
+    },
   };
 };

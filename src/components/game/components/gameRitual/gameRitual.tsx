@@ -186,9 +186,9 @@ export const GameRitual = (props: Props) => {
       <Button
         label="Ready"
         onClick={handleReady}
-        disabled={
-          !session.isRitualFinished || session.players[user.id].isReadyRitual
-        }
+        // disabled={
+        //   !session.isRitualFinished || session.players[user.id].isReadyRitual
+        // }
         className={styles.readyButton}
       />
     </div>

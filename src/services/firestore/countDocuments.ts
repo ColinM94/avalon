@@ -14,8 +14,6 @@ interface Config<T> {
 }
 
 export const countDocuments = async <T>(config: Config<T>) => {
-  console.log("countDocuments");
-
   try {
     const { collection: collectionName, where: whereClauses } = config;
 

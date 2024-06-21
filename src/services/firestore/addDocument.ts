@@ -8,8 +8,6 @@ interface Config<T> {
 }
 
 export const addDocument = async <T>(config: Config<T>) => {
-  console.log("addDocument");
-
   try {
     const document = doc(collection(db, config.collection));
 

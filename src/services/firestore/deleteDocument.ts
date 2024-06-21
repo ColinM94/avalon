@@ -8,8 +8,6 @@ interface Config {
 }
 
 export const deleteDocument = async (config: Config) => {
-  console.log("deleteDocument");
-
   try {
     await deleteDoc(doc(db, config.collection, config.id));
     return true;

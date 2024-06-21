@@ -1,26 +1,18 @@
 .container {
-  padding: vars.$spacing-primary;
   flex: 1;
-}
+  justify-content: center;
 
-.audioPlayer {
-  display: none;
-}
+  .quests {
+    flex-direction: row;
+    justify-content: stretch;
+    gap: vars.$spacing-primary;
+    flex-wrap: wrap;
+    justify-content: center;
 
-.instructions {
-  margin-top: vars.$spacing-primary;
-  padding: vars.$spacing-primary;
-  gap: vars.$spacing-secondary;
-  flex: 1;
-
-  .instruction {
+    .quest {
+      flex: 1;
+      min-width: 100px;
+      max-width: calc(100% / 5 - vars.$spacing-primary);
+    }
   }
-
-  .activeInstruction {
-    color: vars.$color-primary;
-  }
-}
-
-.startButton {
-  margin-top: vars.$spacing-primary;
 }

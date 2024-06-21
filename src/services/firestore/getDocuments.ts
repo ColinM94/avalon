@@ -30,8 +30,6 @@ export const getDocuments = async <T>(config: Config<T>) => {
     limit: limitAmount,
   } = config;
 
-  console.log("addDocuments");
-
   try {
     const conditions: QueryConstraint[] = [];
 
