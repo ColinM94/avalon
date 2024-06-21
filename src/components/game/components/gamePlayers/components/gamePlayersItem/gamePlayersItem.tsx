@@ -4,21 +4,18 @@ import { deleteField } from "firebase/firestore";
 
 import { classes } from "utils";
 import { NameEditor } from "components";
-import { useAppStore } from "stores";
 import { updateDocument } from "services";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const GamePlayersItem = (props: Props) => {
-  const { session, player, connected, isHost, className } = props;
-
-  const { user } = useAppStore();
+  const { session, player, myPlayer, connected, isHost, className } = props;
 
   const [showNameEditor, setShowNameEditor] = React.useState(false);
 
-  const isUser = player.id === user.id;
-  const showKick = isHost && player.id !== user.id && connected;
+  const isMyPlayer = player.id === myPlayer.id;
+  const showKick = isHost && player.id !== myPlayer.id && connected;
 
   const handleKick = async () => {
     if (session.step !== "lobby") return;
@@ -43,12 +40,11 @@ export const GamePlayersItem = (props: Props) => {
 
   return (
     <>
-      {player.id === user.id && (
+      {player.id === myPlayer.id && (
         <NameEditor
+          myPlayer={myPlayer}
           show={showNameEditor}
           setShow={setShowNameEditor}
-          user={user}
-          userId={user.id}
           session={session}
         />
       )}
@@ -60,7 +56,7 @@ export const GamePlayersItem = (props: Props) => {
           styles.container,
           connected && styles.connected,
           player.isHost && styles.host,
-          isUser && styles.user
+          isMyPlayer && styles.user
         )}
       >
         {player.isHost && styles.hostIcon && (
@@ -75,7 +71,7 @@ export const GamePlayersItem = (props: Props) => {
           <FontAwesomeIcon icon="hourglass" className={styles.waitingIcon} />
         )}
 
-        {isUser && !player.name && (
+        {isMyPlayer && !player.name && (
           <FontAwesomeIcon icon="pencil" className={styles.editIcon} />
         )}
 

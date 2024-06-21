@@ -1,10 +1,4 @@
 .container {
-  opacity: 1;
-
-  .readyButtonHidden {
-    transition: opacity 0.5s;
-    opacity: 0;
-  }
 }
 
 .readyButton {
@@ -12,4 +6,5 @@
 }
 
 .players {
+  max-width: 800px;
 }

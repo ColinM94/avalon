@@ -6,8 +6,8 @@ import { GamePlayersItem } from "./components/gamePlayersItem/gamePlayersItem";
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
-export const PlayPlayers = (props: Props) => {
-  const { session, players, isHost, className } = props;
+export const GamePlayers = (props: Props) => {
+  const { session, players, isHost, myPlayer, className } = props;
 
   const renderPlayers = () => {
     const items = [];
@@ -18,6 +18,7 @@ export const PlayPlayers = (props: Props) => {
       items.push(
         <GamePlayersItem
           player={tempPlayer}
+          myPlayer={myPlayer}
           session={session}
           connected={!!players[i]}
           key={i}

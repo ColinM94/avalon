@@ -4,9 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppStore, useToastStore } from "stores";
 import { GameSession } from "types";
 import { getDocumentSnapshot } from "services";
-import { Game, LoadingOverlay, Splash } from "components";
-
-import styles from "./styles.module.scss";
+import { Game, LoadingOverlay } from "components";
+import { reactReducer } from "utils";
+import { GameState } from "types/game";
 
 export const PlayPage = () => {
   const { user } = useAppStore();
@@ -16,46 +16,43 @@ export const PlayPage = () => {
 
   if (!sessionId) throw "Invalid Session ID";
 
-  const [session, setSession] = React.useState<GameSession | null>();
+  const [state, updateState] = reactReducer<GameState | null>(null);
 
   React.useEffect(() => {
     const unsubscribe = getDocumentSnapshot<GameSession>({
       id: sessionId,
       collection: "sessions",
       callback: (data) => {
-        setSession(data || null);
+        if (!data) {
+          showToast("Game not found!", "error");
+          navigate("/");
+          return;
+        }
+
+        updateState({
+          session: data || undefined,
+          isHost: user.id === data.createdBy,
+          players: Object.values(data.players).sort(
+            (a, b) => a.joinedAt - b.joinedAt
+          ),
+          myPlayer: data.players[user.id],
+        });
       },
     });
 
     return () => unsubscribe?.();
   }, []);
 
+  const isAllReady = state?.players.every((player) => player.isReady);
+
   React.useEffect(() => {
-    if (session === null) {
-      showToast("Game not found!", "error");
-      navigate("/");
-    }
-  }, [session]);
+    updateState({
+      isAllReady,
+      players: 
+    });
+  }, [isAllReady]);
 
-  if (!session || !user || !session.players[user.id]) return <LoadingOverlay />;
+  if (!state) return <LoadingOverlay />;
 
-  const players = Object.values(session?.players).sort(
-    (a, b) => a.joinedAt - b.joinedAt
-  );
-
-  const player = session.players[user.id];
-
-  const isHost = user.id === session.createdBy;
-
-  return (
-    <div className={styles.message}>
-      <Game
-        session={session}
-        user={user}
-        isHost={isHost}
-        players={players}
-        player={player}
-      />
-    </div>
-  );
+  return <Game state={state} />;
 };

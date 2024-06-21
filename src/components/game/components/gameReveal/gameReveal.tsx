@@ -3,20 +3,18 @@ import * as React from "react";
 import { Button, CharacterCard } from "components";
 import { charactersDefault } from "consts";
 import { updateDocument, updatePlayer } from "services";
-import { GameSession } from "types";
+import { GameSession, Player } from "types";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const GameReveal = (props: Props) => {
-  const { session, user, players, isHost, className } = props;
+  const { state, className } = props;
 
   const [showCharacter, setShowCharacter] = React.useState(false);
   const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false);
 
-  const characterId = session.players[user.id].characterId;
-
-  const isAllReady = players.every((player) => player.isReadyCharacterReveal);
+  const characterId = state.session.players[state.myPlayer.id].characterId;
 
   const handleReveal = () => {
     setIsCharacterRevealed(true);
@@ -24,24 +22,34 @@ export const GameReveal = (props: Props) => {
   };
 
   const handleReady = () => {
-    updatePlayer(user.id, session, {
+    updatePlayer(state.myPlayer.id, state.session, {
       isReadyCharacterReveal: true,
     });
   };
 
   const handleAllReady = async () => {
+    const updatedPlayers: Record<string, Player> = {};
+
+    state.players.forEach((player, index) => {
+      updatedPlayers[player.id] = {
+        ...player,
+        isReady: false,
+      };
+    });
+
     await updateDocument<GameSession>({
-      id: session.id,
+      id: state.session.id,
       collection: "sessions",
       data: {
         step: "ritual",
+        players: updatedPlayers,
       },
     });
   };
 
   React.useEffect(() => {
-    if (isHost && isAllReady) handleAllReady();
-  }, [isAllReady]);
+    if (state.isHost && state.isAllReady) handleAllReady();
+  }, [state.isAllReady]);
 
   return (
     <div className={styles.container}>
@@ -71,7 +79,7 @@ export const GameReveal = (props: Props) => {
         onClick={handleReady}
         disabled={
           !isCharacterRevealed ||
-          session.players[user.id].isReadyCharacterReveal
+          state.session.players[state.myPlayer.id].isReadyCharacterReveal
         }
         className={styles.readyButton}
       />

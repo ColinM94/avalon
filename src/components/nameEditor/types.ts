@@ -1,8 +1,7 @@
-import { GameSession, User } from "types";
+import { GameSession, Player, User } from "types";
 
 export interface Props {
-  user: User;
-  userId: string;
+  myPlayer: Player;
   session: GameSession;
   show: boolean;
   setShow: (show: boolean) => void;

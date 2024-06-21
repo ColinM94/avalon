@@ -1,14 +1,11 @@
-import * as React from "react";
 import { deleteField } from "firebase/firestore";
 
 import { MainLayout } from "layouts";
 import { useToastStore } from "stores";
 import { User } from "types";
 import { deleteDocument, updateDocument, updatePlayer } from "services";
-import { Button } from "components";
-import { classes } from "utils";
 
-import { PlayPlayers } from "./components/gamePlayers/playPlayers";
+import { GamePlayers } from "./components/gamePlayers/gamePlayers";
 import { GameRitual } from "./components/gameRitual/gameRitual";
 import { GameReveal } from "./components/gameReveal/gameReveal";
 import { GameLobby } from "./components/gameLobby/gameLobby";
@@ -17,9 +14,7 @@ import { GameQuests } from "./components/gameQuests/gameQuests";
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const Game = (props: Props) => {
-  const { session, user, players, isHost, player } = props;
-
+export const Game = ({ state }: Props) => {
   const { showToast } = useToastStore();
 
   const handleLeave = async () => {
@@ -32,14 +27,14 @@ export const Game = (props: Props) => {
 
       const promises = [
         updateDocument({
-          id: session.id,
+          id: state.session.id,
           collection: "sessions",
           data: {
-            [`players.${user.id}`]: deleteField(),
+            [`players.${state.myPlayer.id}`]: deleteField(),
           },
         }),
         updateDocument<User>({
-          id: user.id,
+          id: state.myPlayer.id,
           collection: "users",
           data: {
             sessionId: null,
@@ -47,10 +42,10 @@ export const Game = (props: Props) => {
         }),
       ];
 
-      if (isHost || session.step !== "lobby") {
+      if (state.isHost || state.session.step !== "lobby") {
         promises.push(
           deleteDocument({
-            id: session.id,
+            id: state.session.id,
             collection: "sessions",
           })
         );
@@ -63,7 +58,7 @@ export const Game = (props: Props) => {
   };
 
   const heading = () => {
-    switch (session.step) {
+    switch (state.session.step) {
       case "lobby":
         return "Lobby";
       case "characterReveal":
@@ -75,8 +70,10 @@ export const Game = (props: Props) => {
     }
   };
 
+  const isAllReady = state.players.every((player) => player.isReady);
+
   const setIsReady = () => {
-    updatePlayer(user.id, session, {
+    updatePlayer(state.myPlayer.id, state.session, {
       isReady: true,
     });
   };
@@ -89,45 +86,20 @@ export const Game = (props: Props) => {
         onCloseClick={handleLeave}
         className={styles.container}
       >
-        {session.step === "lobby" && (
-          <GameLobby
-            session={session}
-            players={players}
-            player={player}
-            isHost={isHost}
-            setIsReady={setIsReady}
-          />
+        {state.session.step === "lobby" && (
+          <GameLobby state={state} setIsReady={setIsReady} />
         )}
 
-        {session.step === "characterReveal" && (
-          <GameReveal
-            session={session}
-            players={players}
-            user={user}
-            isHost={isHost}
-          />
+        {state.session.step === "characterReveal" && (
+          <GameReveal state={state} />
         )}
 
-        {session.step === "ritual" && (
-          <GameRitual
-            session={session}
-            isHost={isHost}
-            user={user}
-            players={players}
-          />
-        )}
+        {state.session.step === "ritual" && <GameRitual state={state} />}
 
-        {session.step === "quests" && (
-          <GameQuests session={session} isHost={isHost} />
-        )}
+        {state.session.step === "quests" && <GameQuests state={state} />}
       </MainLayout>
 
-      <PlayPlayers
-        session={session}
-        players={players}
-        isHost={isHost}
-        className={styles.players}
-      />
+      <GamePlayers state={state} className={styles.players} />
     </>
   );
 };

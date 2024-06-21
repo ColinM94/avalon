@@ -12,48 +12,44 @@ import { ReadyButton } from "components";
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const GameLobby = (props: Props) => {
-  const { session, players, player, isHost, setIsReady, className } = props;
-
+export const GameLobby = ({ state, className }: Props) => {
   const { showToast } = useToastStore();
 
-  const url = `${baseUrl}/join/${session.id}`;
+  const url = `${baseUrl}/join/${state.session.id}`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(url);
     showToast("Url copied to clipboard", "info");
   };
 
-  const isAllReady = players.every((player) => player.isReady);
-
   React.useEffect(() => {
-    if (isHost && isAllReady) handleAllReady();
-  }, [isAllReady]);
+    (async () => {
+      if (!state.isHost || !state.isAllReady) return;
 
-  const handleAllReady = async () => {
-    const updatedPlayers: Record<string, Player> = {};
+      const updatedPlayers: Record<string, Player> = {};
 
-    players.forEach((player, index) => {
-      updatedPlayers[player.id] = {
-        ...player,
-        characterId: session.characters[index],
-        isReady: false,
-      };
-    });
+      state.players.forEach((player, index) => {
+        updatedPlayers[player.id] = {
+          ...player,
+          characterId: state.session.characters[index],
+          isReady: false,
+        };
+      });
 
-    await updateDocument<GameSession>({
-      id: session.id,
-      collection: "sessions",
-      data: {
-        step: "characterReveal",
-        players: updatedPlayers,
-      },
-    });
-  };
+      await updateDocument<GameSession>({
+        id: state.session.id,
+        collection: "sessions",
+        data: {
+          step: "characterReveal",
+          players: updatedPlayers,
+        },
+      });
+    })();
+  }, [state.isAllReady]);
 
   return (
     <div className={classes(styles.container, className)}>
-      <div className={styles.joinCode}>{session.id}</div>
+      <div className={styles.joinCode}>{state.session.id}</div>
 
       <QRCode value={url} />
 
@@ -62,7 +58,7 @@ export const GameLobby = (props: Props) => {
         <FontAwesomeIcon icon="copy" className={styles.copyIcon} />
       </div>
 
-      <ReadyButton isReady={player.isReady} onClick={setIsReady} />
+      <ReadyButton isReady={state.myPlayer.isReady} onClick={setIsReady} />
     </div>
   );
 };

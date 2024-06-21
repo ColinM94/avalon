@@ -1,8 +1,6 @@
-import { GameSession, Player } from "types";
+import { GameState } from "types/game";
 
 export interface Props {
-  session: GameSession;
-  players: Player[];
-  isHost: boolean;
+  state: GameState;
   className?: string;
 }

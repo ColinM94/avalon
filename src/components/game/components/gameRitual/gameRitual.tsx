@@ -20,7 +20,7 @@ const instructions = [
 ];
 
 export const GameRitual = (props: Props) => {
-  const { session, isHost, user, players } = props;
+  const { session, isHost, myPlayer, players } = props;
 
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
   const currentInstruction = React.useRef(-1);
@@ -102,7 +102,7 @@ export const GameRitual = (props: Props) => {
   };
 
   const handleReady = () => {
-    updatePlayer(user.id, session, {
+    updatePlayer(myPlayer.id, session, {
       isReadyRitual: true,
     });
   };

@@ -7,14 +7,18 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const NameEditor = (props: Props) => {
-  const { show, setShow, user, session } = props;
+  const { show, setShow, session, myPlayer } = props;
 
-  const [name, setName] = React.useState(user.name);
+  const [name, setName] = React.useState(myPlayer.name);
+
+  React.useEffect(() => {
+    setName(name);
+  }, [myPlayer.name]);
 
   const handleSave = async () => {
     setShow(false);
 
-    updatePlayer(user.id, session, {
+    updatePlayer(myPlayer.id, session, {
       name,
     });
   };
