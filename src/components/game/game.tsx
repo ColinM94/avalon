@@ -70,8 +70,6 @@ export const Game = ({ state }: Props) => {
     }
   };
 
-  const isAllReady = state.players.every((player) => player.isReady);
-
   const setIsReady = () => {
     updatePlayer(state.myPlayer.id, state.session, {
       isReady: true,
@@ -91,12 +89,16 @@ export const Game = ({ state }: Props) => {
         )}
 
         {state.session.step === "characterReveal" && (
-          <GameReveal state={state} />
+          <GameReveal state={state} setIsReady={setIsReady} />
         )}
 
-        {state.session.step === "ritual" && <GameRitual state={state} />}
+        {state.session.step === "ritual" && (
+          <GameRitual state={state} setIsReady={setIsReady} />
+        )}
 
-        {state.session.step === "quests" && <GameQuests state={state} />}
+        {state.session.step === "quests" && (
+          <GameQuests state={state} setIsReady={setIsReady} />
+        )}
       </MainLayout>
 
       <GamePlayers state={state} className={styles.players} />

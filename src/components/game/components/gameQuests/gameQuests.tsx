@@ -1,16 +1,20 @@
-import { Quest } from "types";
-
 import { QuestsQuest } from "./components/questsQuest/questsQuest";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
-export const GameQuests = ({ session, isHost }: Props) => {
+export const GameQuests = ({ state, setIsReady }: Props) => {
   const quests = () => {
     const items = [];
 
     for (let i = 1; i <= 5; i++) {
-      const quest = session[`quest${i}`] as Quest;
+      let quest = state.session.quest1;
+
+      // TODO: replace this shitty fix for a TS error.
+      if (i === 2) quest = state.session.quest2;
+      if (i === 3) quest = state.session.quest2;
+      if (i === 4) quest = state.session.quest2;
+      if (i === 5) quest = state.session.quest2;
 
       items.push(<QuestsQuest quest={quest} className={styles.quest} />);
     }

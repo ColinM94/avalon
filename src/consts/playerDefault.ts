@@ -11,5 +11,6 @@ export const playerDefault = (): Player => {
     isReadyCharacterReveal: false,
     isReadyRitual: false,
     joinedAt: 0,
+    isReady: false,
   };
 };

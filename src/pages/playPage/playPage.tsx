@@ -48,7 +48,6 @@ export const PlayPage = () => {
   React.useEffect(() => {
     updateState({
       isAllReady,
-      players: 
     });
   }, [isAllReady]);
 

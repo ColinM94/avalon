@@ -12,7 +12,7 @@ import { ReadyButton } from "components";
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const GameLobby = ({ state, className }: Props) => {
+export const GameLobby = ({ state, setIsReady, className }: Props) => {
   const { showToast } = useToastStore();
 
   const url = `${baseUrl}/join/${state.session.id}`;

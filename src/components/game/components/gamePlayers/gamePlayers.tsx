@@ -7,22 +7,22 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const GamePlayers = (props: Props) => {
-  const { session, players, isHost, myPlayer, className } = props;
+  const { state, className } = props;
 
   const renderPlayers = () => {
     const items = [];
 
-    for (let i = 0; i < session.numPlayers; i++) {
-      const tempPlayer = players[i] || playerDefault();
+    for (let i = 0; i < state.session.numPlayers; i++) {
+      const tempPlayer = state.players[i] || playerDefault();
 
       items.push(
         <GamePlayersItem
           player={tempPlayer}
-          myPlayer={myPlayer}
-          session={session}
-          connected={!!players[i]}
+          myPlayer={state.myPlayer}
+          session={state.session}
+          connected={!!state.players[i]}
           key={i}
-          isHost={isHost}
+          isHost={state.isHost}
         />
       );
     }

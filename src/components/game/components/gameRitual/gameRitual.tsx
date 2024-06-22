@@ -19,9 +19,7 @@ const instructions = [
   "7. Everyone, open your eyes.",
 ];
 
-export const GameRitual = (props: Props) => {
-  const { session, isHost, myPlayer, players } = props;
-
+export const GameRitual = ({ state }: Props) => {
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
   const currentInstruction = React.useRef(-1);
 
@@ -54,7 +52,7 @@ export const GameRitual = (props: Props) => {
 
   const setIsFinished = (isFinished: boolean) => {
     updateDocument<GameSession>({
-      id: session.id,
+      id: state.session.id,
       collection: "sessions",
       data: {
         isRitualFinished: isFinished,
@@ -93,7 +91,7 @@ export const GameRitual = (props: Props) => {
 
   const handleStartGame = () => {
     updateDocument<GameSession>({
-      id: session.id,
+      id: state.session.id,
       collection: "sessions",
       data: {
         step: "quests",
@@ -102,16 +100,16 @@ export const GameRitual = (props: Props) => {
   };
 
   const handleReady = () => {
-    updatePlayer(myPlayer.id, session, {
+    updatePlayer(state.myPlayer.id, state.session, {
       isReadyRitual: true,
     });
   };
 
-  const isAllReady = players.every((player) => player.isReadyRitual);
+  const isAllReady = state.players.every((player) => player.isReadyRitual);
 
   const handleAllReady = async () => {
     await updateDocument<GameSession>({
-      id: session.id,
+      id: state.session.id,
       collection: "sessions",
       data: {
         step: "quests",
@@ -120,12 +118,12 @@ export const GameRitual = (props: Props) => {
   };
 
   React.useEffect(() => {
-    if (isHost && isAllReady) handleAllReady();
+    if (state.isHost && isAllReady) handleAllReady();
   }, [isAllReady]);
 
   return (
     <div className={styles.container}>
-      {isHost && (
+      {state.isHost && (
         <>
           <audio
             controls
@@ -177,7 +175,7 @@ export const GameRitual = (props: Props) => {
         </>
       )}
 
-      {!isHost && (
+      {!state.isHost && (
         <div className={styles.description}>
           The Host will perform the ritual!
         </div>
