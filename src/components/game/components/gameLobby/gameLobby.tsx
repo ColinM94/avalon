@@ -4,15 +4,15 @@ import { QRCode } from "react-qrcode-logo";
 
 import { classes } from "utils";
 import { useToastStore } from "stores";
-import { updateDocument } from "services";
 import { baseUrl } from "consts";
-import { GameSession, Player } from "types";
+import { Player } from "types";
 import { ReadyButton } from "components";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const GameLobby = ({ state, setIsReady, className }: Props) => {
+export const GameLobby = (props: Props) => {
+  const { state, setIsReady, className } = props;
   const { showToast } = useToastStore();
 
   const url = `${baseUrl}/join/${state.session.id}`;
@@ -36,13 +36,9 @@ export const GameLobby = ({ state, setIsReady, className }: Props) => {
         };
       });
 
-      await updateDocument<GameSession>({
-        id: state.session.id,
-        collection: "sessions",
-        data: {
-          step: "characterReveal",
-          players: updatedPlayers,
-        },
+      state.updateSession({
+        players: updatedPlayers,
+        step: "characterReveal",
       });
     })();
   }, [state.isAllReady]);
@@ -58,7 +54,10 @@ export const GameLobby = ({ state, setIsReady, className }: Props) => {
         <FontAwesomeIcon icon="copy" className={styles.copyIcon} />
       </div>
 
-      <ReadyButton isReady={state.myPlayer.isReady} onClick={setIsReady} />
+      <ReadyButton
+        isReady={state.myPlayer.isReady}
+        onClick={() => setIsReady(true)}
+      />
     </div>
   );
 };

@@ -1,11 +1,11 @@
-import { Button, CharacterCard, Modal } from "components";
+import { CharacterCard } from "components";
 import { charactersDefault } from "consts";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const CharacterRevealer = (props: Props) => {
-  const { characterId, show, setShow, onReveal } = props;
+  const { characterId, show } = props;
 
   return (
     <>

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { useAppStore, useToastStore } from "stores";
 import { GameSession } from "types";
-import { getDocumentSnapshot } from "services";
+import { getDocumentSnapshot, updateDocument } from "services";
 import { Game, LoadingOverlay } from "components";
 import { reactReducer } from "utils";
 import { GameState } from "types/game";
@@ -43,7 +43,35 @@ export const PlayPage = () => {
     return () => unsubscribe?.();
   }, []);
 
-  const isAllReady = state?.players.every((player) => player.isReady);
+  const isAllReady = !!state?.players?.every((player) => player.isReady);
+
+  const updateSession = async (update: Partial<GameSession>) => {
+    try {
+      if (!state?.session) return;
+
+      if (Object.values(update).length !== 1 || !update.step)
+        await updateDocument<GameSession>({
+          id: state.session.id,
+          collection: "sessions",
+          data: {
+            ...update,
+            step: state.session.step,
+          },
+        });
+
+      if (update.step) {
+        await updateDocument<GameSession>({
+          id: state.session.id,
+          collection: "sessions",
+          data: {
+            step: update.step,
+          },
+        });
+      }
+    } catch (error) {
+      showToast(String(error), "error");
+    }
+  };
 
   React.useEffect(() => {
     updateState({
@@ -51,7 +79,13 @@ export const PlayPage = () => {
     });
   }, [isAllReady]);
 
-  if (!state) return <LoadingOverlay />;
+  React.useEffect(() => {
+    updateState({
+      updateSession,
+    });
+  }, [state?.session?.id]);
+
+  if (!state?.session) return <LoadingOverlay />;
 
   return <Game state={state} />;
 };

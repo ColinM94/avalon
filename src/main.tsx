@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
-import { LoadingOverlay, Splash, Toast } from "components";
+import { Splash, Toast } from "components";
 import { getDocumentSnapshot, setDocument } from "services";
 import { User } from "types";
 import { useAppStore } from "stores";

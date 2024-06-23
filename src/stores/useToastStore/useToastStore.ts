@@ -20,7 +20,7 @@ const showToast = (
 
 export const useToastStore = createZustandStore<ToastState>({
   name: "toast",
-  data: (set, get) => ({
+  data: (set) => ({
     toast: null,
     showToast: (text, type) => showToast(set, text, type),
     deleteToast: () => set({ toast: null }),

@@ -4,20 +4,20 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const InputNumber = (props: Props) => {
-  const { value, setValue, min, max, className } = props;
+  const { value, setValue, className } = props;
 
   const classNames = classes(styles.container, className);
 
-  const handleIncrement = () => {
-    if (max && value >= max) return;
-    setValue(value + 1);
-  };
+  // const handleIncrement = () => {
+  //   if (max && value >= max) return;
+  //   setValue(value + 1);
+  // };
 
-  const handleDecrement = () => {
-    if (min && value <= min) return;
+  // const handleDecrement = () => {
+  //   if (min && value <= min) return;
 
-    setValue(value - 1);
-  };
+  //   setValue(value - 1);
+  // };
 
   return (
     <div className={classNames}>

@@ -1,8 +1,7 @@
-import { playerDefault, sessionDefault } from "consts";
+import { playerDefault, userDefault } from "consts";
 
 import { AppState } from "./types";
 import { createZustandStore } from "../createZustandStore";
-import { userDefault } from "consts/userDefault";
 
 export const useAppStore = createZustandStore<AppState>({
   name: "app",

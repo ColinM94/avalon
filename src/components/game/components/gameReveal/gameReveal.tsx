@@ -2,14 +2,14 @@ import * as React from "react";
 
 import { Button, CharacterCard } from "components";
 import { charactersDefault } from "consts";
-import { updateDocument, updatePlayer } from "services";
-import { GameSession, Player } from "types";
+import { Player } from "types";
+import { classes } from "utils";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const GameReveal = (props: Props) => {
-  const { state, className } = props;
+  const { state, setIsReady, className } = props;
 
   const [showCharacter, setShowCharacter] = React.useState(false);
   const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false);
@@ -21,29 +21,19 @@ export const GameReveal = (props: Props) => {
     setShowCharacter(!showCharacter);
   };
 
-  const handleReady = () => {
-    updatePlayer(state.myPlayer.id, state.session, {
-      isReadyCharacterReveal: true,
-    });
-  };
-
   const handleAllReady = async () => {
     const updatedPlayers: Record<string, Player> = {};
 
-    state.players.forEach((player, index) => {
+    state.players.forEach((player) => {
       updatedPlayers[player.id] = {
         ...player,
         isReady: false,
       };
     });
 
-    await updateDocument<GameSession>({
-      id: state.session.id,
-      collection: "sessions",
-      data: {
-        step: "ritual",
-        players: updatedPlayers,
-      },
+    state.updateSession({
+      step: "ritual",
+      players: updatedPlayers,
     });
   };
 
@@ -52,7 +42,7 @@ export const GameReveal = (props: Props) => {
   }, [state.isAllReady]);
 
   return (
-    <div className={styles.container}>
+    <div className={classes(styles.container, className)}>
       <div className={styles.description}>
         Do not let anyone see your character!
       </div>
@@ -76,7 +66,7 @@ export const GameReveal = (props: Props) => {
 
       <Button
         label="Ready"
-        onClick={handleReady}
+        onClick={() => setIsReady(true)}
         disabled={
           !isCharacterRevealed ||
           state.session.players[state.myPlayer.id].isReadyCharacterReveal

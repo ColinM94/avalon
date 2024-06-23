@@ -1,5 +1,5 @@
 import { charactersDefault } from "consts";
-import { CharacterCard, Header } from "components";
+import { CharacterCard } from "components";
 import { MainLayout } from "layouts";
 
 import styles from "./styles.module.scss";

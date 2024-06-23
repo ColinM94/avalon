@@ -1,4 +1,4 @@
-import { GameSession, Player, User } from "types";
+import { GameSession, User } from "types";
 
 export interface Props {
   session: GameSession;

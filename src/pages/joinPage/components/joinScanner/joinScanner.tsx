@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { Scanner } from "@yudiel/react-qr-scanner";
 
 import { Modal } from "components";

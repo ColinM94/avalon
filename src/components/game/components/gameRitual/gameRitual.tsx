@@ -19,7 +19,7 @@ const instructions = [
   "7. Everyone, open your eyes.",
 ];
 
-export const GameRitual = ({ state }: Props) => {
+export const GameRitual = ({ state, setIsReady }: Props) => {
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
   const currentInstruction = React.useRef(-1);
 
@@ -89,37 +89,25 @@ export const GameRitual = ({ state }: Props) => {
     audioPlayer.current.play();
   }, [audio]);
 
-  const handleStartGame = () => {
-    updateDocument<GameSession>({
-      id: state.session.id,
-      collection: "sessions",
-      data: {
-        step: "quests",
-      },
-    });
-  };
-
-  const handleReady = () => {
-    updatePlayer(state.myPlayer.id, state.session, {
-      isReadyRitual: true,
-    });
-  };
-
-  const isAllReady = state.players.every((player) => player.isReadyRitual);
+  // const handleStartGame = () => {
+  //   updateDocument<GameSession>({
+  //     id: state.session.id,
+  //     collection: "sessions",
+  //     data: {
+  //       step: "quests",
+  //     },
+  //   });
+  // };
 
   const handleAllReady = async () => {
-    await updateDocument<GameSession>({
-      id: state.session.id,
-      collection: "sessions",
-      data: {
-        step: "quests",
-      },
+    state.updateSession({
+      step: "quests",
     });
   };
 
   React.useEffect(() => {
-    if (state.isHost && isAllReady) handleAllReady();
-  }, [isAllReady]);
+    if (state.isHost && state.isAllReady) handleAllReady();
+  }, [state.isAllReady]);
 
   return (
     <div className={styles.container}>
@@ -183,7 +171,7 @@ export const GameRitual = ({ state }: Props) => {
 
       <Button
         label="Ready"
-        onClick={handleReady}
+        onClick={() => setIsReady(true)}
         // disabled={
         //   !session.isRitualFinished || session.players[user.id].isReadyRitual
         // }

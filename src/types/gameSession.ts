@@ -3,9 +3,6 @@ export type Player = {
   name: string;
   isHost: boolean;
   isReady: boolean;
-  isReadyLobby: boolean;
-  isReadyCharacterReveal: boolean;
-  isReadyRitual: boolean;
   joinedAt: number;
   characterId: string;
 };

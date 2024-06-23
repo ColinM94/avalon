@@ -6,4 +6,5 @@ export type GameState = {
   myPlayer: Player;
   isHost: boolean;
   isAllReady: boolean;
+  updateSession: (update: Partial<GameSession>) => void;
 };

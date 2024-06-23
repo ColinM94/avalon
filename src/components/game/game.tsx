@@ -70,9 +70,9 @@ export const Game = ({ state }: Props) => {
     }
   };
 
-  const setIsReady = () => {
+  const setIsReady = (isReady: boolean) => {
     updatePlayer(state.myPlayer.id, state.session, {
-      isReady: true,
+      isReady: isReady,
     });
   };
 
