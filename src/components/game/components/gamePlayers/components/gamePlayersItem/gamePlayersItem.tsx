@@ -10,22 +10,22 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const GamePlayersItem = (props: Props) => {
-  const { session, player, myPlayer, connected, isHost, className } = props;
+  const { state, player, connected, isHost, className } = props;
 
   const [showNameEditor, setShowNameEditor] = React.useState(false);
 
-  const isMyPlayer = player.id === myPlayer.id;
-  const showKick = isHost && player.id !== myPlayer.id && connected;
+  const isMyPlayer = player.id === state.myPlayer.id;
+  const showKick = isHost && player.id !== state.myPlayer.id && connected;
 
   const handleKick = async () => {
-    if (session.step !== "lobby") return;
+    if (state.session.step !== "lobby") return;
 
     const shouldKick = confirm(`Are you sure you want to kick ${player.name}`);
 
     if (!shouldKick) return;
 
     await updateDocument({
-      id: session.id,
+      id: state.session.id,
       collection: "sessions",
       data: {
         [`players.${player.id}`]: deleteField(),
@@ -40,12 +40,12 @@ export const GamePlayersItem = (props: Props) => {
 
   return (
     <>
-      {player.id === myPlayer.id && (
+      {player.id === state.myPlayer.id && (
         <NameEditor
-          myPlayer={myPlayer}
+          myPlayer={state.myPlayer}
           show={showNameEditor}
           setShow={setShowNameEditor}
-          session={session}
+          session={state.session}
         />
       )}
 
@@ -63,7 +63,7 @@ export const GamePlayersItem = (props: Props) => {
           <FontAwesomeIcon icon="crown" className={styles.hostIcon} />
         )}
 
-        {showKick && session.step === "lobby" && (
+        {showKick && state.session.step === "lobby" && (
           <FontAwesomeIcon icon="x" className={styles.kickIcon} />
         )}
 
@@ -77,7 +77,7 @@ export const GamePlayersItem = (props: Props) => {
 
         {player.name}
 
-        {player.isReady && (
+        {player.isReady && state.session.step !== "quests" && (
           <FontAwesomeIcon icon="check" className={styles.readyIcon} />
         )}
       </div>

@@ -17,9 +17,8 @@ export const GamePlayers = (props: Props) => {
 
       items.push(
         <GamePlayersItem
+          state={state}
           player={tempPlayer}
-          myPlayer={state.myPlayer}
-          session={state.session}
           connected={!!state.players[i]}
           key={i}
           isHost={state.isHost}

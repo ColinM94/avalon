@@ -17,6 +17,7 @@ export type GameSession = {
   name: string;
   // players: string[];
   players: Record<string, Player>;
+  leaderId: string;
   quest1: Quest;
   quest2: Quest;
   quest3: Quest;
