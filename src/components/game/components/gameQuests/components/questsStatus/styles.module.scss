@@ -1,18 +1,24 @@
 .container {
-  border-radius: 50%;
-  background-color: vars.$color-surface;
-  padding: vars.$spacing-tertiary;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: vars.$font-size-body2;
-  aspect-ratio: 1;
-}
+  flex-direction: row;
+  gap: vars.$spacing-primary;
 
-.failed {
-  background-color: vars.$color-danger;
-}
+  .quest {
+    border-radius: 50%;
+    background-color: vars.$color-surface;
+    padding: vars.$spacing-tertiary;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: vars.$font-size-body2;
+    aspect-ratio: 1;
+    flex: 1;
+  }
 
-.succeeded {
-  background-color: vars.$color-success;
+  .questFailed {
+    background-color: vars.$color-danger;
+  }
+
+  .questSucceeded {
+    background-color: vars.$color-success;
+  }
 }

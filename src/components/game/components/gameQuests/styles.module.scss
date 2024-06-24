@@ -2,14 +2,8 @@
   flex: 1;
   width: 100%;
 
-  .quests {
-    flex-direction: row;
-    gap: vars.$spacing-primary;
+  .questsStatus {
     margin-top: auto;
     width: 100%;
-
-    .quest {
-      flex: 1;
-    }
   }
 }

@@ -69,7 +69,7 @@ export const GameReveal = (props: Props) => {
         onClick={() => setIsReady(true)}
         disabled={
           !isCharacterRevealed ||
-          state.session.players[state.myPlayer.id].isReadyCharacterReveal
+          state.session.players[state.myPlayer.id].isReady
         }
         className={styles.readyButton}
       />

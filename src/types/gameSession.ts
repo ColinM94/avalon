@@ -10,6 +10,9 @@ export type Player = {
 export type Quest = {
   index: number;
   status: "incomplete" | "fail" | "success";
+  numPlayers: number;
+  leaderId: string;
+  players: string[];
 };
 
 export type GameSession = {
@@ -18,14 +21,11 @@ export type GameSession = {
   // players: string[];
   players: Record<string, Player>;
   leaderId: string;
-  quest1: Quest;
-  quest2: Quest;
-  quest3: Quest;
-  quest4: Quest;
-  quest5: Quest;
+  quests: Record<number, Quest>;
   step: "lobby" | "characterReveal" | "ritual" | "quests";
   isRitualFinished: boolean;
   numPlayers: number;
   characters: string[];
   createdBy: string;
+  activeQuest: number;
 };

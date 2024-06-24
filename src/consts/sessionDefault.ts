@@ -11,25 +11,44 @@ export const sessionDefault = (): GameSession => {
     step: "lobby",
     characters: [],
     isRitualFinished: false,
-    quest1: {
-      index: 1,
-      status: "incomplete",
+    activeQuest: 0,
+    quests: {
+      0: {
+        index: 0,
+        status: "incomplete",
+        numPlayers: 5,
+        leaderId: "",
+        players: [],
+      },
+      1: {
+        index: 1,
+        status: "incomplete",
+        numPlayers: 5,
+        leaderId: "",
+        players: [],
+      },
+      2: {
+        index: 2,
+        status: "incomplete",
+        numPlayers: 5,
+        leaderId: "",
+        players: [],
+      },
+      3: {
+        index: 3,
+        status: "incomplete",
+        numPlayers: 5,
+        leaderId: "",
+        players: [],
+      },
+      4: {
+        index: 4,
+        status: "incomplete",
+        numPlayers: 5,
+        leaderId: "",
+        players: [],
+      },
     },
-    quest2: {
-      index: 2,
-      status: "incomplete",
-    },
-    quest3: {
-      index: 3,
-      status: "incomplete",
-    },
-    quest4: {
-      index: 4,
-      status: "incomplete",
-    },
-    quest5: {
-      index: 5,
-      status: "incomplete",
-    },
+    leaderId: "",
   };
 };

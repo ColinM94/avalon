@@ -49,22 +49,24 @@ export const PlayPage = () => {
     try {
       if (!state?.session) return;
 
-      if (Object.values(update).length !== 1 || !update.step)
-        await updateDocument<GameSession>({
-          id: state.session.id,
-          collection: "sessions",
-          data: {
-            ...update,
-            step: state.session.step,
-          },
-        });
+      let step = update.step;
 
-      if (update.step) {
+      if (Object.values(update).length !== 1 || !update.step) {
+        delete update.step;
+
+        await updateDocument<GameSession>({
+          id: state.session.id,
+          collection: "sessions",
+          data: update,
+        });
+      }
+
+      if (step) {
         await updateDocument<GameSession>({
           id: state.session.id,
           collection: "sessions",
           data: {
-            step: update.step,
+            step: step,
           },
         });
       }
@@ -85,7 +87,7 @@ export const PlayPage = () => {
     });
   }, [state?.session?.id]);
 
-  if (!state?.session) return <LoadingOverlay />;
+  if (!state?.session || !state.myPlayer) return <LoadingOverlay />;
 
   return <Game state={state} />;
 };

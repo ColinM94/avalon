@@ -16,6 +16,7 @@ import { Props } from "./types";
 
 export const Game = ({ state }: Props) => {
   const { showToast } = useToastStore();
+  // const navigate = useNavigate();
 
   const handleLeave = async () => {
     try {
@@ -75,6 +76,8 @@ export const Game = ({ state }: Props) => {
       isReady: isReady,
     });
   };
+
+  console.log(state.session.step);
 
   return (
     <>

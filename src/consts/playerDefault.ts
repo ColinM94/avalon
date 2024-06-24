@@ -7,9 +7,6 @@ export const playerDefault = (): Player => {
     name: "",
     characterId: "",
     isHost: false,
-    isReadyLobby: false,
-    isReadyCharacterReveal: false,
-    isReadyRitual: false,
     joinedAt: 0,
     isReady: false,
   };

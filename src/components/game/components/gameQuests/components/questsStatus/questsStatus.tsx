@@ -4,30 +4,22 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const QuestsStatus = ({ state, className }: Props) => {
-  const { index, status } = quest;
-
   const quests = () => {
     const items = [];
 
-    for (let i = 1; i <= 5; i++) {
-      let quest = state.session.quest1;
-
-      // TODO: replace this shitty fix for a TS error.
-      if (i === 2) quest = state.session.quest2;
-      if (i === 3) quest = state.session.quest2;
-      if (i === 4) quest = state.session.quest2;
-      if (i === 5) quest = state.session.quest2;
+    for (let i = 0; i < 5; i++) {
+      let quest = state.session.quests[i];
 
       items.push(
         <div
+          key={i}
           className={classes(
-            styles.container,
-            status === "fail" && styles.failed,
-            status === "success" && styles.succeeded,
-            className
+            styles.quest,
+            quest.status === "fail" && styles.questFailed,
+            quest.status === "success" && styles.questSucceeded
           )}
         >
-          Q {index}
+          Q {i + 1}
         </div>
       );
     }
@@ -35,5 +27,5 @@ export const QuestsStatus = ({ state, className }: Props) => {
     return items;
   };
 
-  return { quests };
+  return <div className={classes(styles.container, className)}>{quests()}</div>;
 };

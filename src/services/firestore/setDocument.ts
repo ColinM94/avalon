@@ -11,16 +11,11 @@ interface Config<T> {
 
 export const setDocument = async <T>(config: Config<T>) => {
   try {
-    const shouldMerge = config.merge === undefined || config.merge === true;
-
     const collectionRef = collection(db, config.collection);
 
-    // NOTE if config.id is undefined, will create a new document, and can't be sent as second argument undefined (why?).
-    const docRef = config.id
-      ? doc(collectionRef, config.id)
-      : doc(collectionRef);
+    const docRef = doc(collectionRef, config.id);
 
-    await setDoc(docRef, config.data, { merge: shouldMerge });
+    await setDoc(docRef, config.data, { merge: config.merge });
 
     return true;
   } catch (error) {

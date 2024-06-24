@@ -1,0 +1,38 @@
+.container {
+  padding-top: vars.$spacing-primary;
+  gap: vars.$spacing-primary;
+
+  .explanation {
+    text-align: center;
+
+    .explanationHeading {
+      font-size: vars.$font-size-h1;
+    }
+
+    .explanationDescription {
+      color: vars.$color-text-secondary;
+    }
+  }
+
+  .players {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: vars.$spacing-primary;
+    margin-top: vars.$spacing-primary;
+
+    .player {
+      background-color: vars.$color-surface;
+      padding: vars.$spacing-primary;
+      border-radius: vars.$roundness;
+      flex: 0.333;
+      min-width: calc(33% - vars.$spacing-primary);
+      max-width: calc(33% - vars.$spacing-primary);
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .playerSelected {
+      background-color: vars.$color-success;
+    }
+  }
+}

@@ -55,7 +55,7 @@ export const GameLobby = (props: Props) => {
       </div>
 
       <ReadyButton
-        isReady={state.myPlayer.isReady}
+        isReady={state.myPlayer?.isReady}
         onClick={() => setIsReady(true)}
       />
     </div>

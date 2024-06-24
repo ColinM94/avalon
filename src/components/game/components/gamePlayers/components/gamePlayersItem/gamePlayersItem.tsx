@@ -16,6 +16,8 @@ export const GamePlayersItem = (props: Props) => {
 
   const isMyPlayer = player.id === state.myPlayer.id;
   const showKick = isHost && player.id !== state.myPlayer.id && connected;
+  const isLeader =
+    state.session.quests[state.session.activeQuest].leaderId === player.id;
 
   const handleKick = async () => {
     if (state.session.step !== "lobby") return;
@@ -34,6 +36,8 @@ export const GamePlayersItem = (props: Props) => {
   };
 
   const handleClick = () => {
+    if (state.session.step !== "lobby") return;
+
     if (showKick) handleKick();
     else setShowNameEditor(true);
   };
@@ -59,7 +63,7 @@ export const GamePlayersItem = (props: Props) => {
           isMyPlayer && styles.user
         )}
       >
-        {player.isHost && styles.hostIcon && (
+        {isLeader && (
           <FontAwesomeIcon icon="crown" className={styles.hostIcon} />
         )}
 

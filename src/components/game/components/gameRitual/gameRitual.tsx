@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "components";
 import { classes } from "utils";
 import { GameSession } from "types";
-import { updateDocument, updatePlayer } from "services";
+import { updateDocument } from "services";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";

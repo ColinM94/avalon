@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "components";
 import { Characters, GameSession } from "types";
-import { reactReducer, shuffleArray } from "utils";
+import { getQuestNumPlayers, reactReducer, shuffleArray } from "utils";
 import {
   charactersDefault,
   maxCharacters,
@@ -92,6 +92,13 @@ export const SetupPage = () => {
           .filter((character) => character.isActive)
           .map((character) => character.id)
       );
+
+      for (let i = 0; i < 5; i++) {
+        tempSession.quests[i] = {
+          ...tempSession.quests[i],
+          numPlayers: getQuestNumPlayers(i, tempSession.numPlayers),
+        };
+      }
 
       await setDocument({
         id: tempSession.id,
