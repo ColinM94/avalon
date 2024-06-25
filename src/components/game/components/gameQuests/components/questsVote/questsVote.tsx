@@ -2,12 +2,15 @@ import * as React from "react";
 
 import { classes, sentencifyArray } from "utils";
 import { Button, LoadingOverlay } from "components";
+import { useToastStore } from "stores";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const QuestsVote = (props: Props) => {
   const { state, activeQuest, className } = props;
+
+  const { showToast } = useToastStore();
 
   React.useEffect(() => {
     if (state.isHost && !state.session.leaderId) {
@@ -34,18 +37,24 @@ export const QuestsVote = (props: Props) => {
       updatedQuestPlayers.push(playerId);
     }
 
+    const updatedQuests = structuredClone(state.session.quests);
+
+    updatedQuests[activeQuest.index].players = updatedQuestPlayers;
+
     state.updateSession({
-      quests: {
-        ...state.session.quests,
-        [activeQuest.index]: {
-          ...activeQuest,
-          players: updatedQuestPlayers,
-        },
-      },
+      quests: updatedQuests,
     });
   };
 
-  const handleContinue = () => {};
+  const handleContinue = () => {
+    try {
+      if (activeQuest.numPlayers !== activeQuest.players.length) {
+        throw `Please select ${activeQuest.numPlayers} players.`;
+      }
+    } catch (error) {
+      showToast(String(error), "error");
+    }
+  };
 
   if (!activeQuest.leaderId) return <LoadingOverlay />;
 

@@ -1,6 +1,9 @@
 import { User } from "types";
 
-export interface AppState {
+export type State = {
   user: User;
-  updateUser: (update: Partial<User>) => void;
-}
+};
+
+export type Actions = {
+  updateAppStore: (update: Partial<State>) => void;
+};

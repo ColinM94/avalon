@@ -1,4 +1,3 @@
-export * from "./backButton/backButton";
 export * from "./button/button";
 export * from "./characterCard/characterCard";
 export * from "./characterRevealer/characterRevealer";

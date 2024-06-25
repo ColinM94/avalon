@@ -1,14 +1,13 @@
-import { playerDefault, userDefault } from "consts";
+import { userDefault } from "consts";
 
-import { AppState } from "./types";
+import { Actions, State } from "./types";
 import { createZustandStore } from "../createZustandStore";
 
-export const useAppStore = createZustandStore<AppState>({
+export const useAppStore = createZustandStore<State & Actions>({
   name: "app",
-  data: (set, get) => ({
-    player: playerDefault(),
+  data: (set) => ({
     user: userDefault(),
-    updateUser: (update) => set({ user: { ...get().user, ...update } }),
+    updateAppStore: (update) => set({ ...update }),
   }),
   storageType: "localStorage",
   persistState: true,

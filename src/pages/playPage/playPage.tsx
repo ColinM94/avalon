@@ -29,6 +29,13 @@ export const PlayPage = () => {
           return;
         }
 
+        if (data && !data.players[user.id]) {
+          console.log("hello");
+
+          navigate(`/`);
+          return;
+        }
+
         updateState({
           session: data || undefined,
           isHost: user.id === data.createdBy,

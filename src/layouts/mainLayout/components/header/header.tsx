@@ -15,7 +15,7 @@ export const Header = (props: Props) => {
       {showBackButton && (
         <Button
           icon="arrow-left"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className={styles.backButton}
           iconClassName={styles.buttonIcon}
         />

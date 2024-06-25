@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Divider, InputText, LoadingOverlay } from "components";
 import { useAppStore, useToastStore } from "stores";
@@ -49,7 +49,9 @@ export const JoinPage = () => {
         throw "This game has already started!";
       }
 
-      await updateDocument<User>({
+      const promises = [];
+
+      const promise1 = await updateDocument<User>({
         id: user.id,
         collection: "users",
         data: {
@@ -57,12 +59,14 @@ export const JoinPage = () => {
         },
       });
 
+      promises.push(promise1);
+
       if (
         !isAlreadyInLobby &&
         !session.players[user.id] &&
         session?.step === "lobby"
       ) {
-        await updateDocument({
+        const promise2 = await updateDocument({
           id: id,
           collection: "sessions",
           data: {
@@ -74,7 +78,11 @@ export const JoinPage = () => {
             },
           },
         });
+
+        promises.push(promise2);
       }
+
+      await Promise.all(promises);
     } catch (error) {
       showToast(String(error), "error");
     }

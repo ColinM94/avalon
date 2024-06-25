@@ -7,10 +7,12 @@ import { User } from "types";
 import { useAppStore } from "stores";
 
 export const Root = () => {
-  const { user, updateUser } = useAppStore();
+  const { user, updateAppStore } = useAppStore();
 
-  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  console.log(user);
 
   // User
   React.useEffect(() => {
@@ -28,7 +30,7 @@ export const Root = () => {
           return;
         }
 
-        updateUser(value);
+        updateAppStore({ user: value });
         return;
       },
     });
@@ -36,26 +38,15 @@ export const Root = () => {
     return () => unsubscribe?.();
   }, [user.id]);
 
-  // Session
-  // React.useEffect(() => {
-  //   const unsubscribe = getDocumentsSnapshot<GameSession>({
-  //     collection: "sessions",
-  //     where: [[`players.${user.id}`, "!=", null]],
-  //     callback: (sessions) => {
-  //       updateSession(sessions?.[0] || null);
-  //     },
-  //   });
-
-  //   return () => unsubscribe?.();
-  // }, [user.id]);
-
   React.useEffect(() => {
+    console.log("lloooop");
+
     if (user.sessionId && !pathname.includes("/play/")) {
       navigate(`/play/${user.sessionId}`);
     } else if (!user.sessionId && pathname.includes("/play/")) {
       navigate("/");
     }
-  }, [user.sessionId]);
+  }, [user.sessionId, pathname]);
 
   return (
     <>

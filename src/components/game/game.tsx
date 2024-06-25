@@ -50,9 +50,9 @@ export const Game = ({ state }: Props) => {
             collection: "sessions",
           })
         );
-
-        await Promise.all(promises);
       }
+
+      await Promise.all(promises);
     } catch (error) {
       showToast(String(error));
     }
