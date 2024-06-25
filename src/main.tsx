@@ -12,8 +12,6 @@ export const Root = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  console.log(user);
-
   // User
   React.useEffect(() => {
     const unsubscribe = getDocumentSnapshot<User>({
@@ -39,13 +37,12 @@ export const Root = () => {
   }, [user.id]);
 
   React.useEffect(() => {
-    console.log("lloooop");
-
-    if (user.sessionId && !pathname.includes("/play/")) {
-      navigate(`/play/${user.sessionId}`);
-    } else if (!user.sessionId && pathname.includes("/play/")) {
-      navigate("/");
-    }
+    // if (user.sessionId && !pathname.includes("/play/")) {
+    //   navigate(`/play/${user.sessionId}`);
+    // }
+    // else if (!user.sessionId && pathname.includes("/play/")) {
+    //   navigate("/");
+    // }
   }, [user.sessionId, pathname]);
 
   return (

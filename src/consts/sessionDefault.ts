@@ -12,6 +12,7 @@ export const sessionDefault = (): GameSession => {
     characters: [],
     isRitualFinished: false,
     activeQuest: 0,
+    isHostPlaying: true,
     quests: {
       0: {
         index: 0,

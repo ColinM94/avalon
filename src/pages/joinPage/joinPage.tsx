@@ -2,19 +2,14 @@ import * as React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Divider, InputText, LoadingOverlay } from "components";
-import { useAppStore, useToastStore } from "stores";
 import { MainLayout } from "layouts";
-import { playerDefault } from "consts";
-import { getDocument, updateDocument } from "services";
-import { GameSession, User } from "types";
 
 import { JoinScanner } from "./components/joinScanner/joinScanner";
 import styles from "./styles.module.scss";
 
 export const JoinPage = () => {
   const { sessionId } = useParams();
-  const { showToast } = useToastStore();
-  const { user } = useAppStore();
+  const navigate = useNavigate();
 
   const [code, setCode] = React.useState("");
   const [showScanner, setShowScanner] = React.useState(false);
@@ -24,68 +19,7 @@ export const JoinPage = () => {
   }, [sessionId]);
 
   const handleJoin = async (code: string) => {
-    try {
-      if (!code) throw "Invalid code!";
-
-      const id = sessionId || code;
-
-      const session = await getDocument<GameSession>({
-        id,
-        collection: "sessions",
-      });
-
-      if (!session) throw `Game ${id} not found!`;
-
-      const isAlreadyInLobby = session.players[user.id];
-
-      if (
-        !isAlreadyInLobby &&
-        Object.values(session.players).length >= session.numPlayers
-      ) {
-        throw "The game is full!";
-      }
-
-      if (!isAlreadyInLobby && session.step !== "lobby") {
-        throw "This game has already started!";
-      }
-
-      const promises = [];
-
-      const promise1 = await updateDocument<User>({
-        id: user.id,
-        collection: "users",
-        data: {
-          sessionId: id,
-        },
-      });
-
-      promises.push(promise1);
-
-      if (
-        !isAlreadyInLobby &&
-        !session.players[user.id] &&
-        session?.step === "lobby"
-      ) {
-        const promise2 = await updateDocument({
-          id: id,
-          collection: "sessions",
-          data: {
-            [`players.${user.id}`]: {
-              ...playerDefault(),
-              id: user.id,
-              name: user.name || "Player",
-              joinedAt: Date.now(),
-            },
-          },
-        });
-
-        promises.push(promise2);
-      }
-
-      await Promise.all(promises);
-    } catch (error) {
-      showToast(String(error), "error");
-    }
+    navigate(`/game/${code}`);
   };
 
   const openCamera = () => {

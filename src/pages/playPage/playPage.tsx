@@ -1,100 +1,81 @@
 import * as React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Unsubscribe } from "firebase/firestore";
 
-import { useAppStore, useToastStore } from "stores";
-import { GameSession } from "types";
+import { useAppStore, useSessionStore, useToastStore } from "stores";
+import { LoadingOverlay } from "components";
 import { getDocumentSnapshot, updateDocument } from "services";
-import { Game, LoadingOverlay } from "components";
-import { reactReducer } from "utils";
-import { GameState } from "types/game";
+import { GameSession, User } from "types";
+import { playerDefault } from "consts";
+
+import { PlayProtected } from "./components/playGame/playProtected";
 
 export const PlayPage = () => {
+  const navigate = useNavigate();
   const { user } = useAppStore();
   const { sessionId } = useParams();
   const { showToast } = useToastStore();
-  const navigate = useNavigate();
+  const { sessionId: id, players, updateSessionStore } = useSessionStore();
 
-  if (!sessionId) throw "Invalid Session ID";
-
-  const [state, updateState] = reactReducer<GameState | null>(null);
-
-  React.useEffect(() => {
-    const unsubscribe = getDocumentSnapshot<GameSession>({
-      id: sessionId,
-      collection: "sessions",
-      callback: (data) => {
-        if (!data) {
-          showToast("Game not found!", "error");
-          navigate("/");
-          return;
-        }
-
-        if (data && !data.players[user.id]) {
-          console.log("hello");
-
-          navigate(`/`);
-          return;
-        }
-
-        updateState({
-          session: data || undefined,
-          isHost: user.id === data.createdBy,
-          players: Object.values(data.players).sort(
-            (a, b) => a.joinedAt - b.joinedAt
-          ),
-          myPlayer: data.players[user.id],
-        });
-      },
-    });
-
-    return () => unsubscribe?.();
-  }, []);
-
-  const isAllReady = !!state?.players?.every((player) => player.isReady);
-
-  const updateSession = async (update: Partial<GameSession>) => {
+  const joinSession = async (id: string) => {
     try {
-      if (!state?.session) return;
+      const joinedSession = await updateDocument<GameSession>({
+        collection: "sessions",
+        id,
+        data: {
+          [`players.${user.id}`]: playerDefault(),
+        },
+      });
 
-      let step = update.step;
+      if (!joinedSession) throw "Error joining session";
 
-      if (Object.values(update).length !== 1 || !update.step) {
-        delete update.step;
-
-        await updateDocument<GameSession>({
-          id: state.session.id,
-          collection: "sessions",
-          data: update,
-        });
-      }
-
-      if (step) {
-        await updateDocument<GameSession>({
-          id: state.session.id,
-          collection: "sessions",
-          data: {
-            step: step,
-          },
-        });
-      }
+      await updateDocument<User>({
+        collection: "users",
+        id: user.id,
+        data: {
+          sessionId: id,
+        },
+      });
     } catch (error) {
       showToast(String(error), "error");
     }
   };
 
   React.useEffect(() => {
-    updateState({
-      isAllReady,
-    });
-  }, [isAllReady]);
+    let unsubscribe: Unsubscribe | undefined;
 
-  React.useEffect(() => {
-    updateState({
-      updateSession,
-    });
-  }, [state?.session?.id]);
+    try {
+      if (!sessionId) throw "Invalid Session ID";
+      if (!user) throw "Invalid User";
 
-  if (!state?.session || !state.myPlayer) return <LoadingOverlay />;
+      unsubscribe = getDocumentSnapshot<GameSession>({
+        id: sessionId,
+        collection: "sessions",
+        callback: (data) => {
+          updateSessionStore({
+            isAllReady: Object.values(players)?.every(
+              (player) => player.isReady
+            ),
+            isHost: data?.leaderId === user.id,
+            myPlayer: data?.players[user.id],
+            players: data?.players,
+          });
 
-  return <Game state={state} />;
+          if (!data) throw "Session not found!";
+          if (!data?.players?.[user.id]) joinSession(data.id);
+        },
+      });
+    } catch (error) {
+      showToast(String(error), "error");
+      navigate("/");
+    }
+
+    return () => unsubscribe?.();
+  }, []);
+
+  if (!id || !players[user.id] || user.sessionId !== id) {
+    return <LoadingOverlay />;
+  }
+
+  return <PlayProtected />;
 };

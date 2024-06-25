@@ -28,4 +28,5 @@ export type GameSession = {
   characters: string[];
   createdBy: string;
   activeQuest: number;
+  isHostPlaying: boolean;
 };
