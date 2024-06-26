@@ -1,9 +1,8 @@
 import { GameSession } from "types";
-import { generateLobbyCode } from "utils";
 
 export const sessionDefault = (): GameSession => {
   return {
-    id: generateLobbyCode(),
+    id: "",
     name: "",
     players: {},
     numPlayers: 5,
@@ -11,7 +10,7 @@ export const sessionDefault = (): GameSession => {
     step: "lobby",
     characters: [],
     isRitualFinished: false,
-    activeQuest: 0,
+    activeQuestIndex: 0,
     isHostPlaying: true,
     quests: {
       0: {

@@ -3,7 +3,6 @@ export interface Props {
   showBackButton?: boolean;
   heading?: string;
   showCloseButton?: boolean;
-  onCloseClick?: () => void;
   children: React.ReactNode;
   className?: string;
 }

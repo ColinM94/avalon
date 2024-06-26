@@ -4,17 +4,21 @@ import { Button, CharacterCard } from "components";
 import { charactersDefault } from "consts";
 import { Player } from "types";
 import { classes } from "utils";
+import { useSessionStore } from "stores";
+import { updateMyPlayer, updateSession } from "services";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const GameReveal = (props: Props) => {
-  const { state, setIsReady, className } = props;
+  const { className } = props;
+
+  const { myPlayer, isHost, isAllReady, session } = useSessionStore();
 
   const [showCharacter, setShowCharacter] = React.useState(false);
   const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false);
 
-  const characterId = state.session.players[state.myPlayer.id].characterId;
+  const characterId = session.players[myPlayer.id].characterId;
 
   const handleReveal = () => {
     setIsCharacterRevealed(true);
@@ -24,22 +28,22 @@ export const GameReveal = (props: Props) => {
   const handleAllReady = async () => {
     const updatedPlayers: Record<string, Player> = {};
 
-    state.players.forEach((player) => {
+    Object.values(session.players).forEach((player) => {
       updatedPlayers[player.id] = {
         ...player,
         isReady: false,
       };
     });
 
-    state.updateSession({
+    updateSession({
       step: "ritual",
       players: updatedPlayers,
     });
   };
 
   React.useEffect(() => {
-    if (state.isHost && state.isAllReady) handleAllReady();
-  }, [state.isAllReady]);
+    if (isHost && isAllReady) handleAllReady();
+  }, [isAllReady]);
 
   return (
     <div className={classes(styles.container, className)}>
@@ -66,11 +70,8 @@ export const GameReveal = (props: Props) => {
 
       <Button
         label="Ready"
-        onClick={() => setIsReady(true)}
-        disabled={
-          !isCharacterRevealed ||
-          state.session.players[state.myPlayer.id].isReady
-        }
+        onClick={() => updateMyPlayer({ isReady: true })}
+        disabled={!isCharacterRevealed || session.players[myPlayer.id].isReady}
         className={styles.readyButton}
       />
     </div>

@@ -1,9 +1,8 @@
 import { Player } from "types";
-import { generateUniqueId } from "utils";
 
-export const playerDefault = (): Player => {
+export const playerDefault = (userId: string): Player => {
   return {
-    id: generateUniqueId(),
+    id: userId,
     name: "",
     characterId: "",
     isHost: false,

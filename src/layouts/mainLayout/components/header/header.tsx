@@ -1,14 +1,66 @@
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "components";
+import { deleteDocument, updateDocument } from "services";
+import { useSessionStore, useToastStore } from "stores";
+import { deleteField } from "firebase/firestore";
+import { User } from "types";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const Header = (props: Props) => {
-  const { heading, showBackButton, onCloseClick } = props;
+  const { heading, showBackButton } = props;
+
+  const { myPlayer, isHost, session } = useSessionStore();
 
   const navigate = useNavigate();
+  const { showToast } = useToastStore();
+
+  const handleLeave = async () => {
+    try {
+      const confirmed = confirm(
+        "Are you sure you want to leave? This will end the game for everyone!"
+      );
+
+      if (!confirmed) return;
+
+      const promises = [
+        updateDocument<User>({
+          id: myPlayer.id,
+          collection: "users",
+          data: {
+            sessionId: null,
+          },
+        }),
+      ];
+
+      if (session.step === "lobby") {
+        promises.push(
+          updateDocument({
+            id: session.id,
+            collection: "sessions",
+            data: {
+              [`players.${myPlayer.id}`]: deleteField(),
+            },
+          })
+        );
+      }
+
+      if (isHost || session.step !== "lobby") {
+        promises.push(
+          deleteDocument({
+            id: session.id,
+            collection: "sessions",
+          })
+        );
+      }
+
+      await Promise.all(promises);
+    } catch (error) {
+      showToast(String(error));
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -23,10 +75,10 @@ export const Header = (props: Props) => {
 
       <div className={styles.heading}>{heading}</div>
 
-      {onCloseClick && (
+      {session.id && (
         <Button
           icon="x"
-          onClick={onCloseClick}
+          onClick={handleLeave}
           className={styles.closeButton}
           iconClassName={styles.buttonIcon}
         />

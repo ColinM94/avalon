@@ -10,7 +10,6 @@ export const MainLayout = (props: Props) => {
     showHeader,
     showBackButton,
     heading,
-    onCloseClick,
     showCloseButton,
     children,
     className,
@@ -22,7 +21,6 @@ export const MainLayout = (props: Props) => {
         <Header
           heading={heading}
           showBackButton={showBackButton}
-          onCloseClick={onCloseClick}
           showCloseButton={showCloseButton}
         />
       )}

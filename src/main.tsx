@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import { Splash, Toast } from "components";
 import { getDocumentSnapshot, setDocument } from "services";
@@ -9,7 +9,6 @@ import { useAppStore } from "stores";
 export const Root = () => {
   const { user, updateAppStore } = useAppStore();
 
-  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   // User

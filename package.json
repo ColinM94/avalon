@@ -25,6 +25,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "firebase": "^10.12.2",
+    "immer": "^10.1.1",
     "react": "next",
     "react-dom": "next",
     "react-qrcode-logo": "^3.0.0",

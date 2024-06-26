@@ -14,3 +14,4 @@ export * from "./firestore/setDocument";
 // Session
 export * from "./session/updatePlayer";
 export * from "./session/updateSession";
+export * from "./session/updateMyPlayer";

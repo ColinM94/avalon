@@ -3,42 +3,32 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Unsubscribe } from "firebase/firestore";
 
 import { useAppStore, useSessionStore, useToastStore } from "stores";
-import { LoadingOverlay } from "components";
-import { getDocumentSnapshot, updateDocument } from "services";
+import { Game, LoadingOverlay } from "components";
+import { getDocumentSnapshot, updateDocument, updateSession } from "services";
 import { GameSession, User } from "types";
 import { playerDefault } from "consts";
-
-import { PlayProtected } from "./components/playGame/playProtected";
 
 export const PlayPage = () => {
   const navigate = useNavigate();
   const { user } = useAppStore();
   const { sessionId } = useParams();
   const { showToast } = useToastStore();
-  const { sessionId: id, players, updateSessionStore } = useSessionStore();
+  const { session, updateSessionStore } = useSessionStore();
 
   const joinSession = async (id: string) => {
-    try {
-      const joinedSession = await updateDocument<GameSession>({
-        collection: "sessions",
-        id,
-        data: {
-          [`players.${user.id}`]: playerDefault(),
-        },
-      });
+    const joinedSession = updateSession({
+      [`players.${user.id}`]: playerDefault(user.id),
+    });
 
-      if (!joinedSession) throw "Error joining session";
+    if (!joinedSession) throw "Error joining session";
 
-      await updateDocument<User>({
-        collection: "users",
-        id: user.id,
-        data: {
-          sessionId: id,
-        },
-      });
-    } catch (error) {
-      showToast(String(error), "error");
-    }
+    await updateDocument<User>({
+      collection: "users",
+      id: user.id,
+      data: {
+        sessionId: id,
+      },
+    });
   };
 
   React.useEffect(() => {
@@ -52,20 +42,34 @@ export const PlayPage = () => {
         id: sessionId,
         collection: "sessions",
         callback: (data) => {
-          updateSessionStore({
-            isAllReady: Object.values(players)?.every(
-              (player) => player.isReady
-            ),
-            isHost: data?.leaderId === user.id,
-            myPlayer: data?.players[user.id],
-            players: data?.players,
-          });
-
           if (!data) throw "Session not found!";
-          if (!data?.players?.[user.id]) joinSession(data.id);
+
+          if (
+            data &&
+            (!data?.players?.[user.id] || user.sessionId !== data.id)
+          ) {
+            joinSession(data.id);
+            return;
+          }
+
+          const numPlayersReady = Object.values(session.players).filter(
+            (item) => item.isReady
+          ).length;
+
+          updateSessionStore({
+            isAllReady: numPlayersReady === data.numPlayers,
+            isHost: data.leaderId === user.id,
+            myPlayer: data.players[user.id],
+            activeQuest: session.quests[session.activeQuestIndex] || null,
+            ...data,
+          });
         },
       });
     } catch (error) {
+      updateSession({
+        id: "",
+      });
+
       showToast(String(error), "error");
       navigate("/");
     }
@@ -73,9 +77,13 @@ export const PlayPage = () => {
     return () => unsubscribe?.();
   }, []);
 
-  if (!id || !players[user.id] || user.sessionId !== id) {
+  if (
+    !session.id ||
+    !session.players[user.id] ||
+    user.sessionId !== session.id
+  ) {
     return <LoadingOverlay />;
   }
 
-  return <PlayProtected />;
+  return <Game />;
 };

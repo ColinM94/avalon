@@ -2,24 +2,27 @@ import * as React from "react";
 
 import { classes, sentencifyArray } from "utils";
 import { Button, LoadingOverlay } from "components";
-import { useToastStore } from "stores";
+import { useSessionStore, useToastStore } from "stores";
+import { updateSession } from "services";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const QuestsVote = (props: Props) => {
-  const { state, activeQuest, className } = props;
+  const { activeQuest, className } = props;
+
+  const { isHost, players, myPlayer, session } = useSessionStore();
 
   const { showToast } = useToastStore();
 
   React.useEffect(() => {
-    if (state.isHost && !state.session.leaderId) {
-      state.updateSession({
+    if (isHost && !activeQuest) {
+      updateSession({
         quests: {
-          ...state.session.quests,
+          ...session.quests,
           0: {
-            ...state.session.quests[0],
-            leaderId: state.players[0].id,
+            ...session.quests[0],
+            leaderId: players[0].id,
           },
         },
       });
@@ -27,7 +30,7 @@ export const QuestsVote = (props: Props) => {
   }, []);
 
   const handleClick = (playerId: string) => {
-    if (activeQuest.leaderId !== state.myPlayer.id) return;
+    if (session.leaderId !== myPlayer.id) return;
 
     const updatedQuestPlayers = activeQuest.players;
 
@@ -37,11 +40,11 @@ export const QuestsVote = (props: Props) => {
       updatedQuestPlayers.push(playerId);
     }
 
-    const updatedQuests = structuredClone(state.session.quests);
+    const updatedQuests = structuredClone(session.quests);
 
     updatedQuests[activeQuest.index].players = updatedQuestPlayers;
 
-    state.updateSession({
+    updateSession({
       quests: updatedQuests,
     });
   };
@@ -60,7 +63,7 @@ export const QuestsVote = (props: Props) => {
 
   return (
     <div className={classes(styles.container, className)}>
-      {activeQuest.leaderId === state.myPlayer.id && (
+      {activeQuest.leaderId === myPlayer.id && (
         <div className={styles.explanation}>
           <div className={styles.explanationHeading}>You are Leader</div>
           <div className={styles.explanationDescription}>
@@ -70,10 +73,10 @@ export const QuestsVote = (props: Props) => {
         </div>
       )}
 
-      {activeQuest.leaderId !== state.myPlayer.id && (
+      {activeQuest.leaderId !== myPlayer.id && (
         <div className={styles.explanation}>
           <div className={styles.explanationHeading}>
-            {state.session.players[activeQuest.leaderId].name} is Leader
+            {players[activeQuest.leaderId].name} is Leader
           </div>
           <div className={styles.explanationDescription}>
             They are voting for {activeQuest.index + 1} player(s) to go on Quest{" "}
@@ -84,7 +87,7 @@ export const QuestsVote = (props: Props) => {
 
       <div>
         {sentencifyArray(
-          state.players
+          Object.values(players)
             .filter((player) => activeQuest.players.includes(player.id))
             .map((player) => player.name)
         )}
@@ -92,7 +95,7 @@ export const QuestsVote = (props: Props) => {
       </div>
 
       <div className={styles.players}>
-        {state.players.map((player) => {
+        {Object.values(players).map((player) => {
           return (
             <div
               onClick={() => handleClick(player.id)}
@@ -108,7 +111,7 @@ export const QuestsVote = (props: Props) => {
         })}
       </div>
 
-      {activeQuest.leaderId === state.myPlayer.id && (
+      {activeQuest.leaderId === myPlayer.id && (
         <Button
           label="Continue"
           onClick={handleContinue}

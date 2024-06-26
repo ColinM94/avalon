@@ -2,7 +2,12 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "components";
 import { Characters, GameSession } from "types";
-import { getQuestNumPlayers, reactReducer, shuffleArray } from "utils";
+import {
+  generateLobbyCode,
+  getQuestNumPlayers,
+  reactReducer,
+  shuffleArray,
+} from "utils";
 import {
   charactersDefault,
   maxCharacters,
@@ -25,10 +30,10 @@ export const SetupPage = () => {
 
   const [tempSession, updateTempSession] = reactReducer<GameSession>({
     ...sessionDefault(),
+    id: generateLobbyCode(),
     players: {
       [user.id]: {
-        ...playerDefault(),
-        id: user.id,
+        ...playerDefault(user.id),
         name: user.name,
         joinedAt: Date.now(),
         isHost: true,
@@ -109,7 +114,7 @@ export const SetupPage = () => {
         },
       });
 
-      navigate(`/join/${tempSession.id}`);
+      navigate(`/play/${tempSession.id}`);
     } catch (error) {
       showToast(String(error), "error");
     }

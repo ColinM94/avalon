@@ -3,11 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { Button } from "components";
 import { classes } from "utils";
-import { GameSession } from "types";
-import { updateDocument } from "services";
+import { useSessionStore, useToastStore } from "stores";
+import { updateMyPlayer, updateSession } from "services";
 
 import styles from "./styles.module.scss";
-import { Props } from "./types";
 
 const instructions = [
   "1. Everyone close your eyes and extend your hand into a fist in front of you.",
@@ -19,7 +18,9 @@ const instructions = [
   "7. Everyone, open your eyes.",
 ];
 
-export const GameRitual = ({ state, setIsReady }: Props) => {
+export const GameRitual = () => {
+  const { isAllReady, isHost } = useSessionStore();
+  const { showToast } = useToastStore();
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
   const currentInstruction = React.useRef(-1);
 
@@ -50,14 +51,12 @@ export const GameRitual = ({ state, setIsReady }: Props) => {
     audioPlayer.current.pause();
   };
 
-  const setIsFinished = (isFinished: boolean) => {
-    updateDocument<GameSession>({
-      id: state.session.id,
-      collection: "sessions",
-      data: {
-        isRitualFinished: isFinished,
-      },
+  const setIsFinished = async (isFinished: boolean) => {
+    const result = await updateSession({
+      isRitualFinished: isFinished,
     });
+
+    if (!result) showToast("Error finishing Ritual", "error");
   };
 
   const handleNextStep = async () => {
@@ -91,7 +90,7 @@ export const GameRitual = ({ state, setIsReady }: Props) => {
 
   // const handleStartGame = () => {
   //   updateDocument<GameSession>({
-  //     id: state.session.id,
+  //     id: session.id,
   //     collection: "sessions",
   //     data: {
   //       step: "quests",
@@ -100,18 +99,18 @@ export const GameRitual = ({ state, setIsReady }: Props) => {
   // };
 
   const handleAllReady = async () => {
-    state.updateSession({
+    updateSession({
       step: "quests",
     });
   };
 
   React.useEffect(() => {
-    if (state.isHost && state.isAllReady) handleAllReady();
-  }, [state.isAllReady]);
+    if (isHost && isAllReady) handleAllReady();
+  }, [isAllReady]);
 
   return (
     <div className={styles.container}>
-      {state.isHost && (
+      {isHost && (
         <>
           <audio
             controls
@@ -163,7 +162,7 @@ export const GameRitual = ({ state, setIsReady }: Props) => {
         </>
       )}
 
-      {!state.isHost && (
+      {!isHost && (
         <div className={styles.description}>
           The Host will perform the ritual!
         </div>
@@ -171,7 +170,11 @@ export const GameRitual = ({ state, setIsReady }: Props) => {
 
       <Button
         label="Ready"
-        onClick={() => setIsReady(true)}
+        onClick={() =>
+          updateMyPlayer({
+            isReady: true,
+          })
+        }
         // disabled={
         //   !session.isRitualFinished || session.players[user.id].isReadyRitual
         // }

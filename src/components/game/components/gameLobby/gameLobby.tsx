@@ -3,19 +3,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { QRCode } from "react-qrcode-logo";
 
 import { classes } from "utils";
-import { useToastStore } from "stores";
+import { useSessionStore, useToastStore } from "stores";
 import { baseUrl } from "consts";
 import { Player } from "types";
 import { ReadyButton } from "components";
+import { updateMyPlayer, updateSession } from "services";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const GameLobby = (props: Props) => {
-  const { state, setIsReady, className } = props;
+  const { className } = props;
   const { showToast } = useToastStore();
+  const { session, isAllReady, isHost, myPlayer } = useSessionStore();
 
-  const url = `${baseUrl}/join/${state.session.id}`;
+  const url = `${baseUrl}/join/${session.id}`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(url);
@@ -24,28 +26,28 @@ export const GameLobby = (props: Props) => {
 
   React.useEffect(() => {
     (async () => {
-      if (!state.isHost || !state.isAllReady) return;
+      if (!isHost || !isAllReady) return;
 
       const updatedPlayers: Record<string, Player> = {};
 
-      state.players.forEach((player, index) => {
+      Object.values(session.players).forEach((player, index) => {
         updatedPlayers[player.id] = {
           ...player,
-          characterId: state.session.characters[index],
+          characterId: session.characters[index],
           isReady: false,
         };
       });
 
-      state.updateSession({
+      updateSession({
         players: updatedPlayers,
         step: "characterReveal",
       });
     })();
-  }, [state.isAllReady]);
+  }, [isAllReady]);
 
   return (
     <div className={classes(styles.container, className)}>
-      <div className={styles.joinCode}>{state.session.id}</div>
+      <div className={styles.joinCode}>{session.id}</div>
 
       <QRCode value={url} />
 
@@ -55,8 +57,8 @@ export const GameLobby = (props: Props) => {
       </div>
 
       <ReadyButton
-        isReady={state.myPlayer?.isReady}
-        onClick={() => setIsReady(true)}
+        isReady={myPlayer?.isReady}
+        onClick={() => updateMyPlayer({ isReady: true })}
       />
     </div>
   );

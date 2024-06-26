@@ -7,8 +7,6 @@ import { Props } from "./types";
 export const SetupOptions = (props: Props) => {
   const { session, updateSession } = props;
 
-  const { numPlayers } = session;
-
   return (
     <div className={styles.container}>
       <Heading headingTitle="Number of Players" />
@@ -20,7 +18,7 @@ export const SetupOptions = (props: Props) => {
             key={num}
             className={classes(
               styles.numPlayersOption,
-              numPlayers === num && styles.numPlayersOptionActive
+              session.numPlayers === num && styles.numPlayersOptionActive
             )}
           >
             {num}

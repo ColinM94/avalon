@@ -4,39 +4,37 @@ import { deleteField } from "firebase/firestore";
 
 import { classes } from "utils";
 import { NameEditor } from "components";
-import { updateDocument } from "services";
+import { updateSession } from "services";
+import { useSessionStore } from "stores";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const GamePlayersItem = (props: Props) => {
-  const { state, player, connected, isHost, className } = props;
+  const { player, connected, className } = props;
+
+  const { myPlayer, activeQuest, isHost, session } = useSessionStore();
 
   const [showNameEditor, setShowNameEditor] = React.useState(false);
 
-  const isMyPlayer = player.id === state.myPlayer.id;
-  const showKick = isHost && player.id !== state.myPlayer.id && connected;
-  const isLeader =
-    state.session.quests[state.session.activeQuest].leaderId === player.id;
+  const isMyPlayer = player.id === myPlayer.id;
+  const showKick = isHost && player.id !== myPlayer.id && connected;
+  const isLeader = activeQuest && activeQuest?.leaderId === player.id;
 
   const handleKick = async () => {
-    if (state.session.step !== "lobby") return;
+    if (session.step !== "lobby") return;
 
     const shouldKick = confirm(`Are you sure you want to kick ${player.name}`);
 
     if (!shouldKick) return;
 
-    await updateDocument({
-      id: state.session.id,
-      collection: "sessions",
-      data: {
-        [`players.${player.id}`]: deleteField(),
-      },
+    await updateSession({
+      [`players.${player.id}`]: deleteField(),
     });
   };
 
   const handleClick = () => {
-    if (state.session.step !== "lobby") return;
+    if (session.step !== "lobby") return;
 
     if (showKick) handleKick();
     else setShowNameEditor(true);
@@ -44,13 +42,8 @@ export const GamePlayersItem = (props: Props) => {
 
   return (
     <>
-      {player.id === state.myPlayer.id && (
-        <NameEditor
-          myPlayer={state.myPlayer}
-          show={showNameEditor}
-          setShow={setShowNameEditor}
-          session={state.session}
-        />
+      {player.id === myPlayer.id && (
+        <NameEditor show={showNameEditor} setShow={setShowNameEditor} />
       )}
 
       <div
@@ -67,7 +60,7 @@ export const GamePlayersItem = (props: Props) => {
           <FontAwesomeIcon icon="crown" className={styles.hostIcon} />
         )}
 
-        {showKick && state.session.step === "lobby" && (
+        {showKick && session.step === "lobby" && (
           <FontAwesomeIcon icon="x" className={styles.kickIcon} />
         )}
 
@@ -81,7 +74,7 @@ export const GamePlayersItem = (props: Props) => {
 
         {player.name}
 
-        {player.isReady && state.session.step !== "quests" && (
+        {player.isReady && session.step !== "quests" && (
           <FontAwesomeIcon icon="check" className={styles.readyIcon} />
         )}
       </div>

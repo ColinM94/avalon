@@ -1,12 +1,9 @@
 import { updateDocument } from "services/firestore/updateDocument";
-import { useToastStore } from "stores";
+import { useSessionStore, useToastStore } from "stores";
 import { GameSession, Player, User } from "types";
 
-export const updatePlayer = async (
-  userId: string,
-  session: GameSession,
-  update: Partial<Player>
-) => {
+export const updatePlayer = async (userId: string, update: Partial<Player>) => {
+  const { session, players } = useSessionStore.getState();
   const { showToast } = useToastStore.getState();
 
   try {
@@ -15,7 +12,7 @@ export const updatePlayer = async (
       collection: "sessions",
       data: {
         [`players.${userId}`]: {
-          ...session.players[userId],
+          ...players[userId],
           ...update,
         },
       },
