@@ -11,4 +11,5 @@ export type State = {
 
 export type Actions = {
   updateSessionStore: (update: Partial<State>) => void;
+  resetSessionsStore: () => void;
 };

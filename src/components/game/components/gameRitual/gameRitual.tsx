@@ -1,10 +1,10 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Button } from "components";
+import { Button, ReadyButton } from "components";
 import { classes } from "utils";
 import { useSessionStore, useToastStore } from "stores";
-import { updateMyPlayer, updateSession } from "services";
+import { updateSession } from "services";
 
 import styles from "./styles.module.scss";
 
@@ -20,6 +20,7 @@ const instructions = [
 
 export const GameRitual = () => {
   const { isAllReady, isHost } = useSessionStore();
+
   const { showToast } = useToastStore();
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
   const currentInstruction = React.useRef(-1);
@@ -168,18 +169,7 @@ export const GameRitual = () => {
         </div>
       )}
 
-      <Button
-        label="Ready"
-        onClick={() =>
-          updateMyPlayer({
-            isReady: true,
-          })
-        }
-        // disabled={
-        //   !session.isRitualFinished || session.players[user.id].isReadyRitual
-        // }
-        className={styles.readyButton}
-      />
+      <ReadyButton className={styles.readyButton} />
     </div>
   );
 };

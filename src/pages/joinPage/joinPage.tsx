@@ -19,7 +19,7 @@ export const JoinPage = () => {
   }, [sessionId]);
 
   const handleJoin = async (code: string) => {
-    navigate(`/game/${code}`);
+    navigate(`/play/${code}`);
   };
 
   const openCamera = () => {

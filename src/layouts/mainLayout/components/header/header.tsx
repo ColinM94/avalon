@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "components";
-import { deleteDocument, updateDocument } from "services";
+import { deleteDocument, updateDocument, updateSession } from "services";
 import { useSessionStore, useToastStore } from "stores";
 import { deleteField } from "firebase/firestore";
 import { User } from "types";
@@ -37,12 +37,8 @@ export const Header = (props: Props) => {
 
       if (session.step === "lobby") {
         promises.push(
-          updateDocument({
-            id: session.id,
-            collection: "sessions",
-            data: {
-              [`players.${myPlayer.id}`]: deleteField(),
-            },
+          updateSession({
+            [`players.${myPlayer.id}`]: deleteField(),
           })
         );
       }
@@ -55,6 +51,8 @@ export const Header = (props: Props) => {
           })
         );
       }
+
+      navigate("/");
 
       await Promise.all(promises);
     } catch (error) {

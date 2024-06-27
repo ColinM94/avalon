@@ -56,10 +56,7 @@ export const GameLobby = (props: Props) => {
         <FontAwesomeIcon icon="copy" className={styles.copyIcon} />
       </div>
 
-      <ReadyButton
-        isReady={myPlayer?.isReady}
-        onClick={() => updateMyPlayer({ isReady: true })}
-      />
+      <ReadyButton />
     </div>
   );
 };

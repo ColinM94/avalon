@@ -1,8 +1,8 @@
 import { Player } from "types";
 
-export const playerDefault = (userId: string): Player => {
+export const playerDefault = (): Player => {
   return {
-    id: userId,
+    id: "",
     name: "",
     characterId: "",
     isHost: false,

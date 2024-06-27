@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import { Button, CharacterCard } from "components";
+import { Button, CharacterCard, ReadyButton } from "components";
 import { charactersDefault } from "consts";
 import { Player } from "types";
 import { classes } from "utils";
 import { useSessionStore } from "stores";
-import { updateMyPlayer, updateSession } from "services";
+import { updateSession } from "services";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -18,7 +18,7 @@ export const GameReveal = (props: Props) => {
   const [showCharacter, setShowCharacter] = React.useState(false);
   const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false);
 
-  const characterId = session.players[myPlayer.id].characterId;
+  const characterId = session.players[myPlayer.id]?.characterId;
 
   const handleReveal = () => {
     setIsCharacterRevealed(true);
@@ -68,9 +68,7 @@ export const GameReveal = (props: Props) => {
         className={styles.revealButton}
       />
 
-      <Button
-        label="Ready"
-        onClick={() => updateMyPlayer({ isReady: true })}
+      <ReadyButton
         disabled={!isCharacterRevealed || session.players[myPlayer.id].isReady}
         className={styles.readyButton}
       />

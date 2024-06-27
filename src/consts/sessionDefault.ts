@@ -10,7 +10,7 @@ export const sessionDefault = (): GameSession => {
     step: "lobby",
     characters: [],
     isRitualFinished: false,
-    activeQuestIndex: 0,
+    activeQuestIndex: null,
     isHostPlaying: true,
     quests: {
       0: {

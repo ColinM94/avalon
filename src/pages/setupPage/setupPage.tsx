@@ -33,7 +33,8 @@ export const SetupPage = () => {
     id: generateLobbyCode(),
     players: {
       [user.id]: {
-        ...playerDefault(user.id),
+        ...playerDefault(),
+        id: user.id,
         name: user.name,
         joinedAt: Date.now(),
         isHost: true,
@@ -113,6 +114,8 @@ export const SetupPage = () => {
           characters: shuffledCharacters,
         },
       });
+
+      console.log("navigating to ", tempSession.id);
 
       navigate(`/play/${tempSession.id}`);
     } catch (error) {

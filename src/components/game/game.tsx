@@ -2,15 +2,18 @@ import { MainLayout } from "layouts";
 import { useSessionStore } from "stores";
 
 import { GamePlayers } from "./components/gamePlayers/gamePlayers";
-import { GameRitual } from "./components/gameRitual/gameRitual";
-import { GameReveal } from "./components/gameReveal/gameReveal";
 import { GameLobby } from "./components/gameLobby/gameLobby";
+import { GameReveal } from "./components/gameReveal/gameReveal";
+import { GameRitual } from "./components/gameRitual/gameRitual";
 import { GameQuests } from "./components/gameQuests/gameQuests";
 
 import styles from "./styles.module.scss";
 
 export const Game = () => {
   const { session } = useSessionStore();
+
+  console.log(session);
+
   // const navigate = useNavigate();
 
   const heading = () => {

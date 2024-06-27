@@ -15,11 +15,19 @@ export const GamePlayers = (props: Props) => {
   const renderPlayers = () => {
     const items = [];
 
+    const tempPlayers = Object.values(players).sort(
+      (a, b) => a.joinedAt - b.joinedAt
+    );
+
     for (let i = 0; i < session.numPlayers; i++) {
-      const tempPlayer = players[i] || playerDefault("");
+      const tempPlayer = tempPlayers[i] || playerDefault("");
 
       items.push(
-        <GamePlayersItem player={tempPlayer} connected={!!players[i]} key={i} />
+        <GamePlayersItem
+          player={tempPlayer}
+          connected={!!tempPlayers[i]}
+          key={i}
+        />
       );
     }
 

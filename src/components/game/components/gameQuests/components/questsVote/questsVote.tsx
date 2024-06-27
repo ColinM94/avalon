@@ -15,19 +15,19 @@ export const QuestsVote = (props: Props) => {
 
   const { showToast } = useToastStore();
 
-  React.useEffect(() => {
-    if (isHost && !activeQuest) {
-      updateSession({
-        quests: {
-          ...session.quests,
-          0: {
-            ...session.quests[0],
-            leaderId: players[0].id,
-          },
-        },
-      });
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (isHost && !activeQuest) {
+  //     updateSession({
+  //       quests: {
+  //         ...session.quests,
+  //         0: {
+  //           ...session.quests[0],
+  //           leaderId: players[0].id,
+  //         },
+  //       },
+  //     });
+  //   }
+  // }, []);
 
   const handleClick = (playerId: string) => {
     if (session.leaderId !== myPlayer.id) return;

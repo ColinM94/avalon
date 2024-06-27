@@ -25,5 +25,6 @@ export const updateSession = async (
     return true;
   } catch (error) {
     showToast(String(error));
+    return false;
   }
 };

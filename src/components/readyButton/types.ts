@@ -1,4 +1,4 @@
 export interface Props {
-  isReady: boolean;
-  onClick: () => void;
+  disabled?: boolean;
+  className?: string;
 }
