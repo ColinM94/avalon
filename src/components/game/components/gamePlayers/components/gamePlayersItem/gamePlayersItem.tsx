@@ -19,7 +19,7 @@ export const GamePlayersItem = (props: Props) => {
 
   const isMyPlayer = player.id === myPlayer.id;
   const showKick = isHost && player.id !== myPlayer.id && connected;
-  const isLeader = activeQuest && activeQuest?.leaderId === myPlayer.id;
+  const isLeader = activeQuest && activeQuest?.leaderId === player.id;
 
   const handleKick = async () => {
     if (session.step !== "lobby") return;

@@ -20,7 +20,6 @@ export type GameSession = {
   name: string;
   // players: string[];
   players: Record<string, Player>;
-  leaderId: string;
   quests: Record<number, Quest>;
   step: "lobby" | "characterReveal" | "ritual" | "quests";
   isRitualFinished: boolean;
@@ -28,5 +27,5 @@ export type GameSession = {
   characters: string[];
   createdBy: string;
   isHostPlaying: boolean;
-  activeQuestIndex: number | null;
+  activeQuestIndex: number;
 };

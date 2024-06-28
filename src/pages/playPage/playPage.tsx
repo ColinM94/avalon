@@ -29,8 +29,6 @@ export const PlayPage = () => {
 
       if (!tempSession) throw "Session not found!";
 
-      console.log(tempSession.players);
-
       if (
         !tempSession?.players[user.id] &&
         Object.keys(tempSession.players).length >= tempSession.numPlayers

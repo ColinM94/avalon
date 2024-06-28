@@ -7,6 +7,7 @@ export type State = {
   isHost: boolean;
   isAllReady: boolean;
   activeQuest: Quest | null;
+  playersArray: Player[];
 };
 
 export type Actions = {

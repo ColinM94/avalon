@@ -12,8 +12,6 @@ import styles from "./styles.module.scss";
 export const Game = () => {
   const { session } = useSessionStore();
 
-  console.log(session);
-
   // const navigate = useNavigate();
 
   const heading = () => {

@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { classes, sentencifyArray } from "utils";
 import { Button, LoadingOverlay } from "components";
 import { useSessionStore, useToastStore } from "stores";
@@ -11,9 +9,11 @@ import styles from "./styles.module.scss";
 export const QuestsVote = (props: Props) => {
   const { activeQuest, className } = props;
 
-  const { isHost, players, myPlayer, session } = useSessionStore();
+  const { players, playersArray, myPlayer, session } = useSessionStore();
 
   const { showToast } = useToastStore();
+
+  const isMaxPlayers = activeQuest.players.length >= activeQuest.numPlayers;
 
   // React.useEffect(() => {
   //   if (isHost && !activeQuest) {
@@ -30,14 +30,16 @@ export const QuestsVote = (props: Props) => {
   // }, []);
 
   const handleClick = (playerId: string) => {
-    if (session.leaderId !== myPlayer.id) return;
+    if (activeQuest.leaderId !== myPlayer.id) return;
 
     const updatedQuestPlayers = activeQuest.players;
 
     if (updatedQuestPlayers.includes(playerId)) {
       updatedQuestPlayers.splice(updatedQuestPlayers.indexOf(playerId), 1);
-    } else {
+    } else if (!isMaxPlayers) {
       updatedQuestPlayers.push(playerId);
+    } else {
+      return;
     }
 
     const updatedQuests = structuredClone(session.quests);
@@ -85,24 +87,27 @@ export const QuestsVote = (props: Props) => {
         </div>
       )}
 
-      <div>
+      <div className={styles.playersSentence}>
         {sentencifyArray(
-          Object.values(players)
-            .filter((player) => activeQuest.players.includes(player.id))
+          playersArray
+            .filter((player) => activeQuest.players?.includes(player.id))
             .map((player) => player.name)
         )}
-        will go on the quest.
+        {activeQuest.players.length > 0 && " will go on the quest."}
       </div>
 
       <div className={styles.players}>
-        {Object.values(players).map((player) => {
+        {playersArray.map((player) => {
+          const isSelected = activeQuest.players.includes(player.id);
+
           return (
             <div
               onClick={() => handleClick(player.id)}
               key={player.id}
               className={classes(
                 styles.player,
-                activeQuest.players.includes(player.id) && styles.playerSelected
+                isSelected && styles.playerSelected,
+                !isSelected && isMaxPlayers && styles.playerDisabled
               )}
             >
               {player.name}

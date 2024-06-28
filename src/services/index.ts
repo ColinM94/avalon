@@ -15,3 +15,4 @@ export * from "./firestore/setDocument";
 export * from "./session/updatePlayer";
 export * from "./session/updateSession";
 export * from "./session/updateMyPlayer";
+export * from "./session/updateActiveQuest";

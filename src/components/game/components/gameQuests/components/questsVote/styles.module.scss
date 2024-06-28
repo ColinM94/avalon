@@ -14,6 +14,10 @@
     }
   }
 
+  .playersSentence {
+    min-height: 50px;
+  }
+
   .players {
     flex-direction: row;
     flex-wrap: wrap;
@@ -33,6 +37,10 @@
 
     .playerSelected {
       background-color: vars.$color-success;
+    }
+
+    .playerDisabled {
+      filter: brightness(vars.$disabled-brightness-filter);
     }
   }
 }

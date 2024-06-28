@@ -115,8 +115,6 @@ export const SetupPage = () => {
         },
       });
 
-      console.log("navigating to ", tempSession.id);
-
       navigate(`/play/${tempSession.id}`);
     } catch (error) {
       showToast(String(error), "error");

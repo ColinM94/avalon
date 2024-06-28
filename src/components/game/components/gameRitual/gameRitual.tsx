@@ -19,7 +19,7 @@ const instructions = [
 ];
 
 export const GameRitual = () => {
-  const { isAllReady, isHost } = useSessionStore();
+  const { isAllReady, isHost, session } = useSessionStore();
 
   const { showToast } = useToastStore();
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
@@ -169,7 +169,10 @@ export const GameRitual = () => {
         </div>
       )}
 
-      <ReadyButton className={styles.readyButton} />
+      <ReadyButton
+        disabled={!session.isRitualFinished}
+        className={styles.readyButton}
+      />
     </div>
   );
 };
