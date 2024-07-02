@@ -10,10 +10,14 @@ export const SetupOptions = (props: Props) => {
   return (
     <div className={styles.container}>
       <InputCheckbox
-        value={!session.isHostPlaying}
-        setValue={(value) => updateSession({ isHostPlaying: !value })}
-        heading="Device is not playing"
-        headingSubtitle="Select if this device will not be used by a player, e.g. laptop connected to TV."
+        value={session.isHostPlaying}
+        setValue={(value) => updateSession({ isHostPlaying: value })}
+        heading="Is this device playing?"
+        headingSubtitle={
+          session.isHostPlaying
+            ? "This device will be used by a player e.g. Phone."
+            : "This device will not be used by a player e.g. Computer connected to a TV."
+        }
         className={styles.isHostPlayingInput}
       />
 
