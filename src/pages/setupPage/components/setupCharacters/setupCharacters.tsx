@@ -42,6 +42,9 @@ export const SetupCharacters = (props: Props) => {
     <div className={styles.container}>
       <Heading
         headingTitle={heading}
+        // headingSubtitle={`Select the characters for ${
+        //   allegiance === "good" ? "Good" : "Evil"
+        // }`}
         rightText={`${numActiveCharacters}/${maxActiveCharacters}`}
       />
 
@@ -53,6 +56,7 @@ export const SetupCharacters = (props: Props) => {
             showName
             key={character.id}
             orientation="portrait"
+            showInfoButton
             className={styles.character}
           />
         ))}

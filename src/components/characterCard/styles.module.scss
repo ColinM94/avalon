@@ -54,9 +54,9 @@ $goodColor: #43839a;
   filter: unset;
   // border-width: 0;
 
-  .image {
-    transform: scale(1.1);
-  }
+  // .image {
+  //   transform: scale(1.1);
+  // }
 }
 
 .good {
@@ -126,8 +126,9 @@ $goodColor: #43839a;
     position: absolute;
     left: 0;
     bottom: 0;
+    right: 0;
     max-height: calc(100% - 2px);
-    width: 40%;
+    width: 50%;
     object-fit: contain;
     transition: transform 0.2s;
   }
@@ -136,7 +137,7 @@ $goodColor: #43839a;
     position: absolute;
     right: 0;
     top: 0;
-    width: 60%;
+    width: 50%;
     background-color: vars.$color-background-translucent;
     height: 100%;
     padding: vars.$spacing-primary;

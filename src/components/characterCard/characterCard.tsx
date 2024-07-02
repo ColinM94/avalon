@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { classes } from "utils";
 import { characterNames } from "consts";
-import { useToastStore } from "stores";
+import { CharacterModal } from "components";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -21,8 +21,7 @@ export const CharacterCard = (props: Props) => {
     className,
   } = props;
 
-  const { showToast } = useToastStore();
-
+  const [showInfo, setShowInfo] = React.useState(false);
   const [image, setImage] = React.useState<string | null>(null);
   const [isRevealed, setIsReavealed] = React.useState(false);
 
@@ -43,12 +42,7 @@ export const CharacterCard = (props: Props) => {
   ) => {
     event.stopPropagation();
 
-    showToast(
-      `${characterNames[character.id]} is a character for ${
-        character.allegiance
-      }`,
-      "info"
-    );
+    setShowInfo(true);
   };
 
   const handleReveal = () => {
@@ -72,39 +66,52 @@ export const CharacterCard = (props: Props) => {
   );
 
   return (
-    <div onClick={() => onClick?.(character.id)} className={classNames}>
-      {!revealed && (
-        <div
-          onClick={handleReveal}
-          className={classes(styles.cover, isRevealed && styles.coverRevealed)}
-        />
-      )}
+    <>
+      <div onClick={() => onClick?.(character.id)} className={classNames}>
+        {!revealed && (
+          <div
+            onClick={handleReveal}
+            className={classes(
+              styles.cover,
+              isRevealed && styles.coverRevealed
+            )}
+          />
+        )}
 
-      {showInfoButton && (
-        <div onClick={handleInfoClick} className={styles.infoButton}>
-          ?
+        {showInfoButton && (
+          <div onClick={handleInfoClick} className={styles.infoButton}>
+            ?
+          </div>
+        )}
+
+        <div className={styles.info}>
+          {showName && (
+            <div className={styles.name}>
+              {characterNames[character.id] || character.id}
+            </div>
+          )}
+
+          {showDescription && (
+            <div className={styles.description}>
+              {character.description.map((item) => (
+                <div key={item} className={styles.descriptionItem}>
+                  • {item}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
 
-      <div className={styles.info}>
-        {showName && (
-          <div className={styles.name}>
-            {characterNames[character.id] || character.id}
-          </div>
-        )}
-
-        {showDescription && (
-          <div className={styles.description}>
-            {character.description.map((item) => (
-              <div key={item} className={styles.descriptionItem}>
-                • {item}
-              </div>
-            ))}
-          </div>
-        )}
+        {image && <img loading="lazy" src={image} className={styles.image} />}
       </div>
 
-      {image && <img loading="lazy" src={image} className={styles.image} />}
-    </div>
+      {showInfoButton && (
+        <CharacterModal
+          characterId={character.id}
+          show={showInfo}
+          setShow={setShowInfo}
+        />
+      )}
+    </>
   );
 };
