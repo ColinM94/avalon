@@ -15,11 +15,14 @@ export const GamePlayersItem = (props: Props) => {
 
   const { myPlayer, activeQuest, isHost, session } = useSessionStore();
 
+  console.log(activeQuest);
+
   const [showNameEditor, setShowNameEditor] = React.useState(false);
 
   const isMyPlayer = player.id === myPlayer.id;
   const showKick = isHost && player.id !== myPlayer.id && connected;
-  const isLeader = activeQuest && activeQuest?.leaderId === player.id;
+  const isLeader =
+    activeQuest && activeQuest.leaderId && activeQuest?.leaderId === player.id;
 
   const handleKick = async () => {
     if (session.step !== "lobby") return;
