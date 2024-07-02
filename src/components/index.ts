@@ -13,3 +13,4 @@ export * from "./splash/splash";
 export * from "./toast/toast";
 export * from "./game/game";
 export * from "./readyButton/readyButton";
+export * from "./inputCheckbox/inputCheckbox";

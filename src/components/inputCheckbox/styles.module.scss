@@ -1,0 +1,16 @@
+.container {
+  align-items: flex-start;
+
+  .iconContainer {
+    background-color: vars.$color-surface;
+    border-radius: vars.$roundness;
+    padding: vars.$spacing-primary;
+    height: 65px;
+    aspect-ratio: 1;
+    cursor: pointer;
+
+    .icon {
+      font-size: vars.$icon-size-large;
+    }
+  }
+}
