@@ -8,6 +8,12 @@
   z-index: 9;
   align-items: center;
   justify-content: center;
+
+  .closeButton {
+    position: fixed;
+    top: vars.$spacing-primary;
+    right: vars.$spacing-primary;
+  }
 }
 
 .backgroundShown {

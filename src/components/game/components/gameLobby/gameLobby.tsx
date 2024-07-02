@@ -7,7 +7,7 @@ import { useSessionStore, useToastStore } from "stores";
 import { baseUrl } from "consts";
 import { Player } from "types";
 import { ReadyButton } from "components";
-import { updateMyPlayer, updateSession } from "services";
+import { updateSession } from "services";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -15,7 +15,7 @@ import { Props } from "./types";
 export const GameLobby = (props: Props) => {
   const { className } = props;
   const { showToast } = useToastStore();
-  const { session, isAllReady, isHost, myPlayer } = useSessionStore();
+  const { session, isAllReady, isHost } = useSessionStore();
 
   const url = `${baseUrl}/join/${session.id}`;
 

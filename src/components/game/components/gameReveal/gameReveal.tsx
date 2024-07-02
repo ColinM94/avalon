@@ -1,7 +1,6 @@
 import * as React from "react";
 
-import { Button, CharacterCard, ReadyButton } from "components";
-import { charactersDefault } from "consts";
+import { Button, CharacterModal, ReadyButton } from "components";
 import { Player } from "types";
 import { classes } from "utils";
 import { useSessionStore } from "stores";
@@ -18,7 +17,7 @@ export const GameReveal = (props: Props) => {
   const [showCharacter, setShowCharacter] = React.useState(false);
   const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false);
 
-  const characterId = session.players[myPlayer.id]?.characterId;
+  const characterId = session.players?.[myPlayer.id]?.characterId;
 
   const handleReveal = () => {
     setIsCharacterRevealed(true);
@@ -51,17 +50,6 @@ export const GameReveal = (props: Props) => {
         Do not let anyone see your character!
       </div>
 
-      <CharacterCard
-        character={charactersDefault[characterId]}
-        showName
-        disableAnimation
-        showDescription
-        alwaysActive
-        orientation="landscape"
-        revealed={showCharacter}
-        className={styles.card}
-      />
-
       <Button
         label={showCharacter ? "Hide Character" : "Reveal Character"}
         onClick={handleReveal}
@@ -72,6 +60,16 @@ export const GameReveal = (props: Props) => {
         disabled={!isCharacterRevealed || session.players[myPlayer.id].isReady}
         className={styles.readyButton}
       />
+
+      {characterId && (
+        <CharacterModal
+          headingTitle="This is your Character"
+          headingSubtitle="Do not let anyone see your screen"
+          characterId={characterId}
+          show={showCharacter}
+          setShow={setShowCharacter}
+        />
+      )}
     </div>
   );
 };

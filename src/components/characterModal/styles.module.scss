@@ -1,7 +1,7 @@
 .character {
+  margin-top: vars.$spacing-primary;
   height: 100vh;
   max-height: 350px;
-
   width: 100vw;
   max-width: min(calc(100vw - vars.$spacing-primary * 2), 500px);
 }

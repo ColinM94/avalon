@@ -1,3 +1,4 @@
+import { Button } from "components";
 import { classes } from "utils";
 
 import { Props } from "./types";
@@ -14,7 +15,13 @@ export const Modal = (props: Props) => {
           styles.background,
           show ? styles.backgroundShown : styles.backgroundHidden
         )}
-      />
+      >
+        <Button
+          icon="x"
+          onClick={() => setShow(false)}
+          className={styles.closeButton}
+        />
+      </div>
 
       <div
         className={classes(
