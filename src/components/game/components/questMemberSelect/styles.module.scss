@@ -1,6 +1,7 @@
 .container {
   padding-top: vars.$spacing-primary;
   gap: vars.$spacing-primary;
+  flex: 1;
 
   .explanation {
     text-align: center;
@@ -16,6 +17,11 @@
 
   .playersSentence {
     min-height: 50px;
+    justify-content: flex-end;
+  }
+
+  .playersSelect {
+    flex: 1;
   }
 
   .players {
@@ -36,7 +42,7 @@
     }
 
     .playerSelected {
-      background-color: vars.$color-success;
+      background-color: vars.$color-primary;
     }
 
     .playerDisabled {

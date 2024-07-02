@@ -1,33 +1,35 @@
+import * as React from "react";
+
 import { classes, sentencifyArray } from "utils";
 import { Button, LoadingOverlay } from "components";
 import { useSessionStore, useToastStore } from "stores";
-import { updateSession } from "services";
+import { updateActiveQuest, updateSession } from "services";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
-export const QuestsVote = (props: Props) => {
-  const { activeQuest, className } = props;
+export const QuestMemberSelect = (props: Props) => {
+  const { className } = props;
 
-  const { players, playersArray, myPlayer, session } = useSessionStore();
+  const { players, playersArray, myPlayer, session, activeQuest } =
+    useSessionStore();
 
   const { showToast } = useToastStore();
 
-  const isMaxPlayers = activeQuest.players.length >= activeQuest.numPlayers;
+  React.useEffect(() => {
+    if (
+      activeQuest?.index === session.activeQuestIndex &&
+      activeQuest.leaderId
+    ) {
+      return;
+    }
 
-  // React.useEffect(() => {
-  //   if (isHost && !activeQuest) {
-  //     updateSession({
-  //       quests: {
-  //         ...session.quests,
-  //         0: {
-  //           ...session.quests[0],
-  //           leaderId: players[0].id,
-  //         },
-  //       },
-  //     });
-  //   }
-  // }, []);
+    updateActiveQuest({
+      leaderId: Object.values(players)[0].id,
+    });
+  }, [session.activeQuestIndex]);
+
+  const isMaxPlayers = activeQuest.players.length >= activeQuest.numPlayers;
 
   const handleClick = (playerId: string) => {
     if (activeQuest.leaderId !== myPlayer.id) return;
@@ -81,39 +83,41 @@ export const QuestsVote = (props: Props) => {
             {players[activeQuest.leaderId].name} is Leader
           </div>
           <div className={styles.explanationDescription}>
-            They are voting for {activeQuest.index + 1} player(s) to go on Quest{" "}
+            They are selecting {activeQuest.numPlayers} player(s) to go on Quest{" "}
             {activeQuest.index + 1}
           </div>
         </div>
       )}
 
-      <div className={styles.playersSentence}>
-        {sentencifyArray(
-          playersArray
-            .filter((player) => activeQuest.players?.includes(player.id))
-            .map((player) => player.name)
-        )}
-        {activeQuest.players.length > 0 && " will go on the quest."}
-      </div>
+      <div className={styles.playersSelect}>
+        <div className={styles.playersSentence}>
+          {sentencifyArray(
+            playersArray
+              .filter((player) => activeQuest.players?.includes(player.id))
+              .map((player) => player.name)
+          )}
+          {activeQuest.players.length > 0 && " will go on the quest."}
+        </div>
 
-      <div className={styles.players}>
-        {playersArray.map((player) => {
-          const isSelected = activeQuest.players.includes(player.id);
+        <div className={styles.players}>
+          {playersArray.map((player) => {
+            const isSelected = activeQuest.players.includes(player.id);
 
-          return (
-            <div
-              onClick={() => handleClick(player.id)}
-              key={player.id}
-              className={classes(
-                styles.player,
-                isSelected && styles.playerSelected,
-                !isSelected && isMaxPlayers && styles.playerDisabled
-              )}
-            >
-              {player.name}
-            </div>
-          );
-        })}
+            return (
+              <div
+                onClick={() => handleClick(player.id)}
+                key={player.id}
+                className={classes(
+                  styles.player,
+                  isSelected && styles.playerSelected,
+                  !isSelected && isMaxPlayers && styles.playerDisabled
+                )}
+              >
+                {player.name}
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {activeQuest.leaderId === myPlayer.id && (

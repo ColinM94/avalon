@@ -21,7 +21,13 @@ export type GameSession = {
   // players: string[];
   players: Record<string, Player>;
   quests: Record<number, Quest>;
-  step: "lobby" | "characterReveal" | "ritual" | "quests";
+  step:
+    | "lobby"
+    | "characterReveal"
+    | "ritual"
+    | "questMemberSelect"
+    | "questApproval"
+    | "quest";
   isRitualFinished: boolean;
   numPlayers: number;
   characters: string[];

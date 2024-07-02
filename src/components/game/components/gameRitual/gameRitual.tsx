@@ -101,7 +101,7 @@ export const GameRitual = () => {
 
   const handleAllReady = async () => {
     updateSession({
-      step: "quests",
+      step: "questMemberSelect",
     });
   };
 

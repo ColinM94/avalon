@@ -6,7 +6,7 @@ export type State = {
   myPlayer: Player;
   isHost: boolean;
   isAllReady: boolean;
-  activeQuest: Quest | null;
+  activeQuest: Quest;
   playersArray: Player[];
 };
 
