@@ -1,5 +1,5 @@
 import { classes } from "utils";
-import { Heading, InputCheckbox } from "components";
+import { Heading } from "components";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -9,7 +9,7 @@ export const SetupOptions = (props: Props) => {
 
   return (
     <>
-      <InputCheckbox
+      {/* <InputCheckbox
         value={session.isHostPlaying}
         setValue={(value) => updateSession({ isHostPlaying: value })}
         heading="Is this device playing?"
@@ -18,12 +18,12 @@ export const SetupOptions = (props: Props) => {
             ? "This device will be used by a player e.g. Phone."
             : "This device will not be used by a player e.g. TV."
         }
-      />
+      /> */}
 
       <div className={styles.numPlayersInput}>
         <Heading
           headingTitle="Players"
-          headingSubtitle="The number of people who will be playing"
+          // headingSubtitle="The number of people who will be playing"
         />
 
         <div className={styles.numPlayersOptions}>

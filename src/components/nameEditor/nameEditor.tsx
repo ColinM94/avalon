@@ -39,6 +39,7 @@ export const NameEditor = (props: Props) => {
           value={name}
           setValue={setName}
           type="text"
+          onEnterClick={handleSave}
           inputClassName={styles.input}
         />
 
