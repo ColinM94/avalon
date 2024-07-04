@@ -16,8 +16,6 @@ export const GamePlayersItem = (props: Props) => {
 
   const { myPlayer, activeQuest, isHost, session } = useSessionStore();
 
-  console.log(activeQuest);
-
   const [showNameEditor, setShowNameEditor] = React.useState(false);
 
   const isMyPlayer = player.id === myPlayer.id;

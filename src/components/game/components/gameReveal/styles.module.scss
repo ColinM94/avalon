@@ -5,6 +5,7 @@
   align-items: center;
 
   .description {
+    margin-top: auto;
     text-align: center;
     font-size: vars.$font-size-h3;
   }
@@ -12,6 +13,10 @@
   .revealButton {
     align-self: center;
     max-width: 200px;
+  }
+
+  .readyButton {
+    margin-top: auto;
   }
 
   .card {

@@ -6,6 +6,8 @@ export const updatePlayer = async (userId: string, update: Partial<Player>) => {
   const { session, myPlayer } = useSessionStore.getState();
   const { showToast } = useToastStore.getState();
 
+  console.log(userId, update);
+
   try {
     await updateDocument<GameSession>({
       id: session.id,

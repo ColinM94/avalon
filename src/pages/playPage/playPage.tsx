@@ -36,19 +36,21 @@ export const PlayPage = () => {
         throw "Lobby is full";
       }
 
-      const joinedSession = await updateSession(
-        {
-          [`players.${user.id}`]: {
-            ...playerDefault(),
-            id: user.id,
-            name: user.name,
-            joinedAt: Date.now(),
+      if (!tempSession.players[user.id]) {
+        const joinedSession = await updateSession(
+          {
+            [`players.${user.id}`]: {
+              ...playerDefault(),
+              id: user.id,
+              name: user.name,
+              joinedAt: Date.now(),
+            },
           },
-        },
-        params.sessionId
-      );
+          params.sessionId
+        );
 
-      if (!joinedSession) throw "Error joining session";
+        if (!joinedSession) throw "Error joining session";
+      }
 
       await updateDocument<User>({
         collection: "users",
