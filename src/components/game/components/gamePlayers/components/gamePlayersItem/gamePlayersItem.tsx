@@ -6,6 +6,7 @@ import { classes } from "utils";
 import { NameEditor } from "components";
 import { updateSession } from "services";
 import { useSessionStore } from "stores";
+import { GameSession } from "types";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -77,9 +78,10 @@ export const GamePlayersItem = (props: Props) => {
 
         {player.name}
 
-        {player.isReady && session.step !== "quests" && (
-          <FontAwesomeIcon icon="check" className={styles.readyIcon} />
-        )}
+        {player.isReady &&
+          (["lobby", "characterReveal"] as GameSession["step"][]).includes(
+            session.step
+          ) && <FontAwesomeIcon icon="check" className={styles.readyIcon} />}
       </div>
     </>
   );

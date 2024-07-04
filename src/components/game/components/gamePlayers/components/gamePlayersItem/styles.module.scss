@@ -26,6 +26,8 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
     background-color: vars.$color-surface2;
     border-radius: vars.$roundness;
     padding: vars.$spacing-tertiary;
+    aspect-ratio: 1;
+    border: 1px solid vars.$color-surface;
   }
 
   .waitingIcon {
