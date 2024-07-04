@@ -7,6 +7,7 @@ import { GameReveal } from "./components/gameReveal/gameReveal";
 import { GameRitual } from "./components/gameRitual/gameRitual";
 import { GameQuests } from "./components/gameQuests/gameQuests";
 import { QuestMemberSelect } from "./components/questMemberSelect/questMemberSelect";
+import { QuestMemberApproval } from "./components/questMemberApproval/questMemberApproval";
 
 import styles from "./styles.module.scss";
 
@@ -48,6 +49,8 @@ export const Game = () => {
         {session.step === "ritual" && <GameRitual />}
 
         {session.step === "questMemberSelect" && <QuestMemberSelect />}
+
+        {session.step === "questApproval" && <QuestMemberApproval />}
 
         {session.step === "quest" && <GameQuests />}
       </MainLayout>

@@ -2,7 +2,15 @@
   opacity: 1;
   align-self: center;
   max-width: 200px;
-  background-color: vars.$color-success;
+
+  background-color: vars.$color-surface;
+
+  // background: linear-gradient(
+  //   45deg,
+  //   rgb(43, 107, 47) 0%,
+  //   rgb(39, 146, 46) 45%,
+  //   rgb(27, 175, 37) 81%
+  // );
 }
 
 .hidden {

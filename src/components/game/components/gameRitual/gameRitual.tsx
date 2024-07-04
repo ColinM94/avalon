@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReadyButton } from "components";
 import { classes } from "utils";
 import { useSessionStore, useToastStore } from "stores";
-import { updateSession } from "services";
+import { updateMyPlayer, updateSession } from "services";
 
 import styles from "./styles.module.scss";
 
@@ -116,6 +116,12 @@ export const GameRitual = () => {
 
   React.useEffect(() => {
     if (isMyPlayerHost && isAllReady) handleAllReady();
+
+    if (isAllReady) {
+      updateMyPlayer({
+        isReady: false,
+      });
+    }
   }, [isAllReady]);
 
   return (

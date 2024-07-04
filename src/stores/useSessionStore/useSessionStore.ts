@@ -14,6 +14,8 @@ const initialState: State = {
     leaderId: "",
     numPlayers: 5,
     players: [],
+    votesToApprove: {},
+    votesToSucceed: {},
     status: "incomplete",
   },
   heading: {

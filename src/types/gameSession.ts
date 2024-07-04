@@ -13,6 +13,8 @@ export type Quest = {
   numPlayers: number;
   leaderId: string;
   players: string[];
+  votesToApprove: Record<string, boolean>;
+  votesToSucceed: Record<string, boolean>;
 };
 
 export type GameSession = {

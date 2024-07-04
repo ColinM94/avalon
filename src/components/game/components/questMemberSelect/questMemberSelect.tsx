@@ -60,11 +60,15 @@ export const QuestMemberSelect = (props: Props) => {
     });
   };
 
-  const handleContinue = () => {
+  const handleLockIn = () => {
     try {
       if (activeQuest.numPlayers !== activeQuest.players.length) {
         throw `Please select ${activeQuest.numPlayers} players.`;
       }
+
+      updateSession({
+        step: "questApproval",
+      });
     } catch (error) {
       showToast(String(error), "error");
     }
@@ -109,9 +113,10 @@ export const QuestMemberSelect = (props: Props) => {
 
       {isMyPlayerLeader && (
         <Button
-          label="Continue"
-          onClick={handleContinue}
-          disabled={activeQuest.players.length !== activeQuest.numPlayers}
+          label="Lock In"
+          onClick={handleLockIn}
+          // disabled={activeQuest.players.length !== activeQuest.numPlayers}
+          className={styles.lockInButton}
         />
       )}
     </div>

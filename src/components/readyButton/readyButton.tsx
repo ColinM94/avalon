@@ -6,10 +6,15 @@ import { useSessionStore } from "stores";
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const ReadyButton = ({ disabled, className }: Props) => {
+export const ReadyButton = ({ onClick, disabled, className }: Props) => {
   const { myPlayer } = useSessionStore();
 
   const handleClick = () => {
+    if (onClick) {
+      onClick();
+      return;
+    }
+
     updateMyPlayer({
       isReady: true,
     });
