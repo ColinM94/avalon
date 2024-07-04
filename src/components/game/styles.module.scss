@@ -1,9 +1,10 @@
 .container {
   width: 100%;
-}
 
-.readyButton {
-  background-color: vars.$color-primary;
+  .subtitle {
+    color: vars.$color-text-secondary;
+    text-align: center;
+  }
 }
 
 .players {

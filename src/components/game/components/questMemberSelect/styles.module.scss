@@ -1,34 +1,14 @@
 .container {
-  padding-top: vars.$spacing-primary;
   gap: vars.$spacing-primary;
   flex: 1;
-
-  .explanation {
-    text-align: center;
-
-    .explanationHeading {
-      font-size: vars.$font-size-h1;
-    }
-
-    .explanationDescription {
-      color: vars.$color-text-secondary;
-    }
-  }
-
-  .playersSentence {
-    min-height: 50px;
-    justify-content: flex-end;
-  }
-
-  .playersSelect {
-    flex: 1;
-  }
 
   .players {
     flex-direction: row;
     flex-wrap: wrap;
     gap: vars.$spacing-primary;
+    flex: 1;
     margin-top: vars.$spacing-primary;
+    margin-bottom: vars.$spacing-primary;
 
     .player {
       background-color: vars.$color-surface;
@@ -36,8 +16,9 @@
       border-radius: vars.$roundness;
       flex: 0.333;
       min-width: calc(33% - vars.$spacing-primary);
-      max-width: calc(33% - vars.$spacing-primary);
+      max-width: calc(33% - vars.$spacing-primary / 1.75);
       text-align: center;
+      place-content: center;
       cursor: pointer;
     }
 

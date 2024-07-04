@@ -10,11 +10,11 @@ export const SetupOptions = (props: Props) => {
   return (
     <>
       {/* <InputCheckbox
-        value={session.isHostPlaying}
-        setValue={(value) => updateSession({ isHostPlaying: value })}
+        value={session.isMyPlayerHostPlaying}
+        setValue={(value) => updateSession({ isMyPlayerHostPlaying: value })}
         heading="Is this device playing?"
         headingSubtitle={
-          session.isHostPlaying
+          session.isMyPlayerHostPlaying
             ? "This device will be used by a player e.g. Phone."
             : "This device will not be used by a player e.g. TV."
         }

@@ -11,30 +11,36 @@ import { QuestMemberSelect } from "./components/questMemberSelect/questMemberSel
 import styles from "./styles.module.scss";
 
 export const Game = () => {
-  const { session } = useSessionStore();
+  const { session, heading } = useSessionStore();
 
-  // const navigate = useNavigate();
-
-  const heading = () => {
-    switch (session.step) {
-      case "lobby":
-        return "Lobby";
-      case "characterReveal":
-        return "Character Reveal";
-      case "ritual":
-        return "Ritual";
-      case "questMemberSelect":
-        return "Choose Quest Members";
-      case "questApproval":
-        return "Vote to Approve";
-      case "quest":
-        return "Quest";
-    }
-  };
+  // const heading = () => {
+  //   switch (session.step) {
+  //     case "lobby":
+  //       return "Lobby";
+  //     case "characterReveal":
+  //       return "Character Reveal";
+  //     case "ritual":
+  //       return "Ritual";
+  //     case "questMemberSelect":
+  //       return "Quest Preparation";
+  //     case "questApproval":
+  //       return "Vote to Approve";
+  //     case "quest":
+  //       return "Quest";
+  //   }
+  // };
 
   return (
     <>
-      <MainLayout heading={heading()} showHeader className={styles.container}>
+      <MainLayout
+        heading={heading.title}
+        showHeader
+        className={styles.container}
+      >
+        {heading.subtitle && (
+          <div className={styles.subtitle}>{heading.subtitle}</div>
+        )}
+
         {session.step === "lobby" && <GameLobby />}
 
         {session.step === "characterReveal" && <GameReveal />}

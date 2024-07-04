@@ -19,7 +19,7 @@ export const MainLayout = (props: Props) => {
     <div className={styles.container}>
       {showHeader && (
         <Header
-          heading={heading}
+          headingTitle={heading}
           showBackButton={showBackButton}
           showCloseButton={showCloseButton}
         />

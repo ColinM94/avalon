@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { classes, sentencifyArray } from "utils";
+import { classes } from "utils";
 import { Button, LoadingOverlay } from "components";
 import { useSessionStore, useToastStore } from "stores";
 import { updateActiveQuest, updateSession } from "services";
@@ -11,8 +11,15 @@ import styles from "./styles.module.scss";
 export const QuestMemberSelect = (props: Props) => {
   const { className } = props;
 
-  const { players, playersArray, myPlayer, session, activeQuest } =
-    useSessionStore();
+  const {
+    players,
+    playersArray,
+    myPlayer,
+    session,
+    activeQuest,
+    isMyPlayerLeader,
+    updateSessionStore,
+  } = useSessionStore();
 
   const { showToast } = useToastStore();
 
@@ -63,64 +70,44 @@ export const QuestMemberSelect = (props: Props) => {
     }
   };
 
+  React.useEffect(() => {
+    let subtitle = isMyPlayerLeader
+      ? `Select ${activeQuest.numPlayers} players to go on the next quest`
+      : `They are selecting ${activeQuest.numPlayers} player(s) to go on the next Quest`;
+
+    updateSessionStore({
+      heading: {
+        title: `${players[activeQuest.leaderId]?.name} is Leader`,
+        subtitle,
+      },
+    });
+  }, [activeQuest.leaderId]);
+
   if (!activeQuest.leaderId) return <LoadingOverlay />;
 
   return (
     <div className={classes(styles.container, className)}>
-      {activeQuest.leaderId === myPlayer.id && (
-        <div className={styles.explanation}>
-          <div className={styles.explanationHeading}>You are Leader</div>
-          <div className={styles.explanationDescription}>
-            Vote for {activeQuest.numPlayers} player(s) to go on Quest{" "}
-            {activeQuest.index + 1}
-          </div>
-        </div>
-      )}
+      <div className={styles.players}>
+        {playersArray.map((player) => {
+          const isSelected = activeQuest.players.includes(player.id);
 
-      {activeQuest.leaderId !== myPlayer.id && (
-        <div className={styles.explanation}>
-          <div className={styles.explanationHeading}>
-            {players[activeQuest.leaderId].name} is Leader
-          </div>
-          <div className={styles.explanationDescription}>
-            They are selecting {activeQuest.numPlayers} player(s) to go on Quest{" "}
-            {activeQuest.index + 1}
-          </div>
-        </div>
-      )}
-
-      <div className={styles.playersSelect}>
-        <div className={styles.playersSentence}>
-          {sentencifyArray(
-            playersArray
-              .filter((player) => activeQuest.players?.includes(player.id))
-              .map((player) => player.name)
-          )}
-          {activeQuest.players.length > 0 && " will go on the quest."}
-        </div>
-
-        <div className={styles.players}>
-          {playersArray.map((player) => {
-            const isSelected = activeQuest.players.includes(player.id);
-
-            return (
-              <div
-                onClick={() => handleClick(player.id)}
-                key={player.id}
-                className={classes(
-                  styles.player,
-                  isSelected && styles.playerSelected,
-                  !isSelected && isMaxPlayers && styles.playerDisabled
-                )}
-              >
-                {player.name}
-              </div>
-            );
-          })}
-        </div>
+          return (
+            <div
+              onClick={() => handleClick(player.id)}
+              key={player.id}
+              className={classes(
+                styles.player,
+                isSelected && styles.playerSelected,
+                !isSelected && isMaxPlayers && styles.playerDisabled
+              )}
+            >
+              {player.name}
+            </div>
+          );
+        })}
       </div>
 
-      {activeQuest.leaderId === myPlayer.id && (
+      {isMyPlayerLeader && (
         <Button
           label="Continue"
           onClick={handleContinue}

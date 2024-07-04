@@ -37,7 +37,7 @@ export const SetupPage = () => {
         id: user.id,
         name: user.name,
         joinedAt: Date.now(),
-        isHost: true,
+        isMyPlayerHost: true,
       },
     },
     createdBy: user.id,

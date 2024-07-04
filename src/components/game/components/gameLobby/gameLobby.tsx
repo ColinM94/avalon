@@ -15,7 +15,7 @@ import { Props } from "./types";
 export const GameLobby = (props: Props) => {
   const { className } = props;
   const { showToast } = useToastStore();
-  const { session, isAllReady, isHost } = useSessionStore();
+  const { session, isAllReady, isMyPlayerHost } = useSessionStore();
 
   const url = `${baseUrl}/join/${session.id}`;
 
@@ -26,7 +26,7 @@ export const GameLobby = (props: Props) => {
 
   React.useEffect(() => {
     (async () => {
-      if (!isHost || !isAllReady) return;
+      if (!isMyPlayerHost || !isAllReady) return;
 
       const updatedPlayers: Record<string, Player> = {};
 

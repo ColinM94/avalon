@@ -12,7 +12,8 @@ import styles from "./styles.module.scss";
 export const GameReveal = (props: Props) => {
   const { className } = props;
 
-  const { myPlayer, isHost, isAllReady, session } = useSessionStore();
+  const { myPlayer, isMyPlayerHost, isAllReady, session, updateSessionStore } =
+    useSessionStore();
 
   const [showCharacter, setShowCharacter] = React.useState(false);
   const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false);
@@ -41,15 +42,20 @@ export const GameReveal = (props: Props) => {
   };
 
   React.useEffect(() => {
-    if (isHost && isAllReady) handleAllReady();
+    updateSessionStore({
+      heading: {
+        title: "Character Reveal",
+        subtitle: "Don't let anyone see your character!",
+      },
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (isMyPlayerHost && isAllReady) handleAllReady();
   }, [isAllReady]);
 
   return (
     <div className={classes(styles.container, className)}>
-      <div className={styles.description}>
-        Do not let anyone see your character!
-      </div>
-
       <Button
         label={showCharacter ? "Hide Character" : "Reveal Character"}
         onClick={handleReveal}

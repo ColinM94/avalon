@@ -4,7 +4,7 @@ export type GameState = {
   session: GameSession;
   players: Player[];
   myPlayer: Player;
-  isHost: boolean;
+  isMyPlayerHost: boolean;
   isAllReady: boolean;
   updateSession: (update: Partial<GameSession>) => void;
 };

@@ -24,12 +24,16 @@ export const PlayProtected = ({ sessionId }: Props) => {
         (item) => item.isReady
       ).length;
 
+      const activeQuest = data.quests[data.activeQuestIndex];
+      const myPlayer = data.players[user.id];
+
       updateSessionStore({
-        isAllReady: numPlayersReady === data.numPlayers,
-        isHost: data.createdBy === user.id,
-        myPlayer: data.players[user.id],
         players: data.players,
-        activeQuest: data.quests[data.activeQuestIndex],
+        myPlayer,
+        isMyPlayerHost: data.createdBy === user.id,
+        isMyPlayerLeader: activeQuest.leaderId == myPlayer.id,
+        isAllReady: numPlayersReady === data.numPlayers,
+        activeQuest,
         playersArray: Object.values(data.players).sort(
           (a, b) => a.joinedAt - b.joinedAt
         ),

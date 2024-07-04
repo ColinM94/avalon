@@ -1,7 +1,7 @@
 export type Player = {
   id: string;
   name: string;
-  isHost: boolean;
+  isMyPlayerHost: boolean;
   isReady: boolean;
   joinedAt: number;
   characterId: string;
@@ -32,6 +32,6 @@ export type GameSession = {
   numPlayers: number;
   characters: string[];
   createdBy: string;
-  isHostPlaying: boolean;
+  isMyPlayerHostPlaying: boolean;
   activeQuestIndex: number;
 };

@@ -4,26 +4,13 @@
   justify-content: center;
   align-items: center;
 
-  .description {
-    margin-top: auto;
-    text-align: center;
-    font-size: vars.$font-size-h3;
-  }
-
   .revealButton {
     align-self: center;
     max-width: 200px;
+    margin-top: auto;
   }
 
   .readyButton {
     margin-top: auto;
-  }
-
-  .card {
-    pointer-events: auto;
-    width: 100%;
-    max-height: 400px;
-    max-width: 600px;
-    aspect-ratio: 1.4;
   }
 }

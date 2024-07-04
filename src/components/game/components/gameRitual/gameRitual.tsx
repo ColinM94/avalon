@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Button, ReadyButton } from "components";
+import { ReadyButton } from "components";
 import { classes } from "utils";
 import { useSessionStore, useToastStore } from "stores";
 import { updateSession } from "services";
@@ -19,7 +19,8 @@ const instructions = [
 ];
 
 export const GameRitual = () => {
-  const { isAllReady, isHost, session } = useSessionStore();
+  const { isAllReady, isMyPlayerHost, session, updateSessionStore } =
+    useSessionStore();
 
   const { showToast } = useToastStore();
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
@@ -89,6 +90,14 @@ export const GameRitual = () => {
     audioPlayer.current.play();
   }, [audio]);
 
+  React.useEffect(() => {
+    updateSessionStore({
+      heading: {
+        title: "Ritual",
+      },
+    });
+  }, []);
+
   // const handleStartGame = () => {
   //   updateDocument<GameSession>({
   //     id: session.id,
@@ -106,12 +115,12 @@ export const GameRitual = () => {
   };
 
   React.useEffect(() => {
-    if (isHost && isAllReady) handleAllReady();
+    if (isMyPlayerHost && isAllReady) handleAllReady();
   }, [isAllReady]);
 
   return (
     <div className={styles.container}>
-      {isHost && (
+      {isMyPlayerHost && (
         <>
           <audio
             controls
@@ -163,7 +172,7 @@ export const GameRitual = () => {
         </>
       )}
 
-      {!isHost && (
+      {!isMyPlayerHost && (
         <div className={styles.description}>
           The Host will perform the ritual!
         </div>

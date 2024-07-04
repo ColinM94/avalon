@@ -10,9 +10,9 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const Header = (props: Props) => {
-  const { heading, showBackButton } = props;
+  const { headingTitle, showBackButton } = props;
 
-  const { myPlayer, isHost, session } = useSessionStore();
+  const { myPlayer, isMyPlayerHost, session } = useSessionStore();
 
   const navigate = useNavigate();
   const { showToast } = useToastStore();
@@ -43,7 +43,7 @@ export const Header = (props: Props) => {
         );
       }
 
-      if (isHost || session.step !== "lobby") {
+      if (isMyPlayerHost || session.step !== "lobby") {
         promises.push(
           deleteDocument({
             id: session.id,
@@ -71,7 +71,9 @@ export const Header = (props: Props) => {
         />
       )}
 
-      <div className={styles.heading}>{heading}</div>
+      <div className={styles.heading}>
+        <div className={styles.headingTitle}>{headingTitle}</div>
+      </div>
 
       {session.id && (
         <Button

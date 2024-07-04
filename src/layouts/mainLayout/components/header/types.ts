@@ -1,5 +1,5 @@
 export interface Props {
-  heading?: string;
+  headingTitle?: string;
   showBackButton?: boolean;
   showCloseButton?: boolean;
 }

@@ -5,10 +5,22 @@ import { createZustandStore } from "../createZustandStore";
 const initialState: State = {
   session: sessionDefault(),
   isAllReady: false,
-  isHost: false,
+  isMyPlayerHost: false,
+  isMyPlayerLeader: false,
   myPlayer: playerDefault(),
   players: {},
-  activeQuest: null,
+  activeQuest: {
+    index: 0,
+    leaderId: "",
+    numPlayers: 5,
+    players: [],
+    status: "incomplete",
+  },
+  heading: {
+    title: "Title",
+    subtitle: "This is the subtitle",
+  },
+  playersArray: [],
 };
 
 export const useSessionStore = createZustandStore<State & Actions>({

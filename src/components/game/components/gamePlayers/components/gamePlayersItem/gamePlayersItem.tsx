@@ -14,12 +14,12 @@ import styles from "./styles.module.scss";
 export const GamePlayersItem = (props: Props) => {
   const { player, connected, className } = props;
 
-  const { myPlayer, activeQuest, isHost, session } = useSessionStore();
+  const { myPlayer, activeQuest, isMyPlayerHost, session } = useSessionStore();
 
   const [showNameEditor, setShowNameEditor] = React.useState(false);
 
   const isMyPlayer = player.id === myPlayer.id;
-  const showKick = isHost && player.id !== myPlayer.id && connected;
+  const showKick = isMyPlayerHost && player.id !== myPlayer.id && connected;
   const isLeader =
     activeQuest && activeQuest.leaderId && activeQuest?.leaderId === player.id;
 
@@ -54,7 +54,7 @@ export const GamePlayersItem = (props: Props) => {
           className,
           styles.container,
           connected && styles.connected,
-          player.isHost && styles.host,
+          player.isMyPlayerHost && styles.host,
           isMyPlayer && styles.user
         )}
       >
@@ -77,9 +77,11 @@ export const GamePlayersItem = (props: Props) => {
         {player.name}
 
         {player.isReady &&
-          (["lobby", "characterReveal"] as GameSession["step"][]).includes(
-            session.step
-          ) && <FontAwesomeIcon icon="check" className={styles.readyIcon} />}
+          (
+            ["lobby", "characterReveal", "ritual"] as GameSession["step"][]
+          ).includes(session.step) && (
+            <FontAwesomeIcon icon="check" className={styles.readyIcon} />
+          )}
       </div>
     </>
   );

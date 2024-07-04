@@ -4,9 +4,14 @@ export type State = {
   session: GameSession;
   players: Record<string, Player>;
   myPlayer: Player;
-  isHost: boolean;
+  isMyPlayerLeader: boolean;
+  isMyPlayerHost: boolean;
   isAllReady: boolean;
   activeQuest: Quest;
+  heading: {
+    title?: string;
+    subtitle?: string;
+  };
   playersArray: Player[];
 };
 

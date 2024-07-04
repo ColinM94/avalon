@@ -5,7 +5,7 @@ export const playerDefault = (): Player => {
     id: "",
     name: "",
     characterId: "",
-    isHost: false,
+    isMyPlayerHost: false,
     joinedAt: 0,
     isReady: false,
   };

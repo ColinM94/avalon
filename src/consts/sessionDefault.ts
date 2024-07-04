@@ -11,7 +11,7 @@ export const sessionDefault = (): GameSession => {
     characters: [],
     isRitualFinished: false,
     activeQuestIndex: 0,
-    isHostPlaying: true,
+    isMyPlayerHostPlaying: true,
     quests: {
       0: {
         index: 0,
@@ -49,6 +49,9 @@ export const sessionDefault = (): GameSession => {
         players: [],
       },
     },
-    leaderId: "",
+    heading: {
+      title: "",
+      subtitle: "",
+    },
   };
 };
