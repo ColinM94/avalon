@@ -8,7 +8,7 @@ import { updateActiveQuest, updateSession } from "services";
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
-export const QuestMemberSelect = (props: Props) => {
+export const GameQuestMemberSelect = (props: Props) => {
   const { className } = props;
 
   const {
@@ -67,7 +67,7 @@ export const QuestMemberSelect = (props: Props) => {
       }
 
       updateSession({
-        step: "questApproval",
+        step: "questMemberVote",
       });
     } catch (error) {
       showToast(String(error), "error");

@@ -28,8 +28,11 @@ export type GameSession = {
     | "characterReveal"
     | "ritual"
     | "questMemberSelect"
-    | "questApproval"
-    | "quest";
+    | "questMemberVote"
+    | "questMemberResult"
+    | "questVote"
+    | "questResult"
+    | "";
   isRitualFinished: boolean;
   numPlayers: number;
   characters: string[];

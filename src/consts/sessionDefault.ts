@@ -19,6 +19,8 @@ export const sessionDefault = (): GameSession => {
         numPlayers: 5,
         leaderId: "",
         players: [],
+        votesToApprove: {},
+        votesToSucceed: {},
       },
       1: {
         index: 1,
@@ -26,6 +28,8 @@ export const sessionDefault = (): GameSession => {
         numPlayers: 5,
         leaderId: "",
         players: [],
+        votesToApprove: {},
+        votesToSucceed: {},
       },
       2: {
         index: 2,
@@ -33,6 +37,8 @@ export const sessionDefault = (): GameSession => {
         numPlayers: 5,
         leaderId: "",
         players: [],
+        votesToApprove: {},
+        votesToSucceed: {},
       },
       3: {
         index: 3,
@@ -40,6 +46,8 @@ export const sessionDefault = (): GameSession => {
         numPlayers: 5,
         leaderId: "",
         players: [],
+        votesToApprove: {},
+        votesToSucceed: {},
       },
       4: {
         index: 4,
@@ -47,11 +55,9 @@ export const sessionDefault = (): GameSession => {
         numPlayers: 5,
         leaderId: "",
         players: [],
+        votesToApprove: {},
+        votesToSucceed: {},
       },
-    },
-    heading: {
-      title: "",
-      subtitle: "",
     },
   };
 };

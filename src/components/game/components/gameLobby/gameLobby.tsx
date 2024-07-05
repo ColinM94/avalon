@@ -15,7 +15,8 @@ import { Props } from "./types";
 export const GameLobby = (props: Props) => {
   const { className } = props;
   const { showToast } = useToastStore();
-  const { session, isAllReady, isMyPlayerHost } = useSessionStore();
+  const { session, isAllReady, isMyPlayerHost, updateSessionStore } =
+    useSessionStore();
 
   const url = `${baseUrl}/join/${session.id}`;
 
@@ -44,6 +45,14 @@ export const GameLobby = (props: Props) => {
       });
     })();
   }, [isAllReady]);
+
+  React.useEffect(() => {
+    updateSessionStore({
+      heading: {
+        title: "Avalon",
+      },
+    });
+  }, []);
 
   return (
     <div className={classes(styles.container, className)}>

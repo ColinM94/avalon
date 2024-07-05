@@ -20,7 +20,7 @@ export const GamePlayers = (props: Props) => {
     );
 
     for (let i = 0; i < session.numPlayers; i++) {
-      const tempPlayer = tempPlayers[i] || playerDefault("");
+      const tempPlayer = tempPlayers[i] || playerDefault();
 
       items.push(
         <GamePlayersItem

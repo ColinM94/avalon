@@ -5,31 +5,16 @@ import { GamePlayers } from "./components/gamePlayers/gamePlayers";
 import { GameLobby } from "./components/gameLobby/gameLobby";
 import { GameReveal } from "./components/gameReveal/gameReveal";
 import { GameRitual } from "./components/gameRitual/gameRitual";
-import { GameQuests } from "./components/gameQuests/gameQuests";
-import { QuestMemberSelect } from "./components/questMemberSelect/questMemberSelect";
-import { QuestMemberApproval } from "./components/questMemberApproval/questMemberApproval";
+import { GameQuestMemberSelect } from "./components/gameQuestMemberSelect/gameQuestMemberSelect";
+import { GameQuestMemberVote } from "./components/gameQuestMemberVote/gameQuestMemberVote";
+import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote";
+import { GameQuestResult } from "./components/gameQuestVoteResult/gameQuestResult";
+import { GameQuestMemberResult } from "./components/gameQuestMemberResult/gameQuestMemberResult";
 
 import styles from "./styles.module.scss";
 
 export const Game = () => {
   const { session, heading } = useSessionStore();
-
-  // const heading = () => {
-  //   switch (session.step) {
-  //     case "lobby":
-  //       return "Lobby";
-  //     case "characterReveal":
-  //       return "Character Reveal";
-  //     case "ritual":
-  //       return "Ritual";
-  //     case "questMemberSelect":
-  //       return "Quest Preparation";
-  //     case "questApproval":
-  //       return "Vote to Approve";
-  //     case "quest":
-  //       return "Quest";
-  //   }
-  // };
 
   return (
     <>
@@ -48,11 +33,15 @@ export const Game = () => {
 
         {session.step === "ritual" && <GameRitual />}
 
-        {session.step === "questMemberSelect" && <QuestMemberSelect />}
+        {session.step === "questMemberSelect" && <GameQuestMemberSelect />}
 
-        {session.step === "questApproval" && <QuestMemberApproval />}
+        {session.step === "questMemberVote" && <GameQuestMemberVote />}
 
-        {session.step === "quest" && <GameQuests />}
+        {session.step === "questMemberResult" && <GameQuestMemberResult />}
+
+        {session.step === "questVote" && <GameQuestVote />}
+
+        {session.step === "questResult" && <GameQuestResult />}
       </MainLayout>
 
       <GamePlayers className={styles.players} />

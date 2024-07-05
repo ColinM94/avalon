@@ -19,8 +19,8 @@ const initialState: State = {
     status: "incomplete",
   },
   heading: {
-    title: "Title",
-    subtitle: "This is the subtitle",
+    title: "",
+    subtitle: "",
   },
   playersArray: [],
 };

@@ -8,7 +8,7 @@ import { ReadyButton } from "components";
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
-export const QuestMemberApproval = (props: Props) => {
+export const GameQuestMemberVote = (props: Props) => {
   const { className } = props;
 
   const {
@@ -45,16 +45,6 @@ export const QuestMemberApproval = (props: Props) => {
     });
   }, []);
 
-  // const votes = () => {
-  //   const items = [];
-
-  //   for (let i = 0; i < playersArray.length; i++) {
-  //     items.push(<div className={styles.vote}>Vote Result</div>);
-  //   }
-
-  //   return items;
-  // };
-
   const handleVoteClick = (voteValue: boolean) => {
     setVote(voteValue);
   };
@@ -69,16 +59,6 @@ export const QuestMemberApproval = (props: Props) => {
     <div className={classes(styles.container, className)}>
       <div className={styles.votes}>
         <div
-          onClick={() => handleVoteClick(false)}
-          className={classes(
-            styles.noVote,
-            vote !== false && styles.voteDisabled
-          )}
-        >
-          No
-        </div>
-
-        <div
           onClick={() => handleVoteClick(true)}
           className={classes(
             styles.yesVote,
@@ -86,6 +66,16 @@ export const QuestMemberApproval = (props: Props) => {
           )}
         >
           Yes
+        </div>
+
+        <div
+          onClick={() => handleVoteClick(false)}
+          className={classes(
+            styles.noVote,
+            vote !== false && styles.voteDisabled
+          )}
+        >
+          No
         </div>
       </div>
 
