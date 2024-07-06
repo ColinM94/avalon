@@ -4,7 +4,7 @@ import { deleteField } from "firebase/firestore";
 
 import { classes } from "utils";
 import { NameEditor } from "components";
-import { getFileUrl, updateSession } from "services";
+import { updateSession } from "services";
 import { useSessionStore } from "stores";
 import { GameSession } from "types";
 // import myFace from "assets/images/myFace.jpg";
@@ -13,12 +13,11 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const PlayerCard = (props: Props) => {
-  const { player, connected, className } = props;
+  const { player, connected = true, className } = props;
 
   const { myPlayer, activeQuest, isMyPlayerHost, session } = useSessionStore();
 
   const [showNameEditor, setShowNameEditor] = React.useState(false);
-  const [imageUrl, setImageUrl] = React.useState<string>();
 
   const isMyPlayer = player.id === myPlayer.id;
   const showKick = isMyPlayerHost && player.id !== myPlayer.id && connected;
@@ -44,23 +43,10 @@ export const PlayerCard = (props: Props) => {
     else setShowNameEditor(true);
   };
 
-  const loadImage = async () => {
-    const url = await getFileUrl(`images/${session.id}/${player.id}.png`);
-    setImageUrl(url);
-  };
-
-  React.useEffect(() => {
-    loadImage();
-  }, []);
-
   return (
     <>
       {player.id === myPlayer.id && (
-        <NameEditor
-          show={showNameEditor}
-          setShow={setShowNameEditor}
-          onSaveSuccess={loadImage}
-        />
+        <NameEditor show={showNameEditor} setShow={setShowNameEditor} />
       )}
 
       <div
@@ -73,7 +59,9 @@ export const PlayerCard = (props: Props) => {
           isMyPlayer && styles.user
         )}
       >
-        <img src={imageUrl} className={styles.image} />
+        {player.imageUrl && (
+          <img src={player.imageUrl} className={styles.image} />
+        )}
 
         {isLeader && (
           <FontAwesomeIcon icon="crown" className={styles.hostIcon} />

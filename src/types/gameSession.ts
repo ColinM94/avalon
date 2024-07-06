@@ -4,6 +4,7 @@ export type Player = {
   isMyPlayerHost: boolean;
   isReady: boolean;
   joinedAt: number;
+  imageUrl?: string;
   characterId: string;
 };
 

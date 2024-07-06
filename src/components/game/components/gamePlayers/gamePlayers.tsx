@@ -21,7 +21,9 @@ export const GamePlayers = (props: Props) => {
     for (let i = 0; i < session.numPlayers; i++) {
       const tempPlayer = tempPlayers[i] || playerDefault();
 
-      items.push(<PlayerCard player={tempPlayer} />);
+      items.push(
+        <PlayerCard player={tempPlayer} connected={!!tempPlayer.joinedAt} />
+      );
     }
 
     return items;
