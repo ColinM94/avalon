@@ -1,8 +1,7 @@
 import { classes } from "utils";
 import { playerDefault } from "consts";
 import { useSessionStore } from "stores";
-
-import { GamePlayersItem } from "./components/gamePlayersItem/gamePlayersItem";
+import { PlayerCard } from "components";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -22,13 +21,7 @@ export const GamePlayers = (props: Props) => {
     for (let i = 0; i < session.numPlayers; i++) {
       const tempPlayer = tempPlayers[i] || playerDefault();
 
-      items.push(
-        <GamePlayersItem
-          player={tempPlayer}
-          connected={!!tempPlayers[i]}
-          key={i}
-        />
-      );
+      items.push(<PlayerCard player={tempPlayer} />);
     }
 
     return items;

@@ -11,23 +11,34 @@
 }
 
 .container {
-  position: fixed;
-  top: vars.$spacing-primary;
-  bottom: vars.$spacing-primary;
-  left: vars.$spacing-primary;
-  right: vars.$spacing-primary;
-  height: fit-content;
-  max-width: 500px;
-  align-self: center;
-  margin-left: auto;
-  margin-right: auto;
-  padding: vars.$spacing-primary;
   background-color: vars.$color-surface;
   border-radius: vars.$roundness;
-  z-index: 2;
+  gap: vars.$spacing-primary;
 
-  .heading {
-    margin-bottom: vars.$spacing-secondary;
+  .photo {
+    aspect-ratio: 1;
+    border: 1px solid vars.$color-surface2;
+    width: 100px;
+    background-color: vars.$color-surface2;
+    border-radius: vars.$roundness;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: vars.$spacing-primary;
+
+    .photoIcon {
+      font-size: 30px;
+    }
+
+    .image {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .imageInput {
+    display: none;
   }
 
   .input {
@@ -35,6 +46,7 @@
   }
 
   .saveButton {
-    margin-top: calc(vars.$spacing-primary * 2);
+    margin-top: calc(vars.$spacing-primary);
+    width: 100%;
   }
 }

@@ -2,6 +2,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faArrowLeft,
   faArrowRotateBack,
+  faCamera,
   faCheck,
   faCopy,
   faCrown,
@@ -25,6 +26,7 @@ export const initIcons = () => {
     faArrowRotateBack,
     faPause,
     faSpinner,
-    faArrowLeft
+    faArrowLeft,
+    faCamera
   );
 };

@@ -16,3 +16,9 @@ export * from "./session/updatePlayer";
 export * from "./session/updateSession";
 export * from "./session/updateMyPlayer";
 export * from "./session/updateActiveQuest";
+
+// Storage
+export * from "./storage/deleteFile";
+export * from "./storage/getFileMetadata";
+export * from "./storage/getFileUrl";
+export * from "./storage/uploadFile";
