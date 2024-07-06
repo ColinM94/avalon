@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { classes } from "utils";
-import { Button, LoadingOverlay } from "components";
+import { Button, LoadingOverlay, PlayerCard } from "components";
 import { useSessionStore, useToastStore } from "stores";
 import { updateActiveQuest, updateSession } from "services";
 
@@ -95,18 +95,18 @@ export const GameQuestMemberSelect = (props: Props) => {
         {playersArray.map((player) => {
           const isSelected = activeQuest.players.includes(player.id);
 
+          if (!isMyPlayerLeader && !isSelected) return;
+
           return (
-            <div
+            <PlayerCard
+              player={player}
               onClick={() => handleClick(player.id)}
-              key={player.id}
+              showName
               className={classes(
                 styles.player,
-                isSelected && styles.playerSelected,
-                !isSelected && isMaxPlayers && styles.playerDisabled
+                isSelected ? styles.playerSelected : styles.playerDisabled
               )}
-            >
-              {player.name}
-            </div>
+            />
           );
         })}
       </div>

@@ -6,28 +6,24 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: vars.$spacing-primary;
+    align-items: center;
+    align-content: flex-start;
     flex: 1;
-    margin-top: vars.$spacing-primary;
-    margin-bottom: vars.$spacing-primary;
 
     .player {
-      background-color: vars.$color-surface;
-      padding: vars.$spacing-primary;
-      border-radius: vars.$roundness;
-      flex: 0.333;
-      min-width: calc(33% - vars.$spacing-primary);
-      max-width: calc(33% - vars.$spacing-primary / 1.75);
-      text-align: center;
-      place-content: center;
-      cursor: pointer;
+      min-width: calc(33% - vars.$spacing-primary * 0.61);
+      height: 100%;
+      max-height: 150px;
     }
 
     .playerSelected {
-      background-color: vars.$color-primary;
+      // background-color: vars.$color-primary;
+      border: 2px solid vars.$color-primary;
     }
 
     .playerDisabled {
-      filter: brightness(vars.$disabled-brightness-filter);
+      filter: grayscale(1);
+      border: 2px solid vars.$color-background;
     }
   }
 

@@ -22,7 +22,11 @@ export const GamePlayers = (props: Props) => {
       const tempPlayer = tempPlayers[i] || playerDefault();
 
       items.push(
-        <PlayerCard player={tempPlayer} connected={!!tempPlayer.joinedAt} />
+        <PlayerCard
+          player={tempPlayer}
+          showName
+          connected={!!tempPlayer.joinedAt}
+        />
       );
     }
 

@@ -13,7 +13,7 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const PlayerCard = (props: Props) => {
-  const { player, connected = true, className } = props;
+  const { player, connected = true, onClick, showName, className } = props;
 
   const { myPlayer, activeQuest, isMyPlayerHost, session } = useSessionStore();
 
@@ -37,6 +37,8 @@ export const PlayerCard = (props: Props) => {
   };
 
   const handleClick = () => {
+    onClick?.();
+
     if (session.step !== "lobby") return;
 
     if (showKick) handleKick();
@@ -79,7 +81,7 @@ export const PlayerCard = (props: Props) => {
           <FontAwesomeIcon icon="pencil" className={styles.editIcon} />
         )}
 
-        {player.name}
+        {showName && <div className={styles.name}>{player.name}</div>}
 
         {player.isReady &&
           (
