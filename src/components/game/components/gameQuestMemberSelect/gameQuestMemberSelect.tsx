@@ -76,7 +76,7 @@ export const GameQuestMemberSelect = (props: Props) => {
 
   React.useEffect(() => {
     let subtitle = isMyPlayerLeader
-      ? `Select ${activeQuest.numPlayers} players to go on the next quest`
+      ? `Select ${activeQuest.numPlayers} people to go on the next quest`
       : `They are selecting ${activeQuest.numPlayers} player(s) to go on the next Quest`;
 
     updateSessionStore({

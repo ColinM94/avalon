@@ -7,7 +7,7 @@ import { NameEditor } from "components";
 import { updateSession } from "services";
 import { useSessionStore } from "stores";
 import { GameSession } from "types";
-import myFace from "assets/images/myFace.jpg";
+// import myFace from "assets/images/myFace.jpg";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -59,7 +59,7 @@ export const GamePlayersItem = (props: Props) => {
           isMyPlayer && styles.user
         )}
       >
-        <img src={myFace} className={styles.myFace} />
+        {/* <img src={myFace} className={styles.myFace} /> */}
 
         {isLeader && (
           <FontAwesomeIcon icon="crown" className={styles.hostIcon} />

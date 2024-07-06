@@ -1,6 +1,17 @@
 .container {
   flex: 1;
 
+  .players {
+    flex-direction: row;
+    gap: vars.$spacing-primary;
+
+    .player {
+      padding: vars.$spacing-primary;
+      background-color: vars.$color-surface;
+      border-radius: vars.$roundness;
+    }
+  }
+
   .votes {
     flex-direction: row;
     gap: vars.$spacing-primary;

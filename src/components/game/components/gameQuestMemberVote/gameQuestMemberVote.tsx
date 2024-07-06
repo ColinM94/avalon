@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { classes, sentencifyArray } from "utils";
+import { classes } from "utils";
 import { useSessionStore } from "stores";
 import { updateActiveQuest } from "services";
-import { ReadyButton } from "components";
+import { PlayerCard, ReadyButton } from "components";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -16,14 +16,11 @@ export const GameQuestMemberVote = (props: Props) => {
     activeQuest,
     players,
     myPlayer,
+
     updateSessionStore,
   } = useSessionStore();
 
   const [vote, setVote] = React.useState<boolean | null>(null);
-
-  const playersNames = activeQuest.players.map(
-    (playerId) => players[playerId].name
-  );
 
   React.useEffect(() => {
     if (isMyPlayerLeader) {
@@ -37,10 +34,8 @@ export const GameQuestMemberVote = (props: Props) => {
 
     updateSessionStore({
       heading: {
-        title: "Vot to approve",
-        subtitle: `${sentencifyArray(
-          playersNames
-        )} will go on the quest, do you approve?`,
+        title: "Vote to approve",
+        subtitle: `These players will go on the quest, do you approve?`,
       },
     });
   }, []);
@@ -57,6 +52,12 @@ export const GameQuestMemberVote = (props: Props) => {
 
   return (
     <div className={classes(styles.container, className)}>
+      <div className={styles.players}>
+        {activeQuest.players.map((playerId) => (
+          <PlayerCard player={players[playerId]} className={styles.player} />
+        ))}
+      </div>
+
       <div className={styles.votes}>
         <div
           onClick={() => handleVoteClick(true)}
