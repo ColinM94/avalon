@@ -27,7 +27,11 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
   }
 
   .editIcon {
+    position: absolute;
+    left: vars.$spacing-secondary;
+    top: vars.$spacing-secondary;
     font-size: vars.$icon-size-small;
+    // margin-bottom: vars.$font-size-body2;
   }
 
   .kickIcon {
@@ -39,7 +43,7 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
     border-radius: vars.$roundness;
     padding: vars.$spacing-tertiary;
     aspect-ratio: 1;
-    border: 1px solid vars.$color-surface;
+    // border: 1px solid vars.$color-surface;
   }
 
   .waitingIcon {
@@ -59,7 +63,7 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
   .readyIcon {
     position: absolute;
     right: 2px;
-    bottom: 2px;
+    top: 2px;
     color: vars.$color-success;
     font-size: vars.$icon-size-small;
     background-color: vars.$color-background-translucent-light;
@@ -93,13 +97,4 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
 
 .user {
   border: 1px solid vars.$color-primary;
-}
-
-.myFace {
-  position: absolute;
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
-  border-radius: vars.$roundness;
-  border: 5px solid vars.$color-surface2;
 }

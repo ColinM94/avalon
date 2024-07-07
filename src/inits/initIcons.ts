@@ -11,6 +11,7 @@ import {
   faPencil,
   faPlay,
   faSpinner,
+  faUser,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -27,6 +28,7 @@ export const initIcons = () => {
     faPause,
     faSpinner,
     faArrowLeft,
-    faCamera
+    faCamera,
+    faUser
   );
 };

@@ -44,7 +44,7 @@ export const Game = () => {
         {session.step === "questResult" && <GameQuestResult />}
       </MainLayout>
 
-      <GamePlayers className={styles.players} />
+      {/* <GamePlayers className={styles.players} /> */}
     </>
   );
 };

@@ -6,7 +6,7 @@ import { classes } from "utils";
 import { useSessionStore, useToastStore } from "stores";
 import { baseUrl } from "consts";
 import { Player } from "types";
-import { ReadyButton } from "components";
+import { Divider, NameEditor, PlayerCard, ReadyButton } from "components";
 import { updateSession } from "services";
 
 import styles from "./styles.module.scss";
@@ -15,8 +15,16 @@ import { Props } from "./types";
 export const GameLobby = (props: Props) => {
   const { className } = props;
   const { showToast } = useToastStore();
-  const { session, isAllReady, isMyPlayerHost, updateSessionStore } =
-    useSessionStore();
+  const {
+    session,
+    isAllReady,
+    isMyPlayerHost,
+    playersArray,
+    myPlayer,
+    updateSessionStore,
+  } = useSessionStore();
+
+  const [showEditor, setShowEditor] = React.useState(false);
 
   const url = `${baseUrl}/join/${session.id}`;
 
@@ -54,8 +62,36 @@ export const GameLobby = (props: Props) => {
     });
   }, []);
 
+  const players = () => {
+    const tempPlayers = [];
+
+    for (let i = 0; i < session.numPlayers; i++) {
+      if (playersArray[i]?.id === myPlayer.id) continue;
+
+      if (!playersArray[i]) {
+        tempPlayers.push(
+          <PlayerCard connected={false} className={styles.player} />
+        );
+
+        continue;
+      }
+
+      tempPlayers.push(
+        <PlayerCard
+          player={playersArray[i]}
+          showName
+          className={styles.player}
+        />
+      );
+    }
+
+    return tempPlayers;
+  };
+
   return (
     <div className={classes(styles.container, className)}>
+      <NameEditor show={showEditor} setShow={setShowEditor} />
+
       <div className={styles.joinCode}>{session.id}</div>
 
       <QRCode value={url} />
@@ -66,6 +102,24 @@ export const GameLobby = (props: Props) => {
       </div>
 
       <ReadyButton />
+
+      <Divider label="Players" className={styles.divider} />
+
+      <div onClick={() => setShowEditor(true)} className={styles.profile}>
+        {myPlayer.imageUrl && (
+          <img src={myPlayer.imageUrl} className={styles.image} />
+        )}
+
+        <FontAwesomeIcon icon="pencil" className={styles.profileEditIcon} />
+
+        {!myPlayer.imageUrl && (
+          <FontAwesomeIcon icon="user" className={styles.photoIcon} />
+        )}
+
+        <div className={styles.profileName}>Player 1</div>
+      </div>
+
+      <div className={styles.players}>{players()}</div>
     </div>
   );
 };

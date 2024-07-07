@@ -19,20 +19,20 @@ export const PlayerCard = (props: Props) => {
 
   const [showNameEditor, setShowNameEditor] = React.useState(false);
 
-  const isMyPlayer = player.id === myPlayer.id;
-  const showKick = isMyPlayerHost && player.id !== myPlayer.id && connected;
+  const isMyPlayer = player?.id === myPlayer.id;
+  const showKick = isMyPlayerHost && player?.id !== myPlayer.id && connected;
   const isLeader =
-    activeQuest && activeQuest.leaderId && activeQuest?.leaderId === player.id;
+    activeQuest && activeQuest.leaderId && activeQuest?.leaderId === player?.id;
 
   const handleKick = async () => {
     if (session.step !== "lobby") return;
 
-    const shouldKick = confirm(`Are you sure you want to kick ${player.name}`);
+    const shouldKick = confirm(`Are you sure you want to kick ${player?.name}`);
 
     if (!shouldKick) return;
 
     await updateSession({
-      [`players.${player.id}`]: deleteField(),
+      [`players.${player?.id}`]: deleteField(),
     });
   };
 
@@ -47,7 +47,7 @@ export const PlayerCard = (props: Props) => {
 
   return (
     <>
-      {player.id === myPlayer.id && (
+      {player?.id === myPlayer.id && (
         <NameEditor show={showNameEditor} setShow={setShowNameEditor} />
       )}
 
@@ -57,11 +57,11 @@ export const PlayerCard = (props: Props) => {
           className,
           styles.container,
           connected && styles.connected,
-          player.isMyPlayerHost && styles.host,
+          player?.isMyPlayerHost && styles.host,
           isMyPlayer && styles.user
         )}
       >
-        {player.imageUrl && (
+        {player?.imageUrl && (
           <img src={player.imageUrl} className={styles.image} />
         )}
 
@@ -73,17 +73,19 @@ export const PlayerCard = (props: Props) => {
           <FontAwesomeIcon icon="x" className={styles.kickIcon} />
         )}
 
-        {!connected && (
+        {connected === false && (
           <FontAwesomeIcon icon="hourglass" className={styles.waitingIcon} />
         )}
 
-        {isMyPlayer && !player.name && (
+        {/* {isMyPlayer && session.step === "lobby" && (
           <FontAwesomeIcon icon="pencil" className={styles.editIcon} />
+        )} */}
+
+        {showName && player?.name && (
+          <div className={styles.name}>{player.name}</div>
         )}
 
-        {showName && <div className={styles.name}>{player.name}</div>}
-
-        {player.isReady &&
+        {player?.isReady &&
           (
             ["lobby", "characterReveal", "ritual"] as GameSession["step"][]
           ).includes(session.step) && (

@@ -27,12 +27,11 @@
   }
 
   .heading {
-    height: vars.$font-size-h2;
     justify-content: center;
     align-items: center;
 
     .headingTitle {
-      font-size: vars.$font-size-h2;
+      font-size: vars.$font-size-h1;
     }
   }
 }
