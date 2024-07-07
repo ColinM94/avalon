@@ -100,24 +100,30 @@ $goodColor: #43839a;
     transition: transform 0.2s;
   }
 
-  .info {
+  .name {
     position: absolute;
+    top: 0;
     left: 0;
-    bottom: 0;
-    padding-bottom: vars.$spacing-tertiary;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    z-index: 9;
+    right: 0;
+    padding: vars.$spacing-tertiary;
+    text-align: center;
+    font-size: vars.$font-size-h2;
+    border-radius: vars.$roundness;
+    text-shadow: vars.$shadow;
+    z-index: 1;
+  }
 
-    .name {
-      text-align: center;
-      font-size: vars.$font-size-h3;
-      // background-color: vars.$color-background-translucent;
-      padding: vars.$spacing-tertiary;
-      border-radius: vars.$roundness;
-      text-shadow: vars.$shadow;
-    }
+  .description {
+    background-color: vars.$color-background-translucent-light;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    width: 100%;
+    position: absolute;
+    padding: vars.$spacing-secondary;
+    justify-content: center;
   }
 }
 

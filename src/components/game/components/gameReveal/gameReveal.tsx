@@ -1,10 +1,11 @@
 import * as React from "react";
 
-import { Button, CharacterModal, ReadyButton } from "components";
+import { Button, CharacterCard, ReadyButton } from "components";
 import { Player } from "types";
 import { classes } from "utils";
 import { useSessionStore } from "stores";
 import { updateSession } from "services";
+import { charactersDefault } from "consts";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -56,6 +57,17 @@ export const GameReveal = (props: Props) => {
 
   return (
     <div className={classes(styles.container, className)}>
+      <CharacterCard
+        character={charactersDefault[characterId]}
+        showDescription
+        showName
+        alwaysActive
+        className={classes(
+          styles.character,
+          !showCharacter && styles.characterHidden
+        )}
+      />
+
       <Button
         label={showCharacter ? "Hide Character" : "Reveal Character"}
         onClick={handleReveal}
@@ -66,16 +78,6 @@ export const GameReveal = (props: Props) => {
         disabled={!isCharacterRevealed || session.players[myPlayer.id].isReady}
         className={styles.readyButton}
       />
-
-      {characterId && (
-        <CharacterModal
-          headingTitle="This is your Character"
-          headingSubtitle="Do not let anyone see your screen"
-          characterId={characterId}
-          show={showCharacter}
-          setShow={setShowCharacter}
-        />
-      )}
     </div>
   );
 };

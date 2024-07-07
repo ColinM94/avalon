@@ -4,6 +4,17 @@
   justify-content: center;
   align-items: center;
 
+  .character {
+    width: calc(100% - vars.$spacing-primary * 2);
+    max-height: 400px;
+    flex: 1;
+    transition: opacity 0.2s;
+  }
+
+  .characterHidden {
+    opacity: 0;
+  }
+
   .revealButton {
     align-self: center;
     max-width: 200px;

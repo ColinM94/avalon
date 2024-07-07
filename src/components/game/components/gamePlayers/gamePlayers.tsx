@@ -1,7 +1,7 @@
 import { classes } from "utils";
 import { playerDefault } from "consts";
 import { useSessionStore } from "stores";
-import { PlayerCard } from "components";
+import { Divider, PlayerCard } from "components";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -34,8 +34,11 @@ export const GamePlayers = (props: Props) => {
   };
 
   return (
-    <div className={classes(styles.container, className)}>
-      {renderPlayers()}
-    </div>
+    <>
+      <Divider label="Players" />
+      <div className={classes(styles.container, className)}>
+        {renderPlayers()}
+      </div>
+    </>
   );
 };

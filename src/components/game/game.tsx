@@ -44,7 +44,9 @@ export const Game = () => {
         {session.step === "questResult" && <GameQuestResult />}
       </MainLayout>
 
-      {/* <GamePlayers className={styles.players} /> */}
+      {["characterReveal", "ritual"].includes(session.step) && (
+        <GamePlayers className={styles.players} />
+      )}
     </>
   );
 };
