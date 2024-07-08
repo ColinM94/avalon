@@ -1,5 +1,4 @@
 import { classes } from "utils";
-import { playerDefault } from "consts";
 import { useSessionStore } from "stores";
 import { Divider, PlayerCard } from "components";
 
@@ -7,9 +6,9 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const GamePlayers = (props: Props) => {
-  const { className } = props;
+  const { showDivider, showEmptySlots, showMyPlayer, className } = props;
 
-  const { players, session } = useSessionStore();
+  const { players, myPlayer, session } = useSessionStore();
 
   const renderPlayers = () => {
     const items = [];
@@ -19,13 +18,25 @@ export const GamePlayers = (props: Props) => {
     );
 
     for (let i = 0; i < session.numPlayers; i++) {
-      const tempPlayer = tempPlayers[i] || playerDefault();
+      const tempPlayer = tempPlayers?.[i];
+
+      if (showEmptySlots && !tempPlayer) {
+        items.push(
+          <PlayerCard key={i} connected={false} className={styles.player} />
+        );
+
+        continue;
+      }
+
+      if (!tempPlayer) return;
 
       items.push(
         <PlayerCard
+          key={tempPlayer.id}
           player={tempPlayer}
           showName
           connected={!!tempPlayer.joinedAt}
+          className={styles.player}
         />
       );
     }
@@ -35,8 +46,8 @@ export const GamePlayers = (props: Props) => {
 
   return (
     <>
-      <Divider label="Players" />
       <div className={classes(styles.container, className)}>
+        {showDivider && <Divider label="Players" />}
         {renderPlayers()}
       </div>
     </>

@@ -6,8 +6,11 @@ import { classes } from "utils";
 import { useSessionStore, useToastStore } from "stores";
 import { baseUrl } from "consts";
 import { Player } from "types";
-import { Divider, NameEditor, PlayerCard, ReadyButton } from "components";
-import { updateSession } from "services";
+import { ReadyButton } from "components";
+import { updateMyPlayer, updateSession } from "services";
+
+import { GameLobbyProfile } from "./components/gameLobbyProfile/gameLobbyProfile";
+import { GamePlayers } from "../gamePlayers/gamePlayers";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -15,16 +18,10 @@ import { Props } from "./types";
 export const GameLobby = (props: Props) => {
   const { className } = props;
   const { showToast } = useToastStore();
-  const {
-    session,
-    isAllReady,
-    isMyPlayerHost,
-    playersArray,
-    myPlayer,
-    updateSessionStore,
-  } = useSessionStore();
+  const { session, isAllReady, isMyPlayerHost, myPlayer, updateSessionStore } =
+    useSessionStore();
 
-  const [showEditor, setShowEditor] = React.useState(false);
+  const [name, setName] = React.useState(myPlayer.name);
 
   const url = `${baseUrl}/join/${session.id}`;
 
@@ -62,64 +59,46 @@ export const GameLobby = (props: Props) => {
     });
   }, []);
 
-  const players = () => {
-    const tempPlayers = [];
-
-    for (let i = 0; i < session.numPlayers; i++) {
-      if (playersArray[i]?.id === myPlayer.id) continue;
-
-      if (!playersArray[i]) {
-        tempPlayers.push(
-          <PlayerCard connected={false} className={styles.player} />
-        );
-
-        continue;
-      }
-
-      tempPlayers.push(
-        <PlayerCard
-          player={playersArray[i]}
-          showName
-          className={styles.player}
-        />
-      );
+  const handleSave = () => {
+    if (!name) {
+      showToast("Enter a name", "error");
+      return;
     }
 
-    return tempPlayers;
+    if (name.length > 10) {
+      showToast("Name is too long", "error");
+      return;
+    }
+
+    updateMyPlayer({
+      isReady: true,
+    });
   };
 
   return (
     <div className={classes(styles.container, className)}>
-      <NameEditor show={showEditor} setShow={setShowEditor} />
+      <div className={styles.lobbyInfo}>
+        <div className={styles.joinCode}>{session.id}</div>
 
-      <div className={styles.joinCode}>{session.id}</div>
+        <QRCode value={url} />
 
-      <QRCode value={url} />
-
-      <div onClick={copyToClipboard} className={styles.copyToClipboard}>
-        Copy URL
-        <FontAwesomeIcon icon="copy" className={styles.copyIcon} />
+        <div onClick={copyToClipboard} className={styles.copyToClipboard}>
+          Copy URL
+          <FontAwesomeIcon icon="copy" className={styles.copyIcon} />
+        </div>
       </div>
 
-      <ReadyButton />
+      {/* <Divider label="Your Profile" /> */}
 
-      <Divider label="Players" className={styles.divider} />
+      <GameLobbyProfile
+        name={name}
+        setName={setName}
+        className={styles.editor}
+      />
 
-      <div onClick={() => setShowEditor(true)} className={styles.profile}>
-        {myPlayer.imageUrl && (
-          <img src={myPlayer.imageUrl} className={styles.image} />
-        )}
+      <ReadyButton onClick={handleSave} />
 
-        <FontAwesomeIcon icon="pencil" className={styles.profileEditIcon} />
-
-        {!myPlayer.imageUrl && (
-          <FontAwesomeIcon icon="user" className={styles.photoIcon} />
-        )}
-
-        <div className={styles.profileName}>Player 1</div>
-      </div>
-
-      <div className={styles.players}>{players()}</div>
+      <GamePlayers showEmptySlots showMyPlayer />
     </div>
   );
 };

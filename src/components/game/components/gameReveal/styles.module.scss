@@ -9,6 +9,7 @@
     max-height: 400px;
     flex: 1;
     transition: opacity 0.2s;
+    margin-top: auto;
   }
 
   .characterHidden {
@@ -18,7 +19,7 @@
   .revealButton {
     align-self: center;
     max-width: 200px;
-    margin-top: auto;
+    // margin-top: auto;
   }
 
   .readyButton {

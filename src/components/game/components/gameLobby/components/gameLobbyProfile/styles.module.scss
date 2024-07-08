@@ -1,0 +1,54 @@
+.container {
+  justify-content: center;
+  align-items: center;
+  gap: vars.$spacing-primary;
+
+  .avatar {
+    aspect-ratio: 1;
+    width: 100px;
+    background-color: vars.$color-surface2;
+    border-radius: vars.$roundness;
+    justify-content: center;
+    overflow: hidden;
+
+    .avatarImage {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .avatarIcon {
+      font-size: vars.$icon-size-large;
+    }
+
+    .imageInput {
+      display: none;
+    }
+  }
+
+  .name {
+    justify-content: center;
+  }
+
+  .nameContainer {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 0;
+    min-width: fit-content;
+    background-color: red;
+
+    .nameInput {
+      all: unset;
+      font-size: vars.$font-size-h2;
+      min-width: 0;
+    }
+
+    .editIcon {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+}

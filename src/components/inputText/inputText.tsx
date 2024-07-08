@@ -10,11 +10,16 @@ export const InputText = (props: Props) => {
     type = "text",
     placeholder,
     onEnterClick,
+    disabled,
     inputClassName,
     className,
   } = props;
 
-  const classNames = classes(styles.container, className);
+  const classNames = classes(
+    styles.container,
+    className
+    // disabled && styles.disabled
+  );
 
   return (
     <div className={classNames}>
@@ -25,6 +30,7 @@ export const InputText = (props: Props) => {
         placeholder={placeholder}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && onEnterClick?.()}
+        disabled={disabled}
         className={classes(styles.input, inputClassName)}
       />
     </div>

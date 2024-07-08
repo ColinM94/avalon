@@ -2,8 +2,8 @@
   // background-color: vars.$color-surface;
   border-top-left-radius: vars.$roundness;
   border-top-right-radius: vars.$roundness;
-  padding: vars.$spacing-primary;
   gap: vars.$spacing-primary;
   flex-direction: row;
   flex-wrap: wrap;
+  width: 100%;
 }

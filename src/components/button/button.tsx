@@ -29,7 +29,11 @@ export const Button = (props: Props) => {
       {icon && (
         <FontAwesomeIcon
           icon={icon}
-          className={classes(styles.icon, iconClassName)}
+          className={classes(
+            styles.icon,
+            iconClassName,
+            disabled && styles.disabled
+          )}
         />
       )}
     </div>

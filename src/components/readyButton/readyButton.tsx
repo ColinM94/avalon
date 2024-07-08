@@ -22,13 +22,13 @@ export const ReadyButton = ({ onClick, disabled, className }: Props) => {
 
   return (
     <Button
-      label={"Ready"}
+      label="Ready"
       onClick={handleClick}
       disabled={disabled}
       className={classes(
         className,
         styles.container,
-        myPlayer.isReady && styles.hidden
+        myPlayer.isReady && styles.disabled
       )}
     />
   );

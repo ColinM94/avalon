@@ -29,6 +29,12 @@ $goodColor: #43839a;
   }
 }
 
+.disabled {
+  &:hover {
+    scale: unset !important;
+  }
+}
+
 .iconContainer {
   aspect-ratio: 1;
   background-color: rgba(0, 0, 0, 0);

@@ -3,6 +3,7 @@
   width: 100%;
 
   background-color: vars.$color-surface;
+  margin-top: auto;
 
   // background: linear-gradient(
   //   45deg,
@@ -12,7 +13,10 @@
   // );
 }
 
-.hidden {
+.disabled {
+  // transition: filter 0.5s;
+  // filter: brightness(vars.$disabled-brightness-filter);
+
   transition: opacity 0.5s;
   opacity: 0;
 }

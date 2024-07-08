@@ -1,9 +1,7 @@
-import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteField } from "firebase/firestore";
 
 import { classes } from "utils";
-import { NameEditor } from "components";
 import { updateSession } from "services";
 import { useSessionStore } from "stores";
 import { GameSession } from "types";
@@ -16,8 +14,6 @@ export const PlayerCard = (props: Props) => {
   const { player, connected = true, onClick, showName, className } = props;
 
   const { myPlayer, activeQuest, isMyPlayerHost, session } = useSessionStore();
-
-  const [showNameEditor, setShowNameEditor] = React.useState(false);
 
   const isMyPlayer = player?.id === myPlayer.id;
   const showKick = isMyPlayerHost && player?.id !== myPlayer.id && connected;
@@ -42,15 +38,10 @@ export const PlayerCard = (props: Props) => {
     if (session.step !== "lobby") return;
 
     if (showKick) handleKick();
-    else setShowNameEditor(true);
   };
 
   return (
     <>
-      {player?.id === myPlayer.id && (
-        <NameEditor show={showNameEditor} setShow={setShowNameEditor} />
-      )}
-
       <div
         onClick={handleClick}
         className={classes(

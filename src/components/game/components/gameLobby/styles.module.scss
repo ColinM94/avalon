@@ -4,11 +4,16 @@
   gap: vars.$spacing-primary;
   flex: 1;
 
-  .joinCode {
-    justify-content: center;
+  .lobbyInfo {
     align-items: center;
-    font-size: vars.$font-size-display;
-    margin-top: auto;
+    width: 100%;
+    gap: vars.$spacing-tertiary;
+
+    .joinCode {
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+    }
   }
 
   .copyToClipboard {
@@ -25,67 +30,7 @@
     }
   }
 
-  .profile {
-    aspect-ratio: 1;
-    width: 100px;
-    background-color: vars.$color-surface2;
-    border-radius: vars.$roundness;
-    justify-content: center;
-    overflow: hidden;
-    // margin-top: auto;
-
-    .photoIcon {
-      font-size: 30px;
-    }
-
-    .profileEditIcon {
-      position: absolute;
-      right: vars.$spacing-secondary;
-      top: vars.$spacing-secondary;
-      font-size: vars.$icon-size-small;
-    }
-
-    .image {
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-    }
-
-    .profileName {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      padding-top: 2px;
-      padding-bottom: 2px;
-      font-size: vars.$font-size-body2;
-      text-align: center;
-      background-color: vars.$color-background-translucent-light;
-    }
-  }
-
-  .imageInput {
-    display: none;
-  }
-
-  .input {
-    background-color: vars.$color-surface2;
-  }
-
-  .divider {
-    margin-bottom: vars.$spacing-secondary;
-    margin-top: auto;
-  }
-
-  .players {
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: vars.$spacing-primary;
-    justify-content: center;
-
-    .player {
-      aspect-ratio: 1;
-    }
+  .editor {
+    flex: 1;
   }
 }
