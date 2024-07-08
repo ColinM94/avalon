@@ -1,4 +1,4 @@
-import { CharacterCard } from "components";
+import { CharacterCard, Players } from "components";
 import { charactersDefault } from "consts";
 
 import { Props } from "./types";
@@ -24,6 +24,8 @@ export const CharacterRevealer = (props: Props) => {
           className={styles.card}
         />
       )}
+
+      <Players showIsReady />
     </>
   );
 };

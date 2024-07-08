@@ -2,8 +2,8 @@ import * as React from "react";
 
 import { classes } from "utils";
 import { useSessionStore } from "stores";
-import { updateActiveQuest } from "services";
-import { PlayerCard, ReadyButton } from "components";
+import { updateDocument, updateMyPlayer, updateSession } from "services";
+import { Players, ReadyButton } from "components";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -13,10 +13,11 @@ export const GameQuestMemberVote = (props: Props) => {
 
   const {
     isMyPlayerLeader,
-    activeQuest,
-    players,
+    isMyPlayerHost,
     myPlayer,
-
+    isAllReady,
+    activeQuest,
+    session,
     updateSessionStore,
   } = useSessionStore();
 
@@ -41,47 +42,70 @@ export const GameQuestMemberVote = (props: Props) => {
   }, []);
 
   const handleVoteClick = (voteValue: boolean) => {
+    if (myPlayer.isReady) return;
+
     setVote(voteValue);
   };
 
   const handleLockIn = () => {
-    updateActiveQuest({
-      [`votesToApprove.${myPlayer.id}`]: vote,
+    updateDocument({
+      collection: "sessions",
+      id: session.id,
+      data: {
+        [`quests.${activeQuest.index}.votesToApprove.${myPlayer.id}`]: vote,
+      },
+    });
+
+    updateMyPlayer({
+      isReady: true,
     });
   };
 
+  React.useEffect(() => {
+    if (isMyPlayerHost && isAllReady) {
+      updateSession({
+        step: "questMemberResult",
+      });
+    }
+
+    if (isAllReady) {
+      updateMyPlayer({
+        isReady: false,
+      });
+    }
+  }, [isAllReady]);
+
   return (
-    <div className={classes(styles.container, className)}>
-      <div className={styles.players}>
-        {activeQuest.players.map((playerId) => (
-          <PlayerCard player={players[playerId]} className={styles.player} />
-        ))}
-      </div>
+    <>
+      <div className={classes(styles.container, className)}>
+        <Players width={3} showOnlyPlayersOnActiveQuest />
 
-      <div className={styles.votes}>
-        <div
-          onClick={() => handleVoteClick(true)}
-          className={classes(
-            styles.yesVote,
-            vote !== true && styles.voteDisabled
-          )}
-        >
-          Yes
+        <div className={styles.votes}>
+          <div
+            onClick={() => handleVoteClick(true)}
+            className={classes(
+              styles.yesVote,
+              vote !== true && styles.voteDisabled
+            )}
+          >
+            Yes
+          </div>
+
+          <div
+            onClick={() => handleVoteClick(false)}
+            className={classes(
+              styles.noVote,
+              vote !== false && styles.voteDisabled
+            )}
+          >
+            No
+          </div>
         </div>
 
-        <div
-          onClick={() => handleVoteClick(false)}
-          className={classes(
-            styles.noVote,
-            vote !== false && styles.voteDisabled
-          )}
-        >
-          No
-        </div>
+        <ReadyButton disabled={vote === null} onClick={handleLockIn} />
+        {/* <div className={styles.votes}>{votes()}</div> */}
       </div>
-
-      <ReadyButton disabled={vote === null} onClick={handleLockIn} />
-      {/* <div className={styles.votes}>{votes()}</div> */}
-    </div>
+      <Players showIsReady />
+    </>
   );
 };

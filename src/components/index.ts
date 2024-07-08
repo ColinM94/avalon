@@ -14,3 +14,4 @@ export * from "./readyButton/readyButton";
 export * from "./inputCheckbox/inputCheckbox";
 export * from "./characterModal/characterModal";
 export * from "./playerCard/playerCard";
+export * from "./players/players";

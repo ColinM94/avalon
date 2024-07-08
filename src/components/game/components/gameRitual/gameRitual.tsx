@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { ReadyButton } from "components";
+import { Players, ReadyButton } from "components";
 import { classes } from "utils";
 import { useSessionStore, useToastStore } from "stores";
 import { updateMyPlayer, updateSession } from "services";
@@ -188,6 +188,8 @@ export const GameRitual = () => {
         disabled={!session.isRitualFinished}
         className={styles.readyButton}
       />
+
+      <Players showEmptySlots showMyPlayer />
     </div>
   );
 };

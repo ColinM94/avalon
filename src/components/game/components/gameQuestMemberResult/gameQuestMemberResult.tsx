@@ -1,27 +1,103 @@
+import * as React from "react";
+
 import { classes } from "utils";
 import { useSessionStore } from "stores";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
+import { ReadyButton } from "components/readyButton/readyButton";
+import { updateActiveQuest, updateMyPlayer, updateSession } from "services";
 
 export const GameQuestMemberResult = (props: Props) => {
   const { className } = props;
 
-  const { playersArray } = useSessionStore();
+  const {
+    activeQuest,
+    isMyPlayerHost,
+    isAllReady,
+    playersArray,
+    session,
+    updateSessionStore,
+  } = useSessionStore();
 
-  const votes = () => {
-    const items = [];
+  const votes = Object.values(activeQuest.votesToApprove).sort(
+    (a, b) => Number(b) - Number(a)
+  );
 
-    for (let i = 0; i < playersArray.length; i++) {
-      items.push(<div className={styles.vote}>Vote Result</div>);
-    }
+  const hasPassed = Boolean(
+    votes.filter((vote) => vote).length > votes.length / 2
+  );
+
+  const renderVotes = () => {
+    const items: React.ReactNode[] = [];
+
+    votes.forEach((vote) => {
+      items.push(
+        <div className={vote ? styles.yesVote : styles.noVote}>
+          {vote ? "Success" : "Fail"}
+        </div>
+      );
+    });
 
     return items;
   };
 
+  React.useEffect(() => {
+    updateSessionStore({
+      heading: {
+        title: "Vote Result",
+        subtitle: "",
+      },
+    });
+  }, []);
+
+  React.useEffect(() => {
+    if (!isMyPlayerHost || !isAllReady) return;
+
+    if (isAllReady) {
+      updateMyPlayer({
+        isReady: false,
+      });
+    }
+
+    if (hasPassed) {
+      updateSession({
+        step: "questVote",
+      });
+    } else {
+      const currentLeaderIndex = playersArray.findIndex(
+        (item) => item.id === activeQuest.leaderId
+      );
+      const newLeader =
+        playersArray?.[currentLeaderIndex + 1] || playersArray[0];
+
+      updateActiveQuest({
+        leaderId: newLeader.id,
+        players: [],
+        votesToApprove: {},
+      });
+
+      updateSession({
+        step: "questMemberSelect",
+        numFailVotes: Number(session.numFailVotes) + 1,
+      });
+    }
+  }, [isAllReady, hasPassed]);
+
   return (
-    <div className={classes(styles.container, className)}>
-      <div className={styles.votes}>{votes()}</div>
-    </div>
+    <>
+      <div className={classes(styles.container, className)}>
+        <div className={styles.votes}>{renderVotes()}</div>
+
+        {hasPassed && (
+          <div className={styles.voteResult}>The Vote has passed</div>
+        )}
+
+        {!hasPassed && (
+          <div className={styles.voteResult}>The Vote has failed</div>
+        )}
+      </div>
+      <ReadyButton />
+    </>
   );
 };

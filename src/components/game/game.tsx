@@ -1,7 +1,6 @@
 import { MainLayout } from "layouts";
 import { useSessionStore } from "stores";
 
-import { GamePlayers } from "./components/gamePlayers/gamePlayers";
 import { GameLobby } from "./components/gameLobby/gameLobby";
 import { GameReveal } from "./components/gameReveal/gameReveal";
 import { GameRitual } from "./components/gameRitual/gameRitual";
@@ -43,10 +42,6 @@ export const Game = () => {
 
         {session.step === "questResult" && <GameQuestResult />}
       </MainLayout>
-
-      {["characterReveal", "ritual"].includes(session.step) && (
-        <GamePlayers className={styles.players} />
-      )}
     </>
   );
 };

@@ -5,24 +5,58 @@ import { Divider, PlayerCard } from "components";
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
-export const GamePlayers = (props: Props) => {
-  const { showDivider, showEmptySlots, className } = props;
+export const Players = (props: Props) => {
+  const {
+    showDivider,
+    showEmptySlots,
+    showOnlyPlayersOnActiveQuest,
+    showIsReady,
+    width,
+    className,
+  } = props;
 
-  const { players, session } = useSessionStore();
+  const { players, session, activeQuest } = useSessionStore();
+
+  console.log(players);
 
   const renderPlayers = () => {
-    const items = [];
+    const items: React.ReactNode[] = [];
 
     const tempPlayers = Object.values(players).sort(
       (a, b) => a.joinedAt - b.joinedAt
     );
+
+    if (showOnlyPlayersOnActiveQuest) {
+      activeQuest.players.forEach((playerId) => {
+        const player = players[playerId];
+
+        items.push(
+          <PlayerCard
+            key={playerId}
+            player={player}
+            showName
+            width={width}
+            showIsReady={showIsReady}
+            className={styles.player}
+          />
+        );
+      });
+
+      return items;
+    }
 
     for (let i = 0; i < session.numPlayers; i++) {
       const tempPlayer = tempPlayers?.[i];
 
       if (showEmptySlots && !tempPlayer) {
         items.push(
-          <PlayerCard key={i} connected={false} className={styles.player} />
+          <PlayerCard
+            key={i}
+            connected={false}
+            width={width}
+            showIsReady={showIsReady}
+            className={styles.player}
+          />
         );
 
         continue;
@@ -36,6 +70,8 @@ export const GamePlayers = (props: Props) => {
           player={tempPlayer}
           showName
           connected={!!tempPlayer.joinedAt}
+          width={width}
+          showIsReady={showIsReady}
           className={styles.player}
         />
       );

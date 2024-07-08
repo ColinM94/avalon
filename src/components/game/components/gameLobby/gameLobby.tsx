@@ -7,10 +7,10 @@ import { useSessionStore, useToastStore } from "stores";
 import { baseUrl } from "consts";
 import { Player } from "types";
 import { ReadyButton } from "components";
-import { updateMyPlayer, updateSession } from "services";
+import { updateSession } from "services";
 
 import { GameLobbyProfile } from "./components/gameLobbyProfile/gameLobbyProfile";
-import { GamePlayers } from "../gamePlayers/gamePlayers";
+import { Players } from "../../../players/players";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -85,7 +85,7 @@ export const GameLobby = (props: Props) => {
 
       <ReadyButton disabled={!myPlayer.name} onClickDisabled={handleReady} />
 
-      <GamePlayers showEmptySlots showMyPlayer />
+      <Players showEmptySlots showMyPlayer showIsReady />
     </div>
   );
 };

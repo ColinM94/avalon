@@ -40,4 +40,5 @@ export type GameSession = {
   createdBy: string;
   isMyPlayerHostPlaying: boolean;
   activeQuestIndex: number;
+  numFailVotes: number;
 };

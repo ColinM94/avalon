@@ -95,7 +95,7 @@ export const GameQuestMemberSelect = (props: Props) => {
         {playersArray.map((player) => {
           const isSelected = activeQuest.players.includes(player.id);
 
-          if (!isMyPlayerLeader && !isSelected) return;
+          // if (!isMyPlayerLeader && !isSelected) return;
 
           return (
             <PlayerCard

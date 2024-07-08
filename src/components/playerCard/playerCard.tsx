@@ -4,14 +4,21 @@ import { deleteField } from "firebase/firestore";
 import { classes } from "utils";
 import { updateSession } from "services";
 import { useSessionStore } from "stores";
-import { GameSession } from "types";
 // import myFace from "assets/images/myFace.jpg";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const PlayerCard = (props: Props) => {
-  const { player, connected = true, onClick, showName, className } = props;
+  const {
+    player,
+    connected = true,
+    onClick,
+    showName,
+    showIsReady,
+    width = 1,
+    className,
+  } = props;
 
   const { myPlayer, activeQuest, isMyPlayerHost, session } = useSessionStore();
 
@@ -40,18 +47,26 @@ export const PlayerCard = (props: Props) => {
     if (showKick) handleKick();
   };
 
+  const classNames = () => {
+    return classes(
+      className,
+      styles.container,
+      connected && styles.connected,
+      player?.isMyPlayerHost && styles.host,
+      isMyPlayer && styles.user,
+      width === 1 && styles.width1,
+      width === 2 && styles.width2,
+      width === 3 && styles.width3,
+      width === 4 && styles.width4,
+      width === 5 && styles.width5
+    );
+  };
+
+  console.log(player?.isReady);
+
   return (
     <>
-      <div
-        onClick={handleClick}
-        className={classes(
-          className,
-          styles.container,
-          connected && styles.connected,
-          player?.isMyPlayerHost && styles.host,
-          isMyPlayer && styles.user
-        )}
-      >
+      <div onClick={handleClick} className={classNames()}>
         {player?.imageUrl && (
           <img src={player.imageUrl} className={styles.image} />
         )}
@@ -76,12 +91,9 @@ export const PlayerCard = (props: Props) => {
           <div className={styles.name}>{player.name}</div>
         )}
 
-        {player?.isReady &&
-          (
-            ["lobby", "characterReveal", "ritual"] as GameSession["step"][]
-          ).includes(session.step) && (
-            <FontAwesomeIcon icon="check" className={styles.readyIcon} />
-          )}
+        {player?.isReady && showIsReady && (
+          <FontAwesomeIcon icon="check" className={styles.readyIcon} />
+        )}
       </div>
     </>
   );
