@@ -25,3 +25,7 @@
     margin: 0;
   }
 }
+
+.disabled {
+  filter: brightness(vars.$disabled-brightness-filter);
+}

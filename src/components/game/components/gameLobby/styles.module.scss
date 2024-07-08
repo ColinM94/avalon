@@ -9,10 +9,24 @@
     width: 100%;
     gap: vars.$spacing-tertiary;
 
-    .joinCode {
-      justify-content: center;
-      align-items: center;
-      font-size: 2rem;
+    .lobbyInfoText {
+      flex-direction: row;
+
+      .joinCode {
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+      }
+
+      .lobbyInfoTextCopyIcon {
+        font-size: vars.$icon-size-medium;
+        margin-left: vars.$spacing-secondary;
+        align-self: center;
+        margin-bottom: 4px;
+        position: absolute;
+
+        right: -(vars.$spacing-primary * 1.5);
+      }
     }
   }
 

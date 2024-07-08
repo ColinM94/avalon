@@ -5,6 +5,7 @@ export interface Props {
   onEnterClick?: () => void;
   placeholder?: string;
   disabled?: boolean;
+  maxLength?: number;
   inputClassName?: string;
   className?: string;
 }

@@ -6,9 +6,9 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const GamePlayers = (props: Props) => {
-  const { showDivider, showEmptySlots, showMyPlayer, className } = props;
+  const { showDivider, showEmptySlots, className } = props;
 
-  const { players, myPlayer, session } = useSessionStore();
+  const { players, session } = useSessionStore();
 
   const renderPlayers = () => {
     const items = [];

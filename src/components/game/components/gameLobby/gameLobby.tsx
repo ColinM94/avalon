@@ -17,17 +17,18 @@ import { Props } from "./types";
 
 export const GameLobby = (props: Props) => {
   const { className } = props;
+
   const { showToast } = useToastStore();
   const { session, isAllReady, isMyPlayerHost, myPlayer, updateSessionStore } =
     useSessionStore();
 
-  const [name, setName] = React.useState(myPlayer.name);
-
   const url = `${baseUrl}/join/${session.id}`;
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(url);
-    showToast("Url copied to clipboard", "info");
+  const handleCopy = () => {
+    navigator.share({
+      title: "Join my game of Avalon",
+      url,
+    });
   };
 
   React.useEffect(() => {
@@ -59,44 +60,30 @@ export const GameLobby = (props: Props) => {
     });
   }, []);
 
-  const handleSave = () => {
-    if (!name) {
-      showToast("Enter a name", "error");
-      return;
-    }
-
-    if (name.length > 10) {
-      showToast("Name is too long", "error");
-      return;
-    }
-
-    updateMyPlayer({
-      isReady: true,
-    });
+  const handleReady = () => {
+    if (!myPlayer.name) showToast("You must choose a name");
+    // if (!myPlayer.imageUrl) showToast("Please take a photo");
   };
 
   return (
     <div className={classes(styles.container, className)}>
       <div className={styles.lobbyInfo}>
-        <div className={styles.joinCode}>{session.id}</div>
+        <div onClick={handleCopy} className={styles.lobbyInfoText}>
+          <div className={styles.joinCode}>{session.id}</div>
+
+          <FontAwesomeIcon
+            icon="share-nodes"
+            className={styles.lobbyInfoTextCopyIcon}
+          />
+        </div>
 
         <QRCode value={url} />
-
-        <div onClick={copyToClipboard} className={styles.copyToClipboard}>
-          Copy URL
-          <FontAwesomeIcon icon="copy" className={styles.copyIcon} />
-        </div>
       </div>
-
       {/* <Divider label="Your Profile" /> */}
 
-      <GameLobbyProfile
-        name={name}
-        setName={setName}
-        className={styles.editor}
-      />
+      <GameLobbyProfile className={styles.editor} />
 
-      <ReadyButton onClick={handleSave} />
+      <ReadyButton disabled={!myPlayer.name} onClickDisabled={handleReady} />
 
       <GamePlayers showEmptySlots showMyPlayer />
     </div>

@@ -6,10 +6,20 @@ import { useSessionStore } from "stores";
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const ReadyButton = ({ onClick, disabled, className }: Props) => {
+export const ReadyButton = ({
+  onClick,
+  onClickDisabled,
+  disabled,
+  className,
+}: Props) => {
   const { myPlayer } = useSessionStore();
 
   const handleClick = () => {
+    if (disabled) {
+      onClickDisabled?.();
+      return;
+    }
+
     if (onClick) {
       onClick();
       return;
@@ -24,11 +34,12 @@ export const ReadyButton = ({ onClick, disabled, className }: Props) => {
     <Button
       label="Ready"
       onClick={handleClick}
+      onClickDisabled={handleClick}
       disabled={disabled}
       className={classes(
         className,
         styles.container,
-        myPlayer.isReady && styles.disabled
+        (myPlayer.isReady || disabled) && styles.disabled
       )}
     />
   );

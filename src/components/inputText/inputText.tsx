@@ -11,13 +11,15 @@ export const InputText = (props: Props) => {
     placeholder,
     onEnterClick,
     disabled,
+    maxLength,
     inputClassName,
     className,
   } = props;
 
   const classNames = classes(
     styles.container,
-    className
+    className,
+    disabled && styles.disabled
     // disabled && styles.disabled
   );
 
@@ -30,6 +32,7 @@ export const InputText = (props: Props) => {
         placeholder={placeholder}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && onEnterClick?.()}
+        maxLength={maxLength}
         disabled={disabled}
         className={classes(styles.input, inputClassName)}
       />

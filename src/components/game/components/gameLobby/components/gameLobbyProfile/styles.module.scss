@@ -2,11 +2,12 @@
   justify-content: center;
   align-items: center;
   gap: vars.$spacing-primary;
+  flex-direction: row;
 
   .avatar {
     aspect-ratio: 1;
-    width: 100px;
-    background-color: vars.$color-surface2;
+    width: 150px;
+    background-color: vars.$color-surface;
     border-radius: vars.$roundness;
     justify-content: center;
     overflow: hidden;
@@ -27,28 +28,22 @@
     }
   }
 
+  .nameLabel {
+    margin-bottom: vars.$spacing-tertiary;
+    font-size: vars.$font-size-h3;
+  }
+
   .name {
     justify-content: center;
   }
 
-  .nameContainer {
-    justify-content: center;
-    align-items: center;
+  .nameInput {
+    // font-size: vars.$font-size-h3;
+    width: 150px;
+    font-size: vars.$font-size-body;
+    padding-left: vars.$spacing-secondary;
+    padding-right: vars.$spacing-secondary;
     text-align: center;
-    width: 0;
-    min-width: fit-content;
-    background-color: red;
-
-    .nameInput {
-      all: unset;
-      font-size: vars.$font-size-h2;
-      min-width: 0;
-    }
-
-    .editIcon {
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
+    background-color: vars.$color-surface;
   }
 }

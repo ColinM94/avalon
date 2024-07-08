@@ -6,13 +6,17 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const Button = (props: Props) => {
-  const { label, onClick, disabled, icon, iconClassName, className } = props;
+  const { label, onClick, onClickDisabled,  disabled, icon, iconClassName, className } = props;
 
   const handleClick = () => {
-    if (disabled) return;
+    if (disabled) {
+      onClickDisabled?.();
+      return;
+    };
 
     onClick();
   };
+
 
   return (
     <div
