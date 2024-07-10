@@ -84,21 +84,20 @@ export const CharacterCard = (props: Props) => {
           </div>
         )}
 
-        {showName && (
-          <div className={styles.name}>
-            {characterNames[character.id] || character.id}
-          </div>
-        )}
+        <div className={styles.description}>
+          {showName && (
+            <div className={styles.name}>
+              {characterNames[character.id] || character.id}
+            </div>
+          )}
 
-        {showDescription && (
-          <div className={styles.description}>
-            {character.description.map((item) => (
+          {showDescription &&
+            character.description.map((item) => (
               <div key={item} className={styles.descriptionItem}>
                 • {item}
               </div>
             ))}
-          </div>
-        )}
+        </div>
 
         {image && <img loading="lazy" src={image} className={styles.image} />}
       </div>

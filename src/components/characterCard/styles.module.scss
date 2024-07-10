@@ -45,6 +45,10 @@ $goodColor: #43839a;
     z-index: 2;
   }
 
+  .description {
+    padding: vars.$spacing-primary;
+  }
+
   &:hover {
     scale: 1.02;
   }
@@ -100,19 +104,6 @@ $goodColor: #43839a;
     transition: transform 0.2s;
   }
 
-  .name {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: vars.$spacing-tertiary;
-    text-align: center;
-    font-size: vars.$font-size-h3;
-    border-radius: vars.$roundness;
-    text-shadow: vars.$shadow;
-    z-index: 1;
-  }
-
   .description {
     background-color: vars.$color-background-translucent-light;
     width: 100%;
@@ -134,30 +125,27 @@ $goodColor: #43839a;
     bottom: 0;
     right: 0;
     max-height: calc(100% - 2px);
-    width: 50%;
+    width: 40%;
     object-fit: contain;
     transition: transform 0.2s;
   }
 
-  .info {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 50%;
-    background-color: vars.$color-background-translucent;
-    height: 100%;
-    padding: vars.$spacing-primary;
+  .name {
     z-index: 2;
-
-    .name {
-      z-index: 2;
-      text-align: center;
-      font-size: vars.$font-size-h2;
-      margin-bottom: vars.$spacing-tertiary;
-    }
+    text-align: center;
+    font-size: vars.$font-size-h2;
+    margin-bottom: vars.$spacing-tertiary;
   }
 
   .description {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: vars.$spacing-primary;
+    background-color: vars.$color-background-translucent-light;
+    height: 100%;
+    width: 60%;
+
     .descriptionItem {
       font-size: vars.$font-size-body2;
       color: vars.$color-text-secondary;
