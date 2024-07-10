@@ -1,51 +1,5 @@
-.container {
-  align-items: center;
-  justify-content: center;
-  gap: vars.$spacing-primary;
-  flex: 1;
+.info {
+}
 
-  .lobbyInfo {
-    align-items: center;
-    width: 100%;
-    flex: 1;
-
-    gap: vars.$spacing-tertiary;
-
-    .lobbyInfoText {
-      flex-direction: row;
-
-      .joinCode {
-        justify-content: center;
-        align-items: center;
-        font-size: 2rem;
-      }
-
-      .lobbyInfoTextCopyIcon {
-        font-size: vars.$icon-size-medium;
-        margin-left: vars.$spacing-secondary;
-        align-self: center;
-        margin-bottom: 4px;
-        position: absolute;
-        right: -(vars.$spacing-primary * 1.5);
-      }
-    }
-  }
-
-  .copyToClipboard {
-    flex-direction: row;
-    margin-top: vars.$spacing-secondary;
-    gap: vars.$spacing-secondary;
-    font-size: vars.$font-size-h3;
-    align-items: center;
-    cursor: pointer;
-
-    .copyIcon {
-      font-size: vars.$font-size-h3;
-      margin-bottom: 4px;
-    }
-  }
-
-  .editor {
-    flex: 1;
-  }
+.profile {
 }

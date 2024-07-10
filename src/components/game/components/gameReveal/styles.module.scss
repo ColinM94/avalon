@@ -1,28 +1,19 @@
-.container {
-  gap: vars.$spacing-primary;
+.character {
+  width: calc(100% - vars.$spacing-primary * 2);
+  max-height: 400px;
   flex: 1;
-  justify-content: center;
-  align-items: center;
+  transition: opacity 0.2s;
+  align-self: center;
+  margin-bottom: vars.$spacing-primary;
+  margin-top: auto;
+}
 
-  .character {
-    width: calc(100% - vars.$spacing-primary * 2);
-    max-height: 400px;
-    flex: 1;
-    transition: opacity 0.2s;
-    margin-top: auto;
-  }
+.characterHidden {
+  opacity: 0;
+}
 
-  .characterHidden {
-    opacity: 0;
-  }
-
-  .revealButton {
-    align-self: center;
-    max-width: 200px;
-    // margin-top: auto;
-  }
-
-  .readyButton {
-    margin-top: auto;
-  }
+.revealButton {
+  align-self: center;
+  max-width: 200px;
+  margin-top: auto;
 }

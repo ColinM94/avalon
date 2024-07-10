@@ -10,7 +10,7 @@ export * from "./modal/modal";
 export * from "./splash/splash";
 export * from "./toast/toast";
 export * from "./game/game";
-export * from "./readyButton/readyButton";
+export * from "./bottomBar/bottomBar";
 export * from "./inputCheckbox/inputCheckbox";
 export * from "./characterModal/characterModal";
 export * from "./playerCard/playerCard";

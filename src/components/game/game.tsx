@@ -1,5 +1,6 @@
 import { MainLayout } from "layouts";
 import { useSessionStore } from "stores";
+import { BottomBar, Players } from "components";
 
 import { GameLobby } from "./components/gameLobby/gameLobby";
 import { GameReveal } from "./components/gameReveal/gameReveal";
@@ -17,30 +18,32 @@ export const Game = () => {
 
   return (
     <>
-      <MainLayout
-        heading={heading.title}
-        // showHeader
-        className={styles.container}
-      >
-        {heading.subtitle && (
-          <div className={styles.subtitle}>{heading.subtitle}</div>
-        )}
+      <MainLayout heading={heading.title} className={styles.container}>
+        <Players
+          width={1}
+          showEmptySlots={session.step === "lobby"}
+          showIsReady
+        />
 
-        {session.step === "lobby" && <GameLobby />}
+        <div className={styles.content}>
+          {session.step === "lobby" && <GameLobby />}
 
-        {session.step === "characterReveal" && <GameReveal />}
+          {session.step === "characterReveal" && <GameReveal />}
 
-        {session.step === "ritual" && <GameRitual />}
+          {session.step === "ritual" && <GameRitual />}
 
-        {session.step === "questMemberSelect" && <GameQuestMemberSelect />}
+          {session.step === "questMemberSelect" && <GameQuestMemberSelect />}
 
-        {session.step === "questMemberVote" && <GameQuestMemberVote />}
+          {session.step === "questMemberVote" && <GameQuestMemberVote />}
 
-        {session.step === "questMemberResult" && <GameQuestMemberResult />}
+          {session.step === "questMemberResult" && <GameQuestMemberResult />}
 
-        {session.step === "questVote" && <GameQuestVote />}
+          {session.step === "questVote" && <GameQuestVote />}
 
-        {session.step === "questResult" && <GameQuestResult />}
+          {session.step === "questResult" && <GameQuestResult />}
+        </div>
+
+        <BottomBar />
       </MainLayout>
     </>
   );

@@ -1,0 +1,27 @@
+.container {
+  align-items: center;
+  width: 100%;
+  gap: vars.$spacing-tertiary;
+  justify-content: center;
+  flex: 1;
+
+  .info {
+    flex-direction: row;
+    margin-bottom: vars.$spacing-tertiary;
+
+    .infoCode {
+      justify-content: center;
+      align-items: center;
+      font-size: 2.5rem;
+    }
+
+    .infoCopyIcon {
+      position: absolute;
+      right: -(vars.$spacing-primary * 1.5);
+      margin-left: vars.$spacing-secondary;
+      margin-bottom: 4px;
+      align-self: center;
+      font-size: vars.$icon-size-medium;
+    }
+  }
+}

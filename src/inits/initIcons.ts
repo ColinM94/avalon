@@ -6,10 +6,13 @@ import {
   faCheck,
   faCopy,
   faCrown,
+  faEllipsisV,
+  faHatWizard,
   faHourglass,
   faPause,
   faPencil,
   faPlay,
+  faRightFromBracket,
   faShareNodes,
   faSpinner,
   faX,
@@ -29,6 +32,9 @@ export const initIcons = () => {
     faSpinner,
     faArrowLeft,
     faCamera,
-    faShareNodes
+    faShareNodes,
+    faEllipsisV,
+    faRightFromBracket,
+    faHatWizard
   );
 };

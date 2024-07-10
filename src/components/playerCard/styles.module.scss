@@ -1,11 +1,8 @@
-$width: calc(100% / 5 - vars.$spacing-primary * 0.8);
-
 .container {
   border-radius: vars.$roundness;
   background-color: vars.$color-surface;
   border: 1px solid vars.$color-surface2;
   aspect-ratio: 1;
-  flex: 1;
   justify-content: center;
   align-items: center;
   font-size: vars.$font-size-body2;
@@ -80,30 +77,22 @@ $width: calc(100% / 5 - vars.$spacing-primary * 0.8);
     background-color: vars.$color-background-translucent-light;
     border-bottom-left-radius: vars.$roundness;
     border-bottom-right-radius: vars.$roundness;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 
 .width1 {
-  min-width: calc(100% / 5 - vars.$spacing-primary * 0.8);
-  max-width: calc(100% / 5 - vars.$spacing-primary * 0.8);
+  min-width: calc(100% / 5 - vars.$spacing-secondary / 1.25);
+  max-width: calc(100% / 5 - vars.$spacing-secondary / 1.25);
 }
 
 .width2 {
-  min-width: calc(100% / 4 - vars.$spacing-primary * 0.75);
-  max-width: calc(100% / 4 - vars.$spacing-primary * 0.75);
+  min-width: calc(100% / 3 - vars.$spacing-secondary / 1.5);
+  max-width: calc(100% / 3 - vars.$spacing-secondary / 1.5);
 }
 
 .width3 {
-  min-width: calc(100% / 3 - vars.$spacing-primary * 0.67);
-  max-width: calc(100% / 3 - vars.$spacing-primary * 0.67);
-}
-
-.width4 {
-  min-width: calc(100% / 2 - vars.$spacing-primary * 0.5);
-  max-width: calc(100% / 2 - vars.$spacing-primary * 0.5);
-}
-
-.width5 {
   min-width: 100%;
   max-width: 100%;
 }

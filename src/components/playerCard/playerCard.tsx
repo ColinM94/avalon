@@ -47,6 +47,8 @@ export const PlayerCard = (props: Props) => {
     if (showKick) handleKick();
   };
 
+  console.log(width);
+
   const classNames = () => {
     return classes(
       className,
@@ -56,9 +58,7 @@ export const PlayerCard = (props: Props) => {
       isMyPlayer && styles.user,
       width === 1 && styles.width1,
       width === 2 && styles.width2,
-      width === 3 && styles.width3,
-      width === 4 && styles.width4,
-      width === 5 && styles.width5
+      width === 3 && styles.width3
     );
   };
 

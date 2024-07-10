@@ -58,5 +58,6 @@ export const PlayProtected = ({ sessionId }: Props) => {
   }, [sessionId]);
 
   if (!sessionId || session.id !== sessionId) return <LoadingOverlay />;
+
   return <Game />;
 };

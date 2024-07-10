@@ -1,10 +1,9 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Players, ReadyButton } from "components";
 import { classes } from "utils";
 import { useSessionStore, useToastStore } from "stores";
-import { goToStep, updateMyPlayer, updateSession } from "services";
+import { goToStep, updateSession } from "services";
 
 import styles from "./styles.module.scss";
 
@@ -19,8 +18,7 @@ const instructions = [
 ];
 
 export const GameRitual = () => {
-  const { isAllReady, isMyPlayerHost, session, updateSessionStore } =
-    useSessionStore();
+  const { isAllReady, isMyPlayerHost, updateSessionStore } = useSessionStore();
 
   const { showToast } = useToastStore();
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
@@ -98,25 +96,16 @@ export const GameRitual = () => {
     });
   }, []);
 
-  // const handleStartGame = () => {
-  //   updateDocument<GameSession>({
-  //     id: session.id,
-  //     collection: "sessions",
-  //     data: {
-  //       step: "quests",
-  //     },
-  //   });
-  // };
-
   React.useEffect(() => {
     if (isMyPlayerHost && isAllReady) {
-      goToStep("questMemberSelect");
+      goToStep({
+        step: "questMemberSelect",
+      });
     }
   }, [isAllReady]);
 
   return (
     <div className={styles.container}>
-      <Players showEmptySlots width={1} showMyPlayer />
       {isMyPlayerHost && (
         <>
           <audio
@@ -174,11 +163,6 @@ export const GameRitual = () => {
           The Host will perform the ritual!
         </div>
       )}
-
-      <ReadyButton
-        disabled={!session.isRitualFinished}
-        className={styles.readyButton}
-      />
     </div>
   );
 };

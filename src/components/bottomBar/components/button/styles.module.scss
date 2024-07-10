@@ -1,0 +1,45 @@
+.leaveButton {
+}
+
+.menu {
+  background-color: vars.$color-surface;
+  border-radius: vars.$roundness;
+  width: calc(100% - vars.$spacing-primary * 2);
+  gap: vars.$spacing-primary;
+  max-width: vars.$breakpoint-small;
+
+  .menuItem {
+    flex-direction: row;
+    width: 100%;
+    padding: vars.$spacing-primary;
+    border-radius: vars.$roundness;
+    gap: vars.$spacing-primary;
+    align-items: center;
+    background-color: vars.$color-surface2;
+
+    &:hover {
+      background-color: vars.$color-surface2;
+    }
+
+    .menuItemIcon {
+      font-size: vars.$icon-size-large;
+    }
+
+    .menuItemText {
+    }
+
+    .menuItemTextTitle {
+      font-size: vars.$font-size-h3;
+    }
+
+    .menuItemTextDescription {
+      font-size: vars.$font-size-body2;
+      color: vars.$color-text-secondary;
+    }
+  }
+
+  .menuItemDisabled {
+    filter: blur(100);
+    pointer-events: none;
+  }
+}

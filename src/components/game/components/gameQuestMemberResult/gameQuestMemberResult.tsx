@@ -3,7 +3,7 @@ import * as React from "react";
 import { classes } from "utils";
 import { useSessionStore } from "stores";
 import { goToStep, updateActiveQuest, updateSession } from "services";
-import { Players, ReadyButton } from "components";
+import { Players } from "components";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -88,7 +88,7 @@ export const GameQuestMemberResult = (props: Props) => {
           <div className={styles.voteResult}>The Vote has failed</div>
         )}
       </div>
-      <ReadyButton />
+      {/* <ReadyButton /> */}
 
       <Players />
     </>

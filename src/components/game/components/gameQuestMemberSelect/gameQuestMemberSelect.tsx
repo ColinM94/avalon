@@ -24,7 +24,6 @@ export const GameQuestMemberSelect = (props: Props) => {
     session,
     activeQuest,
     isMyPlayerLeader,
-    heading,
     updateSessionStore,
   } = useSessionStore();
 
@@ -73,50 +72,36 @@ export const GameQuestMemberSelect = (props: Props) => {
         throw `Please select ${activeQuest.numPlayers} players.`;
       }
 
-      goToStep("questMemberVote");
+      goToStep({
+        step: "questMemberVote",
+      });
     } catch (error) {
       showToast(String(error), "error");
     }
   };
 
-  React.useEffect(() => {
-    let subtitle = isMyPlayerLeader
-      ? `Select ${activeQuest.numPlayers} people to go on the next quest`
-      : `They are selecting ${activeQuest.numPlayers} player(s) to go on the next Quest`;
-
-    if (isMyPlayerLeader) {
-      updateSessionStore({
-        heading: {
-          title: `You are leader`,
-          // subtitle,
-        },
-      });
-    } else {
-      updateSessionStore({
-        heading: {
-          title: `${players[activeQuest.leaderId]?.name} is Leader`,
-          // subtitle,
-        },
-      });
-    }
-  }, [activeQuest.leaderId]);
-
   if (!activeQuest.leaderId) return <LoadingOverlay />;
 
   return (
     <div className={classes(styles.container, className)}>
-      <Players />
+      <Divider
+        label={
+          isMyPlayerLeader
+            ? `You are leader`
+            : `${players[activeQuest.leaderId]?.name} is Leader`
+        }
+      />
 
-      <Divider label="You Are the leader" />
-
-      <div className={styles.description}>Choose 2 characters</div>
+      <div className={styles.description}>
+        {isMyPlayerLeader
+          ? `Select ${activeQuest.numPlayers} people to go on the next quest`
+          : `They are selecting ${activeQuest.numPlayers} player(s) to go on the next Quest`}
+      </div>
 
       <div className={styles.players}>
         {isMyPlayerLeader &&
           playersArray.map((player) => {
             const isSelected = activeQuest.players.includes(player.id);
-
-            // if (!isMyPlayerLeader && !isSelected) return;
 
             return (
               <PlayerCard
@@ -131,8 +116,6 @@ export const GameQuestMemberSelect = (props: Props) => {
             );
           })}
       </div>
-
-      <div>{heading.title}</div>
 
       {isMyPlayerLeader && (
         <Button

@@ -1,14 +1,7 @@
 .container {
   width: 100%;
 
-  .subtitle {
-    color: vars.$color-text-secondary;
-    text-align: center;
+  .content {
+    flex: 1;
   }
-}
-
-.players {
-  width: 100%;
-  max-width: 600px;
-  align-self: center;
 }

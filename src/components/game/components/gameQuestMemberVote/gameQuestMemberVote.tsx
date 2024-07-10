@@ -94,7 +94,7 @@ export const GameQuestMemberVote = (props: Props) => {
           </div>
         </div>
 
-        <ReadyButton disabled={vote === null} onClick={handleLockIn} />
+        {/* <ReadyButton disabled={vote === null} onClick={handleLockIn} /> */}
         {/* <div className={styles.votes}>{votes()}</div> */}
       </div>
       <Players showIsReady />

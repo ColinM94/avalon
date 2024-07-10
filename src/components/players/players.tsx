@@ -15,6 +15,8 @@ export const Players = (props: Props) => {
     className,
   } = props;
 
+  console.log(width);
+
   const { playersArray, players, session, activeQuest } = useSessionStore();
 
   const renderPlayers = () => {

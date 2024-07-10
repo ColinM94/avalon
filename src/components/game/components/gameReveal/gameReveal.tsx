@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button, CharacterCard, ReadyButton } from "components";
+import { Button, CharacterCard } from "components";
 import { Player } from "types";
 import { classes } from "utils";
 import { useSessionStore } from "stores";
@@ -56,7 +56,7 @@ export const GameReveal = (props: Props) => {
   }, [isAllReady]);
 
   return (
-    <div className={classes(styles.container, className)}>
+    <>
       <CharacterCard
         character={charactersDefault[characterId]}
         showDescription
@@ -73,11 +73,6 @@ export const GameReveal = (props: Props) => {
         onClick={handleReveal}
         className={styles.revealButton}
       />
-
-      <ReadyButton
-        disabled={!isCharacterRevealed || session.players[myPlayer.id].isReady}
-        className={styles.readyButton}
-      />
-    </div>
+    </>
   );
 };

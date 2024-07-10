@@ -1,21 +1,30 @@
 import { useSessionStore } from "stores";
-import { GameSession } from "types";
+import { GameSession, Player } from "types";
 
 import { updateSession } from "./updateSession";
 import { updatePlayer } from "./updatePlayer";
 
-export const goToStep = async (step: GameSession["step"]) => {
+interface Props {
+  step: GameSession["step"];
+  characterIds?: string[];
+}
+
+export const goToStep = async ({ step, characterIds }: Props) => {
   const { playersArray } = useSessionStore.getState();
 
-  const promises = [];
+  const promises: Promise<void>[] = [];
 
-  for (const player of playersArray) {
-    promises.push(
-      updatePlayer(player.id, {
-        isReady: false,
-      })
-    );
-  }
+  playersArray.forEach((player, index) => {
+    const update: Partial<Player> = {
+      isReady: false,
+    };
+
+    if (characterIds) {
+      update.characterId = characterIds[index];
+    }
+
+    promises.push(updatePlayer(player.id, update));
+  });
 
   await Promise.all(promises);
 

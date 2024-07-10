@@ -6,7 +6,7 @@ import { getDocumentSnapshot, setDocument } from "services";
 import { User } from "types";
 import { useAppStore } from "stores";
 
-export const Root = () => {
+export const Main = () => {
   const { user, updateAppStore } = useAppStore();
 
   const { pathname } = useLocation();

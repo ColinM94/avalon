@@ -14,10 +14,10 @@ import {
   PlayPage,
 } from "pages";
 
-import { Root } from "./main";
+import { Main } from "./main";
 
 const routes = (
-  <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
+  <Route path="/" element={<Main />} errorElement={<ErrorPage />}>
     <Route path="*" element={<InvalidPage />} />
     <Route index element={<MainMenuPage />} />
     <Route path="setup" element={<SetupPage />} />

@@ -14,6 +14,7 @@ $goodColor: #43839a;
 
   .icon {
     font-size: vars.$icon-size-large;
+    aspect-ratio: 1;
   }
 
   &:hover {

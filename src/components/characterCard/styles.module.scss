@@ -45,8 +45,15 @@ $goodColor: #43839a;
     z-index: 2;
   }
 
+  .name {
+    font-size: vars.$font-size-h1;
+    text-align: center;
+    margin-bottom: vars.$spacing-tertiary;
+  }
+
   .description {
     padding: vars.$spacing-primary;
+    color: vars.$color-text-secondary;
   }
 
   &:hover {
@@ -134,7 +141,6 @@ $goodColor: #43839a;
     z-index: 2;
     text-align: center;
     font-size: vars.$font-size-h2;
-    margin-bottom: vars.$spacing-tertiary;
   }
 
   .description {

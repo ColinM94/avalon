@@ -1,0 +1,29 @@
+.container {
+  gap: vars.$spacing-primary;
+  flex-direction: row;
+
+  .readyButton {
+    opacity: 1;
+    width: 100%;
+    background-color: vars.$color-surface;
+
+    // background: linear-gradient(
+    //   45deg,
+    //   rgb(43, 107, 47) 0%,
+    //   rgb(39, 146, 46) 45%,
+    //   rgb(27, 175, 37) 81%
+    // );
+  }
+
+  .disabled {
+    transition: filter 0.5s;
+    filter: brightness(vars.$disabled-brightness-filter);
+
+    // transition: opacity 0.5s;
+    // opacity: 0;
+  }
+
+  .rightSpace {
+    width: vars.$icon-size-small;
+  }
+}

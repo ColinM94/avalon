@@ -4,6 +4,6 @@ export interface Props {
   showEmptySlots?: boolean;
   showOnlyPlayersOnActiveQuest?: boolean;
   showIsReady?: boolean;
-  width?: 1 | 2 | 3 | 4 | 5;
+  width?: 1 | 2 | 3;
   className?: string;
 }
