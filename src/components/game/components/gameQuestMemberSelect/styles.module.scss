@@ -2,6 +2,11 @@
   gap: vars.$spacing-primary;
   flex: 1;
 
+  .description {
+    color: vars.$color-text-secondary;
+    text-align: center;
+  }
+
   .players {
     flex-direction: row;
     flex-wrap: wrap;

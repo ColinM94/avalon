@@ -52,3 +52,19 @@ export const Root = () => {
     </>
   );
 };
+
+/* 
+  TODO: 
+  - Persist the image
+  - Add placeholder image with specific colours for when user doesn't want to add an image
+  - Change to exit icon from X
+  - no id on load of ritual page
+  - players at bottom too small 
+  - X and checkmark overlapping on player for host
+  - Allow toggle ready and put checkmark on it
+  - Remove ready button from vote pages 
+
+  RitualPage
+  - Have host press continue
+  - Remove ready button
+*/

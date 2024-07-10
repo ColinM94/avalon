@@ -1,7 +1,13 @@
 import * as React from "react";
 
 import { classes } from "utils";
-import { Button, LoadingOverlay, PlayerCard } from "components";
+import {
+  Button,
+  Divider,
+  LoadingOverlay,
+  PlayerCard,
+  Players,
+} from "components";
 import { useSessionStore, useToastStore } from "stores";
 import { goToStep, updateActiveQuest, updateSession } from "services";
 
@@ -18,6 +24,7 @@ export const GameQuestMemberSelect = (props: Props) => {
     session,
     activeQuest,
     isMyPlayerLeader,
+    heading,
     updateSessionStore,
   } = useSessionStore();
 
@@ -77,37 +84,55 @@ export const GameQuestMemberSelect = (props: Props) => {
       ? `Select ${activeQuest.numPlayers} people to go on the next quest`
       : `They are selecting ${activeQuest.numPlayers} player(s) to go on the next Quest`;
 
-    updateSessionStore({
-      heading: {
-        title: `${players[activeQuest.leaderId]?.name} is Leader`,
-        subtitle,
-      },
-    });
+    if (isMyPlayerLeader) {
+      updateSessionStore({
+        heading: {
+          title: `You are leader`,
+          // subtitle,
+        },
+      });
+    } else {
+      updateSessionStore({
+        heading: {
+          title: `${players[activeQuest.leaderId]?.name} is Leader`,
+          // subtitle,
+        },
+      });
+    }
   }, [activeQuest.leaderId]);
 
   if (!activeQuest.leaderId) return <LoadingOverlay />;
 
   return (
     <div className={classes(styles.container, className)}>
+      <Players />
+
+      <Divider label="You Are the leader" />
+
+      <div className={styles.description}>Choose 2 characters</div>
+
       <div className={styles.players}>
-        {playersArray.map((player) => {
-          const isSelected = activeQuest.players.includes(player.id);
+        {isMyPlayerLeader &&
+          playersArray.map((player) => {
+            const isSelected = activeQuest.players.includes(player.id);
 
-          // if (!isMyPlayerLeader && !isSelected) return;
+            // if (!isMyPlayerLeader && !isSelected) return;
 
-          return (
-            <PlayerCard
-              player={player}
-              onClick={() => handleClick(player.id)}
-              showName
-              className={classes(
-                styles.player,
-                isSelected ? styles.playerSelected : styles.playerDisabled
-              )}
-            />
-          );
-        })}
+            return (
+              <PlayerCard
+                player={player}
+                onClick={() => handleClick(player.id)}
+                showName
+                className={classes(
+                  styles.player,
+                  isSelected ? styles.playerSelected : styles.playerDisabled
+                )}
+              />
+            );
+          })}
       </div>
+
+      <div>{heading.title}</div>
 
       {isMyPlayerLeader && (
         <Button

@@ -19,7 +19,7 @@ export const Game = () => {
     <>
       <MainLayout
         heading={heading.title}
-        showHeader
+        // showHeader
         className={styles.container}
       >
         {heading.subtitle && (

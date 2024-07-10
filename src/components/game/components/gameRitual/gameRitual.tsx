@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Players, ReadyButton } from "components";
 import { classes } from "utils";
 import { useSessionStore, useToastStore } from "stores";
-import { updateMyPlayer, updateSession } from "services";
+import { goToStep, updateMyPlayer, updateSession } from "services";
 
 import styles from "./styles.module.scss";
 
@@ -108,24 +108,15 @@ export const GameRitual = () => {
   //   });
   // };
 
-  const handleAllReady = async () => {
-    updateSession({
-      step: "questMemberSelect",
-    });
-  };
-
   React.useEffect(() => {
-    if (isMyPlayerHost && isAllReady) handleAllReady();
-
-    if (isAllReady) {
-      updateMyPlayer({
-        isReady: false,
-      });
+    if (isMyPlayerHost && isAllReady) {
+      goToStep("questMemberSelect");
     }
   }, [isAllReady]);
 
   return (
     <div className={styles.container}>
+      <Players showEmptySlots width={1} showMyPlayer />
       {isMyPlayerHost && (
         <>
           <audio
@@ -188,8 +179,6 @@ export const GameRitual = () => {
         disabled={!session.isRitualFinished}
         className={styles.readyButton}
       />
-
-      <Players showEmptySlots showMyPlayer />
     </div>
   );
 };

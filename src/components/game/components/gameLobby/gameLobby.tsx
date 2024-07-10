@@ -67,6 +67,7 @@ export const GameLobby = (props: Props) => {
 
   return (
     <div className={classes(styles.container, className)}>
+      <Players showEmptySlots showMyPlayer showIsReady />
       <div className={styles.lobbyInfo}>
         <div onClick={handleCopy} className={styles.lobbyInfoText}>
           <div className={styles.joinCode}>{session.id}</div>
@@ -84,8 +85,6 @@ export const GameLobby = (props: Props) => {
       <GameLobbyProfile className={styles.editor} />
 
       <ReadyButton disabled={!myPlayer.name} onClickDisabled={handleReady} />
-
-      <Players showEmptySlots showMyPlayer showIsReady />
     </div>
   );
 };
