@@ -62,8 +62,6 @@ export const PlayerCard = (props: Props) => {
     );
   };
 
-  console.log(player?.isReady);
-
   return (
     <>
       <div onClick={handleClick} className={classNames()}>

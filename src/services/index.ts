@@ -16,6 +16,7 @@ export * from "./session/updatePlayer";
 export * from "./session/updateSession";
 export * from "./session/updateMyPlayer";
 export * from "./session/updateActiveQuest";
+export * from "./session/goToStep";
 
 // Storage
 export * from "./storage/deleteFile";

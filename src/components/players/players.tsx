@@ -15,16 +15,12 @@ export const Players = (props: Props) => {
     className,
   } = props;
 
-  const { players, session, activeQuest } = useSessionStore();
-
-  console.log(players);
+  const { playersArray, players, session, activeQuest } = useSessionStore();
 
   const renderPlayers = () => {
     const items: React.ReactNode[] = [];
 
-    const tempPlayers = Object.values(players).sort(
-      (a, b) => a.joinedAt - b.joinedAt
-    );
+    const tempPlayers = playersArray.sort((a, b) => a.joinedAt - b.joinedAt);
 
     if (showOnlyPlayersOnActiveQuest) {
       activeQuest.players.forEach((playerId) => {

@@ -3,7 +3,7 @@ import * as React from "react";
 import { classes } from "utils";
 import { Button, LoadingOverlay, PlayerCard } from "components";
 import { useSessionStore, useToastStore } from "stores";
-import { updateActiveQuest, updateSession } from "services";
+import { goToStep, updateActiveQuest, updateSession } from "services";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -66,9 +66,7 @@ export const GameQuestMemberSelect = (props: Props) => {
         throw `Please select ${activeQuest.numPlayers} players.`;
       }
 
-      updateSession({
-        step: "questMemberVote",
-      });
+      goToStep("questMemberVote");
     } catch (error) {
       showToast(String(error), "error");
     }

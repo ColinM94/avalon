@@ -3,10 +3,8 @@ import { useSessionStore, useToastStore } from "stores";
 import { GameSession, Player, User } from "types";
 
 export const updatePlayer = async (userId: string, update: Partial<Player>) => {
-  const { session, myPlayer } = useSessionStore.getState();
+  const { session, players } = useSessionStore.getState();
   const { showToast } = useToastStore.getState();
-
-  console.log(userId, update);
 
   try {
     await updateDocument<GameSession>({
@@ -14,7 +12,7 @@ export const updatePlayer = async (userId: string, update: Partial<Player>) => {
       collection: "sessions",
       data: {
         [`players.${userId}`]: {
-          ...myPlayer,
+          ...players[userId],
           ...update,
         },
       },

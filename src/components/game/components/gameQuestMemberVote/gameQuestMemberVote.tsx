@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { classes } from "utils";
 import { useSessionStore } from "stores";
-import { updateDocument, updateMyPlayer, updateSession } from "services";
+import { goToStep, updateDocument, updateMyPlayer } from "services";
 import { Players, ReadyButton } from "components";
 
 import { Props } from "./types";
@@ -63,15 +63,7 @@ export const GameQuestMemberVote = (props: Props) => {
 
   React.useEffect(() => {
     if (isMyPlayerHost && isAllReady) {
-      updateSession({
-        step: "questMemberResult",
-      });
-    }
-
-    if (isAllReady) {
-      updateMyPlayer({
-        isReady: false,
-      });
+      goToStep("questMemberResult");
     }
   }, [isAllReady]);
 

@@ -2,11 +2,11 @@ import * as React from "react";
 
 import { classes } from "utils";
 import { useSessionStore } from "stores";
+import { goToStep, updateActiveQuest, updateSession } from "services";
+import { Players, ReadyButton } from "components";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
-import { ReadyButton } from "components/readyButton/readyButton";
-import { updateActiveQuest, updateMyPlayer, updateSession } from "services";
 
 export const GameQuestMemberResult = (props: Props) => {
   const { className } = props;
@@ -54,16 +54,8 @@ export const GameQuestMemberResult = (props: Props) => {
   React.useEffect(() => {
     if (!isMyPlayerHost || !isAllReady) return;
 
-    if (isAllReady) {
-      updateMyPlayer({
-        isReady: false,
-      });
-    }
-
     if (hasPassed) {
-      updateSession({
-        step: "questVote",
-      });
+      goToStep("questVote");
     } else {
       const currentLeaderIndex = playersArray.findIndex(
         (item) => item.id === activeQuest.leaderId
@@ -74,7 +66,6 @@ export const GameQuestMemberResult = (props: Props) => {
       updateActiveQuest({
         leaderId: newLeader.id,
         players: [],
-        votesToApprove: {},
       });
 
       updateSession({
@@ -98,6 +89,8 @@ export const GameQuestMemberResult = (props: Props) => {
         )}
       </div>
       <ReadyButton />
+
+      <Players />
     </>
   );
 };

@@ -14,9 +14,9 @@
 }
 
 .disabled {
-  // transition: filter 0.5s;
-  // filter: brightness(vars.$disabled-brightness-filter);
+  transition: filter 0.5s;
+  filter: brightness(vars.$disabled-brightness-filter);
 
-  transition: opacity 0.5s;
-  opacity: 0;
+  // transition: opacity 0.5s;
+  // opacity: 0;
 }
