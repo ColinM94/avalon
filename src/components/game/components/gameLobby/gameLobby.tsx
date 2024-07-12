@@ -9,7 +9,15 @@ import { GameLobbyInfo } from "./components/gameLobbyInfo/gameLobbyInfo";
 import styles from "./styles.module.scss";
 
 export const GameLobby = () => {
-  const { session, isAllReady, isMyPlayerHost } = useSessionStore();
+  const {
+    session,
+    isAllReady,
+    isMyPlayerHost,
+    validateReady,
+    playersArray,
+    myPlayer,
+    updateSessionStore,
+  } = useSessionStore();
 
   React.useEffect(() => {
     if (!isMyPlayerHost || !isAllReady) return;
@@ -19,6 +27,29 @@ export const GameLobby = () => {
       characterIds: session.characters,
     });
   }, [isAllReady]);
+
+  const validate = () => {
+    if (!myPlayer.name) return "You must enter a name";
+
+    const filteredPlayers = playersArray.filter(
+      (player) => player.id !== myPlayer.id
+    );
+
+    if (
+      filteredPlayers.some(
+        (player) =>
+          player.name.toLocaleLowerCase() === myPlayer.name.toLocaleLowerCase()
+      )
+    ) {
+      return "This name is taken";
+    }
+
+    return true;
+  };
+
+  React.useEffect(() => {
+    updateSessionStore({ validateReady: validate });
+  }, []);
 
   return (
     <>

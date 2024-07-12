@@ -13,6 +13,7 @@ export type State = {
     subtitle?: string;
   };
   playersArray: Player[];
+  validateReady?: () => string | true;
 };
 
 export type Actions = {

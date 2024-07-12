@@ -9,33 +9,16 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const BottomBar = (props: Props) => {
-  const { onClick, onClickDisabled, disabled, className } = props;
+  const { onClick, disabled, className } = props;
 
-  const { myPlayer, playersArray, session } = useSessionStore();
+  const { myPlayer, validateReady } = useSessionStore();
   const { showToast } = useToastStore();
 
   const handleReady = () => {
     try {
-      if (session.step === "lobby") {
-        if (!myPlayer.name) {
-          throw "You must enter a name";
-        }
+      if (validateReady && validateReady() !== true) return;
 
-        if (
-          playersArray
-            .filter((player) => player.id !== myPlayer.id)
-            .some(
-              (player) =>
-                player.name.toLocaleLowerCase() ===
-                myPlayer.name.toLocaleLowerCase()
-            )
-        ) {
-          throw "This name is taken";
-        }
-      }
-
-      if (session.step === "characterReveal") {
-      }
+      console.log(validateReady);
 
       if (onClick) {
         // if (disabled) {

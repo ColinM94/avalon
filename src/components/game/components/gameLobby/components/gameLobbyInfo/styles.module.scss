@@ -8,6 +8,8 @@
   .info {
     flex-direction: row;
     margin-bottom: vars.$spacing-tertiary;
+    cursor: pointer;
+    padding-left: vars.$icon-size-medium;
 
     .infoCode {
       justify-content: center;
@@ -16,8 +18,7 @@
     }
 
     .infoCopyIcon {
-      position: absolute;
-      right: -(vars.$spacing-primary * 1.5);
+      cursor: pointer;
       margin-left: vars.$spacing-secondary;
       margin-bottom: 4px;
       align-self: center;
