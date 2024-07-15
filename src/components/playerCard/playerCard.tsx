@@ -85,8 +85,11 @@ export const PlayerCard = (props: Props) => {
           <FontAwesomeIcon icon="pencil" className={styles.editIcon} />
         )} */}
 
-        {showName && player?.name && (
-          <div className={styles.name}>{player.name}</div>
+        {showName && (
+          <>
+            {player?.name && <div className={styles.name}>{player?.name}</div>}
+            {!player?.name && <div className={styles.name}>&zwnj;</div>}
+          </>
         )}
 
         {player?.isReady && showIsReady && (
