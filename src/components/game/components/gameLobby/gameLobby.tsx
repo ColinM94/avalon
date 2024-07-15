@@ -13,7 +13,6 @@ export const GameLobby = () => {
     session,
     isAllReady,
     isMyPlayerHost,
-    validateReady,
     playersArray,
     myPlayer,
     updateSessionStore,

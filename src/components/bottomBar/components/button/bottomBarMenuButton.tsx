@@ -62,6 +62,8 @@ export const BottomBarMenuButton = () => {
     }
   };
 
+  const isLobby = session.step === "lobby";
+
   return (
     <>
       <Button
@@ -73,10 +75,10 @@ export const BottomBarMenuButton = () => {
 
       <Modal show={showMenu} setShow={setShowMenu} className={styles.menu}>
         <div
-          onMouseDown={() => setShowCharacter(true)}
-          onMouseUp={() => setShowCharacter(false)}
-          onTouchStart={() => setShowCharacter(true)}
-          onTouchEnd={() => setShowCharacter(false)}
+          onMouseDown={() => !isLobby && setShowCharacter(true)}
+          onMouseUp={() => !isLobby && setShowCharacter(false)}
+          onTouchStart={() => !isLobby && setShowCharacter(true)}
+          onTouchEnd={() => !isLobby && setShowCharacter(false)}
           className={styles.menuItem}
         >
           <FontAwesomeIcon icon="hat-wizard" className={styles.menuItemIcon} />

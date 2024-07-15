@@ -16,6 +16,7 @@
     gap: vars.$spacing-primary;
     align-items: center;
     background-color: vars.$color-surface2;
+    cursor: pointer;
 
     &:hover {
       background-color: vars.$color-surface2;
@@ -39,7 +40,7 @@
   }
 
   .menuItemDisabled {
-    filter: blur(100);
+    filter: brightness(vars.$disabled-brightness-filter);
     pointer-events: none;
   }
 }
