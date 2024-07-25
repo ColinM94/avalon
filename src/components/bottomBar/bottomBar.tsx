@@ -9,16 +9,16 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const BottomBar = (props: Props) => {
-  const { onClick, disabled, className } = props;
+  const { onClick, className } = props;
 
   const { myPlayer, validateReady } = useSessionStore();
   const { showToast } = useToastStore();
 
   const handleReady = () => {
     try {
-      if (validateReady && validateReady() !== true) return;
+      const result = validateReady?.();
 
-      console.log(validateReady);
+      if (result !== true && result !== undefined) throw result;
 
       if (onClick) {
         // if (disabled) {
@@ -38,7 +38,9 @@ export const BottomBar = (props: Props) => {
     }
   };
 
-  const handleClick = () => {};
+  console.log(validateReady?.());
+
+  const isValidated = validateReady?.() === true;
 
   return (
     <>
@@ -49,10 +51,10 @@ export const BottomBar = (props: Props) => {
           label="Ready"
           onClick={handleReady}
           onClickDisabled={handleReady}
-          disabled={disabled}
+          disabled={!isValidated}
           className={classes(
             styles.readyButton,
-            (myPlayer.isReady || disabled) && styles.disabled
+            (myPlayer.isReady || !isValidated) && styles.disabled
           )}
         />
 

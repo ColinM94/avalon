@@ -34,7 +34,6 @@ export type GameSession = {
     | "questVote"
     | "questResult"
     | "";
-  isRitualFinished: boolean;
   numPlayers: number;
   characters: string[];
   createdBy: string;

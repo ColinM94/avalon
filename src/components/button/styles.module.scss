@@ -31,6 +31,9 @@ $goodColor: #43839a;
 }
 
 .disabled {
+  // filter: brightness(1);
+  filter: brightness(vars.$active-brightness-filter);
+
   &:hover {
     scale: unset !important;
   }
@@ -42,8 +45,4 @@ $goodColor: #43839a;
   box-shadow: unset;
   text-shadow: vars.$color-text-shadow;
   padding: 0 !important;
-}
-
-.disabled {
-  filter: brightness(vars.$active-brightness-filter);
 }

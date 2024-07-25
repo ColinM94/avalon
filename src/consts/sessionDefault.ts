@@ -9,7 +9,6 @@ export const sessionDefault = (): GameSession => {
     createdBy: "",
     step: "lobby",
     characters: [],
-    isRitualFinished: false,
     activeQuestIndex: 0,
     isMyPlayerHostPlaying: true,
     numFailVotes: 0,

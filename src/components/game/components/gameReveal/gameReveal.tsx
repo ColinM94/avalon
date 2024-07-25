@@ -55,6 +55,15 @@ export const GameReveal = (props: Props) => {
     if (isMyPlayerHost && isAllReady) handleAllReady();
   }, [isAllReady]);
 
+  const validate = () => {
+    if (!isCharacterRevealed) return "You must view your character first";
+    return true;
+  };
+
+  React.useEffect(() => {
+    updateSessionStore({ validateReady: validate });
+  }, [isCharacterRevealed]);
+
   return (
     <>
       <CharacterCard

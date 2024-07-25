@@ -24,6 +24,7 @@ export const GameRitual = () => {
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
   const currentInstruction = React.useRef(-1);
 
+  const [isFinished, setIsFinished] = React.useState(false);
   const [audio, setAudio] = React.useState();
   const [isPaused, setIsPaused] = React.useState(true);
 
@@ -49,14 +50,6 @@ export const GameRitual = () => {
 
     setIsPaused(true);
     audioPlayer.current.pause();
-  };
-
-  const setIsFinished = async (isFinished: boolean) => {
-    const result = await updateSession({
-      isRitualFinished: isFinished,
-    });
-
-    if (!result) showToast("Error finishing Ritual", "error");
   };
 
   const handleNextStep = async () => {
@@ -103,6 +96,15 @@ export const GameRitual = () => {
       });
     }
   }, [isAllReady]);
+
+  const validate = () => {
+    if (!isFinished) return "The Ritual is not finished";
+    return true;
+  };
+
+  React.useEffect(() => {
+    updateSessionStore({ validateReady: validate });
+  }, [isFinished]);
 
   return (
     <div className={styles.container}>

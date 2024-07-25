@@ -47,8 +47,6 @@ export const PlayerCard = (props: Props) => {
     if (showKick) handleKick();
   };
 
-  console.log(width);
-
   const classNames = () => {
     return classes(
       className,

@@ -1,14 +1,8 @@
 import * as React from "react";
 
 import { classes } from "utils";
-import {
-  Button,
-  Divider,
-  LoadingOverlay,
-  PlayerCard,
-  Players,
-} from "components";
-import { useSessionStore, useToastStore } from "stores";
+import { Divider, LoadingOverlay, PlayerCard } from "components";
+import { useSessionStore } from "stores";
 import { goToStep, updateActiveQuest, updateSession } from "services";
 
 import { Props } from "./types";
@@ -26,8 +20,6 @@ export const GameQuestMemberSelect = (props: Props) => {
     isMyPlayerLeader,
     updateSessionStore,
   } = useSessionStore();
-
-  const { showToast } = useToastStore();
 
   React.useEffect(() => {
     if (
@@ -66,19 +58,25 @@ export const GameQuestMemberSelect = (props: Props) => {
     });
   };
 
-  const handleLockIn = () => {
-    try {
-      if (activeQuest.numPlayers !== activeQuest.players.length) {
-        throw `Please select ${activeQuest.numPlayers} players.`;
-      }
-
-      goToStep({
-        step: "questMemberVote",
-      });
-    } catch (error) {
-      showToast(String(error), "error");
+  const validate = () => {
+    if (activeQuest.numPlayers !== activeQuest.players.length) {
+      return `Please select ${activeQuest.numPlayers} players.`;
     }
+
+    return true;
   };
+
+  React.useEffect(() => {
+    if (isMyPlayerLeader && myPlayer.isReady) return;
+
+    goToStep({
+      step: "questMemberVote",
+    });
+  }, [isMyPlayerLeader, myPlayer.isReady]);
+
+  React.useEffect(() => {
+    updateSessionStore({ validateReady: validate });
+  }, [myPlayer.name]);
 
   if (!activeQuest.leaderId) return <LoadingOverlay />;
 
@@ -116,15 +114,6 @@ export const GameQuestMemberSelect = (props: Props) => {
             );
           })}
       </div>
-
-      {isMyPlayerLeader && (
-        <Button
-          label="Lock In"
-          onClick={handleLockIn}
-          // disabled={activeQuest.players.length !== activeQuest.numPlayers}
-          className={styles.lockInButton}
-        />
-      )}
     </div>
   );
 };

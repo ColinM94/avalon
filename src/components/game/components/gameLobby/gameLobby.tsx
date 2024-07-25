@@ -48,7 +48,7 @@ export const GameLobby = () => {
 
   React.useEffect(() => {
     updateSessionStore({ validateReady: validate });
-  }, []);
+  }, [myPlayer.name]);
 
   return (
     <>
