@@ -40,4 +40,5 @@ export type GameSession = {
   isMyPlayerHostPlaying: boolean;
   activeQuestIndex: number;
   numFailVotes: number;
+  isRitualFinished: boolean;
 };

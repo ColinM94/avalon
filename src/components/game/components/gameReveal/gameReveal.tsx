@@ -1,18 +1,14 @@
 import * as React from "react";
 
 import { Button, CharacterCard } from "components";
-import { Player } from "types";
 import { classes } from "utils";
 import { useSessionStore } from "stores";
-import { updateSession } from "services";
+import { goToStep } from "services";
 import { charactersDefault } from "consts";
 
-import { Props } from "./types";
 import styles from "./styles.module.scss";
 
-export const GameReveal = (props: Props) => {
-  const { className } = props;
-
+export const GameReveal = () => {
   const { myPlayer, isMyPlayerHost, isAllReady, session, updateSessionStore } =
     useSessionStore();
 
@@ -27,18 +23,8 @@ export const GameReveal = (props: Props) => {
   };
 
   const handleAllReady = async () => {
-    const updatedPlayers: Record<string, Player> = {};
-
-    Object.values(session.players).forEach((player) => {
-      updatedPlayers[player.id] = {
-        ...player,
-        isReady: false,
-      };
-    });
-
-    updateSession({
+    goToStep({
       step: "ritual",
-      players: updatedPlayers,
     });
   };
 

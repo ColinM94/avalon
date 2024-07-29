@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { useSessionStore } from "stores";
 import { goToStep } from "services";
+import { Player } from "types";
 
 import { GameLobbyProfile } from "./components/gameLobbyProfile/gameLobbyProfile";
 import { GameLobbyInfo } from "./components/gameLobbyInfo/gameLobbyInfo";
@@ -21,9 +22,17 @@ export const GameLobby = () => {
   React.useEffect(() => {
     if (!isMyPlayerHost || !isAllReady) return;
 
+    const playerUpdates: Record<string, Partial<Player>> = {};
+
+    playersArray.forEach((player, index) => {
+      playerUpdates[player.id] = {
+        characterId: session.characters[index],
+      };
+    });
+
     goToStep({
       step: "characterReveal",
-      characterIds: session.characters,
+      playerUpdates,
     });
   }, [isAllReady]);
 

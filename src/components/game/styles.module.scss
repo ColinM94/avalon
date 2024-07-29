@@ -1,6 +1,31 @@
 .container {
   width: 100%;
 
+  .info {
+    flex-direction: row;
+    gap: vars.$spacing-primary;
+
+    .infoItem {
+      background-color: vars.$color-surface;
+      padding: vars.$spacing-primary;
+      padding-top: vars.$spacing-secondary;
+      padding-bottom: vars.$spacing-secondary;
+      border-radius: vars.$roundness;
+      justify-content: center;
+
+      .infoItemHeading {
+        color: vars.$color-text-secondary;
+        font-size: vars.$font-size-body;
+      }
+
+      .infoItemValue {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+    }
+  }
+
   .content {
     flex: 1;
   }

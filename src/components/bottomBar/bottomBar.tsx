@@ -37,7 +37,6 @@ export const BottomBar = (props: Props) => {
       showToast(String(error), "error");
     }
   };
-
   console.log(validateReady?.());
 
   const isValidated = validateReady?.() === true;

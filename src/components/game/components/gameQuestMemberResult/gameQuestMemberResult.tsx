@@ -3,7 +3,7 @@ import * as React from "react";
 import { classes } from "utils";
 import { useSessionStore } from "stores";
 import { goToStep, updateActiveQuest, updateSession } from "services";
-import { Players } from "components";
+import { Divider } from "components";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -14,7 +14,7 @@ export const GameQuestMemberResult = (props: Props) => {
   const {
     activeQuest,
     isMyPlayerHost,
-    isAllReady,
+    myPlayer,
     playersArray,
     session,
     updateSessionStore,
@@ -52,10 +52,12 @@ export const GameQuestMemberResult = (props: Props) => {
   }, []);
 
   React.useEffect(() => {
-    if (!isMyPlayerHost || !isAllReady) return;
+    if (!isMyPlayerHost || !myPlayer.isReady) return;
 
     if (hasPassed) {
-      goToStep("questVote");
+      goToStep({
+        step: "questVote",
+      });
     } else {
       const currentLeaderIndex = playersArray.findIndex(
         (item) => item.id === activeQuest.leaderId
@@ -69,28 +71,34 @@ export const GameQuestMemberResult = (props: Props) => {
       });
 
       updateSession({
-        step: "questMemberSelect",
         numFailVotes: Number(session.numFailVotes) + 1,
       });
+
+      goToStep({
+        step: "questMemberSelect",
+      });
     }
-  }, [isAllReady, hasPassed]);
+  }, [myPlayer.isReady]);
+
+  const validate = () => {
+    if (!isMyPlayerHost) return "Waiting for the host!";
+
+    return true;
+  };
+
+  React.useEffect(() => {
+    updateSessionStore({ validateReady: validate });
+  }, [isMyPlayerHost, hasPassed]);
 
   return (
     <>
+      <Divider
+        label={hasPassed ? "The Vote has passed" : "The Vote has failed"}
+      />
+
       <div className={classes(styles.container, className)}>
-        <div className={styles.votes}>{renderVotes()}</div>
-
-        {hasPassed && (
-          <div className={styles.voteResult}>The Vote has passed</div>
-        )}
-
-        {!hasPassed && (
-          <div className={styles.voteResult}>The Vote has failed</div>
-        )}
+        {renderVotes()}
       </div>
-      {/* <ReadyButton /> */}
-
-      <Players />
     </>
   );
 };

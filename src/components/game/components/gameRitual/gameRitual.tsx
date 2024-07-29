@@ -2,7 +2,7 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { classes } from "utils";
-import { useSessionStore, useToastStore } from "stores";
+import { useSessionStore } from "stores";
 import { goToStep, updateSession } from "services";
 
 import styles from "./styles.module.scss";
@@ -18,13 +18,12 @@ const instructions = [
 ];
 
 export const GameRitual = () => {
-  const { isAllReady, isMyPlayerHost, updateSessionStore } = useSessionStore();
+  const { isAllReady, isMyPlayerHost, session, updateSessionStore } =
+    useSessionStore();
 
-  const { showToast } = useToastStore();
   const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
   const currentInstruction = React.useRef(-1);
 
-  const [isFinished, setIsFinished] = React.useState(false);
   const [audio, setAudio] = React.useState();
   const [isPaused, setIsPaused] = React.useState(true);
 
@@ -53,12 +52,17 @@ export const GameRitual = () => {
   };
 
   const handleNextStep = async () => {
-    setIsFinished(false);
+    updateSession({
+      isRitualFinished: false,
+    });
+
     currentInstruction.current += 1;
 
     if (currentInstruction.current === instructions.length) {
       setAudio(undefined);
-      setIsFinished(true);
+      updateSession({
+        isRitualFinished: true,
+      });
       setIsPaused(true);
       currentInstruction.current = -1;
       return;
@@ -82,14 +86,6 @@ export const GameRitual = () => {
   }, [audio]);
 
   React.useEffect(() => {
-    updateSessionStore({
-      heading: {
-        title: "Ritual",
-      },
-    });
-  }, []);
-
-  React.useEffect(() => {
     if (isMyPlayerHost && isAllReady) {
       goToStep({
         step: "questMemberSelect",
@@ -98,13 +94,13 @@ export const GameRitual = () => {
   }, [isAllReady]);
 
   const validate = () => {
-    if (!isFinished) return "The Ritual is not finished";
+    if (!session.isRitualFinished) return "The Ritual is not finished";
     return true;
   };
 
   React.useEffect(() => {
     updateSessionStore({ validateReady: validate });
-  }, [isFinished]);
+  }, [session.isRitualFinished]);
 
   return (
     <div className={styles.container}>

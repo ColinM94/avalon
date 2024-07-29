@@ -2,8 +2,8 @@ import * as React from "react";
 
 import { classes } from "utils";
 import { useSessionStore } from "stores";
-import { goToStep, updateDocument, updateMyPlayer } from "services";
-import { Players, ReadyButton } from "components";
+import { goToStep, updateSession } from "services";
+import { Divider, Players } from "components";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -17,7 +17,7 @@ export const GameQuestMemberVote = (props: Props) => {
     myPlayer,
     isAllReady,
     activeQuest,
-    session,
+    players,
     updateSessionStore,
   } = useSessionStore();
 
@@ -47,30 +47,43 @@ export const GameQuestMemberVote = (props: Props) => {
     setVote(voteValue);
   };
 
-  const handleLockIn = () => {
-    updateDocument({
-      collection: "sessions",
-      id: session.id,
-      data: {
-        [`quests.${activeQuest.index}.votesToApprove.${myPlayer.id}`]: vote,
-      },
-    });
-
-    updateMyPlayer({
-      isReady: true,
-    });
-  };
-
   React.useEffect(() => {
     if (isMyPlayerHost && isAllReady) {
-      goToStep("questMemberResult");
+      goToStep({
+        step: "questMemberResult",
+      });
     }
   }, [isAllReady]);
 
+  const validate = () => {
+    if (vote === null) return "You must vote";
+
+    updateSession({
+      [`quests.${activeQuest.index}.votesToApprove.${myPlayer.id}`]: vote,
+    });
+
+    return true;
+  };
+
+  React.useEffect(() => {
+    updateSessionStore({ validateReady: validate });
+  }, [vote]);
+
   return (
     <>
+      <Divider
+        label="Vote"
+        description={`${
+          players[activeQuest.leaderId].name
+        } has chosen these players to go on the quest. Do you approve?`}
+      />
+
       <div className={classes(styles.container, className)}>
-        <Players width={3} showOnlyPlayersOnActiveQuest />
+        <Players
+          width={2}
+          showOnlyPlayersOnActiveQuest
+          className={styles.players}
+        />
 
         <div className={styles.votes}>
           <div
@@ -93,11 +106,7 @@ export const GameQuestMemberVote = (props: Props) => {
             No
           </div>
         </div>
-
-        {/* <ReadyButton disabled={vote === null} onClick={handleLockIn} /> */}
-        {/* <div className={styles.votes}>{votes()}</div> */}
       </div>
-      <Players showIsReady />
     </>
   );
 };

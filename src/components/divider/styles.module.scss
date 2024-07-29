@@ -33,3 +33,9 @@
   width: 100%;
   max-width: 90vw;
 }
+
+.description {
+  margin-bottom: vars.$spacing-primary;
+  text-align: center;
+  color: vars.$color-text-secondary;
+}

@@ -14,7 +14,7 @@ import { GameQuestMemberResult } from "./components/gameQuestMemberResult/gameQu
 import styles from "./styles.module.scss";
 
 export const Game = () => {
-  const { session, heading } = useSessionStore();
+  const { session, players, activeQuest, heading } = useSessionStore();
 
   return (
     <>
@@ -24,6 +24,31 @@ export const Game = () => {
           showEmptySlots={session.step === "lobby"}
           showIsReady
         />
+
+        {!["lobby", "characterReveal", "ritual"].includes(session.step) && (
+          <div className={styles.info}>
+            <div className={styles.infoItem}>
+              <div className={styles.infoItemHeading}>Quest</div>
+              <div className={styles.infoItemValue}>
+                {session.activeQuestIndex + 1}
+              </div>
+            </div>
+
+            <div className={styles.infoItem}>
+              <div className={styles.infoItemHeading}>Failed Votes</div>
+              <div className={styles.infoItemValue}>
+                {session.numFailVotes} / 5
+              </div>
+            </div>
+
+            <div className={styles.infoItem}>
+              <div className={styles.infoItemHeading}>Leader</div>
+              <div className={styles.infoItemValue}>
+                {players[activeQuest.leaderId].name}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className={styles.content}>
           {session.step === "lobby" && <GameLobby />}

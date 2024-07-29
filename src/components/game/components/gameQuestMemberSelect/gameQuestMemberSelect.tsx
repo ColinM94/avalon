@@ -37,7 +37,7 @@ export const GameQuestMemberSelect = (props: Props) => {
   const isMaxPlayers = activeQuest.players.length >= activeQuest.numPlayers;
 
   const handleClick = (playerId: string) => {
-    if (activeQuest.leaderId !== myPlayer.id) return;
+    if (activeQuest.leaderId !== myPlayer.id || myPlayer.isReady) return;
 
     const updatedQuestPlayers = activeQuest.players;
 
@@ -59,6 +59,10 @@ export const GameQuestMemberSelect = (props: Props) => {
   };
 
   const validate = () => {
+    if (!isMyPlayerLeader) {
+      return "The leader must first select the quest members.";
+    }
+
     if (activeQuest.numPlayers !== activeQuest.players.length) {
       return `Please select ${activeQuest.numPlayers} players.`;
     }
@@ -67,36 +71,35 @@ export const GameQuestMemberSelect = (props: Props) => {
   };
 
   React.useEffect(() => {
-    if (isMyPlayerLeader && myPlayer.isReady) return;
+    if (!isMyPlayerLeader || !myPlayer.isReady) return;
 
     goToStep({
       step: "questMemberVote",
     });
-  }, [isMyPlayerLeader, myPlayer.isReady]);
+  }, [myPlayer.isReady]);
 
   React.useEffect(() => {
     updateSessionStore({ validateReady: validate });
-  }, [myPlayer.name]);
+  }, [myPlayer.name, activeQuest.players]);
 
   if (!activeQuest.leaderId) return <LoadingOverlay />;
 
   return (
-    <div className={classes(styles.container, className)}>
+    <>
       <Divider
         label={
           isMyPlayerLeader
             ? `You are leader`
             : `${players[activeQuest.leaderId]?.name} is Leader`
         }
+        description={
+          isMyPlayerLeader
+            ? `Select ${activeQuest.numPlayers} people to go on the next quest`
+            : `They are selecting ${activeQuest.numPlayers} player(s) to go on the next Quest`
+        }
       />
 
-      <div className={styles.description}>
-        {isMyPlayerLeader
-          ? `Select ${activeQuest.numPlayers} people to go on the next quest`
-          : `They are selecting ${activeQuest.numPlayers} player(s) to go on the next Quest`}
-      </div>
-
-      <div className={styles.players}>
+      <div className={classes(styles.container, className)}>
         {isMyPlayerLeader &&
           playersArray.map((player) => {
             const isSelected = activeQuest.players.includes(player.id);
@@ -114,6 +117,6 @@ export const GameQuestMemberSelect = (props: Props) => {
             );
           })}
       </div>
-    </div>
+    </>
   );
 };

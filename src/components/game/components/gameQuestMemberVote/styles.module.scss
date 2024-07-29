@@ -1,23 +1,17 @@
 .container {
   flex: 1;
+  gap: vars.$spacing-primary;
+  justify-content: center;
 
   .players {
-    flex-direction: row;
-    gap: vars.$spacing-primary;
-
-    .player {
-      padding: vars.$spacing-primary;
-      background-color: vars.$color-surface;
-      border-radius: vars.$roundness;
-    }
   }
 
   .votes {
     flex-direction: row;
     gap: vars.$spacing-primary;
-    flex: 1;
     justify-content: center;
     align-items: center;
+    margin-top: auto;
 
     .vote {
       background-color: vars.$color-surface;
