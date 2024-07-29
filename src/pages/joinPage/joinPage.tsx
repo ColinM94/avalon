@@ -19,6 +19,8 @@ export const JoinPage = () => {
   }, [sessionId]);
 
   const handleJoin = async (code: string) => {
+    if (!code) return;
+
     navigate(`/play/${code}`);
   };
 
