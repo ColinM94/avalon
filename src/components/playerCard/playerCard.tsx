@@ -16,6 +16,7 @@ export const PlayerCard = (props: Props) => {
     onClick,
     showName,
     showIsReady,
+    showLeaderIcon,
     width = 1,
     className,
   } = props;
@@ -67,7 +68,7 @@ export const PlayerCard = (props: Props) => {
           <img src={player.imageUrl} className={styles.image} />
         )}
 
-        {isLeader && (
+        {isLeader && showLeaderIcon && (
           <FontAwesomeIcon icon="crown" className={styles.hostIcon} />
         )}
 
@@ -84,10 +85,7 @@ export const PlayerCard = (props: Props) => {
         )} */}
 
         {showName && (
-          <>
-            {player?.name && <div className={styles.name}>{player?.name}</div>}
-            {!player?.name && <div className={styles.name}>&zwnj;</div>}
-          </>
+            player?.name && <div className={styles.name}>{player?.name}</div>
         )}
 
         {player?.isReady && showIsReady && (

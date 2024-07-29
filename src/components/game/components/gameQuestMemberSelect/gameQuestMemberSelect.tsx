@@ -87,15 +87,12 @@ export const GameQuestMemberSelect = (props: Props) => {
   return (
     <>
       <Divider
-        label={
-          isMyPlayerLeader
-            ? `You are leader`
-            : `${players[activeQuest.leaderId]?.name} is Leader`
-        }
         description={
           isMyPlayerLeader
-            ? `Select ${activeQuest.numPlayers} people to go on the next quest`
-            : `They are selecting ${activeQuest.numPlayers} player(s) to go on the next Quest`
+            ? `Select ${activeQuest.numPlayers} people to go on the this quest`
+            : `${players[activeQuest.leaderId]?.name} is selecting ${
+                activeQuest.numPlayers
+              } player(s) to go on the this Quest`
         }
       />
 

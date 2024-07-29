@@ -1,6 +1,6 @@
 import { MainLayout } from "layouts";
 import { useSessionStore } from "stores";
-import { BottomBar, Players } from "components";
+import { BottomBar, Divider, Players } from "components";
 
 import { GameLobby } from "./components/gameLobby/gameLobby";
 import { GameReveal } from "./components/gameReveal/gameReveal";
@@ -22,6 +22,7 @@ export const Game = () => {
         <Players
           width={1}
           showEmptySlots={session.step === "lobby"}
+          showLeaderIcon
           showIsReady
         />
 
@@ -35,16 +36,16 @@ export const Game = () => {
             </div>
 
             <div className={styles.infoItem}>
-              <div className={styles.infoItemHeading}>Failed Votes</div>
+              <div className={styles.infoItemHeading}>Leader</div>
               <div className={styles.infoItemValue}>
-                {session.numFailVotes} / 5
+                {players[activeQuest.leaderId]?.name}
               </div>
             </div>
 
             <div className={styles.infoItem}>
-              <div className={styles.infoItemHeading}>Leader</div>
+              <div className={styles.infoItemHeading}>Failed Votes</div>
               <div className={styles.infoItemValue}>
-                {players[activeQuest.leaderId].name}
+                {session.numFailVotes} / 5
               </div>
             </div>
           </div>
@@ -67,6 +68,8 @@ export const Game = () => {
 
           {session.step === "questResult" && <GameQuestResult />}
         </div>
+
+        {/* <Divider /> */}
 
         <BottomBar />
       </MainLayout>

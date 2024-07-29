@@ -93,7 +93,7 @@ export const GameQuestMemberResult = (props: Props) => {
   return (
     <>
       <Divider
-        label={hasPassed ? "The Vote has passed" : "The Vote has failed"}
+        description={hasPassed ? "The Vote has passed" : "The Vote has failed"}
       />
 
       <div className={classes(styles.container, className)}>

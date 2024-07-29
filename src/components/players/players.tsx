@@ -11,6 +11,7 @@ export const Players = (props: Props) => {
     showEmptySlots,
     showOnlyPlayersOnActiveQuest,
     showIsReady,
+    showLeaderIcon,
     width,
     className,
   } = props;
@@ -66,6 +67,7 @@ export const Players = (props: Props) => {
           player={tempPlayer}
           showName
           connected={!!tempPlayer.joinedAt}
+          showLeaderIcon
           width={width}
           showIsReady={showIsReady}
           className={styles.player}

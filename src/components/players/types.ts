@@ -1,4 +1,5 @@
 export interface Props {
+  showLeaderIcon?: boolean;
   showDivider?: boolean;
   showMyPlayer?: boolean;
   showEmptySlots?: boolean;

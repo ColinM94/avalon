@@ -72,7 +72,7 @@ export const GameQuestMemberVote = (props: Props) => {
   return (
     <>
       <Divider
-        label="Vote"
+        // label="Vote"
         description={`${
           players[activeQuest.leaderId].name
         } has chosen these players to go on the quest. Do you approve?`}

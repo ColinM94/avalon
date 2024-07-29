@@ -27,7 +27,6 @@
 .horizontal {
   @extend .divider;
 
-  margin-top: vars.$spacing-primary;
   margin-bottom: vars.$spacing-primary;
   height: 1px;
   width: 100%;
@@ -35,7 +34,7 @@
 }
 
 .description {
+  font-size: vars.$font-size-h3;
   margin-bottom: vars.$spacing-primary;
   text-align: center;
-  color: vars.$color-text-secondary;
 }
