@@ -6,3 +6,4 @@ export * from "./generateUniqueId";
 export * from "./shuffleArray";
 export * from "./getQuestNumPlayers";
 export * from "./sentencifyArray";
+export * from "./capitaliseFirstLetter";

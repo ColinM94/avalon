@@ -1,6 +1,6 @@
 import { MainLayout } from "layouts";
 import { useSessionStore } from "stores";
-import { BottomBar, Divider, Players } from "components";
+import { BottomBar, Players } from "components";
 
 import { GameLobby } from "./components/gameLobby/gameLobby";
 import { GameReveal } from "./components/gameReveal/gameReveal";
@@ -22,7 +22,6 @@ export const Game = () => {
         <Players
           width={1}
           showEmptySlots={session.step === "lobby"}
-          showLeaderIcon
           showIsReady
         />
 

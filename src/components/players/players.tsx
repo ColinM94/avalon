@@ -11,8 +11,8 @@ export const Players = (props: Props) => {
     showEmptySlots,
     showOnlyPlayersOnActiveQuest,
     showIsReady,
-    showLeaderIcon,
     width,
+    playerIds,
     className,
   } = props;
 
@@ -22,6 +22,23 @@ export const Players = (props: Props) => {
     const items: React.ReactNode[] = [];
 
     const tempPlayers = playersArray.sort((a, b) => a.joinedAt - b.joinedAt);
+
+    if (playerIds) {
+      playerIds.forEach((playerId) => {
+        items.push(
+          <PlayerCard
+            key={playerId}
+            player={players[playerId]}
+            showName
+            width={width}
+            showIsReady={showIsReady}
+            className={styles.player}
+          />
+        );
+      });
+
+      return items;
+    }
 
     if (showOnlyPlayersOnActiveQuest) {
       activeQuest.players.forEach((playerId) => {

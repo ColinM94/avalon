@@ -1,89 +1,117 @@
 import * as React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { classes } from "utils";
 import { useSessionStore } from "stores";
-import { goToStep, updateSession } from "services";
+import { goToStep } from "services";
+import { Players, Divider } from "components";
+import { charactersDefault } from "consts";
 
 import styles from "./styles.module.scss";
 
-const instructions = [
-  "1. Everyone close your eyes and extend your hand into a fist in front of you.",
-  "2. Minions of Mordred, open your eyes and look around so you know the agents of evil.",
-  "3. Minions of Mordred, close your eyes.",
-  "4. Minions of Mordred, extend your thumb so Merlin will know of you.",
-  "5. Merlin, open your eyes so you will know the agents of evil.",
-  "6. Minions of Mordred, put your thumbs down. Merlin, close your eyes.",
-  "7. Everyone, open your eyes.",
-];
-
 export const GameRitual = () => {
-  const { isAllReady, isMyPlayerHost, session, updateSessionStore } =
-    useSessionStore();
+  const {
+    isAllReady,
+    isMyPlayerHost,
+    session,
+    myPlayer,
+    playersArray,
+    updateSessionStore,
+  } = useSessionStore();
 
-  const audioPlayer = React.useRef<HTMLAudioElement | null>(null);
-  const currentInstruction = React.useRef(-1);
+  const myCharacter = charactersDefault[myPlayer.characterId];
 
-  const [audio, setAudio] = React.useState();
-  const [isPaused, setIsPaused] = React.useState(true);
+  const data = () => {
+    const tempData: {
+      description: string;
+      players: string[];
+    } = {
+      description: "",
+      players: [],
+    };
 
-  const handleRestart = () => {
-    setIsPaused(true);
-    setAudio(undefined);
-    currentInstruction.current = -1;
-  };
+    const playerCharacterData = playersArray.map((player) => {
+      const character = charactersDefault[player.characterId];
 
-  const handlePlay = () => {
-    if (!audioPlayer.current) return;
-
-    if (!audio) {
-      handleNextStep();
-    }
-
-    setIsPaused(false);
-    audioPlayer.current.play();
-  };
-
-  const handlePause = () => {
-    if (!audioPlayer.current) return;
-
-    setIsPaused(true);
-    audioPlayer.current.pause();
-  };
-
-  const handleNextStep = async () => {
-    updateSession({
-      isRitualFinished: false,
+      return {
+        playerId: player.id,
+        characterId: player.characterId,
+        allegiance: character.allegiance,
+      };
     });
 
-    currentInstruction.current += 1;
+    const evilPlayers = (tempData.players = playerCharacterData
+      .filter(
+        (item) => item.allegiance === "evil" && item.playerId !== myPlayer.id
+      )
+      .map((player) => player.playerId));
 
-    if (currentInstruction.current === instructions.length) {
-      setAudio(undefined);
-      updateSession({
-        isRitualFinished: true,
-      });
-      setIsPaused(true);
-      currentInstruction.current = -1;
-      return;
-    }
+    // const myCharacter: Character = {
+    //   allegiance: "good",
+    //   id: "percival",
+    // };
 
-    const file = await import(
-      `assets/audio/ritual/${currentInstruction.current}.m4a`
+    const characterId = myCharacter.id;
+
+    const isMorganaPlaying = playerCharacterData.some(
+      (item) => item.characterId === "morgana"
     );
 
-    setAudio(file.default);
+    if (myCharacter.allegiance === "evil") {
+      tempData.description = "You are Evil. ";
+
+      if (characterId === "assassin") {
+        tempData.description +=
+          "You are the assassin. At the end of the game, if Good is about to win, you will get to assassinate who you think is Merlin. ";
+      } else if (characterId === "morgana") {
+        tempData.description += "You are Morgana.";
+      } else {
+        tempData.description +=
+          "You are a minion of Mordred. You have no special powers.";
+      }
+
+      tempData.description += "Here are your fellow evil players:";
+
+      tempData.players = evilPlayers;
+    } else {
+      tempData.description = "You are Good. ";
+
+      if (characterId === "merlin") {
+        tempData.description +=
+          "You are the wizard Merlin, you can see which people are evil. ";
+
+        // if (session.characters.includes("oberon")) {
+        //   tempData.description += "Except for Oberon, she is unknown to you. ";
+        // }
+
+        tempData.description += "These are the evil players:";
+        tempData.players = evilPlayers;
+      } else if (characterId === "percival") {
+        if (isMorganaPlaying) {
+          tempData.description +=
+            "You are Percival. You can see two people. One is Merlin and one is the evil Morgana:";
+        } else {
+          tempData.description +=
+            "You are Percival. You can see who is Merlin. Protect them! This person is Merlin: ";
+        }
+
+        tempData.players = playerCharacterData
+          .filter(
+            (item) =>
+              item.characterId === "morgana" || item.characterId === "merlin"
+          )
+          .map((item) => item.playerId);
+
+        // const percivalPlayerId = playerCharacterData.filter(
+        //   (item) => item.characterId === "merlin"
+        // )[0].playerId;
+      } else {
+        tempData.description +=
+          "You are a Loyal Servant of Arthur. You have no special powers.";
+        tempData.players = [];
+      }
+    }
+
+    return tempData;
   };
-
-  React.useEffect(() => {
-    if (!audioPlayer.current) return;
-
-    audioPlayer.current.playbackRate = 2;
-
-    audioPlayer.current.pause();
-    audioPlayer.current.load();
-    audioPlayer.current.play();
-  }, [audio]);
 
   React.useEffect(() => {
     if (isMyPlayerHost && isAllReady) {
@@ -94,7 +122,8 @@ export const GameRitual = () => {
   }, [isAllReady]);
 
   const validate = () => {
-    if (!session.isRitualFinished) return "The Ritual is not finished";
+    if (false) return "";
+
     return true;
   };
 
@@ -104,63 +133,9 @@ export const GameRitual = () => {
 
   return (
     <div className={styles.container}>
-      {isMyPlayerHost && (
-        <>
-          <audio
-            controls
-            ref={audioPlayer}
-            onEnded={handleNextStep}
-            className={styles.audioPlayer}
-          >
-            <source src={audio} type="audio/mpeg" />
-          </audio>
+      <Divider description={data().description} />
 
-          {
-            <div className={styles.instructions}>
-              {instructions.map((instruction, index) => (
-                <div
-                  key={index}
-                  className={classes(
-                    styles.instruction,
-                    currentInstruction.current === index &&
-                      styles.activeInstruction
-                  )}
-                >
-                  {instruction}
-                </div>
-              ))}
-
-              <div className={styles.buttons}>
-                <div
-                  onClick={isPaused ? handlePlay : handlePause}
-                  className={styles.playButton}
-                >
-                  <FontAwesomeIcon
-                    icon={isPaused ? "play" : "pause"}
-                    className={styles.playButtonIcon}
-                  />
-                </div>
-
-                <div
-                  onClick={() => handleRestart()}
-                  className={styles.playButton}
-                >
-                  <FontAwesomeIcon
-                    icon="arrow-rotate-backward"
-                    className={styles.playButtonIcon}
-                  />
-                </div>
-              </div>
-            </div>
-          }
-        </>
-      )}
-
-      {!isMyPlayerHost && (
-        <div className={styles.description}>
-          The Host will perform the ritual!
-        </div>
-      )}
+      <Players playerIds={data().players.map((player) => player)} />
     </div>
   );
 };

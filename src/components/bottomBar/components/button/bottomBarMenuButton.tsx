@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteField } from "firebase/firestore";
 
-import { classes } from "utils";
+import { capitaliseFirstLetter, classes } from "utils";
 import { Button, Modal } from "components";
 import { useSessionStore, useToastStore } from "stores";
 import { deleteDocument, updateDocument, updateSession } from "services";
 import { User } from "types";
 
 import styles from "./styles.module.scss";
+import { charactersDefault } from "consts";
 
 export const BottomBarMenuButton = () => {
   const navigate = useNavigate();
@@ -90,7 +91,11 @@ export const BottomBarMenuButton = () => {
             )}
           >
             <div className={styles.menuItemTextTitle}>
-              {showCharacter ? "Merlin" : "Your Character"}
+              {showCharacter
+                ? capitaliseFirstLetter(
+                    charactersDefault[myPlayer.characterId].id
+                  )
+                : "Your Character"}
             </div>
             <div className={styles.menuItemTextDescription}>
               Hold down to see your character. Do not let anyone see!

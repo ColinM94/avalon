@@ -25,7 +25,7 @@ export const charactersDefault: Characters = {
       "Sees both Merlin and Morgana, but is not sure who is who.",
       "Makes Good more powerful.",
     ],
-    disabled: true,
+    disabled: false,
   },
   cleric: {
     id: "cleric",
@@ -156,7 +156,7 @@ export const charactersDefault: Characters = {
       "Disguises herself as Merlin",
       "Percival sees both Merlin and Morgana with their thumbs up.",
     ],
-    disabled: true,
+    disabled: false,
   },
   oberon: {
     id: "oberon",

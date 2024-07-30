@@ -92,7 +92,7 @@ export const GameQuestMemberSelect = (props: Props) => {
             ? `Select ${activeQuest.numPlayers} people to go on the this quest`
             : `${players[activeQuest.leaderId]?.name} is selecting ${
                 activeQuest.numPlayers
-              } player(s) to go on the this Quest`
+              } player(s) to go on this Quest`
         }
       />
 
