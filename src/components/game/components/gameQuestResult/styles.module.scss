@@ -1,0 +1,53 @@
+.container {
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: auto;
+  margin-bottom: auto;
+  gap: vars.$spacing-primary;
+  align-content: flex-start;
+  justify-content: center;
+  align-items: center;
+
+  .vote {
+    min-height: 175px;
+    width: calc(33% - vars.$spacing-primary * 0.61);
+    border-radius: vars.$roundness;
+    padding: vars.$spacing-primary;
+    max-height: 200px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: vars.$font-size-h2;
+  }
+
+  .yesVote {
+    @extend .vote;
+
+    background: linear-gradient(
+      45deg,
+      rgb(43, 107, 47) 0%,
+      rgb(39, 146, 46) 45%,
+      rgb(27, 175, 37) 81%
+    );
+  }
+
+  .noVote {
+    @extend .vote;
+
+    background: linear-gradient(
+      45deg,
+      rgb(124, 37, 37) 0%,
+      rgb(170, 34, 34) 45%,
+      rgb(202, 20, 20) 81%
+    );
+  }
+
+  .voteDisabled {
+    filter: brightness(0.6);
+  }
+
+  .voteResult {
+    font-size: vars.$font-size-h1;
+    text-align: center;
+  }
+}

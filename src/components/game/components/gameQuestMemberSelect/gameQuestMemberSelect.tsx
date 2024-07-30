@@ -8,6 +8,49 @@ import { goToStep, updateActiveQuest, updateSession } from "services";
 import { Props } from "./types";
 import styles from "./styles.module.scss";
 
+const getNumPlayers = (questIndex: number, totalNumPlayers: number) => {
+  if (questIndex === 0) {
+    if (totalNumPlayers === 5) return 2;
+    if (totalNumPlayers === 6) return 2;
+    if (totalNumPlayers === 7) return 2;
+    if (totalNumPlayers === 8) return 3;
+    if (totalNumPlayers === 9) return 3;
+    if (totalNumPlayers === 10) return 3;
+  }
+  if (questIndex === 1) {
+    if (totalNumPlayers === 5) return 3;
+    if (totalNumPlayers === 6) return 3;
+    if (totalNumPlayers === 7) return 3;
+    if (totalNumPlayers === 8) return 4;
+    if (totalNumPlayers === 9) return 4;
+    if (totalNumPlayers === 10) return 4;
+  }
+  if (questIndex === 2) {
+    if (totalNumPlayers === 5) return 2;
+    if (totalNumPlayers === 6) return 4;
+    if (totalNumPlayers === 7) return 3;
+    if (totalNumPlayers === 8) return 4;
+    if (totalNumPlayers === 9) return 4;
+    if (totalNumPlayers === 10) return 4;
+  }
+  if (questIndex === 3) {
+    if (totalNumPlayers === 5) return 4;
+    if (totalNumPlayers === 6) return 3;
+    if (totalNumPlayers === 7) return 4;
+    if (totalNumPlayers === 8) return 5;
+    if (totalNumPlayers === 9) return 5;
+    if (totalNumPlayers === 10) return 5;
+  }
+  if (questIndex === 4) {
+    if (totalNumPlayers === 5) return 4;
+    if (totalNumPlayers === 6) return 4;
+    if (totalNumPlayers === 7) return 4;
+    if (totalNumPlayers === 8) return 5;
+    if (totalNumPlayers === 9) return 5;
+    if (totalNumPlayers === 10) return 5;
+  }
+};
+
 export const GameQuestMemberSelect = (props: Props) => {
   const { className } = props;
 
@@ -31,6 +74,7 @@ export const GameQuestMemberSelect = (props: Props) => {
 
     updateActiveQuest({
       leaderId: Object.values(players)[0].id,
+      numPlayers: getNumPlayers(session.activeQuestIndex, session.numPlayers),
     });
   }, [session.activeQuestIndex]);
 
@@ -106,6 +150,7 @@ export const GameQuestMemberSelect = (props: Props) => {
                 player={player}
                 onClick={() => handleClick(player.id)}
                 showName
+                key={player.id}
                 className={classes(
                   styles.player,
                   isSelected ? styles.playerSelected : styles.playerDisabled

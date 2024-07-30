@@ -8,8 +8,8 @@ import { GameRitual } from "./components/gameRitual/gameRitual";
 import { GameQuestMemberSelect } from "./components/gameQuestMemberSelect/gameQuestMemberSelect";
 import { GameQuestMemberVote } from "./components/gameQuestMemberVote/gameQuestMemberVote";
 import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote";
-import { GameQuestResult } from "./components/gameQuestVoteResult/gameQuestResult";
 import { GameQuestMemberResult } from "./components/gameQuestMemberResult/gameQuestMemberResult";
+import { GameQuestResult } from "./components/gameQuestResult/gameQuestResult";
 
 import styles from "./styles.module.scss";
 
@@ -27,12 +27,12 @@ export const Game = () => {
 
         {!["lobby", "characterReveal", "ritual"].includes(session.step) && (
           <div className={styles.info}>
-            <div className={styles.infoItem}>
+            {/* <div className={styles.infoItem}>
               <div className={styles.infoItemHeading}>Quest</div>
               <div className={styles.infoItemValue}>
                 {session.activeQuestIndex + 1}
               </div>
-            </div>
+            </div> */}
 
             <div className={styles.infoItem}>
               <div className={styles.infoItemHeading}>Leader</div>
@@ -45,6 +45,13 @@ export const Game = () => {
               <div className={styles.infoItemHeading}>Failed Votes</div>
               <div className={styles.infoItemValue}>
                 {session.numFailVotes} / 5
+              </div>
+            </div>
+
+            <div className={styles.infoItem}>
+              <div className={styles.infoItemHeading}>Failed Quests</div>
+              <div className={styles.infoItemValue}>
+                {session.numFailQuests} / 3
               </div>
             </div>
           </div>

@@ -54,7 +54,7 @@ export const PlayerCard = (props: Props) => {
       styles.container,
       connected && styles.connected,
       player?.isMyPlayerHost && styles.host,
-      isMyPlayer && styles.user,
+      // isMyPlayer && styles.user,
       width === 1 && styles.width1,
       width === 2 && styles.width2,
       width === 3 && styles.width3
@@ -84,8 +84,8 @@ export const PlayerCard = (props: Props) => {
           <FontAwesomeIcon icon="pencil" className={styles.editIcon} />
         )} */}
 
-        {showName && (
-            player?.name && <div className={styles.name}>{player?.name}</div>
+        {showName && player?.name && (
+          <div className={styles.name}>{player?.name}</div>
         )}
 
         {player?.isReady && showIsReady && (

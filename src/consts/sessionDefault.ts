@@ -12,6 +12,7 @@ export const sessionDefault = (): GameSession => {
     activeQuestIndex: 0,
     isMyPlayerHostPlaying: true,
     numFailVotes: 0,
+    numFailQuests: 0,
     isRitualFinished: false,
     quests: {
       0: {

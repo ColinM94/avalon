@@ -62,7 +62,7 @@ export const GameRitual = () => {
         tempData.description +=
           "You are the assassin. At the end of the game, if Good is about to win, you will get to assassinate who you think is Merlin. ";
       } else if (characterId === "morgana") {
-        tempData.description += "You are Morgana.";
+        tempData.description += "You are Morgana. ";
       } else {
         tempData.description +=
           "You are a minion of Mordred. You have no special powers.";
@@ -135,7 +135,7 @@ export const GameRitual = () => {
     <div className={styles.container}>
       <Divider description={data().description} />
 
-      <Players playerIds={data().players.map((player) => player)} />
+      <Players playerIds={data().players.map((player) => player)} width={2} />
     </div>
   );
 };
