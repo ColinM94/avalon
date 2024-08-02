@@ -1,3 +1,8 @@
+/**
+ * Randomly shuffles array of string.
+ * @param array - Array of strings.
+ * @returns Array with elements randomly shuffled.
+ */
 export const shuffleArray = (array: string[]) => {
   const tempArray = array;
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import { Splash, Toast } from "components";
 import { getDocumentSnapshot, setDocument } from "services";
@@ -8,8 +8,6 @@ import { useAppStore } from "stores";
 
 export const Main = () => {
   const { user, updateAppStore } = useAppStore();
-
-  const { pathname } = useLocation();
 
   // User
   React.useEffect(() => {
@@ -34,15 +32,6 @@ export const Main = () => {
 
     return () => unsubscribe?.();
   }, [user.id]);
-
-  React.useEffect(() => {
-    // if (user.sessionId && !pathname.includes("/play/")) {
-    //   navigate(`/play/${user.sessionId}`);
-    // }
-    // else if (!user.sessionId && pathname.includes("/play/")) {
-    //   navigate("/");
-    // }
-  }, [user.sessionId, pathname]);
 
   return (
     <>

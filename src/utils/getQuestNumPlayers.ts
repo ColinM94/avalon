@@ -1,3 +1,8 @@
+/**
+ *  @param quest - Index of quest.
+ *  @param numPlayers - Number of players.
+ *  @returns The number of players who go on the quest.
+ */
 export const getQuestNumPlayers = (quest: number, numPlayers: number) => {
   const data = [
     [2, 2, 2, 3, 3, 3],

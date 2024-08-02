@@ -1,3 +1,8 @@
+/**
+ * Combines array of strings into a sentence with apostraphies, conjunction, and a full stop.
+ * @param arr - Array of strings.
+ * @returns Combined sentence.
+ */
 export const sentencifyArray = (arr: string[]) => {
   if (arr.length == 0) return "";
 

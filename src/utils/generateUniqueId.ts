@@ -1,3 +1,7 @@
+/**
+ * Generates a unique 16 digit string
+ * @returns 16 digit string
+ */
 export const generateUniqueId = () => {
   const characters =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
