@@ -7,8 +7,6 @@ import styles from "./styles.module.scss";
 export const CharactersPage = () => {
   const characters = Object.values(charactersDefault);
 
-  // const handleCharacterClick = (characterId: string) => {};
-
   return (
     <MainLayout
       showHeader
@@ -19,7 +17,6 @@ export const CharactersPage = () => {
       {characters.map((character) => (
         <CharacterCard
           character={character}
-          // onClick={handleCharacterClick}
           alwaysActive
           showName
           orientation="landscape"
