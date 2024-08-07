@@ -6,5 +6,6 @@ export const userDefault = (): User => {
     id: generateUniqueId(),
     name: "",
     sessionId: null,
+    imageUrl: "",
   };
 };

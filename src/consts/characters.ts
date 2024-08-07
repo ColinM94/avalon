@@ -36,7 +36,7 @@ export const charactersDefault: Characters = {
       "Knows if the leader of the first quest is good or evil.",
       "Makes Good more powerful..",
     ],
-    disabled: true,
+    disabled: false,
   },
   troublemaker: {
     id: "troublemaker",
@@ -47,7 +47,7 @@ export const charactersDefault: Characters = {
       "Must lie when their loyaly is checked by the cleric or any rules/ability.",
       "Makes Evil more powerful.",
     ],
-    disabled: true,
+    disabled: false,
   },
   seniorMessenger: {
     id: "seniorMessenger",
@@ -55,7 +55,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
-    disabled: true,
+    disabled: false,
   },
   juniorMessenger: {
     id: "juniorMessenger",
@@ -63,7 +63,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
-    disabled: true,
+    disabled: false,
   },
   rogueGood: {
     id: "rogueGood",
@@ -71,7 +71,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
-    disabled: true,
+    disabled: false,
   },
   sorcererGood: {
     id: "sorcererGood",
@@ -79,7 +79,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
-    disabled: true,
+    disabled: false,
   },
   lancelotGood: {
     id: "lancelotGood",
@@ -87,7 +87,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
-    disabled: true,
+    disabled: false,
   },
   untrustworthyServant: {
     id: "untrustworthyServant",
@@ -95,7 +95,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
-    disabled: true,
+    disabled: false,
   },
   servant1: {
     id: "servant1",
@@ -103,7 +103,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: false,
+    disabled: true,
   },
   servant2: {
     id: "servant2",
@@ -111,7 +111,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: false,
+    disabled: true,
   },
   servant3: {
     id: "servant3",
@@ -119,7 +119,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: false,
+    disabled: true,
   },
   servant4: {
     id: "servant4",
@@ -127,7 +127,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: false,
+    disabled: true,
   },
   servant5: {
     id: "servant5",
@@ -135,7 +135,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: false,
+    disabled: true,
   },
   assassin: {
     id: "assassin",
@@ -167,7 +167,7 @@ export const charactersDefault: Characters = {
       "Does not reveal himself to other evil players.",
       "Makes Good more powerful.",
     ],
-    disabled: true,
+    disabled: false,
   },
   mordred: {
     id: "mordred",
@@ -175,7 +175,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Makes evil more powerful."],
-    disabled: true,
+    disabled: false,
   },
   lunatic: {
     id: "lunatic",
@@ -186,7 +186,7 @@ export const charactersDefault: Characters = {
       "Must fail every quest they are on.",
       "Recommended for games with 7+ players.",
     ],
-    disabled: true,
+    disabled: false,
   },
   sorcererEvil: {
     id: "sorcererEvil",
@@ -194,7 +194,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: [],
-    disabled: true,
+    disabled: false,
   },
   revealer: {
     id: "revealer",
@@ -246,7 +246,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: false,
+    disabled: true,
   },
   minion2: {
     id: "minion2",
@@ -254,7 +254,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: false,
+    disabled: true,
   },
   minion3: {
     id: "minion3",
@@ -262,7 +262,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: false,
+    disabled: true,
   },
 };
 

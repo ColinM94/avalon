@@ -2,31 +2,38 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "components";
 import { Characters, GameSession } from "types";
-import {
-  generateLobbyCode,
-  getQuestNumPlayers,
-  reactReducer,
-  shuffleArray,
-} from "utils";
+import { getQuestNumPlayers, reactReducer, shuffleArray } from "utils";
 import {
   charactersDefault,
   maxCharacters,
   playerDefault,
   sessionDefault,
 } from "consts";
-import { useAppStore, useToastStore } from "stores";
+import { useAppStore, useSessionStore, useToastStore } from "stores";
 import { MainLayout } from "layouts";
-import { setDocument } from "services";
+import { deleteDocument, setDocument } from "services";
 
 import { SetupCharacters } from "./components/setupCharacters/setupCharacters";
-import { SetupOptions } from "./components/setupOptions/setupOptions";
 
 import styles from "./styles.module.scss";
+import React from "react";
 
 export const SetupPage = () => {
   const { showToast } = useToastStore();
   const { user } = useAppStore();
   const navigate = useNavigate();
+  const { session } = useSessionStore();
+
+  React.useEffect(() => {
+    if (!session.id) return;
+
+    deleteDocument({
+      collection: "sessions",
+      id: session.id,
+    });
+  }, []);
+
+  return;
 
   const [tempSession, updateTempSession] = reactReducer<GameSession>({
     ...sessionDefault(),
@@ -128,7 +135,7 @@ export const SetupPage = () => {
       heading="Game Setup"
       className={styles.container}
     >
-      <SetupOptions session={tempSession} updateSession={updateTempSession} />
+      {/* <SetupOptions session={tempSession} updateSession={updateTempSession} /> */}
 
       <SetupCharacters
         heading="Good Characters"

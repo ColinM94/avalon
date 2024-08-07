@@ -13,7 +13,10 @@ export type State = {
     subtitle?: string;
   };
   playersArray: Player[];
-  validateReady?: () => string | true;
+  onReady?: () => string | void;
+  canReady?: () => string | boolean;
+  onContinue?: () => string | void;
+  canContinue?: () => string | boolean;
 };
 
 export type Actions = {

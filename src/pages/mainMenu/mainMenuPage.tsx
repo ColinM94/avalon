@@ -1,15 +1,48 @@
 import { useNavigate } from "react-router-dom";
 
-import { MainMenuButton } from "./components/mainMenuButton/mainMenuButton";
-
-import styles from "./styles.module.scss";
 import { MainLayout } from "layouts";
+import { setDocument } from "services";
+import { GameSession } from "types";
+import { generateSessionId } from "utils";
+import { useAppStore, useToastStore } from "stores";
+import { playerDefault, sessionDefault } from "consts";
+
+import { MainMenuButton } from "./components/mainMenuButton/mainMenuButton";
+import styles from "./styles.module.scss";
 
 export const MainMenuPage = () => {
   const navigate = useNavigate();
+  const { user } = useAppStore();
+  const { showToast } = useToastStore();
 
-  const handleCreateLobby = () => {
-    navigate("/setup");
+  const handleCreateSession = async () => {
+    try {
+      const id = generateSessionId();
+
+      const result = await setDocument<GameSession>({
+        id: id,
+        collection: "sessions",
+        data: {
+          ...sessionDefault(),
+          id,
+          players: {
+            [user.id]: {
+              ...playerDefault(),
+              id: user.id,
+              name: user.name || "",
+              imageUrl: user.imageUrl || "",
+            },
+          },
+          createdBy: user.id,
+        },
+      });
+
+      if (!result) throw "Error creating game session";
+
+      navigate(`/play/${id}`);
+    } catch (error) {
+      showToast(String(error), "error");
+    }
   };
 
   const handleJoinLobby = () => {
@@ -37,7 +70,7 @@ export const MainMenuPage = () => {
         <MainMenuButton
           label="Create"
           position={1}
-          onClick={handleCreateLobby}
+          onClick={handleCreateSession}
           className={styles.button}
         />
 
