@@ -20,9 +20,9 @@ export const PlayProtected = ({ sessionId }: Props) => {
       if (!user) throw "Invalid User";
       if (!data) throw "Session not found!";
 
-      const numPlayersReady = Object.values(data.players).filter(
-        (item) => item.isReady
-      ).length;
+      const isAllReady = Object.values(data.players)
+        .filter((player) => player.id !== session.createdBy)
+        .every((item) => item.isReady);
 
       const activeQuest = data.quests[data.activeQuestIndex];
       const myPlayer = data.players[user.id];
@@ -32,7 +32,7 @@ export const PlayProtected = ({ sessionId }: Props) => {
         myPlayer,
         isMyPlayerHost: data.createdBy === user.id,
         isMyPlayerLeader: activeQuest.leaderId == myPlayer.id,
-        isAllReady: numPlayersReady === data.numPlayers,
+        isAllReady,
         activeQuest,
         playersArray: Object.values(data.players).sort(
           (a, b) => a.joinedAt - b.joinedAt

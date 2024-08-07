@@ -8,11 +8,11 @@ import { Button, Modal } from "components";
 import { useSessionStore, useToastStore } from "stores";
 import { deleteDocument, updateDocument, updateSession } from "services";
 import { User } from "types";
-
-import styles from "./styles.module.scss";
 import { charactersDefault } from "consts";
 
-export const BottomBarMenuButton = () => {
+import styles from "./styles.module.scss";
+
+export const MenuBarMenuButton = () => {
   const navigate = useNavigate();
   const { myPlayer, session, isMyPlayerHost } = useSessionStore();
   const { showToast } = useToastStore();
