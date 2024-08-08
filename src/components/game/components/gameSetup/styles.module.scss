@@ -1,0 +1,6 @@
+.container {
+  padding: vars.$spacing-primary;
+  flex: 1;
+  gap: vars.$spacing-primary * 2 !important;
+  width: 100%;
+}

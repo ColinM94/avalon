@@ -1,0 +1,32 @@
+.numPlayersInput {
+  .numPlayersOptions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: vars.$spacing-primary;
+
+    .numPlayersOption {
+      padding: vars.$spacing-primary;
+      background-color: vars.$color-surface;
+      border-radius: vars.$roundness;
+      flex: 0.33;
+      min-width: 25%;
+      cursor: pointer;
+      justify-content: center;
+      align-items: center;
+      aspect-ratio: 1;
+      font-size: vars.$font-size-h3;
+
+      @media (min-width: vars.$breakpoint-medium) {
+        min-width: unset;
+      }
+
+      &:hover {
+        filter: brightness(vars.$active-brightness-filter);
+      }
+    }
+
+    .numPlayersOptionActive {
+      background-color: vars.$color-primary;
+    }
+  }
+}

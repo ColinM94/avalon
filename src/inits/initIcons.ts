@@ -15,6 +15,7 @@ import {
   faRightFromBracket,
   faShareNodes,
   faSpinner,
+  faUser,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -35,6 +36,7 @@ export const initIcons = () => {
     faShareNodes,
     faEllipsisV,
     faRightFromBracket,
-    faHatWizard
+    faHatWizard,
+    faUser
   );
 };

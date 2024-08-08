@@ -10,6 +10,7 @@ import { GameQuestMemberVote } from "./components/gameQuestMemberVote/gameQuestM
 import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote";
 import { GameQuestMemberResult } from "./components/gameQuestMemberResult/gameQuestMemberResult";
 import { GameQuestResult } from "./components/gameQuestResult/gameQuestResult";
+import { GameSetup } from "./components/gameSetup/gameSetup";
 
 import styles from "./styles.module.scss";
 
@@ -25,7 +26,9 @@ export const Game = () => {
           showIsReady
         />
 
-        {!["lobby", "characterReveal", "ritual"].includes(session.step) && (
+        {!["setup", "lobby", "characterReveal", "ritual"].includes(
+          session.step
+        ) && (
           <div className={styles.info}>
             {/* <div className={styles.infoItem}>
               <div className={styles.infoItemHeading}>Quest</div>
@@ -60,6 +63,8 @@ export const Game = () => {
         <div className={styles.content}>
           {session.step === "lobby" && <GameLobby />}
 
+          {session.step === "setup" && <GameSetup />}
+
           {session.step === "characterReveal" && <GameReveal />}
 
           {session.step === "ritual" && <GameRitual />}
@@ -76,8 +81,6 @@ export const Game = () => {
         </div>
 
         {/* <Divider /> */}
-
-        <MenuBar />
       </MainLayout>
     </>
   );

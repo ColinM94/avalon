@@ -1,0 +1,14 @@
+.container {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+
+  .heading {
+    font-size: vars.$font-size-h2;
+  }
+
+  .description {
+    font-size: vars.$font-size-body;
+    color: vars.$color-text-secondary;
+  }
+}

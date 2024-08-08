@@ -26,6 +26,7 @@ export type GameSession = {
   quests: Record<number, Quest>;
   step:
     | "lobby"
+    | "setup"
     | "characterReveal"
     | "ritual"
     | "questMemberSelect"

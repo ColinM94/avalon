@@ -21,8 +21,8 @@ export const PlayProtected = ({ sessionId }: Props) => {
       if (!data) throw "Session not found!";
 
       const isAllReady = Object.values(data.players)
-        .filter((player) => player.id !== session.createdBy)
-        .every((item) => item.isReady);
+        .filter((player) => player.id !== data.createdBy)
+        .every((player) => player.isReady === true);
 
       const activeQuest = data.quests[data.activeQuestIndex];
       const myPlayer = data.players[user.id];

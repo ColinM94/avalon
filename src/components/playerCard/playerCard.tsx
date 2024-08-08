@@ -4,7 +4,6 @@ import { deleteField } from "firebase/firestore";
 import { classes } from "utils";
 import { updateSession } from "services";
 import { useSessionStore } from "stores";
-// import myFace from "assets/images/myFace.jpg";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -68,6 +67,10 @@ export const PlayerCard = (props: Props) => {
           <img src={player.imageUrl} className={styles.image} />
         )}
 
+        {connected && !player?.imageUrl && (
+          <FontAwesomeIcon icon="user" className={styles.playerIcon} />
+        )}
+
         {isLeader && showLeaderIcon && (
           <FontAwesomeIcon icon="crown" className={styles.hostIcon} />
         )}
@@ -77,15 +80,15 @@ export const PlayerCard = (props: Props) => {
         )}
 
         {connected === false && (
-          <FontAwesomeIcon icon="hourglass" className={styles.waitingIcon} />
+          <FontAwesomeIcon icon="user" className={styles.waitingIcon} />
         )}
 
         {/* {isMyPlayer && session.step === "lobby" && (
           <FontAwesomeIcon icon="pencil" className={styles.editIcon} />
         )} */}
 
-        {showName && player?.name && (
-          <div className={styles.name}>{player?.name}</div>
+        {showName && (
+          <div className={styles.name}>{player?.name || "Player"}</div>
         )}
 
         {player?.isReady && showIsReady && (

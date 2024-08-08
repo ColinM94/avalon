@@ -42,6 +42,11 @@
 
   .waitingIcon {
     font-size: vars.$icon-size-medium;
+    color: vars.$color-text-tertiary;
+  }
+
+  .playerIcon {
+    font-size: vars.$icon-size-medium;
     color: vars.$color-text-secondary;
   }
 

@@ -8,19 +8,22 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const MenuBar = (props: Props) => {
-  const { className } = props;
+  const { canContinue, canReady, onContinue, onReady, className } = props;
 
   useSessionStore();
 
   return (
-    <>
-      <div className={classes(styles.container, className)}>
-        <MenuBarMenuButton />
+    <div className={classes(styles.container, className)}>
+      <MenuBarMenuButton />
 
-        <MenuBarReadyButton />
+      <MenuBarReadyButton
+        canContinue={canContinue}
+        canReady={canReady}
+        onContinue={onContinue}
+        onReady={onReady}
+      />
 
-        <div className={styles.rightSpace} />
-      </div>
-    </>
+      <div className={styles.rightSpace} />
+    </div>
   );
 };

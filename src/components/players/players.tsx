@@ -16,7 +16,7 @@ export const Players = (props: Props) => {
     className,
   } = props;
 
-  const { playersArray, players, session, activeQuest } = useSessionStore();
+  const { playersArray, players, activeQuest, session } = useSessionStore();
 
   const renderPlayers = () => {
     const items: React.ReactNode[] = [];
@@ -59,14 +59,16 @@ export const Players = (props: Props) => {
       return items;
     }
 
-    for (let i = 0; i < session.numPlayers; i++) {
+    if (session.step !== "lobby") return;
+
+    for (let i = 0; i < 10; i++) {
       const tempPlayer = tempPlayers?.[i];
 
       if (showEmptySlots && !tempPlayer) {
         items.push(
           <PlayerCard
             key={i}
-            // connected={false}
+            connected={false}
             width={width}
             showIsReady={showIsReady}
             className={styles.player}

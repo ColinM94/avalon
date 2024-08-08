@@ -6,9 +6,10 @@ import { updateMyPlayer } from "services";
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const MenuBarReadyButton = ({ onClick }: Props) => {
-  const { isMyPlayerHost, canContinue, canReady, onContinue, onReady } =
-    useSessionStore();
+export const MenuBarReadyButton = (props: Props) => {
+  const { canReady, canContinue, onContinue, onReady } = props;
+
+  const { isMyPlayerHost } = useSessionStore();
   const { showToast } = useToastStore();
 
   const handleCanReady = (alertUser: boolean) => {
@@ -16,7 +17,7 @@ export const MenuBarReadyButton = ({ onClick }: Props) => {
 
     const result = canReady?.();
 
-    if (result === true || result === false) return result;
+    if (result === true) return result;
 
     if (alertUser) showToast(result, "error");
   };
@@ -49,25 +50,27 @@ export const MenuBarReadyButton = ({ onClick }: Props) => {
     }
   };
 
-  if (isMyPlayerHost) {
+  if (isMyPlayerHost && onContinue) {
     return (
       <Button
         label="Continue"
         onClick={handleContinue}
         onClickDisabled={handleContinue}
-        disabled={canContinue?.() !== true}
+        disabled={canContinue ? canContinue?.() !== true : false}
         className={classes(styles.container, !canContinue && styles.disabled)}
       />
     );
   }
 
-  return (
-    <Button
-      label={"Ready"}
-      onClick={handleReady}
-      onClickDisabled={() => handleCanReady(true)}
-      disabled={canReady?.() !== true}
-      className={classes(styles.container, !canReady && styles.disabled)}
-    />
-  );
+  if (onReady) {
+    return (
+      <Button
+        label={"Ready"}
+        onClick={handleReady}
+        onClickDisabled={() => handleCanReady(true)}
+        disabled={canReady ? canReady?.() !== true : false}
+        className={classes(styles.container, !canReady && styles.disabled)}
+      />
+    );
+  }
 };

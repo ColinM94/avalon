@@ -1,6 +1,8 @@
 .container {
   gap: vars.$spacing-primary;
   flex-direction: row;
+  padding-top: vars.$spacing-primary;
+  margin-top: auto;
 
   .rightSpace {
     width: vars.$icon-size-small;
