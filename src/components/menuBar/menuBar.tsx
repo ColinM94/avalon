@@ -7,7 +7,7 @@ import { MenuBarReadyButton } from "./components/menuBarReadyButton/menuBarReady
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
-export const BottomBar = (props: Props) => {
+export const MenuBar = (props: Props) => {
   const { className } = props;
 
   useSessionStore();

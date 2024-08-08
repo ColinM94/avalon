@@ -25,14 +25,6 @@ export const MainMenuPage = () => {
         data: {
           ...sessionDefault(),
           id,
-          players: {
-            [user.id]: {
-              ...playerDefault(),
-              id: user.id,
-              name: user.name || "",
-              imageUrl: user.imageUrl || "",
-            },
-          },
           createdBy: user.id,
         },
       });

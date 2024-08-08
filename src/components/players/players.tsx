@@ -66,7 +66,7 @@ export const Players = (props: Props) => {
         items.push(
           <PlayerCard
             key={i}
-            connected={false}
+            // connected={false}
             width={width}
             showIsReady={showIsReady}
             className={styles.player}
@@ -83,7 +83,7 @@ export const Players = (props: Props) => {
           key={tempPlayer.id}
           player={tempPlayer}
           showName
-          connected={!!tempPlayer.joinedAt}
+          // connected={!!tempPlayer.joinedAt}
           showLeaderIcon
           width={width}
           showIsReady={showIsReady}

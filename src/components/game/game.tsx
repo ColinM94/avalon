@@ -1,6 +1,6 @@
 import { MainLayout } from "layouts";
 import { useSessionStore } from "stores";
-import { BottomBar, Players } from "components";
+import { MenuBar, Players } from "components";
 
 import { GameLobby } from "./components/gameLobby/gameLobby";
 import { GameReveal } from "./components/gameReveal/gameReveal";
@@ -77,7 +77,7 @@ export const Game = () => {
 
         {/* <Divider /> */}
 
-        <BottomBar />
+        <MenuBar />
       </MainLayout>
     </>
   );
