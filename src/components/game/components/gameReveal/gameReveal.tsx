@@ -1,54 +1,49 @@
-import * as React from "react";
+import * as React from "react"
 
-import { Button, CharacterCard } from "components";
-import { classes } from "utils";
-import { useSessionStore } from "stores";
-import { goToStep } from "services";
-import { charactersDefault } from "consts";
+import { Button, CharacterCard, MenuBar } from "components"
+import { classes } from "utils"
+import { useSessionStore } from "stores"
+import { goToStep, updateMyPlayer } from "services"
+import { charactersDefault } from "consts"
 
-import styles from "./styles.module.scss";
+import styles from "./styles.module.scss"
 
 export const GameReveal = () => {
-  const { myPlayer, isMyPlayerHost, isAllReady, session, updateSessionStore } =
-    useSessionStore();
+  const { myPlayer, isMyPlayerHost, isAllReady, session } = useSessionStore()
 
-  const [showCharacter, setShowCharacter] = React.useState(false);
-  const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false);
+  const [showCharacter, setShowCharacter] = React.useState(false)
+  const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false)
 
-  const characterId = session.players?.[myPlayer.id]?.characterId;
+  const characterId = session.players?.[myPlayer.id]?.characterId
 
   const handleReveal = () => {
-    setIsCharacterRevealed(true);
-    setShowCharacter(!showCharacter);
-  };
+    setIsCharacterRevealed(true)
+    setShowCharacter(!showCharacter)
+  }
 
-  const handleAllReady = async () => {
+  const canContinue = () => {
+    if (!isAllReady) return "All players are not ready"
+
+    return true
+  }
+
+  const handleContinue = () => {
     goToStep({
-      step: "ritual",
-    });
-  };
+      step: "questMemberSelect",
+    })
+  }
 
-  React.useEffect(() => {
-    updateSessionStore({
-      heading: {
-        title: "Character Reveal",
-        subtitle: "Don't let anyone see your character!",
-      },
-    });
-  }, []);
+  const canReady = () => {
+    if (!isCharacterRevealed) return "You must view your character first"
 
-  React.useEffect(() => {
-    if (isMyPlayerHost && isAllReady) handleAllReady();
-  }, [isAllReady]);
+    return true
+  }
 
-  const validate = () => {
-    if (!isCharacterRevealed) return "You must view your character first";
-    return true;
-  };
-
-  React.useEffect(() => {
-    updateSessionStore({ validateReady: validate });
-  }, [isCharacterRevealed]);
+  const onReady = () => {
+    updateMyPlayer({
+      isReady: true,
+    })
+  }
 
   return (
     <>
@@ -57,10 +52,7 @@ export const GameReveal = () => {
         showDescription
         showName
         alwaysActive
-        className={classes(
-          styles.character,
-          !showCharacter && styles.characterHidden
-        )}
+        className={classes(styles.character, !showCharacter && styles.characterHidden)}
       />
 
       <Button
@@ -68,6 +60,13 @@ export const GameReveal = () => {
         onClick={handleReveal}
         className={styles.revealButton}
       />
+
+      <MenuBar
+        canContinue={isMyPlayerHost ? canContinue : undefined}
+        onContinue={handleContinue}
+        canReady={canReady}
+        onReady={onReady}
+      />
     </>
-  );
-};
+  )
+}

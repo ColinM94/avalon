@@ -1,6 +1,6 @@
-import { playerDefault, sessionDefault } from "consts";
-import { Actions, State } from "./types";
-import { createZustandStore } from "../createZustandStore";
+import { playerDefault, sessionDefault } from "consts"
+import { Actions, State } from "./types"
+import { createZustandStore } from "../createZustandStore"
 
 const initialState: State = {
   session: sessionDefault(),
@@ -9,6 +9,10 @@ const initialState: State = {
   isMyPlayerLeader: false,
   myPlayer: playerDefault(),
   players: {},
+  heading: {
+    title: "",
+    description: "",
+  },
   activeQuest: {
     index: 0,
     leaderId: "",
@@ -18,12 +22,8 @@ const initialState: State = {
     votesToSucceed: {},
     status: "incomplete",
   },
-  heading: {
-    title: "",
-    subtitle: "",
-  },
   playersArray: [],
-};
+}
 
 export const useSessionStore = createZustandStore<State & Actions>({
   name: "session",
@@ -33,4 +33,4 @@ export const useSessionStore = createZustandStore<State & Actions>({
     resetSessionsStore: () => set({ ...initialState }),
   }),
   storageType: "localStorage",
-});
+})

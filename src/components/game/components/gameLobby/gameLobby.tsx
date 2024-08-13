@@ -1,16 +1,15 @@
 import { useSessionStore } from "stores";
 import { goToStep } from "services";
 import { Player } from "types";
+import { MenuBar } from "components";
 
 import { GameLobbyProfile } from "./components/gameLobbyProfile/gameLobbyProfile";
 import { GameLobbyInfo } from "./components/gameLobbyInfo/gameLobbyInfo";
 
 import styles from "./styles.module.scss";
-import { MenuBar } from "components";
 
 export const GameLobby = () => {
-  const { session, playersArray, myPlayer, isAllReady, updateSessionStore } =
-    useSessionStore();
+  const { session, playersArray, myPlayer, isAllReady } = useSessionStore();
 
   const canReady = () => {
     if (myPlayer.isReady) return "You are ready";
