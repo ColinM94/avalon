@@ -62,7 +62,8 @@ export const GameReveal = () => {
       />
 
       <MenuBar
-        canContinue={isMyPlayerHost ? canContinue : undefined}
+        showContinue={isMyPlayerHost}
+        canContinue={canContinue}
         onContinue={handleContinue}
         canReady={canReady}
         onReady={onReady}

@@ -1,56 +1,56 @@
-import { classes } from "utils";
-import { Button } from "components";
-import { useSessionStore, useToastStore } from "stores";
-import { updateMyPlayer } from "services";
+import { classes } from "utils"
+import { Button } from "components"
+import { useSessionStore, useToastStore } from "stores"
+import { updateMyPlayer } from "services"
 
-import styles from "./styles.module.scss";
-import { Props } from "./types";
+import styles from "./styles.module.scss"
+import { Props } from "./types"
 
 export const MenuBarReadyButton = (props: Props) => {
-  const { canReady, canContinue, onContinue, onReady } = props;
+  const { canReady, onReady, showContinue, canContinue, onContinue } = props
 
-  const { isMyPlayerHost } = useSessionStore();
-  const { showToast } = useToastStore();
+  const { myPlayer } = useSessionStore()
+  const { showToast } = useToastStore()
 
   const handleCanReady = (alertUser: boolean) => {
-    if (!canReady) return;
+    if (!canReady) return
 
-    const result = canReady?.();
+    const result = canReady?.()
 
-    if (result === true) return result;
+    if (result === true) return result
 
-    if (alertUser) showToast(result, "error");
-  };
+    if (alertUser) showToast(result, "error")
+  }
 
   const handleReady = () => {
     try {
-      const result = canReady?.();
+      const result = canReady?.()
 
-      if (result !== true) throw result;
+      if (result !== true) throw result
 
-      onReady?.();
+      onReady?.()
 
       updateMyPlayer({
         isReady: true,
-      });
+      })
     } catch (error) {
-      showToast(String(error), "error");
+      showToast(String(error), "error")
     }
-  };
+  }
 
   const handleContinue = () => {
     try {
-      const result = canContinue?.();
+      const result = canContinue?.()
 
-      if (result !== true) throw result;
+      if (result !== true) throw result
 
-      onContinue?.();
+      onContinue?.()
     } catch (error) {
-      showToast(String(error), "error");
+      showToast(String(error), "error")
     }
-  };
+  }
 
-  if (isMyPlayerHost && onContinue) {
+  if (showContinue) {
     return (
       <Button
         label="Continue"
@@ -59,7 +59,7 @@ export const MenuBarReadyButton = (props: Props) => {
         disabled={canContinue ? canContinue?.() !== true : false}
         className={classes(styles.container, !canContinue && styles.disabled)}
       />
-    );
+    )
   }
 
   if (onReady) {
@@ -69,8 +69,8 @@ export const MenuBarReadyButton = (props: Props) => {
         onClick={handleReady}
         onClickDisabled={() => handleCanReady(true)}
         disabled={canReady ? canReady?.() !== true : false}
-        className={classes(styles.container, !canReady && styles.disabled)}
+        className={classes(styles.container, (myPlayer.isReady || !canReady) && styles.disabled)}
       />
-    );
+    )
   }
-};
+}

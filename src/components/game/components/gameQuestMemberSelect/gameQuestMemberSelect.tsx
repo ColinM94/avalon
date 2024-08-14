@@ -106,7 +106,7 @@ export const GameQuestMemberSelect = (props: Props) => {
           })}
       </div>
 
-      <MenuBar canContinue={isMyPlayerLeader ? canContinue : undefined} onContinue={handleContinue} />
+      <MenuBar showContinue={isMyPlayerLeader} canContinue={canContinue} onContinue={handleContinue} />
     </>
   )
 }

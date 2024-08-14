@@ -1,83 +1,69 @@
-import { useNavigate } from "react-router-dom";
+import { MenuBar, StepDescription } from "components"
+import { Characters } from "types"
+import { getQuestNumPlayers, reactReducer, shuffleArray } from "utils"
+import { charactersDefault, maxCharacters } from "consts"
+import { useAppStore, useSessionStore, useToastStore } from "stores"
+import { goToStep, updateDocument } from "services"
 
-import { MenuBar, StepDescription } from "components";
-import { Characters } from "types";
-import { getQuestNumPlayers, reactReducer, shuffleArray } from "utils";
-import { charactersDefault, maxCharacters } from "consts";
-import { useAppStore, useSessionStore, useToastStore } from "stores";
-import { updateDocument } from "services";
-
-import { SetupCharacters } from "./components/setupCharacters/setupCharacters";
+import { SetupCharacters } from "./components/setupCharacters/setupCharacters"
 
 export const GameSetup = () => {
-  const { showToast } = useToastStore();
-  const { user } = useAppStore();
-  const navigate = useNavigate();
-  const { session, isMyPlayerHost } = useSessionStore();
+  const { showToast } = useToastStore()
+  const { user } = useAppStore()
+  const { session, isMyPlayerHost } = useSessionStore()
 
-  // const [tempSession, updateTempSession] = reactReducer<GameSession>(session);
-
-  const [characters, updateCharacters] =
-    reactReducer<Characters>(charactersDefault);
+  const [characters, updateCharacters] = reactReducer<Characters>(charactersDefault)
 
   const numActiveGoodCharacters = Object.values(characters).filter(
     (character) => character.allegiance === "good" && character.isActive
-  ).length;
+  ).length
 
   const numActiveEvilCharacters = Object.values(characters).filter(
     (character) => character.allegiance === "evil" && character.isActive
-  ).length;
+  ).length
 
-  const maxGoodCharacters = maxCharacters[session.numPlayers]?.good;
-  const maxEvilCharacters = maxCharacters[session.numPlayers]?.evil;
+  const maxGoodCharacters = maxCharacters[session.numPlayers]?.good
+  const maxEvilCharacters = maxCharacters[session.numPlayers]?.evil
 
   const canContinue = () => {
     if (numActiveGoodCharacters !== maxGoodCharacters) {
-      const numRemaining = maxGoodCharacters - numActiveGoodCharacters;
+      const numRemaining = maxGoodCharacters - numActiveGoodCharacters
 
       if (Math.sign(numRemaining) === 1) {
-        return `Please select ${numRemaining} more Good character${
-          numRemaining === 1 ? "" : "s"
-        }!`;
+        return `Please select ${numRemaining} more Good character${numRemaining === 1 ? "" : "s"}!`
       } else {
-        return `You have selected too many Good character${
-          numRemaining === 1 ? "" : "s"
-        }!`;
+        return `You have selected too many Good character${numRemaining === 1 ? "" : "s"}!`
       }
     }
 
     if (numActiveEvilCharacters !== maxEvilCharacters) {
-      const numRemaining = maxEvilCharacters - numActiveEvilCharacters;
+      const numRemaining = maxEvilCharacters - numActiveEvilCharacters
 
       if (Math.sign(numRemaining) === 1) {
-        return `Please select ${numRemaining} more Evil character${
-          numRemaining === 1 ? "" : "s"
-        }!`;
+        return `Please select ${numRemaining} more Evil character${numRemaining === 1 ? "" : "s"}!`
       } else {
-        return `You have selected too many Evil character${
-          numRemaining === 1 ? "" : "s"
-        }!`;
+        return `You have selected too many Evil character${numRemaining === 1 ? "" : "s"}!`
       }
     }
 
-    return true;
-  };
+    return true
+  }
 
   const handleContinue = async () => {
-    if (!user.id) return;
+    if (!user.id) return
 
     try {
       const shuffledCharacters = shuffleArray(
         Object.values(characters)
           .filter((character) => character.isActive)
           .map((character) => character.id)
-      );
+      )
 
       for (let i = 0; i < 5; i++) {
         session.quests[i] = {
           ...session.quests[i],
           numPlayers: getQuestNumPlayers(i, session.numPlayers),
-        };
+        }
       }
 
       await updateDocument({
@@ -86,13 +72,15 @@ export const GameSetup = () => {
         data: {
           characters: shuffledCharacters,
         },
-      });
+      })
 
-      navigate("characterReveal");
+      goToStep({
+        step: "characterReveal",
+      })
     } catch (error) {
-      showToast(String(error), "error");
+      showToast(String(error), "error")
     }
-  };
+  }
 
   return (
     <>
@@ -118,17 +106,9 @@ export const GameSetup = () => {
         </>
       )}
 
-      {!isMyPlayerHost && (
-        <StepDescription
-          heading="Please Wait"
-          description="The Host is selecting Characters."
-        />
-      )}
+      {!isMyPlayerHost && <StepDescription heading="Please Wait" description="The Host is selecting Characters." />}
 
-      <MenuBar
-        canContinue={isMyPlayerHost ? canContinue : undefined}
-        onContinue={handleContinue}
-      />
+      <MenuBar showContinue={isMyPlayerHost} canContinue={canContinue} onContinue={handleContinue} />
     </>
-  );
-};
+  )
+}

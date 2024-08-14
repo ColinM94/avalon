@@ -4,7 +4,6 @@ import { Players } from "components"
 
 import { GameLobby } from "./components/gameLobby/gameLobby"
 import { GameReveal } from "./components/gameReveal/gameReveal"
-import { GameRitual } from "./components/gameRitual/gameRitual"
 import { GameQuestMemberSelect } from "./components/gameQuestMemberSelect/gameQuestMemberSelect"
 import { GameQuestMemberVote } from "./components/gameQuestMemberVote/gameQuestMemberVote"
 import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote"
@@ -55,8 +54,6 @@ export const Game = () => {
 
           {session.step === "characterReveal" && <GameReveal />}
 
-          {session.step === "ritual" && <GameRitual />}
-
           {session.step === "questMemberSelect" && <GameQuestMemberSelect />}
 
           {session.step === "questMemberVote" && <GameQuestMemberVote />}
@@ -67,8 +64,6 @@ export const Game = () => {
 
           {session.step === "questResult" && <GameQuestResult />}
         </div>
-
-        {/* <Divider /> */}
       </MainLayout>
     </>
   )
