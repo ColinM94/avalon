@@ -1,29 +1,24 @@
-import { CharacterCard, Heading } from "components";
+import { CharacterCard, Heading } from "components"
+import { classes } from "utils"
 
-import styles from "./styles.module.scss";
-import { Props } from "./types";
+import styles from "./styles.module.scss"
+import { Props } from "./types"
 
 export const SetupCharacters = (props: Props) => {
-  const {
-    heading,
-    characters,
-    maxActiveCharacters,
-    numActiveCharacters,
-    allegiance,
-    updateCharacters,
-  } = props;
+  const { heading, characters, maxActiveCharacters, numActiveCharacters, allegiance, updateCharacters, className } =
+    props
 
   const handleCharacterClick = (characterId: string) => {
-    const character = characters[characterId];
+    const character = characters[characterId]
 
-    if (!character.isOptional) return;
+    if (!character.isOptional) return
 
     if (
       character.allegiance === allegiance &&
       !characters[characterId].isActive &&
       numActiveCharacters >= maxActiveCharacters
     ) {
-      return;
+      return
     }
 
     updateCharacters({
@@ -31,15 +26,15 @@ export const SetupCharacters = (props: Props) => {
         ...character,
         isActive: !characters[characterId].isActive,
       },
-    });
-  };
+    })
+  }
 
   const filteredCharacters = Object.values(characters).filter(
     (character) => character.allegiance === allegiance && !character.disabled
-  );
+  )
 
   return (
-    <div className={styles.container}>
+    <div className={classes(styles.container, className)}>
       <Heading
         headingTitle={heading}
         // headingSubtitle={`Select the characters for ${
@@ -62,5 +57,5 @@ export const SetupCharacters = (props: Props) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

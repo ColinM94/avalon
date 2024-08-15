@@ -22,6 +22,7 @@ export const GameReveal = () => {
   }
 
   const canContinue = () => {
+    if (!isCharacterRevealed) "You must view your character first"
     if (!isAllReady) return "All players are not ready"
 
     return true

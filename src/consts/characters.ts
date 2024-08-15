@@ -1,4 +1,4 @@
-import { Characters } from "types";
+import { Characters } from "types"
 
 export const charactersDefault: Characters = {
   // Good Characters
@@ -7,12 +7,7 @@ export const charactersDefault: Characters = {
     isActive: true,
     allegiance: "good",
     isOptional: false,
-    description: [
-      "Knows who is evil",
-      "If assassinated, evil wins.",
-      "Is a cool wizard",
-      "Can do a backflip",
-    ],
+    description: ["Knows who is evil", "If assassinated, evil wins.", "Is a cool wizard", "Can do a backflip"],
     disabled: false,
   },
   percival: {
@@ -32,10 +27,7 @@ export const charactersDefault: Characters = {
     isActive: false,
     allegiance: "good",
     isOptional: true,
-    description: [
-      "Knows if the leader of the first quest is good or evil.",
-      "Makes Good more powerful..",
-    ],
+    description: ["Knows if the leader of the first quest is good or evil.", "Makes Good more powerful.."],
     disabled: false,
   },
   troublemaker: {
@@ -55,7 +47,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
-    disabled: false,
+    disabled: true,
   },
   juniorMessenger: {
     id: "juniorMessenger",
@@ -63,7 +55,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: [],
-    disabled: false,
+    disabled: true,
   },
   rogueGood: {
     id: "rogueGood",
@@ -142,9 +134,7 @@ export const charactersDefault: Characters = {
     isActive: true,
     allegiance: "evil",
     isOptional: false,
-    description: [
-      "Can assasinate who they think is Merlin, at the end of the game.",
-    ],
+    description: ["Can assasinate who they think is Merlin, at the end of the game."],
     disabled: false,
   },
   morgana: {
@@ -152,10 +142,7 @@ export const charactersDefault: Characters = {
     isActive: false,
     allegiance: "evil",
     isOptional: true,
-    description: [
-      "Disguises herself as Merlin",
-      "Percival sees both Merlin and Morgana with their thumbs up.",
-    ],
+    description: ["Disguises herself as Merlin", "Percival sees both Merlin and Morgana with their thumbs up."],
     disabled: false,
   },
   oberon: {
@@ -163,10 +150,7 @@ export const charactersDefault: Characters = {
     isActive: false,
     allegiance: "evil",
     isOptional: true,
-    description: [
-      "Does not reveal himself to other evil players.",
-      "Makes Good more powerful.",
-    ],
+    description: ["Does not reveal himself to other evil players.", "Makes Good more powerful."],
     disabled: false,
   },
   mordred: {
@@ -182,10 +166,7 @@ export const charactersDefault: Characters = {
     isActive: false,
     allegiance: "evil",
     isOptional: true,
-    description: [
-      "Must fail every quest they are on.",
-      "Recommended for games with 7+ players.",
-    ],
+    description: ["Must fail every quest they are on.", "Recommended for games with 7+ players."],
     disabled: false,
   },
   sorcererEvil: {
@@ -264,7 +245,7 @@ export const charactersDefault: Characters = {
     description: ["Has no special powers"],
     disabled: true,
   },
-};
+}
 
 export const maxCharacters: Record<number, { good: number; evil: number }> = {
   5: {
@@ -291,7 +272,7 @@ export const maxCharacters: Record<number, { good: number; evil: number }> = {
     good: 6,
     evil: 4,
   },
-};
+}
 
 export const characterNames: Record<string, string> = {
   merlin: "Merlin",
@@ -323,4 +304,4 @@ export const characterNames: Record<string, string> = {
   minion1: "Minion",
   minion2: "Minion",
   minion3: "Minion",
-};
+}

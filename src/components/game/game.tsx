@@ -20,7 +20,6 @@ export const Game = () => {
     <>
       <MainLayout heading={heading.title} className={styles.container}>
         <Players width={1} showEmptySlots={session.step === "lobby"} showIsReady />
-
         {!["setup", "lobby", "characterReveal", "ritual"].includes(session.step) && (
           <div className={styles.info}>
             {/* <div className={styles.infoItem}>

@@ -46,9 +46,8 @@ $goodColor: #43839a;
   }
 
   .name {
-    font-size: vars.$font-size-h2;
+    font-size: vars.$font-size-body2;
     text-align: center;
-    margin-bottom: vars.$spacing-tertiary;
   }
 
   .description {
@@ -72,12 +71,7 @@ $goodColor: #43839a;
 
 .good {
   background: rgb(55, 80, 89);
-  background: radial-gradient(
-    circle,
-    rgba(55, 80, 89, 1) 0%,
-    rgba(67, 98, 154, 1) 45%,
-    rgba(53, 128, 187, 1) 81%
-  );
+  background: radial-gradient(circle, rgba(55, 80, 89, 1) 0%, rgba(67, 98, 154, 1) 45%, rgba(53, 128, 187, 1) 81%);
 }
 
 .activeGood {
@@ -89,12 +83,7 @@ $goodColor: #43839a;
   background-color: $evilColor;
 
   background: rgb(176, 125, 74);
-  background: radial-gradient(
-    circle,
-    rgba(176, 125, 74, 1) 0%,
-    rgba(213, 126, 38, 1) 45%,
-    rgba(255, 129, 0, 1) 81%
-  );
+  background: radial-gradient(circle, rgba(176, 125, 74, 1) 0%, rgba(213, 126, 38, 1) 45%, rgba(255, 129, 0, 1) 81%);
 }
 
 .activeEvil {
@@ -140,7 +129,7 @@ $goodColor: #43839a;
   .name {
     z-index: 2;
     text-align: center;
-    font-size: vars.$font-size-h2;
+    font-size: vars.$font-size-h3;
   }
 
   .description {

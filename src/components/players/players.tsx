@@ -1,27 +1,17 @@
-import { classes } from "utils";
-import { useSessionStore } from "stores";
-import { Divider, PlayerCard } from "components";
+import { classes } from "utils"
+import { useSessionStore } from "stores"
+import { Divider, PlayerCard } from "components"
 
-import { Props } from "./types";
-import styles from "./styles.module.scss";
+import { Props } from "./types"
+import styles from "./styles.module.scss"
 
 export const Players = (props: Props) => {
-  const {
-    showDivider,
-    showEmptySlots,
-    showOnlyPlayersOnActiveQuest,
-    showIsReady,
-    width,
-    playerIds,
-    className,
-  } = props;
+  const { showDivider, showEmptySlots, showOnlyPlayersOnActiveQuest, showIsReady, width, playerIds, className } = props
 
-  const { playersArray, players, activeQuest, session } = useSessionStore();
+  const { playersArray, players, activeQuest } = useSessionStore()
 
   const renderPlayers = () => {
-    const items: React.ReactNode[] = [];
-
-    const tempPlayers = playersArray.sort((a, b) => a.joinedAt - b.joinedAt);
+    const items: React.ReactNode[] = []
 
     if (playerIds) {
       playerIds.forEach((playerId) => {
@@ -34,15 +24,15 @@ export const Players = (props: Props) => {
             showIsReady={showIsReady}
             className={styles.player}
           />
-        );
-      });
+        )
+      })
 
-      return items;
+      return items
     }
 
     if (showOnlyPlayersOnActiveQuest) {
       activeQuest.players.forEach((playerId) => {
-        const player = players[playerId];
+        const player = players[playerId]
 
         items.push(
           <PlayerCard
@@ -53,32 +43,26 @@ export const Players = (props: Props) => {
             showIsReady={showIsReady}
             className={styles.player}
           />
-        );
-      });
+        )
+      })
 
-      return items;
+      return items
     }
 
-    if (session.step !== "lobby") return;
-
     for (let i = 0; i < 10; i++) {
-      const tempPlayer = tempPlayers?.[i];
+      const tempPlayer = playersArray?.[i]
+
+      console.log(tempPlayer)
 
       if (showEmptySlots && !tempPlayer) {
         items.push(
-          <PlayerCard
-            key={i}
-            connected={false}
-            width={width}
-            showIsReady={showIsReady}
-            className={styles.player}
-          />
-        );
+          <PlayerCard key={i} connected={false} width={width} showIsReady={showIsReady} className={styles.player} />
+        )
 
-        continue;
+        continue
       }
 
-      if (!tempPlayer) return;
+      if (!tempPlayer) return items
 
       items.push(
         <PlayerCard
@@ -91,11 +75,11 @@ export const Players = (props: Props) => {
           showIsReady={showIsReady}
           className={styles.player}
         />
-      );
+      )
     }
 
-    return items;
-  };
+    return items
+  }
 
   return (
     <>
@@ -104,5 +88,5 @@ export const Players = (props: Props) => {
         {renderPlayers()}
       </div>
     </>
-  );
-};
+  )
+}

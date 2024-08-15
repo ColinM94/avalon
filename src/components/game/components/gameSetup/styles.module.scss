@@ -4,3 +4,7 @@
   gap: vars.$spacing-primary * 2 !important;
   width: 100%;
 }
+
+.section {
+  margin-bottom: calc(vars.$spacing-primary * 2);
+}

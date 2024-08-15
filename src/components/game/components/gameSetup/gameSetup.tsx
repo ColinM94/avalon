@@ -1,16 +1,18 @@
 import { MenuBar, StepDescription } from "components"
-import { Characters } from "types"
-import { getQuestNumPlayers, reactReducer, shuffleArray } from "utils"
+import { Characters, Player } from "types"
+import { reactReducer, shuffleArray } from "utils"
 import { charactersDefault, maxCharacters } from "consts"
 import { useAppStore, useSessionStore, useToastStore } from "stores"
-import { goToStep, updateDocument } from "services"
+import { goToStep } from "services"
 
 import { SetupCharacters } from "./components/setupCharacters/setupCharacters"
+
+import styles from "./styles.module.scss"
 
 export const GameSetup = () => {
   const { showToast } = useToastStore()
   const { user } = useAppStore()
-  const { session, isMyPlayerHost } = useSessionStore()
+  const { session, isMyPlayerHost, playersArray } = useSessionStore()
 
   const [characters, updateCharacters] = reactReducer<Characters>(charactersDefault)
 
@@ -59,23 +61,17 @@ export const GameSetup = () => {
           .map((character) => character.id)
       )
 
-      for (let i = 0; i < 5; i++) {
-        session.quests[i] = {
-          ...session.quests[i],
-          numPlayers: getQuestNumPlayers(i, session.numPlayers),
-        }
-      }
+      const playerUpdates: Record<string, Partial<Player>> = {}
 
-      await updateDocument({
-        id: session.id,
-        collection: "sessions",
-        data: {
-          characters: shuffledCharacters,
-        },
+      playersArray.forEach((player, i) => {
+        playerUpdates[player.id] = {
+          characterId: shuffledCharacters[i],
+        }
       })
 
       goToStep({
         step: "characterReveal",
+        playerUpdates,
       })
     } catch (error) {
       showToast(String(error), "error")
@@ -93,6 +89,7 @@ export const GameSetup = () => {
             maxActiveCharacters={maxGoodCharacters}
             updateCharacters={updateCharacters}
             numActiveCharacters={numActiveGoodCharacters}
+            className={styles.section}
           />
 
           <SetupCharacters
@@ -102,6 +99,7 @@ export const GameSetup = () => {
             maxActiveCharacters={maxEvilCharacters}
             updateCharacters={updateCharacters}
             numActiveCharacters={numActiveEvilCharacters}
+            className={styles.section}
           />
         </>
       )}
