@@ -20,6 +20,8 @@ export const GameQuestResult = (props: Props) => {
   const renderVotes = () => {
     const items: React.ReactNode[] = []
 
+    console.log(votes)
+
     votes.forEach((vote, index) => {
       items.push(
         <div key={index} className={vote ? styles.yesVote : styles.noVote}>
@@ -30,8 +32,6 @@ export const GameQuestResult = (props: Props) => {
 
     return items
   }
-
-  React.useEffect(() => {}, [myPlayer.isReady])
 
   const canContinue = () => {
     return true

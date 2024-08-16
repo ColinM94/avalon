@@ -15,16 +15,17 @@ export const GameLobby = () => {
     if (myPlayer.isReady) return "You are ready"
     if (!myPlayer.name) return "You must enter a name"
     // if (!myPlayer.imageUrl) return "You must select an image";
-    return true
-  }
 
-  const onReady = () => {
     const filteredPlayers = playersArray.filter((player) => player.id !== myPlayer.id)
 
     if (filteredPlayers.some((player) => player.name.toLocaleLowerCase() === myPlayer.name.toLocaleLowerCase())) {
       return "This name is taken"
     }
+
+    return true
   }
+
+  const onReady = () => {}
 
   const canContinue = () => {
     if (playersArray.length < 5) {
@@ -35,7 +36,7 @@ export const GameLobby = () => {
       return "All players are not ready"
     }
 
-    return true
+    return canReady()
   }
 
   const onContinue = () => {
