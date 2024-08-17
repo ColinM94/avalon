@@ -1,41 +1,15 @@
-import * as React from "react"
-
 import { classes } from "utils"
 import { Divider, LoadingOverlay, MenuBar, PlayerCard } from "components"
 import { useSessionStore } from "stores"
-import { goToStep, updateActiveQuest, updateSession } from "services"
+import { goToStep, updateSession } from "services"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
-
-const numPlayersByQuest = [
-  // questIndex 0
-  [2, 2, 2, 3, 3, 3],
-  // questIndex 1
-  [3, 3, 3, 4, 4, 4],
-  // questIndex 2
-  [2, 4, 3, 4, 4, 4],
-  // questIndex 3
-  [4, 3, 4, 5, 5, 5],
-  // questIndex 4
-  [4, 4, 4, 5, 5, 5],
-]
 
 export const GameQuestMemberSelect = (props: Props) => {
   const { className } = props
 
   const { players, playersArray, myPlayer, session, activeQuest, isMyPlayerLeader } = useSessionStore()
-
-  React.useEffect(() => {
-    if (activeQuest?.index === session.activeQuestIndex && activeQuest.leaderId) {
-      return
-    }
-
-    updateActiveQuest({
-      leaderId: Object.values(players)[0].id,
-      numPlayers: numPlayersByQuest[session.activeQuestIndex][session.numPlayers - 5],
-    })
-  }, [session.activeQuestIndex])
 
   const isMaxPlayers = activeQuest.players.length >= activeQuest.numPlayers
 

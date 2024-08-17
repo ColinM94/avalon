@@ -11,7 +11,7 @@ import styles from "./styles.module.scss"
 export const GameQuestMemberResult = (props: Props) => {
   const { className } = props
 
-  const { activeQuest, isMyPlayerHost, myPlayer, playersArray, session, isAllReady } = useSessionStore()
+  const { activeQuest, isMyPlayerHost, playersArray, session } = useSessionStore()
 
   const votes = Object.values(activeQuest.votesToApprove).sort((a, b) => Number(b) - Number(a))
 
@@ -27,9 +27,7 @@ export const GameQuestMemberResult = (props: Props) => {
     return items
   }
 
-  React.useEffect(() => {
-    if (!isMyPlayerHost || !myPlayer.isReady) return
-
+  const onContinue = () => {
     if (hasPassed) {
       goToStep({
         step: "questVote",
@@ -41,6 +39,9 @@ export const GameQuestMemberResult = (props: Props) => {
       updateActiveQuest({
         leaderId: newLeader.id,
         players: [],
+        index: activeQuest.index + 1,
+        votesToApprove: {},
+        votesToSucceed: {},
       })
 
       updateSession({
@@ -51,18 +52,6 @@ export const GameQuestMemberResult = (props: Props) => {
         step: "questMemberSelect",
       })
     }
-  }, [myPlayer.isReady])
-
-  const canContinue = () => {
-    if (!isAllReady) return "All players are not ready"
-
-    return true
-  }
-
-  const onContinue = () => {
-    goToStep({
-      step: "questMemberSelect",
-    })
   }
 
   return (
@@ -71,7 +60,7 @@ export const GameQuestMemberResult = (props: Props) => {
 
       <div className={classes(styles.container, className)}>{renderVotes()}</div>
 
-      <MenuBar showContinue={isMyPlayerHost} canContinue={canContinue} onContinue={onContinue} />
+      <MenuBar showContinue={isMyPlayerHost} onContinue={onContinue} />
     </>
   )
 }

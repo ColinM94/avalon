@@ -52,8 +52,6 @@ export const Players = (props: Props) => {
     for (let i = 0; i < 10; i++) {
       const tempPlayer = playersArray?.[i]
 
-      console.log(tempPlayer)
-
       if (showEmptySlots && !tempPlayer) {
         items.push(
           <PlayerCard key={i} connected={false} width={width} showIsReady={showIsReady} className={styles.player} />

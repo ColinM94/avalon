@@ -1,9 +1,8 @@
-import * as React from "react"
-
 import { classes } from "utils"
 import { useSessionStore } from "stores"
-import { goToStep, updateMyPlayer } from "services"
+import { goToStep, updateDocument, updateMyPlayer, updateSession } from "services"
 import { Divider, MenuBar, Players } from "components"
+import { GameSession } from "types"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -11,14 +10,21 @@ import styles from "./styles.module.scss"
 export const GameQuestMemberVote = (props: Props) => {
   const { className } = props
 
-  const { isMyPlayerHost, myPlayer, isAllReady, activeQuest, players } = useSessionStore()
+  const { isMyPlayerHost, myPlayer, isAllReady, activeQuest, players, session } = useSessionStore()
 
-  const [vote, setVote] = React.useState<boolean | null>(null)
+  const handleVoteClick = async (voteValue: boolean) => {
+    // console.log(voteValue)
+    await updateDocument<GameSession>({
+      id: session.id,
+      collection: "sessions",
+      data: {
+        [`quests.${session.activeQuestIndex}.votesToApprove.${myPlayer.id}`]: voteValue,
+      },
+    })
 
-  const handleVoteClick = (voteValue: boolean) => {
-    if (myPlayer.isReady) return
-
-    setVote(voteValue)
+    updateMyPlayer({
+      isReady: true,
+    })
   }
 
   const canContinue = () => {
@@ -28,22 +34,21 @@ export const GameQuestMemberVote = (props: Props) => {
   }
 
   const onContinue = () => {
+    const votes = Object.values(activeQuest.votesToApprove).sort((a, b) => Number(b) - Number(a))
+    const hasPassed = Boolean(votes.filter((vote) => vote).length > votes.length / 2)
+
+    if (!hasPassed) {
+      updateSession({
+        numFailVotes: (session.numFailVotes += 1),
+      })
+    }
+
     goToStep({
       step: "questMemberResult",
     })
   }
 
-  const canReady = () => {
-    if (vote === null) return "You must vote"
-
-    return true
-  }
-
-  const onReady = () => {
-    updateMyPlayer({
-      isReady: true,
-    })
-  }
+  console.log(activeQuest.votesToApprove[myPlayer.id])
 
   return (
     <>
@@ -59,27 +64,21 @@ export const GameQuestMemberVote = (props: Props) => {
         <div className={styles.votes}>
           <div
             onClick={() => handleVoteClick(true)}
-            className={classes(styles.yesVote, vote !== true && styles.voteDisabled)}
+            className={classes(styles.yesVote, activeQuest.votesToApprove[myPlayer.id] !== true && styles.voteDisabled)}
           >
             Yes
           </div>
 
           <div
             onClick={() => handleVoteClick(false)}
-            className={classes(styles.noVote, vote !== false && styles.voteDisabled)}
+            className={classes(styles.noVote, activeQuest.votesToApprove[myPlayer.id] !== false && styles.voteDisabled)}
           >
             No
           </div>
         </div>
       </div>
 
-      <MenuBar
-        showContinue={isMyPlayerHost}
-        canContinue={canContinue}
-        onContinue={onContinue}
-        canReady={canReady}
-        onReady={onReady}
-      />
+      <MenuBar showContinue={isMyPlayerHost} canContinue={canContinue} onContinue={onContinue} />
     </>
   )
 }

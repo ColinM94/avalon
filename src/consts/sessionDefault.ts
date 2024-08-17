@@ -1,4 +1,4 @@
-import { GameSession } from "types";
+import { GameSession } from "types"
 
 export const sessionDefault = (): GameSession => {
   return {
@@ -61,5 +61,5 @@ export const sessionDefault = (): GameSession => {
         votesToSucceed: {},
       },
     },
-  };
-};
+  }
+}

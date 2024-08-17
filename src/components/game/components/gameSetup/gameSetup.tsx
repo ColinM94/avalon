@@ -28,24 +28,12 @@ export const GameSetup = () => {
   const maxEvilCharacters = maxCharacters[session.numPlayers]?.evil
 
   const canContinue = () => {
-    if (numActiveGoodCharacters !== maxGoodCharacters) {
-      const numRemaining = maxGoodCharacters - numActiveGoodCharacters
-
-      if (Math.sign(numRemaining) === 1) {
-        return `Please select ${numRemaining} more Good character${numRemaining === 1 ? "" : "s"}!`
-      } else {
-        return `You have selected too many Good character${numRemaining === 1 ? "" : "s"}!`
-      }
+    if (numActiveGoodCharacters > maxGoodCharacters) {
+      return "You have selected too many Good characters!"
     }
 
-    if (numActiveEvilCharacters !== maxEvilCharacters) {
-      const numRemaining = maxEvilCharacters - numActiveEvilCharacters
-
-      if (Math.sign(numRemaining) === 1) {
-        return `Please select ${numRemaining} more Evil character${numRemaining === 1 ? "" : "s"}!`
-      } else {
-        return `You have selected too many Evil character${numRemaining === 1 ? "" : "s"}!`
-      }
+    if (numActiveEvilCharacters > maxEvilCharacters) {
+      return `You have selected too many evil characters`
     }
 
     return true

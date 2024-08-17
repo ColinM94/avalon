@@ -20,8 +20,6 @@ export const GameQuestResult = (props: Props) => {
   const renderVotes = () => {
     const items: React.ReactNode[] = []
 
-    console.log(votes)
-
     votes.forEach((vote, index) => {
       items.push(
         <div key={index} className={vote ? styles.yesVote : styles.noVote}>
@@ -31,10 +29,6 @@ export const GameQuestResult = (props: Props) => {
     })
 
     return items
-  }
-
-  const canContinue = () => {
-    return true
   }
 
   const onContinue = () => {
@@ -82,13 +76,7 @@ export const GameQuestResult = (props: Props) => {
 
       <div className={classes(styles.container, className)}>{renderVotes()}</div>
 
-      <MenuBar
-        showContinue={isMyPlayerHost}
-        canContinue={canContinue}
-        onContinue={onContinue}
-        canReady={canReady}
-        onReady={onReady}
-      />
+      <MenuBar showContinue={isMyPlayerHost} onContinue={onContinue} canReady={canReady} onReady={onReady} />
     </>
   )
 }

@@ -40,14 +40,22 @@ export const MenuBarReadyButton = (props: Props) => {
 
   const handleContinue = () => {
     try {
-      const result = canContinue?.()
+      if (canContinue) {
+        const result = canContinue()
 
-      if (result !== true) throw result
+        if (result !== true) throw result
+      }
 
       onContinue?.()
     } catch (error) {
       showToast(String(error), "error")
     }
+  }
+
+  const isContinueDisabled = () => {
+    if (canContinue && canContinue() !== true) return true
+
+    return false
   }
 
   if (showContinue) {
@@ -56,8 +64,8 @@ export const MenuBarReadyButton = (props: Props) => {
         label="Continue"
         onClick={handleContinue}
         onClickDisabled={handleContinue}
-        disabled={canContinue ? canContinue?.() !== true : false}
-        className={classes(styles.container, !canContinue && styles.disabled)}
+        disabled={isContinueDisabled()}
+        className={classes(styles.container, isContinueDisabled() && styles.disabled)}
       />
     )
   }

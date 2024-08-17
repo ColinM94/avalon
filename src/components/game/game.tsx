@@ -14,7 +14,7 @@ import { GameSetup } from "./components/gameSetup/gameSetup"
 import styles from "./styles.module.scss"
 
 export const Game = () => {
-  const { session, players, activeQuest, heading } = useSessionStore()
+  const { session, heading } = useSessionStore()
 
   return (
     <>
@@ -30,10 +30,10 @@ export const Game = () => {
               </div>
             </div> */}
 
-            <div className={styles.infoItem}>
+            {/* <div className={styles.infoItem}>
               <div className={styles.infoItemHeading}>Leader</div>
               <div className={styles.infoItemValue}>{players[activeQuest.leaderId]?.name}</div>
-            </div>
+            </div> */}
 
             <div className={styles.infoItem}>
               <div className={styles.infoItemHeading}>Failed Votes</div>
