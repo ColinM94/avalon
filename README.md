@@ -1,5 +1,3 @@
-Adaption of the Avalon boardgame for web.
-
 <div style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px;">
   <img src="/screenshots/1.png" style="display: flex; flex: 1; max-width: 200px; height: 250px;">
   <img src="/screenshots/2.png" style="display: flex; flex: 1; max-width: 200px; height: 250px;">
