@@ -1,52 +1,32 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import { classes } from "utils";
+import { classes } from "utils/classes"
 
-import { Props } from "./types";
-import styles from "./styles.module.scss";
+import { Props } from "./types"
+import styles from "./styles.module.scss"
 
 export const Button = (props: Props) => {
-  const {
-    label,
-    onClick,
-    onClickDisabled,
-    disabled,
-    icon,
-    iconClassName,
-    className,
-  } = props;
+  const { label, onClick, onClickDisabled, disabled, icon, iconClassName, className } = props
 
   const handleClick = () => {
     if (disabled) {
-      onClickDisabled?.();
-      return;
+      onClickDisabled?.()
+      return
     }
 
-    onClick();
-  };
+    onClick()
+  }
 
   return (
     <div
       onClick={handleClick}
-      className={classes(
-        className,
-        styles.container,
-        icon && styles.iconContainer,
-        disabled && styles.disabled
-      )}
+      className={classes(className, styles.container, icon && styles.iconContainer, disabled && styles.disabled)}
     >
       {label}
 
       {icon && (
-        <FontAwesomeIcon
-          icon={icon}
-          className={classes(
-            styles.icon,
-            iconClassName,
-            disabled && styles.disabled
-          )}
-        />
+        <FontAwesomeIcon icon={icon} className={classes(styles.icon, iconClassName, disabled && styles.disabled)} />
       )}
     </div>
-  );
-};
+  )
+}

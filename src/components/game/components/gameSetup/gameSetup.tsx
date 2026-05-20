@@ -1,10 +1,14 @@
-import { MenuBar, StepDescription } from "components"
-import { Characters, Player } from "types"
-import { reactReducer, shuffleArray } from "utils"
-import { charactersDefault, maxCharacters } from "consts"
-import { useAppStore, useSessionStore, useToastStore } from "stores"
-import { goToStep } from "services"
-
+import { MenuBar } from "components/menuBar/menuBar"
+import { StepDescription } from "components/stepDescription/stepDescription"
+import { charactersDefault, maxCharacters } from "consts/characters"
+import { goToStep } from "services/session/goToStep"
+import { useAppStore } from "stores/useAppStore/useAppStore"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { useToastStore } from "stores/useToastStore/useToastStore"
+import { Characters } from "types/characters"
+import { Player } from "types/gameSession"
+import { reactReducer } from "utils/reactReducer"
+import { shuffleArray } from "utils/shuffleArray"
 import { SetupCharacters } from "./components/setupCharacters/setupCharacters"
 
 import styles from "./styles.module.scss"
@@ -17,11 +21,11 @@ export const GameSetup = () => {
   const [characters, updateCharacters] = reactReducer<Characters>(charactersDefault)
 
   const numActiveGoodCharacters = Object.values(characters).filter(
-    (character) => character.allegiance === "good" && character.isActive
+    (character) => character.allegiance === "good" && character.isActive,
   ).length
 
   const numActiveEvilCharacters = Object.values(characters).filter(
-    (character) => character.allegiance === "evil" && character.isActive
+    (character) => character.allegiance === "evil" && character.isActive,
   ).length
 
   const maxGoodCharacters = maxCharacters[session.numPlayers]?.good
@@ -46,7 +50,7 @@ export const GameSetup = () => {
       const shuffledCharacters = shuffleArray(
         Object.values(characters)
           .filter((character) => character.isActive)
-          .map((character) => character.id)
+          .map((character) => character.id),
       )
 
       const playerUpdates: Record<string, Partial<Player>> = {}
@@ -57,7 +61,7 @@ export const GameSetup = () => {
         }
       })
 
-      goToStep({
+      void goToStep({
         step: "characterReveal",
         playerUpdates,
       })

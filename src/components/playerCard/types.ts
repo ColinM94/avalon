@@ -1,12 +1,12 @@
-import { Player } from "types";
+import { Player } from "types/gameSession"
 
 export interface Props {
-  player?: Player;
-  width?: 1 | 2 | 3 | 4 | 5;
-  onClick?: () => void;
-  showLeaderIcon?: boolean;
-  showIsReady?: boolean;
-  connected?: boolean;
-  showName?: boolean;
-  className?: string;
+  player?: Player
+  width?: 1 | 2 | 3 | 4 | 5
+  onClick?: () => void
+  showLeaderIcon?: boolean
+  showIsReady?: boolean
+  connected?: boolean
+  showName?: boolean
+  className?: string
 }

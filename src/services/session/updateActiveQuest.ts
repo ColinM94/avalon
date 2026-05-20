@@ -1,9 +1,9 @@
-import { updateDocument } from "services";
-import { useSessionStore } from "stores";
-import { Quest } from "types";
+import { updateDocument } from "services/firestore/updateDocument"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { Quest } from "types/gameSession"
 
 export const updateActiveQuest = async (update: Partial<Quest>) => {
-  const { session } = useSessionStore.getState();
+  const { session } = useSessionStore.getState()
 
   const success = await updateDocument<Quest>({
     collection: "sessions",
@@ -14,7 +14,7 @@ export const updateActiveQuest = async (update: Partial<Quest>) => {
         ...update,
       },
     },
-  });
+  })
 
-  if (!success) throw `Unable to update quest ${session.activeQuestIndex}`;
-};
+  if (!success) throw new Error(`Unable to update quest ${session.activeQuestIndex}`)
+}

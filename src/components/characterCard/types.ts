@@ -1,14 +1,14 @@
-import { Character } from "types";
+import { Character } from "types/characters"
 
 export interface Props {
-  character: Character;
-  onClick?: (characterId: string) => void;
-  orientation?: "portrait" | "landscape";
-  showInfoButton?: boolean;
-  alwaysActive?: boolean;
-  disableAnimation?: boolean;
-  showName?: boolean;
-  showDescription?: boolean;
-  revealed?: boolean;
-  className?: string;
+  character: Character
+  onClick?: (characterId: string) => void
+  orientation?: "portrait" | "landscape"
+  showInfoButton?: boolean
+  alwaysActive?: boolean
+  disableAnimation?: boolean
+  showName?: boolean
+  showDescription?: boolean
+  revealed?: boolean
+  className?: string
 }

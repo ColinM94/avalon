@@ -1,12 +1,12 @@
-import { classes } from "utils";
+import { Props } from "./types"
+import styles from "./styles.module.scss"
 
-import { Props } from "./types";
-import styles from "./styles.module.scss";
+import { classes } from "utils/classes"
 
 export const InputNumber = (props: Props) => {
-  const { value, setValue, className } = props;
+  const { value, setValue, className } = props
 
-  const classNames = classes(styles.container, className);
+  const classNames = classes(styles.container, className)
 
   // const handleIncrement = () => {
   //   if (max && value >= max) return;
@@ -36,5 +36,5 @@ export const InputNumber = (props: Props) => {
         +
       </div> */}
     </div>
-  );
-};
+  )
+}

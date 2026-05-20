@@ -23,7 +23,6 @@ export type GameSession = {
   name: string
   // players: string[];
   players: Record<string, Player>
-  quests: Record<number, Quest>
   step:
     | "lobby"
     | "setup"

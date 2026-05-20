@@ -1,23 +1,27 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter"
 
-import { MainLayout } from "layouts";
-import { setDocument } from "services";
-import { GameSession } from "types";
-import { generateSessionId } from "utils";
-import { useAppStore, useToastStore } from "stores";
-import { playerDefault, sessionDefault } from "consts";
+import { sessionDefault } from "consts/sessionDefault"
+import { MainLayout } from "layouts/mainLayout/mainLayout"
+import { setDocument } from "services/firestore/setDocument"
+import { useAppStore } from "stores/useAppStore/useAppStore"
+import { useToastStore } from "stores/useToastStore/useToastStore"
+import { GameSession } from "types/gameSession"
+import { generateLobbyCode } from "utils/generateLobbyCode"
 
-import { MainMenuButton } from "./components/mainMenuButton/mainMenuButton";
-import styles from "./styles.module.scss";
+import { MainMenuButton } from "./components/mainMenuButton/mainMenuButton"
+import styles from "./styles.module.scss"
 
 export const MainMenuPage = () => {
-  const navigate = useNavigate();
-  const { user } = useAppStore();
-  const { showToast } = useToastStore();
+  const [, navigate] = useLocation()
+
+  const { user } = useAppStore()
+  const { showToast } = useToastStore()
 
   const handleCreateSession = async () => {
     try {
-      const id = generateSessionId();
+      const id = generateLobbyCode()
+
+      console.log(id)
 
       const result = await setDocument<GameSession>({
         id: id,
@@ -27,70 +31,45 @@ export const MainMenuPage = () => {
           id,
           createdBy: user.id,
         },
-      });
+      })
 
-      if (!result) throw "Error creating game session";
+      if (!result) throw new Error("Error creating game session")
 
-      navigate(`/play/${id}`);
+      navigate(`/play/${id}`)
     } catch (error) {
-      showToast(String(error), "error");
+      showToast(String(error), "error")
     }
-  };
+  }
 
   const handleJoinLobby = () => {
-    navigate(`/join`);
-  };
+    navigate(`/join`)
+  }
 
   const handleRules = () => {
-    window
-      .open(
-        "https://fgbradleys.com/wp-content/uploads/Avalon-Big-Box-Rulebook.pdf",
-        "_blank"
-      )
-      ?.focus();
-  };
+    navigate("/rules")
+  }
 
   const handleCharacters = () => {
-    navigate("/characters");
-  };
+    navigate("/characters")
+  }
 
   return (
     <MainLayout className={styles.container}>
       <div className={styles.heading}>Avalon</div>
 
       <div className={styles.buttons}>
-        <MainMenuButton
-          label="Create"
-          position={1}
-          onClick={handleCreateSession}
-          className={styles.button}
-        />
+        <MainMenuButton label="Create" position={1} onClick={handleCreateSession} className={styles.button} />
 
-        <MainMenuButton
-          label="Join"
-          position={2}
-          onClick={handleJoinLobby}
-          className={styles.button}
-        />
+        <MainMenuButton label="Join" position={2} onClick={handleJoinLobby} className={styles.button} />
 
-        <MainMenuButton
-          label="Rules"
-          position={3}
-          onClick={handleRules}
-          className={styles.button}
-        />
+        <MainMenuButton label="Rules" position={3} onClick={handleRules} className={styles.button} />
 
-        <MainMenuButton
-          label="Characters"
-          position={4}
-          onClick={handleCharacters}
-          className={styles.button}
-        />
+        <MainMenuButton label="Characters" position={4} onClick={handleCharacters} className={styles.button} />
       </div>
 
       <div className={styles.footer}>
         <div className={styles.createdBy}>Created by Colin Maher</div>
       </div>
     </MainLayout>
-  );
-};
+  )
+}

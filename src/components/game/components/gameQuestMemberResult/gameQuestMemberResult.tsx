@@ -1,9 +1,12 @@
 import * as React from "react"
 
-import { classes } from "utils"
-import { useSessionStore } from "stores"
-import { goToStep, updateActiveQuest, updateSession } from "services"
-import { Divider, MenuBar } from "components"
+import { MenuBar } from "components/menuBar/menuBar"
+import { goToStep } from "services/session/goToStep"
+import { updateActiveQuest } from "services/session/updateActiveQuest"
+import { updateSession } from "services/session/updateSession"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { classes } from "utils/classes"
+import { Divider } from "components/divider/divider"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -29,14 +32,14 @@ export const GameQuestMemberResult = (props: Props) => {
 
   const onContinue = () => {
     if (hasPassed) {
-      goToStep({
+      void goToStep({
         step: "questVote",
       })
     } else {
       const currentLeaderIndex = playersArray.findIndex((item) => item.id === activeQuest.leaderId)
       const newLeader = playersArray?.[currentLeaderIndex + 1] || playersArray[0]
 
-      updateActiveQuest({
+      void updateActiveQuest({
         leaderId: newLeader.id,
         players: [],
         index: activeQuest.index + 1,
@@ -44,11 +47,11 @@ export const GameQuestMemberResult = (props: Props) => {
         votesToSucceed: {},
       })
 
-      updateSession({
+      void updateSession({
         numFailVotes: Number(session.numFailVotes) + 1,
       })
 
-      goToStep({
+      void goToStep({
         step: "questMemberSelect",
       })
     }

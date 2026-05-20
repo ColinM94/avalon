@@ -1,4 +1,4 @@
-import { GameSession, Player, Quest } from "types"
+import { GameSession, Player, Quest } from "types/gameSession"
 
 export type State = {
   session: GameSession

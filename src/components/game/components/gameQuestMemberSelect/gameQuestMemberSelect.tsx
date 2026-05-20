@@ -1,7 +1,11 @@
-import { classes } from "utils"
-import { Divider, LoadingOverlay, MenuBar, PlayerCard } from "components"
-import { useSessionStore } from "stores"
-import { goToStep, updateSession } from "services"
+import { Divider } from "components/divider/divider"
+import { LoadingOverlay } from "components/loadingOverlay/loadingOverlay"
+import { MenuBar } from "components/menuBar/menuBar"
+import { PlayerCard } from "components/playerCard/playerCard"
+import { goToStep } from "services/session/goToStep"
+import { updateSession } from "services/session/updateSession"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { classes } from "utils/classes"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -30,7 +34,7 @@ export const GameQuestMemberSelect = (props: Props) => {
 
     updatedQuests[activeQuest.index].players = updatedQuestPlayers
 
-    updateSession({
+    void updateSession({
       quests: updatedQuests,
     })
   }
@@ -44,7 +48,7 @@ export const GameQuestMemberSelect = (props: Props) => {
   }
 
   const handleContinue = () => {
-    goToStep({
+    void goToStep({
       step: "questMemberVote",
     })
   }

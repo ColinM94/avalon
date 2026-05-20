@@ -1,15 +1,18 @@
 import * as React from "react"
 
-import { Button, CharacterCard, MenuBar } from "components"
-import { classes } from "utils"
-import { useSessionStore } from "stores"
-import { goToStep, updateActiveQuest, updateMyPlayer } from "services"
-import { charactersDefault, numPlayersByQuest } from "consts"
+import { Button } from "components/button/button"
+import { CharacterCard } from "components/characterCard/characterCard"
+import { MenuBar } from "components/menuBar/menuBar"
+import { charactersDefault } from "consts/characters"
+import { goToStep } from "services/session/goToStep"
+import { updateMyPlayer } from "services/session/updateMyPlayer"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { classes } from "utils/classes"
 
 import styles from "./styles.module.scss"
 
 export const GameReveal = () => {
-  const { myPlayer, isMyPlayerHost, isAllReady, session, players } = useSessionStore()
+  const { myPlayer, isMyPlayerHost, isAllReady, session } = useSessionStore()
 
   const [showCharacter, setShowCharacter] = React.useState(false)
   const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false)
@@ -29,12 +32,7 @@ export const GameReveal = () => {
   }
 
   const handleContinue = () => {
-    updateActiveQuest({
-      numPlayers: numPlayersByQuest[session.activeQuestIndex][session.numPlayers - 5],
-      leaderId: Object.values(players)[0].id,
-    })
-
-    goToStep({
+    void goToStep({
       step: "questMemberSelect",
     })
   }

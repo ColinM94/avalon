@@ -1,22 +1,18 @@
-import { Toast } from "types";
-import { SetStoreState } from "stores/types";
+import { SetStoreState } from "stores/types"
+import { Toast } from "types/toast"
 
-import { createZustandStore } from "../createZustandStore";
-import { ToastState } from "./types";
+import { createZustandStore } from "../createZustandStore"
+import { ToastState } from "./types"
 
-const showToast = (
-  set: SetStoreState<ToastState>,
-  text: string,
-  type?: Toast["type"]
-) => {
+const showToast = (set: SetStoreState<ToastState>, text: string, type?: Toast["type"]) => {
   set({
     toast: {
       text,
       type,
       createdAt: Date.now(),
     },
-  });
-};
+  })
+}
 
 export const useToastStore = createZustandStore<ToastState>({
   name: "toast",
@@ -26,4 +22,4 @@ export const useToastStore = createZustandStore<ToastState>({
     deleteToast: () => set({ toast: null }),
   }),
   storageType: "localStorage",
-});
+})

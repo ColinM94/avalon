@@ -1,5 +1,6 @@
-import { CharacterCard, Heading } from "components"
-import { classes } from "utils"
+import { classes } from "utils/classes"
+import { Heading } from "components/heading/heading"
+import { CharacterCard } from "components/characterCard/characterCard"
 
 import styles from "./styles.module.scss"
 import { Props } from "./types"
@@ -30,7 +31,7 @@ export const SetupCharacters = (props: Props) => {
   }
 
   const filteredCharacters = Object.values(characters).filter(
-    (character) => character.allegiance === allegiance && !character.disabled
+    (character) => character.allegiance === allegiance && !character.disabled,
   )
 
   return (

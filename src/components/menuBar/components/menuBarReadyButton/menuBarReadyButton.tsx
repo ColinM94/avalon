@@ -1,10 +1,12 @@
-import { classes } from "utils"
-import { Button } from "components"
-import { useSessionStore, useToastStore } from "stores"
-import { updateMyPlayer } from "services"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { useToastStore } from "stores/useToastStore/useToastStore"
+import { updateMyPlayer } from "services/session/updateMyPlayer"
+import { Button } from "components/button/button"
+import { classes } from "utils/classes"
 
 import styles from "./styles.module.scss"
 import { Props } from "./types"
+import React from "react"
 
 export const MenuBarReadyButton = (props: Props) => {
   const { canReady, onReady, showContinue, canContinue, onContinue } = props
@@ -37,6 +39,16 @@ export const MenuBarReadyButton = (props: Props) => {
       showToast(String(error), "error")
     }
   }
+
+  React.useEffect(() => {
+    ;(async () => {
+      if (myPlayer.isMyPlayerHost) return
+
+      setTimeout(() => {
+        handleReady()
+      }, 1000)
+    })()
+  }, [])
 
   const handleContinue = () => {
     try {

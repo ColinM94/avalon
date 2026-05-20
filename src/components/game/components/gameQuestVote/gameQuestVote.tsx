@@ -1,9 +1,12 @@
 import * as React from "react"
 
-import { classes } from "utils"
-import { useSessionStore } from "stores"
-import { goToStep, updateMyPlayer, updateSession } from "services"
-import { Divider, MenuBar } from "components"
+import { Divider } from "components/divider/divider"
+import { MenuBar } from "components/menuBar/menuBar"
+import { goToStep } from "services/session/goToStep"
+import { updateMyPlayer } from "services/session/updateMyPlayer"
+import { updateSession } from "services/session/updateSession"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { classes } from "utils/classes"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -20,7 +23,7 @@ export const GameQuestVote = (props: Props) => {
   const handleVoteClick = (voteValue: boolean) => {
     if (myPlayer.isReady) return
 
-    updateSession({
+    void updateSession({
       [`quests.${activeQuest.index}.votesToSucceed.${myPlayer.id}`]: voteValue,
     })
   }
@@ -51,11 +54,11 @@ export const GameQuestVote = (props: Props) => {
       return
     }
 
-    updateSession({
+    void updateSession({
       numFailQuests: Number(session.numFailQuests) + 1,
     })
 
-    goToStep({
+    void goToStep({
       step: "questResult",
     })
   }
@@ -67,7 +70,7 @@ export const GameQuestVote = (props: Props) => {
   }
 
   const onReady = () => {
-    updateMyPlayer({
+    void updateMyPlayer({
       isReady: true,
     })
   }

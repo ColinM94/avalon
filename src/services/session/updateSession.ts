@@ -1,18 +1,16 @@
-import { updateDocument } from "services";
-import { useSessionStore, useToastStore } from "stores";
-import { GameSession } from "types";
+import { updateDocument } from "services/firestore/updateDocument"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { useToastStore } from "stores/useToastStore/useToastStore"
+import { GameSession } from "types/gameSession"
 
-export const updateSession = async (
-  update: Partial<GameSession>,
-  sessionId?: string
-) => {
-  const { session } = useSessionStore.getState();
-  const { showToast } = useToastStore.getState();
+export const updateSession = async (update: Partial<GameSession>, sessionId?: string) => {
+  const { session } = useSessionStore.getState()
+  const { showToast } = useToastStore.getState()
 
-  const id = sessionId || session.id;
+  const id = sessionId || session.id
 
   if (!id) {
-    throw "Unable to update session as no ID defined";
+    throw new Error("Unable to update session as no ID defined")
   }
 
   try {
@@ -20,11 +18,11 @@ export const updateSession = async (
       id,
       collection: "sessions",
       data: update,
-    });
+    })
 
-    return true;
+    return true
   } catch (error) {
-    showToast(String(error));
-    return false;
+    showToast(String(error))
+    return false
   }
-};
+}

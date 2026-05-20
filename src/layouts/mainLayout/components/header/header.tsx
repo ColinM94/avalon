@@ -1,29 +1,31 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter"
 
-import { Button } from "components";
-import { deleteDocument, updateDocument, updateSession } from "services";
-import { useSessionStore, useToastStore } from "stores";
-import { deleteField } from "firebase/firestore";
-import { User } from "types";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { Button } from "components/button/button"
+import { deleteField } from "firebase/firestore"
+import { deleteDocument } from "services/firestore/deleteDocument"
+import { updateDocument } from "services/firestore/updateDocument"
+import { updateSession } from "services/session/updateSession"
+import { useToastStore } from "stores/useToastStore/useToastStore"
+import { User } from "types/user"
 
-import { Props } from "./types";
-import styles from "./styles.module.scss";
+import { Props } from "./types"
+import styles from "./styles.module.scss"
 
 export const Header = (props: Props) => {
-  const { headingTitle, showBackButton } = props;
+  const { headingTitle, showBackButton } = props
 
-  const { myPlayer, isMyPlayerHost, session } = useSessionStore();
+  const { myPlayer, isMyPlayerHost, session } = useSessionStore()
 
-  const navigate = useNavigate();
-  const { showToast } = useToastStore();
+  const [, navigate] = useLocation()
+
+  const { showToast } = useToastStore()
 
   const handleLeave = async () => {
     try {
-      const confirmed = confirm(
-        "Are you sure you want to leave? This will end the game for everyone!"
-      );
+      const confirmed = confirm("Are you sure you want to leave? This will end the game for everyone!")
 
-      if (!confirmed) return;
+      if (!confirmed) return
 
       const promises = [
         updateDocument<User>({
@@ -33,14 +35,14 @@ export const Header = (props: Props) => {
             sessionId: null,
           },
         }),
-      ];
+      ]
 
       if (session.step === "lobby") {
         promises.push(
           updateSession({
             [`players.${myPlayer.id}`]: deleteField(),
-          })
-        );
+          }),
+        )
       }
 
       if (isMyPlayerHost || session.step !== "lobby") {
@@ -48,17 +50,17 @@ export const Header = (props: Props) => {
           deleteDocument({
             id: session.id,
             collection: "sessions",
-          })
-        );
+          }),
+        )
       }
 
-      navigate("/");
+      navigate("/")
 
-      await Promise.all(promises);
+      await Promise.all(promises)
     } catch (error) {
-      showToast(String(error));
+      showToast(String(error))
     }
-  };
+  }
 
   return (
     <div className={styles.container}>
@@ -76,13 +78,8 @@ export const Header = (props: Props) => {
       </div>
 
       {session.id && (
-        <Button
-          icon="x"
-          onClick={handleLeave}
-          className={styles.closeButton}
-          iconClassName={styles.buttonIcon}
-        />
+        <Button icon="x" onClick={handleLeave} className={styles.closeButton} iconClassName={styles.buttonIcon} />
       )}
     </div>
-  );
-};
+  )
+}

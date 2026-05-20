@@ -1,32 +1,36 @@
-import * as React from "react";
-import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { deleteField } from "firebase/firestore";
+import * as React from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { deleteField } from "firebase/firestore"
+import { useLocation } from "wouter"
 
-import { capitaliseFirstLetter, classes } from "utils";
-import { Button, Modal } from "components";
-import { useSessionStore, useToastStore } from "stores";
-import { deleteDocument, updateDocument, updateSession } from "services";
-import { User } from "types";
-import { charactersDefault } from "consts";
+import { Button } from "components/button/button"
+import { Modal } from "components/modal/modal"
+import { charactersDefault } from "consts/characters"
+import { deleteDocument } from "services/firestore/deleteDocument"
+import { updateDocument } from "services/firestore/updateDocument"
+import { updateSession } from "services/session/updateSession"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { useToastStore } from "stores/useToastStore/useToastStore"
+import { User } from "types/user"
+import { capitaliseFirstLetter } from "utils/capitaliseFirstLetter"
+import { classes } from "utils/classes"
 
-import styles from "./styles.module.scss";
+import styles from "./styles.module.scss"
 
 export const MenuBarMenuButton = () => {
-  const navigate = useNavigate();
-  const { myPlayer, session, isMyPlayerHost } = useSessionStore();
-  const { showToast } = useToastStore();
+  const [, navigate] = useLocation()
 
-  const [showMenu, setShowMenu] = React.useState(false);
-  const [showCharacter, setShowCharacter] = React.useState(false);
+  const { myPlayer, session, isMyPlayerHost } = useSessionStore()
+  const { showToast } = useToastStore()
+
+  const [showMenu, setShowMenu] = React.useState(false)
+  const [showCharacter, setShowCharacter] = React.useState(false)
 
   const handleLeave = async () => {
     try {
-      const confirmed = confirm(
-        "Are you sure you want to leave? This will end the game for everyone!"
-      );
+      const confirmed = confirm("Are you sure you want to leave? This will end the game for everyone!")
 
-      if (!confirmed) return;
+      if (!confirmed) return
 
       const promises = [
         updateDocument<User>({
@@ -36,14 +40,14 @@ export const MenuBarMenuButton = () => {
             sessionId: null,
           },
         }),
-      ];
+      ]
 
       if (session.step === "lobby") {
         promises.push(
           updateSession({
             [`players.${myPlayer.id}`]: deleteField(),
-          })
-        );
+          }),
+        )
       }
 
       if (isMyPlayerHost || session.step !== "lobby") {
@@ -51,19 +55,19 @@ export const MenuBarMenuButton = () => {
           deleteDocument({
             id: session.id,
             collection: "sessions",
-          })
-        );
+          }),
+        )
       }
 
-      navigate("/");
+      navigate("/")
 
-      await Promise.all(promises);
+      await Promise.all(promises)
     } catch (error) {
-      showToast(String(error));
+      showToast(String(error))
     }
-  };
+  }
 
-  const isLobby = session.step === "lobby";
+  const isLobby = session.step === "lobby"
 
   return (
     <>
@@ -84,18 +88,9 @@ export const MenuBarMenuButton = () => {
         >
           <FontAwesomeIcon icon="hat-wizard" className={styles.menuItemIcon} />
 
-          <div
-            className={classes(
-              styles.menuItemText,
-              session.step === "lobby" && styles.menuItemDisabled
-            )}
-          >
+          <div className={classes(styles.menuItemText, session.step === "lobby" && styles.menuItemDisabled)}>
             <div className={styles.menuItemTextTitle}>
-              {showCharacter
-                ? capitaliseFirstLetter(
-                    charactersDefault[myPlayer.characterId].id
-                  )
-                : "Your Character"}
+              {showCharacter ? capitaliseFirstLetter(charactersDefault[myPlayer.characterId].id) : "Your Character"}
             </div>
             <div className={styles.menuItemTextDescription}>
               Hold down to see your character. Do not let anyone see!
@@ -104,19 +99,14 @@ export const MenuBarMenuButton = () => {
         </div>
 
         <div onClick={handleLeave} className={styles.menuItem}>
-          <FontAwesomeIcon
-            icon="right-from-bracket"
-            className={styles.menuItemIcon}
-          />
+          <FontAwesomeIcon icon="right-from-bracket" className={styles.menuItemIcon} />
 
           <div className={styles.menuItemText}>
             <div className={styles.menuItemTextTitle}>Quit</div>
-            <div className={styles.menuItemTextDescription}>
-              This will end the game for everyone
-            </div>
+            <div className={styles.menuItemTextDescription}>This will end the game for everyone</div>
           </div>
         </div>
       </Modal>
     </>
-  );
-};
+  )
+}

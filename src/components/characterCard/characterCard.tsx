@@ -1,11 +1,11 @@
 import * as React from "react"
 
-import { classes } from "utils"
-import { characterNames } from "consts"
-import { CharacterModal } from "components"
+import { classes } from "utils/classes"
+import { characterNames } from "consts/characters"
+import { CharacterModal } from "components/characterModal/characterModal"
 
-import { Props } from "./types"
 import styles from "./styles.module.scss"
+import { Props } from "./types"
 
 export const CharacterCard = (props: Props) => {
   const {
@@ -54,7 +54,7 @@ export const CharacterCard = (props: Props) => {
     character.allegiance === "evil" && styles.evil,
     orientation === "portrait" && styles.portrait,
     orientation === "landscape" && styles.landscape,
-    disableAnimation && styles.animationDisabled
+    disableAnimation && styles.animationDisabled,
   )
 
   return (

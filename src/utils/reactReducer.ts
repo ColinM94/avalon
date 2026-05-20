@@ -1,4 +1,5 @@
-import * as React from "react";
+/* eslint-disable react-hooks/rules-of-hooks */
+import * as React from "react"
 
 /**
  * Abstraction for React.useReducer so it's easier to use and setup.
@@ -7,6 +8,6 @@ import * as React from "react";
  */
 export const reactReducer = <T>(initialState: T) => {
   return React.useReducer((state: T, updates: Partial<T>) => {
-    return { ...state, ...updates };
-  }, initialState);
-};
+    return { ...state, ...updates }
+  }, initialState)
+}

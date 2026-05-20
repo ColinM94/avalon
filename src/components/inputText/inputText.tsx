@@ -1,7 +1,7 @@
-import { classes } from "utils";
+import { classes } from "utils/classes"
 
-import { Props } from "./types";
-import styles from "./styles.module.scss";
+import { Props } from "./types"
+import styles from "./styles.module.scss"
 
 export const InputText = (props: Props) => {
   const {
@@ -14,14 +14,14 @@ export const InputText = (props: Props) => {
     maxLength,
     inputClassName,
     className,
-  } = props;
+  } = props
 
   const classNames = classes(
     styles.container,
     className,
-    disabled && styles.disabled
+    disabled && styles.disabled,
     // disabled && styles.disabled
-  );
+  )
 
   return (
     <div className={classNames}>
@@ -37,5 +37,5 @@ export const InputText = (props: Props) => {
         className={classes(styles.input, inputClassName)}
       />
     </div>
-  );
-};
+  )
+}

@@ -1,17 +1,16 @@
-import { CharacterCard, Players } from "components";
-import { charactersDefault } from "consts";
+import { CharacterCard } from "components/characterCard/characterCard"
+import { charactersDefault } from "consts/characters"
+import { Players } from "components/players/players"
 
-import { Props } from "./types";
-import styles from "./styles.module.scss";
+import { Props } from "./types"
+import styles from "./styles.module.scss"
 
 export const CharacterRevealer = (props: Props) => {
-  const { characterId, show } = props;
+  const { characterId, show } = props
 
   return (
     <>
-      <div className={styles.description}>
-        Do not show anyone your character!
-      </div>
+      <div className={styles.description}>Do not show anyone your character!</div>
 
       {show && charactersDefault[characterId] && (
         <CharacterCard
@@ -27,5 +26,5 @@ export const CharacterRevealer = (props: Props) => {
 
       <Players showIsReady />
     </>
-  );
-};
+  )
+}

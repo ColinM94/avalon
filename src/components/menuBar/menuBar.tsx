@@ -1,4 +1,4 @@
-import { classes } from "utils"
+import { classes } from "utils/classes"
 
 import { MenuBarMenuButton } from "./components/menuBarMenuButton/menuBarMenuButton"
 import { MenuBarReadyButton } from "./components/menuBarReadyButton/menuBarReadyButton"

@@ -1,23 +1,23 @@
-import { collection, doc, setDoc } from "firebase/firestore";
-import { db } from "inits/firebase";
-import { FirestoreCollection } from "types";
+import { collection, doc, setDoc } from "firebase/firestore"
+import { db } from "inits/firebase"
+import { FirestoreCollection } from "types/firebase"
 
 interface Config<T> {
-  collection: FirestoreCollection;
-  data: Omit<T, "id">;
+  collection: FirestoreCollection
+  data: Omit<T, "id">
 }
 
 export const addDocument = async <T>(config: Config<T>) => {
   try {
-    const document = doc(collection(db, config.collection));
+    const document = doc(collection(db, config.collection))
 
     await setDoc(document, {
       ...config.data,
       id: document.id,
-    });
+    })
 
-    return document.id;
+    return document.id
   } catch (error) {
-    console.error(error, "addDocToCollection");
+    console.error(error, "addDocToCollection")
   }
-};
+}

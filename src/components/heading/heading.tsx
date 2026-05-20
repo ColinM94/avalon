@@ -1,10 +1,10 @@
-import { classes } from "utils";
+import { classes } from "utils/classes"
 
-import styles from "./styles.module.scss";
-import { Props } from "./types";
+import styles from "./styles.module.scss"
+import { Props } from "./types"
 
 export const Heading = (props: Props) => {
-  const { headingTitle, headingSubtitle, rightText, className } = props;
+  const { headingTitle, headingSubtitle, rightText, className } = props
 
   return (
     <div className={classes(styles.container, className)}>
@@ -14,5 +14,5 @@ export const Heading = (props: Props) => {
       </div>
       <div className={styles.rightText}>{rightText}</div>
     </div>
-  );
-};
+  )
+}

@@ -1,35 +1,51 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react"
+import babel from "@rolldown/plugin-babel"
+import { defineConfig } from "vite"
+import * as path from "path"
 
 export default defineConfig({
-  plugins: [react()],
+  optimizeDeps: {
+    include: ["firebase/app", "firebase/firestore", "firebase/auth", "firebase/storage"],
+  },
+  build: {
+    rolldownOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes("node_modules")) {
+            if (id.includes("react-dom") || id.includes("react-router")) return "react-vendor"
+            if (id.includes("@firebase")) return "firebase-vendor"
+            return "vendor"
+          }
+        },
+      },
+    },
+    outDir: "dist",
+  },
+  publicDir: "public",
   resolve: {
     alias: {
       assets: path.resolve(__dirname, "src/assets"),
-      characters: path.resolve(__dirname, "src/characters"),
       components: path.resolve(__dirname, "src/components"),
       consts: path.resolve(__dirname, "src/consts"),
+      hooks: path.resolve(__dirname, "src/hooks"),
       inits: path.resolve(__dirname, "src/inits"),
       layouts: path.resolve(__dirname, "src/layouts"),
       pages: path.resolve(__dirname, "src/pages"),
-      utils: path.resolve(__dirname, "src/utils"),
-      styles: path.resolve(__dirname, "src/styles"),
       services: path.resolve(__dirname, "src/services"),
+      styles: path.resolve(__dirname, "src/styles"),
       stores: path.resolve(__dirname, "src/stores"),
+      types: path.resolve(__dirname, "src/types"),
+      utils: path.resolve(__dirname, "src/utils"),
     },
   },
-  esbuild: {
-    legalComments: "none",
-  },
+  plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
   css: {
-    preprocessorMaxWorkers: true,
     preprocessorOptions: {
       scss: {
         additionalData: `
-        @use "./src/styles/vars.scss";
+        @use "styles/vars.scss";
         `,
       },
     },
   },
-});
+})

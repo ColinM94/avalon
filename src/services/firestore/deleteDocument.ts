@@ -1,21 +1,18 @@
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "inits/firebase";
-import { FirestoreCollection } from "types";
+import { deleteDoc, doc } from "firebase/firestore"
+import { db } from "inits/firebase"
+import { FirestoreCollection } from "types/firebase"
 
 interface Config {
-  collection: FirestoreCollection;
-  id: string;
+  collection: FirestoreCollection
+  id: string
 }
 
 export const deleteDocument = async (config: Config) => {
   try {
-    await deleteDoc(doc(db, config.collection, config.id));
-    return true;
+    await deleteDoc(doc(db, config.collection, config.id))
+    return true
   } catch (error) {
-    console.error(
-      error,
-      `addDocToCollection ${config.collection} ${config.id}`
-    );
-    return false;
+    console.error(error, `addDocToCollection ${config.collection} ${config.id}`)
+    return false
   }
-};
+}

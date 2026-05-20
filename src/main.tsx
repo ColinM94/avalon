@@ -1,59 +1,91 @@
-import * as React from "react";
-import { Outlet } from "react-router-dom";
+import * as React from "react"
+import ReactDOM from "react-dom/client"
+import { Route, Switch } from "wouter"
 
-import { Splash, Toast } from "components";
-import { getDocumentSnapshot, setDocument } from "services";
-import { User } from "types";
-import { useAppStore } from "stores";
+import { User } from "types/user"
+import { useAppStore } from "stores/useAppStore/useAppStore"
+import { Splash } from "components/splash/splash"
+import { Toast } from "components/toast/toast"
+import { getDocumentSnapshot } from "services/firestore/getDocumentSnapshot"
+import { setDocument } from "services/firestore/setDocument"
+import { InvalidPage } from "pages/invalidPage/invalidPage"
+import { CharactersPage } from "pages/charactersPage/charactersPage"
+import { JoinPage } from "pages/joinPage/joinPage"
+import { MainMenuPage } from "pages/mainMenu/mainMenuPage"
+import { PlayPage } from "pages/playPage/playPage"
+import { RulesPage } from "pages/rulesPage/rulesPage"
+import { initIcons } from "inits/initIcons"
 
-export const Main = () => {
-  const { user, updateAppStore } = useAppStore();
+import "styles/global.scss"
 
-  // User
+initIcons()
+
+export const App = () => {
+  const { user, updateAppStore } = useAppStore()
+
   React.useEffect(() => {
     const unsubscribe = getDocumentSnapshot<User>({
       id: user.id,
       collection: "users",
       callback: (value) => {
         if (!value) {
-          setDocument<{ id: string; name: string }>({
+          void setDocument<{ id: string; name: string }>({
             id: user.id,
             collection: "users",
             data: user,
-          });
+          })
 
-          return;
+          return
         }
 
-        updateAppStore({ user: value });
-        return;
+        updateAppStore({ user: value })
+        return
       },
-    });
+    })
 
-    return () => unsubscribe?.();
-  }, [user.id]);
+    return () => unsubscribe?.()
+  }, [user.id])
 
   return (
     <>
+      <Switch>
+        <Route path="/">
+          <MainMenuPage />
+        </Route>
+
+        <Route path="join/:sessionId?">
+          <JoinPage />
+        </Route>
+
+        <Route path="play/:sessionId">
+          <PlayPage />
+        </Route>
+
+        <Route path="characters">
+          <CharactersPage />
+        </Route>
+
+        <Route path="rules">
+          <RulesPage />
+        </Route>
+
+        <Route path="*">
+          <InvalidPage />
+        </Route>
+      </Switch>
+
       <Splash />
-      {user.id && <Outlet />}
       <Toast />
     </>
-  );
-};
+  )
+}
 
-/* 
-  TODO: 
-  - Persist the image
-  - Add placeholder image with specific colours for when user doesn't want to add an image
-  - Change to exit icon from X
-  - no id on load of ritual page
-  - players at bottom too small 
-  - X and checkmark overlapping on player for host
-  - Allow toggle ready and put checkmark on it
-  - Remove ready button from vote pages 
-
-  RitualPage
-  - Have host press continue
-  - Remove ready button
-*/
+const rootElement = document.getElementById("root")!
+if (!rootElement.innerHTML) {
+  const root = ReactDOM.createRoot(rootElement)
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  )
+}

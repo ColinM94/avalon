@@ -1,8 +1,7 @@
-import { useSessionStore } from "stores"
-import { GameSession, Player } from "types"
-
 import { updateSession } from "./updateSession"
 import { updatePlayer } from "./updatePlayer"
+import { GameSession, Player } from "types/gameSession"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 
 interface Props {
   step: GameSession["step"]
@@ -25,7 +24,7 @@ export const goToStep = async ({ step, playerUpdates }: Props) => {
 
   await Promise.all(promises)
 
-  updateSession({
+  void updateSession({
     step,
   })
 }

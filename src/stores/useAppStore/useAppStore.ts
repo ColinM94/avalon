@@ -1,7 +1,7 @@
-import { userDefault } from "consts";
+import { userDefault } from "consts/userDefault"
 
-import { Actions, State } from "./types";
-import { createZustandStore } from "../createZustandStore";
+import { Actions, State } from "./types"
+import { createZustandStore } from "../createZustandStore"
 
 export const useAppStore = createZustandStore<State & Actions>({
   name: "app",
@@ -11,4 +11,4 @@ export const useAppStore = createZustandStore<State & Actions>({
   }),
   storageType: "localStorage",
   persistState: true,
-});
+})

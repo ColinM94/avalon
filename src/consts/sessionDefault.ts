@@ -1,4 +1,4 @@
-import { GameSession } from "types"
+import { GameSession } from "types/gameSession"
 
 export const sessionDefault = (): GameSession => {
   return {

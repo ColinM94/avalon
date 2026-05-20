@@ -1,5 +1,5 @@
-import { User } from "types";
-import { generateUniqueId } from "utils";
+import { User } from "types/user"
+import { generateUniqueId } from "utils/generateUniqueId"
 
 export const userDefault = (): User => {
   return {
@@ -7,5 +7,5 @@ export const userDefault = (): User => {
     name: "",
     sessionId: null,
     imageUrl: "",
-  };
-};
+  }
+}

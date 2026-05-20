@@ -9,17 +9,17 @@
   width: 100%;
   background-color: vars.$color-background;
   z-index: 99;
-  animation: fadeOut 3s forwards;
+  animation: fadeOut 4s forwards;
 
   .headingSmall {
     font-size: vars.$font-size-h1;
-    animation: fadeOut 2s forwards;
+    animation: fadeOut 3s forwards;
   }
 
   .heading {
     font-size: 5rem;
     text-align: center;
-    animation: fadeOut 2s forwards;
+    animation: fadeOut 3s forwards;
   }
 
   @keyframes fadeOut {

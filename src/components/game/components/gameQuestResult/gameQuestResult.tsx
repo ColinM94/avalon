@@ -1,12 +1,15 @@
 import * as React from "react"
 
-import { classes } from "utils"
-import { useSessionStore } from "stores"
-import { goToStep, updateActiveQuest, updateMyPlayer, updateSession } from "services"
-import { Divider, MenuBar } from "components"
-
 import { Props } from "./types"
 import styles from "./styles.module.scss"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { Divider } from "components/divider/divider"
+import { MenuBar } from "components/menuBar/menuBar"
+import { goToStep } from "services/session/goToStep"
+import { updateActiveQuest } from "services/session/updateActiveQuest"
+import { updateMyPlayer } from "services/session/updateMyPlayer"
+import { updateSession } from "services/session/updateSession"
+import { classes } from "utils/classes"
 
 export const GameQuestResult = (props: Props) => {
   const { className } = props
@@ -15,7 +18,7 @@ export const GameQuestResult = (props: Props) => {
 
   const votes = Object.values(activeQuest.votesToSucceed).sort((a, b) => Number(b) - Number(a))
 
-  const hasPassed = !Boolean(votes.some((vote) => !vote))
+  const hasPassed = !votes.some((vote) => !vote)
 
   const renderVotes = () => {
     const items: React.ReactNode[] = []
@@ -24,7 +27,7 @@ export const GameQuestResult = (props: Props) => {
       items.push(
         <div key={index} className={vote ? styles.yesVote : styles.noVote}>
           {vote ? "Success" : "Fail"}
-        </div>
+        </div>,
       )
     })
 
@@ -35,24 +38,24 @@ export const GameQuestResult = (props: Props) => {
     if (!isMyPlayerHost || !myPlayer.isReady) return
 
     if (hasPassed) {
-      goToStep({
+      void goToStep({
         step: "questVote",
       })
     } else {
       const currentLeaderIndex = playersArray.findIndex((item) => item.id === activeQuest.leaderId)
       const newLeader = playersArray?.[currentLeaderIndex + 1] || playersArray[0]
 
-      updateActiveQuest({
+      void updateActiveQuest({
         leaderId: newLeader.id,
         players: [],
         votesToSucceed: {},
       })
 
-      updateSession({
+      void updateSession({
         numFailVotes: Number(session.numFailVotes) + 1,
       })
 
-      goToStep({
+      void goToStep({
         step: "questMemberSelect",
       })
     }
@@ -65,7 +68,7 @@ export const GameQuestResult = (props: Props) => {
   }
 
   const onReady = () => {
-    updateMyPlayer({
+    void updateMyPlayer({
       isReady: true,
     })
   }

@@ -1,31 +1,20 @@
-import { classes } from "utils";
+import { classes } from "utils/classes"
 
-import { Header } from "./components/header/header";
+import { Header } from "./components/header/header"
 
-import styles from "./styles.module.scss";
-import { Props } from "./types";
+import styles from "./styles.module.scss"
+import { Props } from "./types"
 
 export const MainLayout = (props: Props) => {
-  const {
-    showHeader,
-    showBackButton,
-    heading,
-    showCloseButton,
-    children,
-    className,
-  } = props;
+  const { showHeader, showBackButton, heading, showCloseButton, children, className } = props
 
   return (
     <div className={styles.container}>
       {showHeader && (
-        <Header
-          headingTitle={heading}
-          showBackButton={showBackButton}
-          showCloseButton={showCloseButton}
-        />
+        <Header headingTitle={heading} showBackButton={showBackButton} showCloseButton={showCloseButton} />
       )}
 
       <div className={classes(styles.content, className)}>{children}</div>
     </div>
-  );
-};
+  )
+}

@@ -1,19 +1,14 @@
-import { charactersDefault } from "consts";
-import { CharacterCard } from "components";
-import { MainLayout } from "layouts";
+import { charactersDefault } from "consts/characters"
+import { MainLayout } from "layouts/mainLayout/mainLayout"
+import { CharacterCard } from "components/characterCard/characterCard"
 
-import styles from "./styles.module.scss";
+import styles from "./styles.module.scss"
 
 export const CharactersPage = () => {
-  const characters = Object.values(charactersDefault);
+  const characters = Object.values(charactersDefault)
 
   return (
-    <MainLayout
-      showHeader
-      showBackButton
-      heading="Characters"
-      className={styles.container}
-    >
+    <MainLayout showHeader showBackButton heading="Characters" className={styles.container}>
       {characters.map((character) => (
         <CharacterCard
           character={character}
@@ -27,5 +22,5 @@ export const CharactersPage = () => {
         />
       ))}
     </MainLayout>
-  );
-};
+  )
+}

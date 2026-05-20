@@ -1,9 +1,9 @@
-import { User } from "types";
+import { User } from "types/user"
 
 export type State = {
-  user: User;
-};
+  user: User
+}
 
 export type Actions = {
-  updateAppStore: (update: Partial<State>) => void;
-};
+  updateAppStore: (update: Partial<State>) => void
+}

@@ -1,4 +1,4 @@
-import { Characters } from "types"
+import { Characters } from "types/characters"
 
 export const charactersDefault: Characters = {
   // Good Characters

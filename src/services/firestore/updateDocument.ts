@@ -1,24 +1,24 @@
-import { collection, doc, updateDoc } from "firebase/firestore";
-import { db } from "inits/firebase";
-import { FirestoreCollection } from "types";
+import { collection, doc, updateDoc } from "firebase/firestore"
+import { db } from "inits/firebase"
+import { FirestoreCollection } from "types/firebase"
 
 interface Config<T> {
-  collection: FirestoreCollection;
-  data: Partial<T>;
-  id: string;
+  collection: FirestoreCollection
+  data: Partial<T>
+  id: string
 }
 
 export const updateDocument = async <T>(config: Config<T>) => {
   try {
-    const collectionRef = collection(db, config.collection);
+    const collectionRef = collection(db, config.collection)
 
-    const docRef = doc(collectionRef, config.id);
+    const docRef = doc(collectionRef, config.id)
 
-    await updateDoc(docRef, config.data as any);
+    await updateDoc(docRef, config.data as any)
 
-    return true;
+    return true
   } catch (error) {
-    console.error(error, `updateDocument ${config.id} ${config.data}`);
-    return false;
+    console.error(error, `updateDocument ${config.id} ${config.data}`)
+    return false
   }
-};
+}

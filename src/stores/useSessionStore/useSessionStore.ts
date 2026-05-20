@@ -1,6 +1,7 @@
-import { playerDefault, sessionDefault } from "consts"
-import { Actions, State } from "./types"
+import { playerDefault } from "consts/playerDefault"
+import { sessionDefault } from "consts/sessionDefault"
 import { createZustandStore } from "../createZustandStore"
+import { Actions, State } from "./types"
 
 const initialState: State = {
   session: sessionDefault(),

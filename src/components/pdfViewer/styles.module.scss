@@ -1,0 +1,36 @@
+.container {
+  gap: vars.$spacing-primary;
+  padding-inline: vars.$spacing-primary;
+
+  .viewer {
+    background-color: #fafaf5;
+    border-radius: vars.$roundness;
+    flex: 1;
+    overflow: hidden;
+
+    .document {
+      position: absolute;
+    }
+  }
+
+  .controls {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: vars.$spacing-primary;
+
+    .controlsPageNumber {
+      flex: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: vars.$font-size-h2;
+      white-space: nowrap;
+    }
+
+    .controlButton {
+      flex: 1;
+      height: 100%;
+    }
+  }
+}

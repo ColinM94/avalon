@@ -1,24 +1,23 @@
-import { getDoc, doc } from "firebase/firestore";
-import { db } from "inits/firebase";
-import { FirestoreCollection } from "types";
+import { getDoc, doc } from "firebase/firestore"
+import { db } from "inits/firebase"
+import { FirestoreCollection } from "types/firebase"
 
 interface Config {
-  collection: FirestoreCollection;
-  id: string;
+  collection: FirestoreCollection
+  id: string
 }
 
 export const getDocument = async <T>(config: Config) => {
-  const { collection: collectionName } = config;
-
+  const { collection: collectionName } = config
 
   try {
-    const document = await getDoc(doc(db, collectionName, config.id));
+    const document = await getDoc(doc(db, collectionName, config.id))
 
-    if (!document.exists()) return undefined;
+    if (!document.exists()) return undefined
 
-    return { ...document.data(), id: document.id } as T;
+    return { ...document.data(), id: document.id } as T
   } catch (error) {
-    console.error(error, `getDocument ${config.id} from ${collectionName} `);
-    return undefined;
+    console.error(error, `getDocument ${config.id} from ${collectionName} `)
+    return undefined
   }
-};
+}

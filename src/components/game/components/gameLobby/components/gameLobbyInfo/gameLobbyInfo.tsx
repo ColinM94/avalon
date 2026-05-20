@@ -1,24 +1,24 @@
-import { QRCode } from "react-qrcode-logo";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { QRCode } from "react-qrcode-logo"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import { baseUrl } from "consts";
-import { useSessionStore } from "stores";
-import { classes } from "utils";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { baseUrl } from "consts/general"
+import { classes } from "utils/classes"
 
-import styles from "./styles.module.scss";
-import { Props } from "./types";
+import styles from "./styles.module.scss"
+import { Props } from "./types"
 
 export const GameLobbyInfo = ({ className }: Props) => {
-  const { session } = useSessionStore();
+  const { session } = useSessionStore()
 
-  const url = `${baseUrl}/join/${session.id}`;
+  const url = `${baseUrl}/join/${session.id}`
 
   const handleShare = () => {
     navigator.share({
       title: "Join my game of Avalon",
       url,
-    });
-  };
+    })
+  }
 
   return (
     <div className={classes(styles.container, className)}>
@@ -30,5 +30,5 @@ export const GameLobbyInfo = ({ className }: Props) => {
 
       <QRCode value={url} />
     </div>
-  );
-};
+  )
+}

@@ -1,6 +1,7 @@
-import { classes } from "utils"
-import { useSessionStore } from "stores"
-import { Divider, PlayerCard } from "components"
+import { Divider } from "components/divider/divider"
+import { PlayerCard } from "components/playerCard/playerCard"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { classes } from "utils/classes"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -23,7 +24,7 @@ export const Players = (props: Props) => {
             width={width}
             showIsReady={showIsReady}
             className={styles.player}
-          />
+          />,
         )
       })
 
@@ -42,7 +43,7 @@ export const Players = (props: Props) => {
             width={width}
             showIsReady={showIsReady}
             className={styles.player}
-          />
+          />,
         )
       })
 
@@ -54,7 +55,7 @@ export const Players = (props: Props) => {
 
       if (showEmptySlots && !tempPlayer) {
         items.push(
-          <PlayerCard key={i} connected={false} width={width} showIsReady={showIsReady} className={styles.player} />
+          <PlayerCard key={i} connected={false} width={width} showIsReady={showIsReady} className={styles.player} />,
         )
 
         continue
@@ -72,7 +73,7 @@ export const Players = (props: Props) => {
           width={width}
           showIsReady={showIsReady}
           className={styles.player}
-        />
+        />,
       )
     }
 

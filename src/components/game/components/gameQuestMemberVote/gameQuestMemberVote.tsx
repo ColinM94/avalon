@@ -1,8 +1,13 @@
-import { classes } from "utils"
-import { useSessionStore } from "stores"
-import { goToStep, updateDocument, updateMyPlayer, updateSession } from "services"
-import { Divider, MenuBar, Players } from "components"
-import { GameSession } from "types"
+import { Divider } from "components/divider/divider"
+import { MenuBar } from "components/menuBar/menuBar"
+import { Players } from "components/players/players"
+import { updateDocument } from "services/firestore/updateDocument"
+import { goToStep } from "services/session/goToStep"
+import { updateMyPlayer } from "services/session/updateMyPlayer"
+import { updateSession } from "services/session/updateSession"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { GameSession } from "types/gameSession"
+import { classes } from "utils/classes"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -13,7 +18,6 @@ export const GameQuestMemberVote = (props: Props) => {
   const { isMyPlayerHost, myPlayer, isAllReady, activeQuest, players, session } = useSessionStore()
 
   const handleVoteClick = async (voteValue: boolean) => {
-    // console.log(voteValue)
     await updateDocument<GameSession>({
       id: session.id,
       collection: "sessions",
@@ -22,7 +26,7 @@ export const GameQuestMemberVote = (props: Props) => {
       },
     })
 
-    updateMyPlayer({
+    void updateMyPlayer({
       isReady: true,
     })
   }
@@ -38,12 +42,12 @@ export const GameQuestMemberVote = (props: Props) => {
     const hasPassed = Boolean(votes.filter((vote) => vote).length > votes.length / 2)
 
     if (!hasPassed) {
-      updateSession({
-        numFailVotes: (session.numFailVotes += 1),
+      void updateSession({
+        numFailVotes: session.numFailVotes + 1,
       })
     }
 
-    goToStep({
+    void goToStep({
       step: "questMemberResult",
     })
   }

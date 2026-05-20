@@ -35,9 +35,6 @@ body {
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
 
-  // Firefox
-  // scrollbar-color: vars.$color-surface2 vars.$color-surface;
-
   ::-webkit-scrollbar {
     display: none;
     width: 10px;

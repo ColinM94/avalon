@@ -1,11 +1,14 @@
 import * as React from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import { useSessionStore } from "stores"
-import { classes } from "utils"
-import { InputText } from "components"
-import { getFileUrl, updateDocument, updateMyPlayer, uploadFile } from "services"
-import { User } from "types"
+import { InputText } from "components/inputText/inputText"
+import { updateDocument } from "services/firestore/updateDocument"
+import { updateMyPlayer } from "services/session/updateMyPlayer"
+import { getFileUrl } from "services/storage/getFileUrl"
+import { uploadFile } from "services/storage/uploadFile"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { User } from "types/user"
+import { classes } from "utils/classes"
 
 import styles from "./styles.module.scss"
 import { Props } from "./types"
@@ -27,14 +30,14 @@ export const GameLobbyProfile = ({ className }: Props) => {
       const url = await getFileUrl(`images/${session.id}/${myPlayer.id}.png`)
 
       updateMyPlayer({
-        imageUrl: url,
+        imageUrl: url || "",
       })
 
       updateDocument<User>({
         collection: "users",
         id: myPlayer.id,
         data: {
-          imageUrl: url,
+          imageUrl: url || "",
         },
       })
     })()

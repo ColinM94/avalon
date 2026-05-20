@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { deleteField } from "firebase/firestore"
 
-import { classes } from "utils"
-import { updateSession } from "services"
-import { useSessionStore } from "stores"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { updateSession } from "services/session/updateSession"
+import { classes } from "utils/classes"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -13,7 +13,7 @@ export const PlayerCard = (props: Props) => {
 
   const { myPlayer, activeQuest, isMyPlayerHost, session } = useSessionStore()
 
-  const isMyPlayer = player?.id === myPlayer.id
+  // const isMyPlayer = player?.id === myPlayer.id
   const showKick = isMyPlayerHost && player?.id !== myPlayer.id && connected
   const isLeader = activeQuest && activeQuest.leaderId && activeQuest?.leaderId === player?.id
 
@@ -46,7 +46,7 @@ export const PlayerCard = (props: Props) => {
       // isMyPlayer && styles.user,
       width === 1 && styles.width1,
       width === 2 && styles.width2,
-      width === 3 && styles.width3
+      width === 3 && styles.width3,
     )
   }
 

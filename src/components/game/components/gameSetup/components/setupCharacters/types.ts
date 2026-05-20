@@ -1,4 +1,4 @@
-import { Character } from "types"
+import { Character } from "types/characters"
 
 export interface Props {
   heading: string

@@ -1,11 +1,11 @@
-import { classes } from "utils";
-import { Heading } from "components";
+import { Heading } from "components/heading/heading"
+import { classes } from "utils/classes"
 
-import styles from "./styles.module.scss";
-import { Props } from "./types";
+import styles from "./styles.module.scss"
+import { Props } from "./types"
 
 export const SetupOptions = (props: Props) => {
-  const { session, updateSession } = props;
+  const { session, updateSession } = props
 
   return (
     <>
@@ -31,10 +31,7 @@ export const SetupOptions = (props: Props) => {
             <div
               onClick={() => updateSession({ numPlayers: num })}
               key={num}
-              className={classes(
-                styles.numPlayersOption,
-                session.numPlayers === num && styles.numPlayersOptionActive
-              )}
+              className={classes(styles.numPlayersOption, session.numPlayers === num && styles.numPlayersOptionActive)}
             >
               {num}
             </div>
@@ -42,5 +39,5 @@ export const SetupOptions = (props: Props) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}

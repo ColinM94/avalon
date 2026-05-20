@@ -1,16 +1,15 @@
-import { MainLayout } from "layouts"
-import { useSessionStore } from "stores"
-import { Players } from "components"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { MainLayout } from "layouts/mainLayout/mainLayout"
+import { Players } from "components/players/players"
 
+import { GameSetup } from "./components/gameSetup/gameSetup"
 import { GameLobby } from "./components/gameLobby/gameLobby"
 import { GameReveal } from "./components/gameReveal/gameReveal"
+import { GameQuestMemberResult } from "./components/gameQuestMemberResult/gameQuestMemberResult"
 import { GameQuestMemberSelect } from "./components/gameQuestMemberSelect/gameQuestMemberSelect"
 import { GameQuestMemberVote } from "./components/gameQuestMemberVote/gameQuestMemberVote"
-import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote"
-import { GameQuestMemberResult } from "./components/gameQuestMemberResult/gameQuestMemberResult"
 import { GameQuestResult } from "./components/gameQuestResult/gameQuestResult"
-import { GameSetup } from "./components/gameSetup/gameSetup"
-
+import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote"
 import styles from "./styles.module.scss"
 
 export const Game = () => {

@@ -1,4 +1,4 @@
-import { Player } from "types";
+import { Player } from "types/gameSession"
 
 export const playerDefault = (): Player => {
   return {
@@ -8,5 +8,5 @@ export const playerDefault = (): Player => {
     isMyPlayerHost: false,
     joinedAt: 0,
     isReady: false,
-  };
-};
+  }
+}

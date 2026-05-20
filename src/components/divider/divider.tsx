@@ -1,10 +1,10 @@
-import { classes } from "utils";
+import { classes } from "utils/classes"
 
-import styles from "./styles.module.scss";
-import { Props } from "./types";
+import styles from "./styles.module.scss"
+import { Props } from "./types"
 
 export const Divider = (props: Props) => {
-  const { direction = "horizontal", label, description, className } = props;
+  const { direction = "horizontal", label, description, className } = props
 
   return (
     <>
@@ -12,7 +12,7 @@ export const Divider = (props: Props) => {
         className={classes(
           styles.container,
           direction === "horizontal" ? styles.horizontal : styles.vertical,
-          className
+          className,
         )}
       >
         {label && <div className={styles.label}>{label}</div>}
@@ -20,5 +20,5 @@ export const Divider = (props: Props) => {
 
       {description && <div className={styles.description}>{description}</div>}
     </>
-  );
-};
+  )
+}

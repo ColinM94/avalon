@@ -1,18 +1,18 @@
-import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import * as React from "react"
+import { useLocation } from "wouter"
 
-import styles from "./styles.module.scss";
+import styles from "./styles.module.scss"
 
 export const InvalidPage = () => {
-  const navigate = useNavigate();
+  const [, navigate] = useLocation()
 
   React.useEffect(() => {
-    navigate("/");
-  }, []);
+    navigate("/")
+  }, [])
 
   return (
     <div className={styles.container}>
       <h1>Page Not Found {":("}</h1>
     </div>
-  );
-};
+  )
+}

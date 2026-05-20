@@ -1,7 +1,7 @@
-import { useSessionStore } from "stores"
-import { goToStep } from "services"
-import { Player } from "types"
-import { MenuBar } from "components"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { MenuBar } from "components/menuBar/menuBar"
+import { goToStep } from "services/session/goToStep"
+import { Player } from "types/gameSession"
 
 import { GameLobbyProfile } from "./components/gameLobbyProfile/gameLobbyProfile"
 import { GameLobbyInfo } from "./components/gameLobbyInfo/gameLobbyInfo"
@@ -44,11 +44,11 @@ export const GameLobby = () => {
 
     playersArray.forEach((player, index) => {
       playerUpdates[player.id] = {
-        characterId: session.characters[index],
+        characterId: session.characters[index] || "",
       }
     })
 
-    goToStep({
+    void goToStep({
       step: "setup",
       playerUpdates,
     })
