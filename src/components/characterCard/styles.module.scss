@@ -48,6 +48,8 @@ $goodColor: #43839a;
   .name {
     font-size: vars.$font-size-body2;
     text-align: center;
+    color: vars.$color-text-primary;
+    margin-bottom: vars.$spacing-secondary;
   }
 
   .description {

@@ -2,6 +2,7 @@ import react, { reactCompilerPreset } from "@vitejs/plugin-react"
 import babel from "@rolldown/plugin-babel"
 import { defineConfig } from "vite"
 import * as path from "path"
+import { VitePWA } from "vite-plugin-pwa"
 
 export default defineConfig({
   optimizeDeps: {
@@ -38,7 +39,7 @@ export default defineConfig({
       utils: path.resolve(__dirname, "src/utils"),
     },
   },
-  plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
+  plugins: [react(), babel({ presets: [reactCompilerPreset()] }), VitePWA()],
   css: {
     preprocessorOptions: {
       scss: {
