@@ -21,7 +21,7 @@ export const JoinPage = () => {
   //   if (sessionId) handleJoin(sessionId)
   // }, [sessionId])
 
-  const handleJoin = async (code: string) => {
+  const handleJoin = (code: string) => {
     if (!code) return
 
     navigate(`/play/${code}`)

@@ -17,16 +17,16 @@ import styles from "./styles.module.scss"
 export const MainMenuButton = (props: Props) => {
   const { label, className, onClick, position } = props
 
-  const backgroundImage = () => {
-    if (position === 1) return backgroundImage1
-    if (position === 2) return backgroundImage2
-    if (position === 3) return backgroundImage3
-    if (position === 4) return backgroundImage4
+  const backgroundImages: Record<number, string> = {
+    1: backgroundImage1,
+    2: backgroundImage2,
+    3: backgroundImage3,
+    4: backgroundImage4,
   }
 
   return (
     <div onClick={onClick} className={classes(styles.container, className)}>
-      <img src={backgroundImage()} className={styles.backgroundImage} />
+      <img src={backgroundImages[position]} className={styles.backgroundImage} />
       <div className={styles.label}>{label}</div>
 
       {position === 4 && (

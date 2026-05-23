@@ -1,4 +1,4 @@
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { library } from "@fortawesome/fontawesome-svg-core"
 import {
   faArrowLeft,
   faArrowRotateBack,
@@ -14,10 +14,11 @@ import {
   faPlay,
   faRightFromBracket,
   faShareNodes,
+  faSliders,
   faSpinner,
   faUser,
   faX,
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons"
 
 export const initIcons = () => {
   library.add(
@@ -37,6 +38,7 @@ export const initIcons = () => {
     faEllipsisV,
     faRightFromBracket,
     faHatWizard,
-    faUser
-  );
-};
+    faUser,
+    faSliders,
+  )
+}

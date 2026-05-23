@@ -1,4 +1,6 @@
 import { classes } from "utils/classes"
+import { Debug } from "components/debug/debug"
+import { isDev } from "consts/general"
 
 import { MenuBarMenuButton } from "./components/menuBarMenuButton/menuBarMenuButton"
 import { MenuBarReadyButton } from "./components/menuBarReadyButton/menuBarReadyButton"
@@ -6,7 +8,7 @@ import { MenuBarReadyButton } from "./components/menuBarReadyButton/menuBarReady
 import styles from "./styles.module.scss"
 import { Props } from "./types"
 
-export const MenuBar = (props: Props) => {
+export const fMenuBar = (props: Props) => {
   const { canContinue, canReady, onContinue, onReady, showContinue, className } = props
 
   return (
@@ -21,7 +23,9 @@ export const MenuBar = (props: Props) => {
         onReady={onReady}
       />
 
-      <div className={styles.rightSpace} />
+      {isDev && <Debug />}
+
+      {!isDev && <div className={styles.rightSpace} />}
     </div>
   )
 }

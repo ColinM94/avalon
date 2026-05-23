@@ -1,0 +1,31 @@
+.button {
+  //   position: absolute;
+  //   bottom: vars.$spacing-primary;
+  //   right: vars.$spacing-primary;
+}
+
+.container {
+  background-color: vars.$color-surface;
+  border-radius: vars.$roundness;
+  gap: vars.$spacing-primary;
+
+  .players {
+    display: grid;
+    flex-direction: row;
+    gap: vars.$spacing-primary;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(3, 1fr);
+
+    .player {
+      background-color: vars.$color-surface2;
+      padding: vars.$spacing-primary;
+      white-space: nowrap;
+      gap: vars.$spacing-primary;
+
+      .playerName {
+        white-space: nowrap;
+        text-align: center;
+      }
+    }
+  }
+}

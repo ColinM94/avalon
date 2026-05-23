@@ -21,8 +21,6 @@ export const MainMenuPage = () => {
     try {
       const id = generateLobbyCode()
 
-      console.log(id)
-
       const result = await setDocument<GameSession>({
         id: id,
         collection: "sessions",

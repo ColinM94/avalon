@@ -22,7 +22,7 @@ export const Button = (props: Props) => {
       onClick={handleClick}
       className={classes(className, styles.container, icon && styles.iconContainer, disabled && styles.disabled)}
     >
-      {label}
+      <div>{label}</div>
 
       {icon && (
         <FontAwesomeIcon icon={icon} className={classes(styles.icon, iconClassName, disabled && styles.disabled)} />
