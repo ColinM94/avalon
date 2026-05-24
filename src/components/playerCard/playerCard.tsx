@@ -34,7 +34,7 @@ export const PlayerCard = (props: Props) => {
 
     if (session.step !== "lobby") return
 
-    if (showKick) handleKick()
+    if (showKick) void handleKick()
   }
 
   const classNames = () => {

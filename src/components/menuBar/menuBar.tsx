@@ -8,7 +8,7 @@ import { MenuBarReadyButton } from "./components/menuBarReadyButton/menuBarReady
 import styles from "./styles.module.scss"
 import { Props } from "./types"
 
-export const fMenuBar = (props: Props) => {
+export const MenuBar = (props: Props) => {
   const { canContinue, canReady, onContinue, onReady, showContinue, className } = props
 
   return (

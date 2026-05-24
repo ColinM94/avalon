@@ -25,15 +25,15 @@ export const GameLobbyProfile = ({ className }: Props) => {
 
   React.useEffect(() => {
     if (!image) return
-    ;(async () => {
+    void (async () => {
       await uploadFile(image, `images/${session.id}/${myPlayer.id}.png`)
       const url = await getFileUrl(`images/${session.id}/${myPlayer.id}.png`)
 
-      updateMyPlayer({
+      void updateMyPlayer({
         imageUrl: url || "",
       })
 
-      updateDocument<User>({
+      void updateDocument<User>({
         collection: "users",
         id: myPlayer.id,
         data: {
@@ -45,7 +45,7 @@ export const GameLobbyProfile = ({ className }: Props) => {
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
-      updateMyPlayer({
+      void updateMyPlayer({
         name,
       })
     }, 200)
@@ -54,7 +54,7 @@ export const GameLobbyProfile = ({ className }: Props) => {
   }, [name])
 
   React.useEffect(() => {
-    updateMyPlayer({
+    void updateMyPlayer({
       isReady: false,
     })
   }, [name])

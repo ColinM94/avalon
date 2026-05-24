@@ -12,9 +12,9 @@ export const GameLobby = () => {
   const { session, playersArray, myPlayer, isAllReady, isMyPlayerHost } = useSessionStore()
 
   const canReady = () => {
-    if (myPlayer.isReady) return "You are ready"
+    if (myPlayer.isReady && !isMyPlayerHost) return "You are ready"
     if (!myPlayer.name) return "You must enter a name"
-    // if (!myPlayer.imageUrl) return "You must select an image";
+    // if (!myPlayer.imageUrl) return "You must select an image"
 
     const filteredPlayers = playersArray.filter((player) => player.id !== myPlayer.id)
 

@@ -17,7 +17,7 @@ export const PlayProtected = ({ sessionId }: Props) => {
   const { showToast } = useToastStore()
   const { user } = useAppStore()
 
-  const updateState = async (data: GameSession | undefined) => {
+  const updateState = (data: GameSession | undefined) => {
     try {
       if (!sessionId) throw new Error("Invalid Session ID")
       if (!user) throw new Error("Invalid User")

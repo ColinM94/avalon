@@ -43,7 +43,7 @@ export const GameSetup = () => {
     return true
   }
 
-  const handleContinue = async () => {
+  const handleContinue = () => {
     if (!user.id) return
 
     try {
