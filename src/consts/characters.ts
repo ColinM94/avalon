@@ -95,7 +95,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: true,
+    disabled: false,
   },
   servant2: {
     id: "servant2",
@@ -103,7 +103,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: true,
+    disabled: false,
   },
   servant3: {
     id: "servant3",
@@ -111,7 +111,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: true,
+    disabled: false,
   },
   servant4: {
     id: "servant4",
@@ -119,7 +119,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: true,
+    disabled: false,
   },
   servant5: {
     id: "servant5",
@@ -127,7 +127,7 @@ export const charactersDefault: Characters = {
     allegiance: "good",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: true,
+    disabled: false,
   },
   assassin: {
     id: "assassin",
@@ -227,7 +227,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: true,
+    disabled: false,
   },
   minion2: {
     id: "minion2",
@@ -235,7 +235,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: true,
+    disabled: false,
   },
   minion3: {
     id: "minion3",
@@ -243,7 +243,7 @@ export const charactersDefault: Characters = {
     allegiance: "evil",
     isOptional: true,
     description: ["Has no special powers"],
-    disabled: true,
+    disabled: false,
   },
 }
 

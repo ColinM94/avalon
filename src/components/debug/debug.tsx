@@ -19,7 +19,7 @@ import { questMemberSelectCanContinue } from "services/session/canContinue"
 import styles from "./styles.module.scss"
 
 export const Debug = () => {
-  const { session, activeQuest } = useSessionStore()
+  const { session, activeQuest, isAllReady } = useSessionStore()
   const { showToast } = useToastStore()
   const [showMenu, setShowMenu] = React.useState(false)
 
@@ -67,6 +67,7 @@ export const Debug = () => {
             disabled={Object.keys(session.players).length >= 10}
           />
         )}
+
         <div className={styles.players}>
           {Object.values(session.players)
             .sort((a, b) => a.name.localeCompare(b.name))
@@ -89,8 +90,9 @@ export const Debug = () => {
                   {session.step === "questMemberSelect" && (
                     <Button
                       label={isSelectedForQuest ? "Remove from Quest" : "Add to Quest"}
+                      disabled={isSelectedForQuest}
                       onClick={() => selectQuestMember(player.id)}
-                      onClickDisabled={() => showToast(`${player.name} is already ready`, "error")}
+                      onClickDisabled={() => selectQuestMember(player.id)}
                     />
                   )}
 
@@ -159,7 +161,7 @@ export const Debug = () => {
                   )}
 
                   <Button
-                    label={player.isReady ? "Ready" : "Not Ready"}
+                    label={player.isReady ? "Unready" : "Ready"}
                     disabled={player.isReady}
                     onClick={() => {
                       void updatePlayer(player.id, {
@@ -177,20 +179,43 @@ export const Debug = () => {
             })}
         </div>
 
-        {session.step === "questMemberSelect" && (
+        <div className={styles.buttons}>
+          {session.step === "questMemberSelect" && (
+            <Button
+              label="Continue"
+              onClick={() => {
+                void goToStep({
+                  step: "questMemberVote",
+                })
+              }}
+              disabled={Boolean(questMemberSelectCanContinue() !== true)}
+              onClickDisabled={() => {
+                showToast(String(questMemberSelectCanContinue()), "error")
+              }}
+              className={styles.button}
+            />
+          )}
+
           <Button
-            label="Continue"
-            onClick={() => {
-              void goToStep({
-                step: "questMemberVote",
+            label={isAllReady ? "All Unready" : "All Ready"}
+            onClick={() =>
+              Object.keys(session.players).forEach((playerId) => {
+                void updatePlayer(playerId, {
+                  isReady: true,
+                })
+              })
+            }
+            disabled={isAllReady}
+            onClickDisabled={() => {
+              Object.keys(session.players).forEach((playerId) => {
+                void updatePlayer(playerId, {
+                  isReady: false,
+                })
               })
             }}
-            disabled={Boolean(questMemberSelectCanContinue() !== true)}
-            onClickDisabled={() => {
-              showToast(String(questMemberSelectCanContinue()), "error")
-            }}
+            className={styles.button}
           />
-        )}
+        </div>
       </Modal>
     </>
   )

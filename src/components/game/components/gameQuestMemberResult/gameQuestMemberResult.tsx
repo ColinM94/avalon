@@ -35,36 +35,28 @@ export const GameQuestMemberResult = (props: Props) => {
       void goToStep({
         step: "questVote",
       })
-    } else {
-      const currentLeaderIndex = playersArray.findIndex((item) => item.id === activeQuest.leaderId)
-      const newLeader = playersArray?.[currentLeaderIndex + 1] || playersArray[0]
-
-      void updateActiveQuest({
-        leaderId: newLeader.id,
-        players: [],
-        index: activeQuest.index + 1,
-        votesToApprove: {},
-        votesToSucceed: {},
-      })
-
-      const numFailVotes = Number(session.numFailVotes) + 1
-
-      void updateSession({
-        numFailVotes,
-      })
-
-      if (numFailVotes >= 5) {
-        void goToStep({
-          step: "gameOver",
-        })
-
-        return
-      }
-
+    } else if (session.numFailVotes >= 5) {
       void goToStep({
-        step: "questMemberSelect",
+        step: "gameOver",
       })
+
+      return
     }
+
+    const currentLeaderIndex = playersArray.findIndex((item) => item.id === activeQuest.leaderId)
+    const newLeader = playersArray?.[currentLeaderIndex + 1] || playersArray[0]
+
+    void updateActiveQuest({
+      leaderId: newLeader.id,
+      players: [],
+      index: activeQuest.index + 1,
+      votesToApprove: {},
+      votesToSucceed: {},
+    })
+
+    void goToStep({
+      step: "questMemberSelect",
+    })
   }
 
   return (

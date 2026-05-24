@@ -38,9 +38,7 @@ export const SetupCharacters = (props: Props) => {
     <div className={classes(styles.container, className)}>
       <Heading
         headingTitle={heading}
-        // headingSubtitle={`Select the characters for ${
-        //   allegiance === "good" ? "Good" : "Evil"
-        // }`}
+        // headingSubtitle={`Select the characters for ${allegiance === "good" ? "Good" : "Evil"}`}
         rightText={`${numActiveCharacters}/${maxActiveCharacters}`}
       />
 

@@ -1,8 +1,8 @@
 .container {
-  justify-content: center;
   align-items: center;
   flex: 1;
   gap: vars.$spacing-primary;
+  margin-top: 40%;
 
   .headingEvil {
     font-size: 50px;

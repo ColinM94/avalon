@@ -32,8 +32,8 @@
   transform: translate(-50%, -50%);
   z-index: 10;
   padding: vars.$spacing-primary;
-  justify-content: center;
-  align-items: center;
+  max-height: calc(100% - vars.$spacing-primary * 7);
+  overflow: auto;
 }
 
 .containerShown {

@@ -63,6 +63,7 @@ export const GameReveal = () => {
         showDescription
         showName
         alwaysActive
+        orientation="landscape"
         className={classes(styles.character, !showCharacter && styles.characterHidden)}
       />
 

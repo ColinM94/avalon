@@ -31,8 +31,10 @@ export const GameSetup = () => {
     (character) => character.allegiance === "evil" && character.isActive,
   ).length
 
-  const maxGoodCharacters = maxCharacters[session.numPlayers]?.good
-  const maxEvilCharacters = maxCharacters[session.numPlayers]?.evil
+  const numPlayers = Object.keys(session.players).length
+
+  const maxGoodCharacters = maxCharacters[numPlayers]?.good
+  const maxEvilCharacters = maxCharacters[numPlayers]?.evil
 
   const canContinue = () => {
     if (numActiveGoodCharacters > maxGoodCharacters) {

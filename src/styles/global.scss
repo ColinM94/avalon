@@ -35,24 +35,10 @@ body {
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
 
-  ::-webkit-scrollbar {
-    display: none;
-    width: 10px;
-    border-radius: vars.$roundness;
-  }
-
-  ::-webkit-scrollbar-track {
-    border-radius: vars.$roundness;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: vars.$color-surface2;
-    border-radius: vars.$roundness;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: vars.$color-surface3;
-  }
+  scroll-behavior: smooth !important;
+  scrollbar-width: thin;
+  scrollbar-color: vars.$color-outline vars.$color-surface2;
+  scrollbar-arrow-color: vars.$color-background;
 }
 
 img,

@@ -9,6 +9,7 @@
   border-radius: vars.$roundness;
   gap: vars.$spacing-primary;
   width: calc(100% - vars.$spacing-primary * 2);
+  height: fit-content;
 
   .players {
     display: grid;
@@ -32,8 +33,8 @@
 
       .characterCard {
         align-self: center;
-        height: 100px;
-        width: 100px;
+        height: 125px;
+        width: 125px;
       }
 
       .votes {
@@ -62,6 +63,15 @@
           filter: brightness(1);
         }
       }
+    }
+  }
+
+  .buttons {
+    flex-direction: row;
+    gap: vars.$spacing-primary;
+
+    .button {
+      flex: 1;
     }
   }
 }
