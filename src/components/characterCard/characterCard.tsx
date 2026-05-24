@@ -32,7 +32,7 @@ export const CharacterCard = (props: Props) => {
       setImage(tempImage.default)
     }
 
-    loadImage()
+    void loadImage()
   }, [character.id])
 
   const handleInfoClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -59,7 +59,7 @@ export const CharacterCard = (props: Props) => {
 
   return (
     <>
-      <div onClick={() => onClick?.(character.id)} className={classNames}>
+      <div onClick={() => onClick?.(character.id)} title={characterNames[character.id]} className={classNames}>
         {!revealed && (
           <div onClick={handleReveal} className={classes(styles.cover, isRevealed && styles.coverRevealed)} />
         )}

@@ -1,15 +1,19 @@
 {
-    "folders": [
-        {
-            "path": "."
-        }
-    ],
-    "settings": {
-        "search.exclude": {
-            "**/node_modules": true,
-            "**/public": true
-        },
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "folders": [
+    {
+      "path": ".",
     },
+    {
+      "name": "avalon @ 01e456a",
+      "uri": "gitlens://7b22726566223a2230316534353661346639313638663636326234613336653964306330646165333031316336353565222c227265706f50617468223a22633a2f50726f6a656374732f6176616c6f6e227d/c:/Projects/avalon?{\"ref\":\"01e456a\"}",
+    },
+  ],
+  "settings": {
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/public": true,
+    },
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
 }

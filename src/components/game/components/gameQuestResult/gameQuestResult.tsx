@@ -35,7 +35,7 @@ export const GameQuestResult = (props: Props) => {
   }
 
   const onContinue = () => {
-    if (!isMyPlayerHost || !myPlayer.isReady) return
+    if (!isMyPlayerHost) return
 
     if (hasPassed) {
       void goToStep({
@@ -79,7 +79,13 @@ export const GameQuestResult = (props: Props) => {
 
       <div className={classes(styles.container, className)}>{renderVotes()}</div>
 
-      <MenuBar showContinue={isMyPlayerHost} onContinue={onContinue} canReady={canReady} onReady={onReady} />
+      <MenuBar
+        showContinue={isMyPlayerHost}
+        canContinue={() => true}
+        onContinue={onContinue}
+        canReady={canReady}
+        onReady={onReady}
+      />
     </>
   )
 }

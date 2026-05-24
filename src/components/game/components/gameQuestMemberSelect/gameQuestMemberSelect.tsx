@@ -3,9 +3,10 @@ import { LoadingOverlay } from "components/loadingOverlay/loadingOverlay"
 import { MenuBar } from "components/menuBar/menuBar"
 import { PlayerCard } from "components/playerCard/playerCard"
 import { goToStep } from "services/session/goToStep"
-import { updateSession } from "services/session/updateSession"
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 import { classes } from "utils/classes"
+import { selectQuestMember } from "services/session/selectQuestMember"
+import { questMemberSelectCanContinue } from "services/session/canContinue"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -13,38 +14,12 @@ import styles from "./styles.module.scss"
 export const GameQuestMemberSelect = (props: Props) => {
   const { className } = props
 
-  const { players, playersArray, myPlayer, session, activeQuest, isMyPlayerLeader } = useSessionStore()
-
-  const isMaxPlayers = activeQuest.players.length >= activeQuest.numPlayers
+  const { players, playersArray, myPlayer, activeQuest, isMyPlayerLeader } = useSessionStore()
 
   const handleClick = (playerId: string) => {
     if (activeQuest.leaderId !== myPlayer.id || myPlayer.isReady) return
 
-    const updatedQuestPlayers = activeQuest.players
-
-    if (updatedQuestPlayers.includes(playerId)) {
-      updatedQuestPlayers.splice(updatedQuestPlayers.indexOf(playerId), 1)
-    } else if (!isMaxPlayers) {
-      updatedQuestPlayers.push(playerId)
-    } else {
-      return
-    }
-
-    const updatedQuests = structuredClone(session.quests)
-
-    updatedQuests[activeQuest.index].players = updatedQuestPlayers
-
-    void updateSession({
-      quests: updatedQuests,
-    })
-  }
-
-  const canContinue = () => {
-    if (activeQuest.numPlayers !== activeQuest.players.length) {
-      return `Please select ${activeQuest.numPlayers} players.`
-    }
-
-    return true
+    selectQuestMember(playerId)
   }
 
   const handleContinue = () => {
@@ -63,7 +38,7 @@ export const GameQuestMemberSelect = (props: Props) => {
             ? `Select ${activeQuest.numPlayers} people to go on the this quest`
             : `${players[activeQuest.leaderId]?.name} is selecting ${
                 activeQuest.numPlayers
-              } player(s) to go on this Quest`
+              } players to go on this Quest`
         }
       />
 
@@ -84,7 +59,7 @@ export const GameQuestMemberSelect = (props: Props) => {
           })}
       </div>
 
-      <MenuBar showContinue={isMyPlayerLeader} canContinue={canContinue} onContinue={handleContinue} />
+      <MenuBar showContinue={isMyPlayerLeader} canContinue={questMemberSelectCanContinue} onContinue={handleContinue} />
     </>
   )
 }

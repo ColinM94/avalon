@@ -33,11 +33,13 @@ export type GameSession = {
     | "questMemberResult"
     | "questVote"
     | "questResult"
+    | "gameOver"
     | ""
   numPlayers: number
   characters: string[]
   createdBy: string
   isMyPlayerHostPlaying: boolean
+  quests: Record<number, Quest>
   activeQuestIndex: number
   numFailVotes: number
   numFailQuests: number

@@ -11,9 +11,10 @@ import { GameQuestMemberVote } from "./components/gameQuestMemberVote/gameQuestM
 import { GameQuestResult } from "./components/gameQuestResult/gameQuestResult"
 import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote"
 import styles from "./styles.module.scss"
+import { GameOver } from "./components/gameOver/gameOver"
 
 export const Game = () => {
-  const { session, heading } = useSessionStore()
+  const { session, heading, players, activeQuest } = useSessionStore()
 
   return (
     <>
@@ -22,17 +23,15 @@ export const Game = () => {
 
         {!["setup", "lobby", "characterReveal", "ritual"].includes(session.step) && (
           <div className={styles.info}>
-            {/* <div className={styles.infoItem}>
+            <div className={styles.infoItem}>
               <div className={styles.infoItemHeading}>Quest</div>
-              <div className={styles.infoItemValue}>
-                {session.activeQuestIndex + 1}
-              </div>
-            </div> */}
+              <div className={styles.infoItemValue}>{session.activeQuestIndex + 1}</div>
+            </div>
 
-            {/* <div className={styles.infoItem}>
+            <div className={styles.infoItem}>
               <div className={styles.infoItemHeading}>Leader</div>
               <div className={styles.infoItemValue}>{players[activeQuest.leaderId]?.name}</div>
-            </div> */}
+            </div>
 
             <div className={styles.infoItem}>
               <div className={styles.infoItemHeading}>Failed Votes</div>
@@ -62,6 +61,8 @@ export const Game = () => {
           {session.step === "questVote" && <GameQuestVote />}
 
           {session.step === "questResult" && <GameQuestResult />}
+
+          {session.step === "gameOver" && <GameOver />}
         </div>
       </MainLayout>
     </>

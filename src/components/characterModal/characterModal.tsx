@@ -18,7 +18,7 @@ export const CharacterModal = (props: Props) => {
         alwaysActive
         showDescription
         showName
-        orientation="portrait"
+        orientation="landscape"
         className={styles.character}
       />
     </Modal>

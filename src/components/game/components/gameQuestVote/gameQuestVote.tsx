@@ -7,6 +7,7 @@ import { updateMyPlayer } from "services/session/updateMyPlayer"
 import { updateSession } from "services/session/updateSession"
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 import { classes } from "utils/classes"
+import { questSucceedVote } from "services/session/questSucceedVote"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -23,12 +24,17 @@ export const GameQuestVote = (props: Props) => {
   const handleVoteClick = (voteValue: boolean) => {
     if (myPlayer.isReady) return
 
-    void updateSession({
-      [`quests.${activeQuest.index}.votesToSucceed.${myPlayer.id}`]: voteValue,
+    void questSucceedVote({
+      playerId: myPlayer.id,
+      voteValue,
     })
   }
 
   const canContinue = () => {
+    const playersOnQuestAreReady = activeQuest.players.every((playerId) => players[playerId].isReady)
+
+    if (!playersOnQuestAreReady) return "Not all players on quest are ready"
+
     return true
   }
 
@@ -39,9 +45,13 @@ export const GameQuestVote = (props: Props) => {
 
     let shouldProceed = true
 
+    console.log(activeQuest)
+
     activeQuest.players.map((playerId) => {
       if (activeQuest.votesToSucceed?.[playerId] === undefined) {
         shouldProceed = false
+
+        console.log("hello")
       }
 
       if (!players[playerId].isReady) {

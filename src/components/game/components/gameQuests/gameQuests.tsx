@@ -1,19 +1,18 @@
-import { useSessionStore } from "stores";
-import { LoadingOverlay } from "components";
+import { LoadingOverlay } from "components/loadingOverlay/loadingOverlay"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 
-import { QuestsStatus } from "./components/questsStatus/questsStatus";
-
-import styles from "./styles.module.scss";
+import { QuestsStatus } from "./components/questsStatus/questsStatus"
+import styles from "./styles.module.scss"
 
 export const GameQuests = () => {
-  const { activeQuest } = useSessionStore();
+  const { activeQuest } = useSessionStore()
 
-  if (!activeQuest) return <LoadingOverlay />;
+  if (!activeQuest) return <LoadingOverlay />
 
   return (
     <div className={styles.container}>
       {/* <QuestsMemberSelect activeQuest={activeQuest} /> */}
       <QuestsStatus className={styles.questsStatus} />
     </div>
-  );
-};
+  )
+}

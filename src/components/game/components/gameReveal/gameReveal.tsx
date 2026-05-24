@@ -10,9 +10,11 @@ import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 import { classes } from "utils/classes"
 
 import styles from "./styles.module.scss"
+import { updateActiveQuest } from "services/session/updateActiveQuest"
+import { numPlayersByQuest } from "consts/quest"
 
 export const GameReveal = () => {
-  const { myPlayer, isMyPlayerHost, isAllReady, session } = useSessionStore()
+  const { myPlayer, isMyPlayerHost, isAllReady, session, players } = useSessionStore()
 
   const [showCharacter, setShowCharacter] = React.useState(false)
   const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false)
@@ -25,13 +27,18 @@ export const GameReveal = () => {
   }
 
   const canContinue = () => {
-    if (!isCharacterRevealed) "You must view your character first"
+    if (!isCharacterRevealed) return "You must view your character first"
     if (!isAllReady) return "All players are not ready"
 
     return true
   }
 
   const handleContinue = () => {
+    void updateActiveQuest({
+      numPlayers: numPlayersByQuest[session.activeQuestIndex][session.numPlayers - 5],
+      leaderId: Object.values(players)[0].id,
+    })
+
     void goToStep({
       step: "questMemberSelect",
     })
@@ -44,7 +51,7 @@ export const GameReveal = () => {
   }
 
   const onReady = () => {
-    updateMyPlayer({
+    void updateMyPlayer({
       isReady: true,
     })
   }

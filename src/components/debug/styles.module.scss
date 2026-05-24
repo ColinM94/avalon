@@ -8,6 +8,7 @@
   background-color: vars.$color-surface;
   border-radius: vars.$roundness;
   gap: vars.$spacing-primary;
+  width: calc(100% - vars.$spacing-primary * 2);
 
   .players {
     display: grid;
@@ -15,16 +16,51 @@
     gap: vars.$spacing-primary;
     flex-wrap: wrap;
     grid-template-columns: repeat(3, 1fr);
+    width: 100%;
 
     .player {
       background-color: vars.$color-surface2;
       padding: vars.$spacing-primary;
       white-space: nowrap;
       gap: vars.$spacing-primary;
+      border-radius: vars.$roundness;
 
       .playerName {
         white-space: nowrap;
         text-align: center;
+      }
+
+      .characterCard {
+        align-self: center;
+        height: 100px;
+        width: 100px;
+      }
+
+      .votes {
+        flex-direction: row;
+        gap: vars.$spacing-primary;
+
+        .yesButton {
+          flex: 1;
+          // outline: 2px solid vars.$color-success;
+          filter: brightness(0.5);
+          background-color: vars.$color-success;
+        }
+
+        .noButton {
+          flex: 1;
+          background-color: vars.$color-danger;
+          filter: brightness(0.5);
+          // outline: 2px solid vars.$color-danger;
+        }
+
+        .yesButtonActive {
+          filter: brightness(1);
+        }
+
+        .noButtonActive {
+          filter: brightness(1);
+        }
       }
     }
   }

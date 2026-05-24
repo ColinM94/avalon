@@ -1,3 +1,5 @@
+import * as React from "react"
+
 import { MenuBar } from "components/menuBar/menuBar"
 import { StepDescription } from "components/stepDescription/stepDescription"
 import { charactersDefault, maxCharacters } from "consts/characters"
@@ -7,8 +9,9 @@ import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 import { useToastStore } from "stores/useToastStore/useToastStore"
 import { Characters } from "types/characters"
 import { Player } from "types/gameSession"
-import { reactReducer } from "utils/reactReducer"
 import { shuffleArray } from "utils/shuffleArray"
+import { mergeReducer } from "utils/mergeReducer"
+
 import { SetupCharacters } from "./components/setupCharacters/setupCharacters"
 
 import styles from "./styles.module.scss"
@@ -18,7 +21,7 @@ export const GameSetup = () => {
   const { user } = useAppStore()
   const { session, isMyPlayerHost, playersArray } = useSessionStore()
 
-  const [characters, updateCharacters] = reactReducer<Characters>(charactersDefault)
+  const [characters, updateCharacters] = React.useReducer(mergeReducer<Characters>, charactersDefault)
 
   const numActiveGoodCharacters = Object.values(characters).filter(
     (character) => character.allegiance === "good" && character.isActive,
@@ -38,6 +41,14 @@ export const GameSetup = () => {
 
     if (numActiveEvilCharacters > maxEvilCharacters) {
       return `You have selected too many evil characters`
+    }
+
+    if (numActiveGoodCharacters < maxGoodCharacters) {
+      return `You must select ${maxGoodCharacters} good characters`
+    }
+
+    if (numActiveEvilCharacters < maxEvilCharacters) {
+      return `You must select ${maxEvilCharacters} evil characters`
     }
 
     return true

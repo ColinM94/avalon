@@ -47,9 +47,19 @@ export const GameQuestMemberResult = (props: Props) => {
         votesToSucceed: {},
       })
 
+      const numFailVotes = Number(session.numFailVotes) + 1
+
       void updateSession({
-        numFailVotes: Number(session.numFailVotes) + 1,
+        numFailVotes,
       })
+
+      if (numFailVotes >= 5) {
+        void goToStep({
+          step: "gameOver",
+        })
+
+        return
+      }
 
       void goToStep({
         step: "questMemberSelect",
