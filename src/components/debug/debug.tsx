@@ -54,20 +54,13 @@ export const Debug = () => {
     )
   }
 
+  console.log(session.step)
+
   return (
     <>
       <Button icon="sliders" onClick={() => setShowMenu(true)} className={styles.button} />
 
       <Modal show={showMenu} setShow={setShowMenu} className={styles.container}>
-        {session.step === "lobby" && (
-          <Button
-            label="Add Fake Player"
-            onClick={addFakePlayer}
-            onClickDisabled={() => showToast("Already at max players", "error")}
-            disabled={Object.keys(session.players).length >= 10}
-          />
-        )}
-
         <div className={styles.players}>
           {Object.values(session.players)
             .sort((a, b) => a.name.localeCompare(b.name))
@@ -79,119 +72,120 @@ export const Debug = () => {
                 <div key={player.id} className={styles.player}>
                   <div className={styles.playerName}>{player.name}</div>
 
-                  {player.characterId && (
-                    <CharacterCard
-                      character={charactersDefault[player.characterId]}
-                      alwaysActive
-                      className={styles.characterCard}
-                    />
-                  )}
-
-                  {session.step === "questMemberSelect" && (
-                    <Button
-                      label={isSelectedForQuest ? "Remove from Quest" : "Add to Quest"}
-                      disabled={isSelectedForQuest}
-                      onClick={() => selectQuestMember(player.id)}
-                      onClickDisabled={() => selectQuestMember(player.id)}
-                    />
-                  )}
-
-                  {session.step === "questMemberVote" && (
-                    <div className={styles.votes}>
-                      <Button
-                        label="Yes"
-                        onClick={() =>
-                          questMemberVote({
-                            playerId: player.id,
-                            voteValue: true,
-                          })
-                        }
-                        className={classes(
-                          styles.yesButton,
-                          activeQuest.votesToApprove[player.id] === true && styles.yesButtonActive,
-                        )}
+                  <div className={styles.playerContent}>
+                    {player.characterId && (
+                      <CharacterCard
+                        character={charactersDefault[player.characterId]}
+                        alwaysActive
+                        className={styles.characterCard}
                       />
+                    )}
+
+                    <div className={styles.playerControls}>
+                      {session.step === "questMemberSelect" && (
+                        <Button
+                          label={isSelectedForQuest ? "Remove" : "Add"}
+                          // icon={isSelectedForQuest ? "minus" : "plus"}
+                          disabled={isSelectedForQuest}
+                          onClick={() => selectQuestMember(player.id)}
+                          onClickDisabled={() => selectQuestMember(player.id)}
+                          className={styles.button}
+                        />
+                      )}
+
+                      {session.step === "questMemberVote" && (
+                        <>
+                          <Button
+                            label="Yes"
+                            onClick={() =>
+                              questMemberVote({
+                                playerId: player.id,
+                                voteValue: true,
+                              })
+                            }
+                            className={classes(
+                              styles.yesButton,
+                              activeQuest.votesToApprove[player.id] === true && styles.yesButtonActive,
+                            )}
+                          />
+
+                          <Button
+                            label="No"
+                            onClick={() =>
+                              questMemberVote({
+                                playerId: player.id,
+                                voteValue: false,
+                              })
+                            }
+                            className={classes(
+                              styles.noButton,
+                              activeQuest.votesToApprove[player.id] === false && styles.noButtonActive,
+                            )}
+                          />
+                        </>
+                      )}
+
+                      {session.step === "questVote" && activeQuest.players.includes(player.id) && (
+                        <div className={styles.votes}>
+                          <Button
+                            label="Pass"
+                            onClick={() =>
+                              questSucceedVote({
+                                playerId: player.id,
+                                voteValue: true,
+                              })
+                            }
+                            className={classes(
+                              styles.yesButton,
+                              activeQuest.votesToSucceed[player.id] === true && styles.yesButtonActive,
+                            )}
+                          />
+
+                          <Button
+                            label="Fail"
+                            onClick={() =>
+                              questSucceedVote({
+                                playerId: player.id,
+                                voteValue: false,
+                              })
+                            }
+                            className={classes(
+                              styles.noButton,
+                              activeQuest.votesToSucceed[player.id] === false && styles.noButtonActive,
+                            )}
+                          />
+                        </div>
+                      )}
 
                       <Button
-                        label="No"
-                        onClick={() =>
-                          questMemberVote({
-                            playerId: player.id,
-                            voteValue: false,
+                        label={player.isReady ? "Unready" : "Ready"}
+                        disabled={player.isReady}
+                        onClick={() => {
+                          void updatePlayer(player.id, {
+                            isReady: !player.isReady,
                           })
-                        }
-                        className={classes(
-                          styles.noButton,
-                          activeQuest.votesToApprove[player.id] === false && styles.noButtonActive,
-                        )}
+                        }}
+                        onClickDisabled={() => {
+                          void updatePlayer(player.id, {
+                            isReady: false,
+                          })
+                        }}
+                        className={styles.button}
                       />
                     </div>
-                  )}
-
-                  {session.step === "questVote" && activeQuest.players.includes(player.id) && (
-                    <div className={styles.votes}>
-                      <Button
-                        label="Pass"
-                        onClick={() =>
-                          questSucceedVote({
-                            playerId: player.id,
-                            voteValue: true,
-                          })
-                        }
-                        className={classes(
-                          styles.yesButton,
-                          activeQuest.votesToSucceed[player.id] === true && styles.yesButtonActive,
-                        )}
-                      />
-
-                      <Button
-                        label="Fail"
-                        onClick={() =>
-                          questSucceedVote({
-                            playerId: player.id,
-                            voteValue: false,
-                          })
-                        }
-                        className={classes(
-                          styles.noButton,
-                          activeQuest.votesToSucceed[player.id] === false && styles.noButtonActive,
-                        )}
-                      />
-                    </div>
-                  )}
-
-                  <Button
-                    label={player.isReady ? "Unready" : "Ready"}
-                    disabled={player.isReady}
-                    onClick={() => {
-                      void updatePlayer(player.id, {
-                        isReady: !player.isReady,
-                      })
-                    }}
-                    onClickDisabled={() => {
-                      void updatePlayer(player.id, {
-                        isReady: false,
-                      })
-                    }}
-                  />
+                  </div>
                 </div>
               )
             })}
         </div>
 
-        <div className={styles.buttons}>
-          {session.step === "questMemberSelect" && (
+        <div className={styles.controls}>
+          {session.step === "lobby" && (
             <Button
-              label="Continue"
-              onClick={() => {
-                void goToStep({
-                  step: "questMemberVote",
-                })
-              }}
-              disabled={Boolean(questMemberSelectCanContinue() !== true)}
-              onClickDisabled={() => {
-                showToast(String(questMemberSelectCanContinue()), "error")
-              }}
+              label="Add Fake Player"
+              onClick={addFakePlayer}
+              onClickDisabled={() => showToast("Already at max players", "error")}
+              disabled={Object.keys(session.players).length >= 10}
               className={styles.button}
             />
           )}
@@ -215,6 +209,82 @@ export const Debug = () => {
             }}
             className={styles.button}
           />
+
+          {session.step === "questMemberVote" && (
+            <>
+              <Button
+                label="All Yes"
+                onClick={() => {
+                  Object.keys(session.players).forEach((playerId) => {
+                    void questMemberVote({
+                      playerId: playerId,
+                      voteValue: true,
+                    })
+                  })
+                }}
+                className={styles.button}
+              />
+
+              <Button
+                label="All No"
+                onClick={() => {
+                  Object.keys(session.players).forEach((playerId) => {
+                    void questMemberVote({
+                      playerId: playerId,
+                      voteValue: false,
+                    })
+                  })
+                }}
+                className={styles.button}
+              />
+            </>
+          )}
+
+          {session.step === "questVote" && (
+            <>
+              <Button
+                label="All Pass"
+                onClick={() => {
+                  activeQuest.players.forEach((playerId) => {
+                    void questSucceedVote({
+                      playerId: playerId,
+                      voteValue: true,
+                    })
+                  })
+                }}
+                className={styles.button}
+              />
+
+              <Button
+                label="All Fail"
+                onClick={() => {
+                  activeQuest.players.forEach((playerId) => {
+                    void questSucceedVote({
+                      playerId: playerId,
+                      voteValue: false,
+                    })
+                  })
+                }}
+                className={styles.button}
+              />
+            </>
+          )}
+
+          {session.step === "questMemberSelect" && (
+            <Button
+              label="Continue"
+              onClick={() => {
+                void goToStep({
+                  step: "questMemberVote",
+                })
+              }}
+              disabled={Boolean(questMemberSelectCanContinue() !== true)}
+              onClickDisabled={() => {
+                showToast(String(questMemberSelectCanContinue()), "error")
+              }}
+              className={styles.button}
+            />
+          )}
         </div>
       </Modal>
     </>

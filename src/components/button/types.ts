@@ -1,11 +1,12 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { IconProp } from "@fortawesome/fontawesome-svg-core"
 
 export interface Props {
-  label?: string;
-  icon?: IconProp;
-  onClick: () => void;
-  onClickDisabled?: () => void;
-  disabled?: boolean;
-  iconClassName?: string;
-  className?: string;
+  label?: string
+  icon?: IconProp
+  onClick: () => void
+  onClickDisabled?: () => void
+  disabled?: boolean
+  iconClassName?: string
+  labelClassName?: string
+  className?: string
 }

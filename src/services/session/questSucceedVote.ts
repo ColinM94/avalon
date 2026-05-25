@@ -1,14 +1,19 @@
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { updateSession } from "./updateSession"
+import { updateDocument } from "services/firestore/updateDocument"
+import { GameSession } from "types/gameSession"
 
 interface Props {
   playerId: string
   voteValue: boolean
 }
-export const questSucceedVote = ({ playerId, voteValue }: Props) => {
-  const { activeQuest } = useSessionStore.getState()
+export const questSucceedVote = async ({ playerId, voteValue }: Props) => {
+  const { session } = useSessionStore.getState()
 
-  void updateSession({
-    [`quests.${activeQuest.index}.votesToSucceed.${playerId}`]: voteValue,
+  await updateDocument<GameSession>({
+    id: session.id,
+    collection: "sessions",
+    data: {
+      [`quests.${session.activeQuestIndex}.votesToSucceed.${playerId}`]: voteValue,
+    },
   })
 }

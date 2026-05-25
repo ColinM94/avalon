@@ -11,6 +11,7 @@ $goodColor: #43839a;
   justify-content: center;
   align-items: center;
   transition: scale 0.2s;
+  padding: vars.$spacing-primary;
 
   .icon {
     font-size: vars.$icon-size-large;

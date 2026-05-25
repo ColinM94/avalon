@@ -6,7 +6,7 @@ import { Props } from "./types"
 import styles from "./styles.module.scss"
 
 export const Button = (props: Props) => {
-  const { label, onClick, onClickDisabled, disabled, icon, iconClassName, className } = props
+  const { label, onClick, onClickDisabled, disabled, icon, labelClassName, iconClassName, className } = props
 
   const handleClick = () => {
     if (disabled) {
@@ -22,7 +22,7 @@ export const Button = (props: Props) => {
       onClick={handleClick}
       className={classes(className, styles.container, icon && styles.iconContainer, disabled && styles.disabled)}
     >
-      <div>{label}</div>
+      <div className={classes(styles.label, labelClassName)}>{label}</div>
 
       {icon && (
         <FontAwesomeIcon icon={icon} className={classes(styles.icon, iconClassName, disabled && styles.disabled)} />

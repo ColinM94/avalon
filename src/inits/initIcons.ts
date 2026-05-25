@@ -12,12 +12,16 @@ import {
   faPause,
   faPencil,
   faPlay,
+  faPlus,
   faRightFromBracket,
   faShareNodes,
   faSliders,
   faSpinner,
+  faSquare,
+  faSquareCheck,
   faUser,
   faX,
+  faMinus,
 } from "@fortawesome/free-solid-svg-icons"
 
 export const initIcons = () => {
@@ -40,5 +44,9 @@ export const initIcons = () => {
     faHatWizard,
     faUser,
     faSliders,
+    faSquare,
+    faSquareCheck,
+    faPlus,
+    faMinus,
   )
 }

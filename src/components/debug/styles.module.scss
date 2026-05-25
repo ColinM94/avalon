@@ -1,77 +1,101 @@
-.button {
-  //   position: absolute;
-  //   bottom: vars.$spacing-primary;
-  //   right: vars.$spacing-primary;
-}
-
 .container {
   background-color: vars.$color-surface;
   border-radius: vars.$roundness;
-  gap: vars.$spacing-primary;
+  gap: vars.$spacing-secondary;
   width: calc(100% - vars.$spacing-primary * 2);
   height: fit-content;
+  height: 100%;
+  padding: vars.$spacing-secondary;
+
+  .button {
+    padding-inline: vars.$spacing-secondary;
+    padding-block: vars.$spacing-tertiary;
+
+    div {
+      font-size: vars.$font-size-body;
+    }
+  }
+
+  .iconButton {
+    padding: vars.$spacing-secondary;
+    background-color: vars.$color-primary;
+  }
 
   .players {
     display: grid;
     flex-direction: row;
-    gap: vars.$spacing-primary;
     flex-wrap: wrap;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     width: 100%;
+    gap: vars.$spacing-tertiary;
+
+    @media (min-width: vars.$breakpoint-medium) {
+      grid-template-columns: repeat(3, 1fr);
+    }
 
     .player {
       background-color: vars.$color-surface2;
-      padding: vars.$spacing-primary;
-      white-space: nowrap;
+      padding: vars.$spacing-secondary;
       gap: vars.$spacing-primary;
-      border-radius: vars.$roundness;
+      white-space: nowrap;
 
       .playerName {
         white-space: nowrap;
         text-align: center;
       }
 
-      .characterCard {
-        align-self: center;
-        height: 125px;
-        width: 125px;
-      }
-
-      .votes {
+      .playerContent {
         flex-direction: row;
         gap: vars.$spacing-primary;
 
-        .yesButton {
+        .characterCard {
+          align-self: center;
+          aspect-ratio: 1;
+          width: 100px;
+        }
+
+        .playerControls {
+          gap: vars.$spacing-secondary;
           flex: 1;
-          // outline: 2px solid vars.$color-success;
-          filter: brightness(0.5);
-          background-color: vars.$color-success;
-        }
 
-        .noButton {
-          flex: 1;
-          background-color: vars.$color-danger;
-          filter: brightness(0.5);
-          // outline: 2px solid vars.$color-danger;
+          .button {
+            width: 100%;
+          }
         }
+      }
 
-        .yesButtonActive {
-          filter: brightness(1);
-        }
+      .yesButton {
+        @extend .button;
+        filter: brightness(0.5);
+        background-color: vars.$color-success;
+      }
 
-        .noButtonActive {
-          filter: brightness(1);
-        }
+      .noButton {
+        @extend .button;
+        background-color: vars.$color-danger;
+        filter: brightness(0.5);
+      }
+
+      .yesButtonActive {
+        filter: brightness(1);
+      }
+
+      .noButtonActive {
+        filter: brightness(1);
       }
     }
   }
 
-  .buttons {
+  .controls {
     flex-direction: row;
     gap: vars.$spacing-primary;
+    padding: vars.$spacing-primary;
+    width: 100%;
+    margin-top: auto;
 
     .button {
       flex: 1;
+      padding: vars.$spacing-primary;
     }
   }
 }

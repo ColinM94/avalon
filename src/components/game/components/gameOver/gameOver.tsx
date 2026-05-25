@@ -43,8 +43,8 @@ export const GameOver = () => {
 
   return (
     <div className={styles.container}>
-      {result().evilHasWon && <div className={styles.headingEvil}>The Kingdom Falls</div>}
-      {!result().evilHasWon && <div className={styles.headingGood}>The Kingdom Is Saved</div>}
+      {result().evilHasWon && <div className={styles.headingEvil}>Evil has Won</div>}
+      {!result().evilHasWon && <div className={styles.headingGood}>Good has Won</div>}
 
       <div className={styles.description}>{result().description}</div>
 

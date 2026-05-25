@@ -17,12 +17,15 @@ export const GameQuestVote = (props: Props) => {
 
   const { players, myPlayer, isMyPlayerHost, activeQuest, session } = useSessionStore()
 
+  console.log(session)
   const isUpdating = React.useRef(false)
 
   const vote = Boolean(activeQuest?.votesToSucceed?.[myPlayer.id])
 
+  console.log(vote)
+
   const handleVoteClick = (voteValue: boolean) => {
-    if (myPlayer.isReady) return
+    // if (myPlayer.isReady && !isMyPlayerHost) return
 
     void questSucceedVote({
       playerId: myPlayer.id,
@@ -50,8 +53,6 @@ export const GameQuestVote = (props: Props) => {
     activeQuest.players.map((playerId) => {
       if (activeQuest.votesToSucceed?.[playerId] === undefined) {
         shouldProceed = false
-
-        console.log("hello")
       }
 
       if (!players[playerId].isReady) {

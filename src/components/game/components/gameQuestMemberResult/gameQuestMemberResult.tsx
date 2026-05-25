@@ -3,7 +3,6 @@ import * as React from "react"
 import { MenuBar } from "components/menuBar/menuBar"
 import { goToStep } from "services/session/goToStep"
 import { updateActiveQuest } from "services/session/updateActiveQuest"
-import { updateSession } from "services/session/updateSession"
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 import { classes } from "utils/classes"
 import { Divider } from "components/divider/divider"
@@ -31,13 +30,17 @@ export const GameQuestMemberResult = (props: Props) => {
   }
 
   const onContinue = () => {
+    if (session.numFailVotes >= 5) {
+      void goToStep({
+        step: "gameOver",
+      })
+
+      return
+    }
+
     if (hasPassed) {
       void goToStep({
         step: "questVote",
-      })
-    } else if (session.numFailVotes >= 5) {
-      void goToStep({
-        step: "gameOver",
       })
 
       return
