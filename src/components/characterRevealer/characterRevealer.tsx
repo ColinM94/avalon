@@ -1,6 +1,6 @@
 import { CharacterCard } from "components/characterCard/characterCard"
-import { charactersDefault } from "consts/characters"
 import { Players } from "components/players/players"
+import { charactersDefault } from "consts/defaults"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"

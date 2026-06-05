@@ -1,8 +1,8 @@
 import * as React from "react"
 
 import { classes } from "utils/classes"
-import { characterNames } from "consts/characters"
 import { CharacterModal } from "components/characterModal/characterModal"
+import { characterNames } from "consts/characters"
 
 import styles from "./styles.module.scss"
 import { Props } from "./types"

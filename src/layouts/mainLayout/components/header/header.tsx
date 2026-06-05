@@ -6,8 +6,8 @@ import { deleteField } from "firebase/firestore"
 import { deleteDocument } from "services/firestore/deleteDocument"
 import { updateDocument } from "services/firestore/updateDocument"
 import { updateSession } from "services/session/updateSession"
-import { useToastStore } from "stores/useToastStore/useToastStore"
 import { User } from "types/user"
+import { useAppStore } from "stores/useAppStore/useAppStore"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -16,10 +16,9 @@ export const Header = (props: Props) => {
   const { headingTitle, showBackButton } = props
 
   const { myPlayer, isMyPlayerHost, session } = useSessionStore()
+  const { showToast } = useAppStore()
 
   const [, navigate] = useLocation()
-
-  const { showToast } = useToastStore()
 
   const handleLeave = async () => {
     try {
@@ -58,7 +57,8 @@ export const Header = (props: Props) => {
 
       await Promise.all(promises)
     } catch (error) {
-      showToast(String(error))
+      const err = error as Error
+      showToast(err.message, "error")
     }
   }
 

@@ -1,12 +1,11 @@
 import { useLocation } from "wouter"
 
-import { sessionDefault } from "consts/sessionDefault"
 import { MainLayout } from "layouts/mainLayout/mainLayout"
 import { setDocument } from "services/firestore/setDocument"
 import { useAppStore } from "stores/useAppStore/useAppStore"
-import { useToastStore } from "stores/useToastStore/useToastStore"
 import { GameSession } from "types/gameSession"
 import { generateLobbyCode } from "utils/generateLobbyCode"
+import { sessionDefault } from "consts/defaults"
 
 import { MainMenuButton } from "./components/mainMenuButton/mainMenuButton"
 import styles from "./styles.module.scss"
@@ -15,7 +14,7 @@ export const MainMenuPage = () => {
   const [, navigate] = useLocation()
 
   const { user } = useAppStore()
-  const { showToast } = useToastStore()
+  const { showToast } = useAppStore()
 
   const handleCreateSession = async () => {
     try {
@@ -35,7 +34,8 @@ export const MainMenuPage = () => {
 
       navigate(`/play/${id}`)
     } catch (error) {
-      showToast(String(error), "error")
+      const err = error as Error
+      showToast(err.message, "error")
     }
   }
 

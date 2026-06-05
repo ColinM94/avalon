@@ -5,15 +5,15 @@ import { useLocation } from "wouter"
 
 import { Button } from "components/button/button"
 import { Modal } from "components/modal/modal"
-import { charactersDefault } from "consts/characters"
 import { deleteDocument } from "services/firestore/deleteDocument"
 import { updateDocument } from "services/firestore/updateDocument"
 import { updateSession } from "services/session/updateSession"
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { useToastStore } from "stores/useToastStore/useToastStore"
 import { User } from "types/user"
 import { capitaliseFirstLetter } from "utils/capitaliseFirstLetter"
 import { classes } from "utils/classes"
+import { useAppStore } from "stores/useAppStore/useAppStore"
+import { charactersDefault } from "consts/defaults"
 
 import styles from "./styles.module.scss"
 
@@ -21,7 +21,7 @@ export const MenuBarMenuButton = () => {
   const [, navigate] = useLocation()
 
   const { myPlayer, session, isMyPlayerHost } = useSessionStore()
-  const { showToast } = useToastStore()
+  const { showToast } = useAppStore()
 
   const [showMenu, setShowMenu] = React.useState(false)
   const [showCharacter, setShowCharacter] = React.useState(false)
@@ -63,7 +63,8 @@ export const MenuBarMenuButton = () => {
 
       await Promise.all(promises)
     } catch (error) {
-      showToast(String(error))
+      const err = error as Error
+      showToast(err.message)
     }
   }
 

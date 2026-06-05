@@ -4,7 +4,6 @@ import { useLocation, useParams } from "wouter"
 import { LoadingOverlay } from "components/loadingOverlay/loadingOverlay"
 import { useAppStore } from "stores/useAppStore/useAppStore"
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { useToastStore } from "stores/useToastStore/useToastStore"
 import { joinSession } from "services/session/joinSession"
 
 import { PlayProtected } from "./playProtected/playProtected"
@@ -14,7 +13,7 @@ export const PlayPage = () => {
 
   const { user } = useAppStore()
   const params = useParams()
-  const { showToast } = useToastStore()
+  const { showToast } = useAppStore()
   const { resetSessionsStore } = useSessionStore()
 
   const [sessionId, setSessionId] = React.useState<string | undefined>()
@@ -32,9 +31,11 @@ export const PlayPage = () => {
 
       setSessionId(params.sessionId)
     } catch (error) {
+      const err = error as Error
+
       setSessionId(undefined)
       resetSessionsStore()
-      showToast(String(error), "error")
+      showToast(err.message, "error")
       navigate("/")
     }
   }

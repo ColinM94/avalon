@@ -2,11 +2,10 @@ import { Divider } from "components/divider/divider"
 import { LoadingOverlay } from "components/loadingOverlay/loadingOverlay"
 import { MenuBar } from "components/menuBar/menuBar"
 import { PlayerCard } from "components/playerCard/playerCard"
-import { goToStep } from "services/session/goToStep"
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 import { classes } from "utils/classes"
 import { selectQuestMember } from "services/session/selectQuestMember"
-import { questMemberSelectCanContinue } from "services/session/canContinue"
+import { questMemberSelectCanContinue, questMemberSelectContinue } from "services/session/validation"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -20,12 +19,6 @@ export const GameQuestMemberSelect = (props: Props) => {
     if (activeQuest.leaderId !== myPlayer.id || myPlayer.isReady) return
 
     selectQuestMember(playerId)
-  }
-
-  const handleContinue = () => {
-    void goToStep({
-      step: "questMemberVote",
-    })
   }
 
   if (!activeQuest.leaderId) return <LoadingOverlay />
@@ -59,7 +52,11 @@ export const GameQuestMemberSelect = (props: Props) => {
           })}
       </div>
 
-      <MenuBar showContinue={isMyPlayerLeader} canContinue={questMemberSelectCanContinue} onContinue={handleContinue} />
+      <MenuBar
+        showContinue={isMyPlayerLeader}
+        canContinue={questMemberSelectCanContinue}
+        onContinue={questMemberSelectContinue}
+      />
     </>
   )
 }

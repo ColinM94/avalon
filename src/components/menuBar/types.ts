@@ -3,8 +3,8 @@ export interface Props {
   onClickDisabled?: () => void
   canContinue?: () => string | true
   canReady?: () => string | true
-  onContinue?: () => void
-  onReady?: () => void
+  onContinue?: () => Promise<void>
+  onReady?: () => Promise<void>
   showContinue: boolean
   className?: string
 }

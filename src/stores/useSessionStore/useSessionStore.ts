@@ -1,5 +1,4 @@
-import { playerDefault } from "consts/playerDefault"
-import { sessionDefault } from "consts/sessionDefault"
+import { playerDefault, sessionDefault } from "consts/defaults"
 import { createZustandStore } from "../createZustandStore"
 import { Actions, State } from "./types"
 
@@ -22,6 +21,8 @@ const initialState: State = {
     votesToApprove: {},
     votesToSucceed: {},
     status: "incomplete",
+    isApproved: false,
+    isSuccessful: false,
   },
   playersArray: [],
 }

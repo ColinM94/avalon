@@ -1,8 +1,8 @@
 import { Scanner } from "@yudiel/react-qr-scanner"
 
 import { Modal } from "components/modal/modal"
-import { useToastStore } from "stores/useToastStore/useToastStore"
 import { classes } from "utils/classes"
+import { useAppStore } from "stores/useAppStore/useAppStore"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
@@ -10,7 +10,7 @@ import styles from "./styles.module.scss"
 export const JoinScanner = (props: Props) => {
   const { showScanner, setShowScanner, onScanSuccess, className } = props
 
-  const { showToast } = useToastStore()
+  const { showToast } = useAppStore()
 
   const handleScan = (value: string) => {
     const sessionId = value.substring(value.length - 4)

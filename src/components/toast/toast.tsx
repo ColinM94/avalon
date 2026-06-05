@@ -1,13 +1,13 @@
 import * as React from "react"
 
-import { useToastStore } from "stores/useToastStore/useToastStore"
 import { classes } from "utils/classes"
+import { useAppStore } from "stores/useAppStore/useAppStore"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
 
 export const Toast = ({ className }: Props) => {
-  const { toast } = useToastStore()
+  const { toast } = useAppStore()
 
   const [fadeOut, setFadeOut] = React.useState(false)
 

@@ -1,6 +1,8 @@
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 import { MainLayout } from "layouts/mainLayout/mainLayout"
 import { Players } from "components/players/players"
+import { classes } from "utils/classes"
+import { numPlayersByQuest } from "consts/general"
 
 import { GameSetup } from "./components/gameSetup/gameSetup"
 import { GameLobby } from "./components/gameLobby/gameLobby"
@@ -10,11 +12,11 @@ import { GameQuestMemberSelect } from "./components/gameQuestMemberSelect/gameQu
 import { GameQuestMemberVote } from "./components/gameQuestMemberVote/gameQuestMemberVote"
 import { GameQuestResult } from "./components/gameQuestResult/gameQuestResult"
 import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote"
-import styles from "./styles.module.scss"
 import { GameOver } from "./components/gameOver/gameOver"
+import styles from "./styles.module.scss"
 
 export const Game = () => {
-  const { session, heading, players, activeQuest } = useSessionStore()
+  const { session, heading, players, activeQuest, playersArray } = useSessionStore()
 
   return (
     <>
@@ -44,6 +46,16 @@ export const Game = () => {
             </div>
           </div>
         )}
+
+        <div className={styles.quests}>
+          <div className={classes(styles.quest, session.quests[0].isSuccessful)}>
+            {numPlayersByQuest[0][playersArray.length]}
+          </div>
+          <div className={classes(styles.quest)}>{numPlayersByQuest[1][playersArray.length]}</div>
+          <div className={classes(styles.quest)}>{numPlayersByQuest[2][playersArray.length]}</div>
+          <div className={classes(styles.quest)}>{numPlayersByQuest[3][playersArray.length]}</div>
+          <div className={classes(styles.quest)}>{numPlayersByQuest[4][playersArray.length]}</div>
+        </div>
 
         <div className={styles.content}>
           {session.step === "lobby" && <GameLobby />}

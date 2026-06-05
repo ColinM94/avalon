@@ -1,11 +1,11 @@
 import { updateDocument } from "services/firestore/updateDocument"
+import { useAppStore } from "stores/useAppStore/useAppStore"
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { useToastStore } from "stores/useToastStore/useToastStore"
 import { GameSession } from "types/gameSession"
 
 export const updateSession = async (update: Partial<GameSession>, sessionId?: string) => {
   const { session } = useSessionStore.getState()
-  const { showToast } = useToastStore.getState()
+  const { showToast } = useAppStore.getState()
 
   const id = sessionId || session.id
 
@@ -22,7 +22,8 @@ export const updateSession = async (update: Partial<GameSession>, sessionId?: st
 
     return true
   } catch (error) {
-    showToast(String(error))
+    const err = error as Error
+    showToast(err.message, "error")
     return false
   }
 }

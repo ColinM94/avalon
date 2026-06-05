@@ -16,6 +16,8 @@ export type Quest = {
   players: string[]
   votesToApprove: Record<string, boolean>
   votesToSucceed: Record<string, boolean>
+  isApproved: boolean
+  isSuccessful: boolean
 }
 
 export type GameSession = {

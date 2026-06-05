@@ -1,28 +1,19 @@
-import * as React from "react"
-
 import { Divider } from "components/divider/divider"
 import { MenuBar } from "components/menuBar/menuBar"
-import { goToStep } from "services/session/goToStep"
-import { updateMyPlayer } from "services/session/updateMyPlayer"
-import { updateSession } from "services/session/updateSession"
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 import { classes } from "utils/classes"
 import { questSucceedVote } from "services/session/questSucceedVote"
 
 import { Props } from "./types"
 import styles from "./styles.module.scss"
+import { questVoteCanContinue, questVoteCanReady, questVoteContinue, questVoteReady } from "services/session/validation"
 
 export const GameQuestVote = (props: Props) => {
   const { className } = props
 
-  const { players, myPlayer, isMyPlayerHost, activeQuest, session } = useSessionStore()
-
-  console.log(session)
-  const isUpdating = React.useRef(false)
+  const { myPlayer, isMyPlayerHost, activeQuest } = useSessionStore()
 
   const vote = Boolean(activeQuest?.votesToSucceed?.[myPlayer.id])
-
-  console.log(vote)
 
   const handleVoteClick = (voteValue: boolean) => {
     // if (myPlayer.isReady && !isMyPlayerHost) return
@@ -30,59 +21,6 @@ export const GameQuestVote = (props: Props) => {
     void questSucceedVote({
       playerId: myPlayer.id,
       voteValue,
-    })
-  }
-
-  const canContinue = () => {
-    const playersOnQuestAreReady = activeQuest.players.every((playerId) => players[playerId].isReady)
-
-    if (!playersOnQuestAreReady) return "Not all players on quest are ready"
-
-    return true
-  }
-
-  const onContinue = () => {
-    if (!isMyPlayerHost || isUpdating.current) return
-
-    isUpdating.current = true
-
-    let shouldProceed = true
-
-    console.log(activeQuest)
-
-    activeQuest.players.map((playerId) => {
-      if (activeQuest.votesToSucceed?.[playerId] === undefined) {
-        shouldProceed = false
-      }
-
-      if (!players[playerId].isReady) {
-        shouldProceed = false
-      }
-    })
-
-    if (!shouldProceed) {
-      isUpdating.current = false
-      return
-    }
-
-    void updateSession({
-      numFailQuests: Number(session.numFailQuests) + 1,
-    })
-
-    void goToStep({
-      step: "questResult",
-    })
-  }
-
-  const canReady = () => {
-    if (!activeQuest.players.includes(myPlayer.id)) return "You are not part of this quest."
-
-    return true
-  }
-
-  const onReady = () => {
-    void updateMyPlayer({
-      isReady: true,
     })
   }
 
@@ -114,10 +52,10 @@ export const GameQuestVote = (props: Props) => {
 
       <MenuBar
         showContinue={isMyPlayerHost}
-        canContinue={canContinue}
-        onContinue={onContinue}
-        canReady={canReady}
-        onReady={onReady}
+        canContinue={questVoteCanContinue}
+        onContinue={questVoteContinue}
+        canReady={() => questVoteCanReady(myPlayer.id)}
+        onReady={() => questVoteReady(myPlayer.id)}
       />
     </div>
   )

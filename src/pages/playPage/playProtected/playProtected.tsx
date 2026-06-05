@@ -6,7 +6,6 @@ import { LoadingOverlay } from "components/loadingOverlay/loadingOverlay"
 import { getDocumentSnapshot } from "services/firestore/getDocumentSnapshot"
 import { useAppStore } from "stores/useAppStore/useAppStore"
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { useToastStore } from "stores/useToastStore/useToastStore"
 import { GameSession } from "types/gameSession"
 
 import { Props } from "./types"
@@ -14,7 +13,7 @@ import { Props } from "./types"
 export const PlayProtected = ({ sessionId }: Props) => {
   const [, navigate] = useLocation()
   const { session, updateSessionStore } = useSessionStore()
-  const { showToast } = useToastStore()
+  const { showToast } = useAppStore()
   const { user } = useAppStore()
 
   const updateState = (data: GameSession | undefined) => {
@@ -41,7 +40,8 @@ export const PlayProtected = ({ sessionId }: Props) => {
         session: data,
       })
     } catch (error) {
-      showToast(String(error), "error")
+      const err = error as Error
+      showToast(err.message, "error")
       navigate("/")
     }
   }

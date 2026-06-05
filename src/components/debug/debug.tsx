@@ -6,21 +6,21 @@ import { useSessionStore } from "stores/useSessionStore/useSessionStore"
 import { updateSession } from "services/session/updateSession"
 import { Player } from "types/gameSession"
 import { updatePlayer } from "services/session/updatePlayer"
-import { useToastStore } from "stores/useToastStore/useToastStore"
 import { CharacterCard } from "components/characterCard/characterCard"
-import { charactersDefault } from "consts/characters"
 import { selectQuestMember } from "services/session/selectQuestMember"
 import { goToStep } from "services/session/goToStep"
 import { questMemberVote } from "services/session/questMemberVote"
 import { classes } from "utils/classes"
 import { questSucceedVote } from "services/session/questSucceedVote"
-import { questMemberSelectCanContinue } from "services/session/canContinue"
+import { questMemberSelectCanContinue } from "services/session/validation"
+import { charactersDefault } from "consts/defaults"
+import { useAppStore } from "stores/useAppStore/useAppStore"
 
 import styles from "./styles.module.scss"
 
 export const Debug = () => {
   const { session, activeQuest, isAllReady } = useSessionStore()
-  const { showToast } = useToastStore()
+  const { showToast } = useAppStore()
   const [showMenu, setShowMenu] = React.useState(false)
 
   const addFakePlayer = async () => {
@@ -39,7 +39,6 @@ export const Debug = () => {
           characterId: "",
         }
 
-        console.log("break")
         break
       }
     }
@@ -53,8 +52,6 @@ export const Debug = () => {
       session.id,
     )
   }
-
-  console.log(session.step)
 
   return (
     <>

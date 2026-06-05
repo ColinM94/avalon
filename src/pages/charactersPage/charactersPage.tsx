@@ -1,6 +1,6 @@
-import { charactersDefault } from "consts/characters"
 import { MainLayout } from "layouts/mainLayout/mainLayout"
 import { CharacterCard } from "components/characterCard/characterCard"
+import { charactersDefault } from "consts/defaults"
 
 import styles from "./styles.module.scss"
 

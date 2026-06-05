@@ -1,7 +1,6 @@
 import { useLocation } from "wouter"
 
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { Button } from "components/button/button"
 
 import styles from "./styles.module.scss"
 

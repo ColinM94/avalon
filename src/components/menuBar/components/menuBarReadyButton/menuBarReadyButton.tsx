@@ -1,18 +1,35 @@
+import * as React from "react"
+
 import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { useToastStore } from "stores/useToastStore/useToastStore"
 import { updateMyPlayer } from "services/session/updateMyPlayer"
 import { Button } from "components/button/button"
 import { classes } from "utils/classes"
+import { LoadingOverlay } from "components/loadingOverlay/loadingOverlay"
+import { useAppStore } from "stores/useAppStore/useAppStore"
 
 import styles from "./styles.module.scss"
 import { Props } from "./types"
-import React from "react"
 
 export const MenuBarReadyButton = (props: Props) => {
   const { canReady, onReady, showContinue, canContinue, onContinue } = props
 
   const { myPlayer } = useSessionStore()
-  const { showToast } = useToastStore()
+  const { showToast } = useAppStore()
+
+  const [isLoading, setIsLoading] = React.useState(false)
+
+  const isContinueDisabled = Boolean((canContinue && canContinue() !== true) || isLoading)
+  const isReadyDisabled = Boolean((canReady && canReady() !== true) || isLoading)
+
+  // React.useEffect(() => {
+  //   void (() => {
+  //     if (myPlayer.isMyPlayerHost) return
+
+  //     setTimeout(() => {
+  //       void handleReady()
+  //     }, 1000)
+  //   })()
+  // }, [])
 
   const handleCanReady = (alertUser: boolean) => {
     if (!canReady) return
@@ -24,73 +41,69 @@ export const MenuBarReadyButton = (props: Props) => {
     if (alertUser) showToast(result, "error")
   }
 
-  const handleReady = () => {
+  const handleReady = async () => {
     try {
+      setIsLoading(true)
+
       const result = canReady?.()
 
-      if (result !== true) throw result
+      if (result !== true && typeof result === "string") throw new Error(result)
 
-      onReady?.()
+      await onReady?.()
 
-      updateMyPlayer({
+      await updateMyPlayer({
         isReady: true,
       })
     } catch (error) {
-      showToast(String(error), "error")
+      const err = error as Error
+      showToast(err.message, "error")
+    } finally {
+      setIsLoading(false)
     }
   }
 
-  React.useEffect(() => {
-    ;(async () => {
-      if (myPlayer.isMyPlayerHost) return
-
-      setTimeout(() => {
-        handleReady()
-      }, 1000)
-    })()
-  }, [])
-
-  const handleContinue = () => {
+  const handleContinue = async () => {
     try {
+      setIsLoading(true)
+
       if (canContinue) {
         const result = canContinue()
 
-        if (result !== true) throw result
+        if (result !== true) throw new Error(result)
       }
 
-      onContinue?.()
+      await onContinue?.()
     } catch (error) {
-      showToast(String(error), "error")
+      const err = error as Error
+      showToast(err.message, "error")
+    } finally {
+      setIsLoading(false)
     }
   }
 
-  const isContinueDisabled = () => {
-    if (canContinue && canContinue() !== true) return true
+  return (
+    <>
+      {isLoading && <LoadingOverlay />}
 
-    return false
-  }
+      {showContinue && (
+        <Button
+          label="Continue"
+          onClick={handleContinue}
+          onClickDisabled={handleContinue}
+          disabled={isContinueDisabled}
+          className={classes(styles.container, isContinueDisabled && styles.disabled)}
+        />
+      )}
 
-  if (showContinue) {
-    return (
-      <Button
-        label="Continue"
-        onClick={handleContinue}
-        onClickDisabled={handleContinue}
-        disabled={isContinueDisabled()}
-        className={classes(styles.container, isContinueDisabled() && styles.disabled)}
-      />
-    )
-  }
-
-  if (onReady) {
-    return (
-      <Button
-        label={"Ready"}
-        onClick={handleReady}
-        onClickDisabled={() => handleCanReady(true)}
-        disabled={canReady ? canReady?.() !== true : false}
-        className={classes(styles.container, (myPlayer.isReady || !canReady) && styles.disabled)}
-      />
-    )
-  }
+      {!showContinue && onReady && (
+        <Button
+          label={"Ready"}
+          onClick={handleReady}
+          onClickDisabled={() => handleCanReady(true)}
+          disabled={isReadyDisabled}
+          className={classes(styles.container, (myPlayer.isReady || !canReady) && styles.disabled)}
+        />
+      )}
+    </>
+  )
 }

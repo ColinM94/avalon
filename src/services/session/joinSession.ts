@@ -1,10 +1,10 @@
 import { getDocument } from "services/firestore/getDocument"
 import { GameSession } from "types/gameSession"
 import { updateSession } from "./updateSession"
-import { playerDefault } from "consts/playerDefault"
 import { User } from "types/user"
 import { updateDocument } from "services/firestore/updateDocument"
 import { APIResponse } from "consts/general"
+import { playerDefault } from "consts/defaults"
 
 interface Props {
   sessionId: string
