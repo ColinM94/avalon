@@ -1,33 +1,34 @@
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { MainLayout } from "layouts/mainLayout/mainLayout"
-import { Players } from "components/players/players"
-import { classes } from "utils/classes"
-import { numPlayersByQuest } from "consts/general"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { MainLayout } from "layouts/mainLayout/mainLayout";
+import { Players } from "components/players/players";
 
-import { GameSetup } from "./components/gameSetup/gameSetup"
-import { GameLobby } from "./components/gameLobby/gameLobby"
-import { GameReveal } from "./components/gameReveal/gameReveal"
-import { GameQuestMemberResult } from "./components/gameQuestMemberResult/gameQuestMemberResult"
-import { GameQuestMemberSelect } from "./components/gameQuestMemberSelect/gameQuestMemberSelect"
-import { GameQuestMemberVote } from "./components/gameQuestMemberVote/gameQuestMemberVote"
-import { GameQuestResult } from "./components/gameQuestResult/gameQuestResult"
-import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote"
-import { GameOver } from "./components/gameOver/gameOver"
-import styles from "./styles.module.scss"
+import { GameSetup } from "./components/gameSetup/gameSetup";
+import { GameLobby } from "./components/gameLobby/gameLobby";
+import { GameReveal } from "./components/gameReveal/gameReveal";
+import { GameQuestMemberResult } from "./components/gameQuestMemberResult/gameQuestMemberResult";
+import { GameQuestMemberSelect } from "./components/gameQuestMemberSelect/gameQuestMemberSelect";
+import { GameQuestMemberVote } from "./components/gameQuestMemberVote/gameQuestMemberVote";
+import { GameQuestResult } from "./components/gameQuestResult/gameQuestResult";
+import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote";
+import { GameOver } from "./components/gameOver/gameOver";
+import { GameQuests } from "./components/gameQuests/gameQuests";
+import styles from "./styles.module.scss";
 
 export const Game = () => {
-  const { session, heading, players, activeQuest, playersArray } = useSessionStore()
+  const { session, heading, players, activeQuest } = useSessionStore();
 
   return (
     <>
       <MainLayout heading={heading.title} className={styles.container}>
         <Players width={1} showEmptySlots={session.step === "lobby"} showIsReady />
 
+        <GameQuests className={styles.quests} />
+
         {!["setup", "lobby", "characterReveal", "ritual"].includes(session.step) && (
           <div className={styles.info}>
             <div className={styles.infoItem}>
               <div className={styles.infoItemHeading}>Quest</div>
-              <div className={styles.infoItemValue}>{session.activeQuestIndex + 1}</div>
+              <div className={styles.infoItemValue}>{activeQuest.index + 1}</div>
             </div>
 
             <div className={styles.infoItem}>
@@ -46,16 +47,6 @@ export const Game = () => {
             </div>
           </div>
         )}
-
-        <div className={styles.quests}>
-          <div className={classes(styles.quest, session.quests[0].isSuccessful)}>
-            {numPlayersByQuest[0][playersArray.length]}
-          </div>
-          <div className={classes(styles.quest)}>{numPlayersByQuest[1][playersArray.length]}</div>
-          <div className={classes(styles.quest)}>{numPlayersByQuest[2][playersArray.length]}</div>
-          <div className={classes(styles.quest)}>{numPlayersByQuest[3][playersArray.length]}</div>
-          <div className={classes(styles.quest)}>{numPlayersByQuest[4][playersArray.length]}</div>
-        </div>
 
         <div className={styles.content}>
           {session.step === "lobby" && <GameLobby />}
@@ -78,5 +69,5 @@ export const Game = () => {
         </div>
       </MainLayout>
     </>
-  )
-}
+  );
+};

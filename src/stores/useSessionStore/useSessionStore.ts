@@ -25,6 +25,7 @@ const initialState: State = {
     isSuccessful: false,
   },
   playersArray: [],
+  numPlayers: 0,
 }
 
 export const useSessionStore = createZustandStore<State & Actions>({

@@ -1,17 +1,73 @@
 .container {
   flex-direction: row;
-  gap: vars.$spacing-primary;
+  gap: vars.$spacing-secondary;
 
   .quest {
     border-radius: 50%;
     background-color: vars.$color-surface;
-    padding: vars.$spacing-tertiary;
+    padding: vars.$spacing-secondary;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-size: vars.$font-size-body2;
     aspect-ratio: 1;
     flex: 1;
+
+    .questHeading {
+      // position: absolute;
+      // top: 0;
+      font-size: vars.$font-size-body2;
+      color: vars.$color-text-secondary;
+      padding-block: vars.$spacing-secondary;
+      width: 100%;
+    }
+
+    .questLabel {
+      flex-direction: row;
+      gap: vars.$spacing-tertiary;
+      // margin-top: vars.$spacing-tertiary;
+
+      .questLabelValue {
+      }
+
+      .questLabelSubValue {
+        color: vars.$color-text-secondary;
+        font-size: vars.$font-size-body2;
+        justify-content: center;
+      }
+    }
+  }
+
+  .questVotes {
+    border-radius: 2px;
+    width: 100%;
+    flex: 1;
+    flex-direction: row;
+    gap: vars.$spacing-tertiary;
+    justify-content: center;
+    padding-top: vars.$spacing-secondary;
+
+    .questVote {
+      aspect-ratio: 0.7;
+      border-radius: 2px;
+      height: 20px;
+    }
+
+    .questVoteSuccess {
+      @extend .questVote;
+      background-color: vars.$color-success;
+      filter: brightness(0.8);
+    }
+
+    .questVoteFailed {
+      @extend .questVote;
+      background-color: vars.$color-danger;
+      filter: brightness(0.8);
+    }
+  }
+
+  .questActive {
+    outline: 2px solid vars.$color-primary;
   }
 
   .questFailed {

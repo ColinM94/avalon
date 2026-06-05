@@ -9,6 +9,7 @@ export type State = {
   isAllReady: boolean
   activeQuest: Quest
   playersArray: Player[]
+  numPlayers: number
   heading: {
     title: string
     description: string

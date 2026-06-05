@@ -1,7 +1,7 @@
-import { Characters } from "types/characters"
-import { GameSession, Player } from "types/gameSession"
-import { User } from "types/user"
-import { generateUniqueId } from "utils/generateUniqueId"
+import { Characters } from "types/characters";
+import { GameSession, Player } from "types/gameSession";
+import { User } from "types/user";
+import { generateUniqueId } from "utils/generateUniqueId";
 
 export const userDefault = (): User => {
   return {
@@ -9,8 +9,8 @@ export const userDefault = (): User => {
     name: "",
     sessionId: null,
     imageUrl: "",
-  }
-}
+  };
+};
 
 export const playerDefault = (): Player => {
   return {
@@ -20,8 +20,8 @@ export const playerDefault = (): Player => {
     isMyPlayerHost: false,
     joinedAt: 0,
     isReady: false,
-  }
-}
+  };
+};
 
 export const sessionDefault = (): GameSession => {
   return {
@@ -32,11 +32,11 @@ export const sessionDefault = (): GameSession => {
     createdBy: "",
     step: "lobby",
     characters: [],
-    activeQuestIndex: 0,
     isMyPlayerHostPlaying: true,
     numFailVotes: 0,
     numFailQuests: 0,
     isRitualFinished: false,
+    activeQuestIndex: 0,
     quests: {
       0: {
         index: 0,
@@ -94,8 +94,8 @@ export const sessionDefault = (): GameSession => {
         isSuccessful: false,
       },
     },
-  }
-}
+  };
+};
 
 export const charactersDefault: Characters = {
   // Good Characters
@@ -342,4 +342,4 @@ export const charactersDefault: Characters = {
     description: ["Has no special powers"],
     disabled: false,
   },
-}
+};

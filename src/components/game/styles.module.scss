@@ -1,6 +1,9 @@
 .container {
   width: 100%;
 
+  .quests {
+  }
+
   .info {
     flex-direction: row;
     gap: vars.$spacing-primary;
