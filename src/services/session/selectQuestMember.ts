@@ -1,26 +1,26 @@
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { updateSession } from "./updateSession"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { updateSession } from "./updateSession";
 
 export const selectQuestMember = (playerId: string) => {
-  const { activeQuest, session } = useSessionStore.getState()
+  const { activeQuest, session } = useSessionStore.getState();
 
-  const isMaxPlayers = activeQuest.players.length >= activeQuest.numPlayers
+  const isMaxPlayers = activeQuest.players.length >= activeQuest.numPlayers;
 
-  const updatedQuestPlayers = activeQuest.players
+  const updatedQuestPlayers = activeQuest.players;
 
   if (updatedQuestPlayers.includes(playerId)) {
-    updatedQuestPlayers.splice(updatedQuestPlayers.indexOf(playerId), 1)
+    updatedQuestPlayers.splice(updatedQuestPlayers.indexOf(playerId), 1);
   } else if (!isMaxPlayers) {
-    updatedQuestPlayers.push(playerId)
+    updatedQuestPlayers.push(playerId);
   } else {
-    return
+    return;
   }
 
-  const updatedQuests = structuredClone(session.quests)
+  const updatedQuests = structuredClone(session.quests);
 
-  updatedQuests[activeQuest.index].players = updatedQuestPlayers
+  updatedQuests[activeQuest.index].players = updatedQuestPlayers;
 
   void updateSession({
     quests: updatedQuests,
-  })
-}
+  });
+};

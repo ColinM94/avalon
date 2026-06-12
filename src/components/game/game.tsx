@@ -22,8 +22,8 @@ export const Game = () => {
       <MainLayout heading={heading.title} className={styles.container}>
         <Players width={1} showEmptySlots={session.step === "lobby"} showIsReady />
 
-        <GameQuests className={styles.quests} />
-
+        {!["lobby", "setup", "characterReveal"].includes(session.step) && <GameQuests className={styles.quests} />}
+        {/* 
         {!["setup", "lobby", "characterReveal", "ritual"].includes(session.step) && (
           <div className={styles.info}>
             <div className={styles.infoItem}>
@@ -46,7 +46,7 @@ export const Game = () => {
               <div className={styles.infoItemValue}>{session.numFailQuests} / 3</div>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className={styles.content}>
           {session.step === "lobby" && <GameLobby />}

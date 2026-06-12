@@ -1,33 +1,33 @@
-import * as React from "react"
+import * as React from "react";
 
-import { Button } from "components/button/button"
-import { Modal } from "components/modal/modal"
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { updateSession } from "services/session/updateSession"
-import { Player } from "types/gameSession"
-import { updatePlayer } from "services/session/updatePlayer"
-import { CharacterCard } from "components/characterCard/characterCard"
-import { selectQuestMember } from "services/session/selectQuestMember"
-import { goToStep } from "services/session/goToStep"
-import { questMemberVote } from "services/session/questMemberVote"
-import { classes } from "utils/classes"
-import { questSucceedVote } from "services/session/questSucceedVote"
-import { questMemberSelectCanContinue } from "services/session/validation"
-import { charactersDefault } from "consts/defaults"
-import { useAppStore } from "stores/useAppStore/useAppStore"
+import { Button } from "components/button/button";
+import { Modal } from "components/modal/modal";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { updateSession } from "services/session/updateSession";
+import { Player } from "types/gameSession";
+import { updatePlayer } from "services/session/updatePlayer";
+import { CharacterCard } from "components/characterCard/characterCard";
+import { selectQuestMember } from "services/session/selectQuestMember";
+import { goToStep } from "services/session/goToStep";
+import { questMemberVote } from "services/session/questMemberVote";
+import { classes } from "utils/classes";
+import { questSucceedVote } from "services/session/questSucceedVote";
+import { questMemberSelectCanContinue } from "services/session/validation";
+import { charactersDefault } from "consts/defaults";
+import { useAppStore } from "stores/useAppStore/useAppStore";
 
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
 
 export const Debug = () => {
-  const { session, activeQuest, isAllReady } = useSessionStore()
-  const { showToast } = useAppStore()
-  const [showMenu, setShowMenu] = React.useState(false)
+  const { session, activeQuest, isAllReady } = useSessionStore();
+  const { showToast } = useAppStore();
+  const [showMenu, setShowMenu] = React.useState(false);
 
   const addFakePlayer = async () => {
-    let fakePlayer: Player | undefined
+    let fakePlayer: Player | undefined;
 
     for (let i = 1; i < 10; i++) {
-      const fakePlayerId = `fakePlayer${i}`
+      const fakePlayerId = `fakePlayer${i}`;
 
       if (!session.players[fakePlayerId]) {
         fakePlayer = {
@@ -37,21 +37,21 @@ export const Debug = () => {
           isReady: false,
           joinedAt: Date.now(),
           characterId: "",
-        }
+        };
 
-        break
+        break;
       }
     }
 
-    if (!fakePlayer) return
+    if (!fakePlayer) return;
 
     await updateSession(
       {
         [`players.${fakePlayer.id}`]: fakePlayer,
       },
       session.id,
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -62,8 +62,8 @@ export const Debug = () => {
           {Object.values(session.players)
             .sort((a, b) => a.name.localeCompare(b.name))
             .map((player) => {
-              const isSelectedForQuest = activeQuest.players.includes(player.id)
-              const voteToSucceed = Boolean(activeQuest?.votesToSucceed?.[player.id])
+              const isSelectedForQuest = activeQuest.players.includes(player.id);
+              const voteToSucceed = Boolean(activeQuest?.votesToSucceed?.[player.id]);
 
               return (
                 <div key={player.id} className={styles.player}>
@@ -82,7 +82,6 @@ export const Debug = () => {
                       {session.step === "questMemberSelect" && (
                         <Button
                           label={isSelectedForQuest ? "Remove" : "Add"}
-                          // icon={isSelectedForQuest ? "minus" : "plus"}
                           disabled={isSelectedForQuest}
                           onClick={() => selectQuestMember(player.id)}
                           onClickDisabled={() => selectQuestMember(player.id)}
@@ -160,19 +159,19 @@ export const Debug = () => {
                         onClick={() => {
                           void updatePlayer(player.id, {
                             isReady: !player.isReady,
-                          })
+                          });
                         }}
                         onClickDisabled={() => {
                           void updatePlayer(player.id, {
                             isReady: false,
-                          })
+                          });
                         }}
                         className={styles.button}
                       />
                     </div>
                   </div>
                 </div>
-              )
+              );
             })}
         </div>
 
@@ -193,7 +192,7 @@ export const Debug = () => {
               Object.keys(session.players).forEach((playerId) => {
                 void updatePlayer(playerId, {
                   isReady: true,
-                })
+                });
               })
             }
             disabled={isAllReady}
@@ -201,8 +200,8 @@ export const Debug = () => {
               Object.keys(session.players).forEach((playerId) => {
                 void updatePlayer(playerId, {
                   isReady: false,
-                })
-              })
+                });
+              });
             }}
             className={styles.button}
           />
@@ -216,8 +215,8 @@ export const Debug = () => {
                     void questMemberVote({
                       playerId: playerId,
                       voteValue: true,
-                    })
-                  })
+                    });
+                  });
                 }}
                 className={styles.button}
               />
@@ -229,8 +228,8 @@ export const Debug = () => {
                     void questMemberVote({
                       playerId: playerId,
                       voteValue: false,
-                    })
-                  })
+                    });
+                  });
                 }}
                 className={styles.button}
               />
@@ -246,8 +245,8 @@ export const Debug = () => {
                     void questSucceedVote({
                       playerId: playerId,
                       voteValue: true,
-                    })
-                  })
+                    });
+                  });
                 }}
                 className={styles.button}
               />
@@ -259,8 +258,8 @@ export const Debug = () => {
                     void questSucceedVote({
                       playerId: playerId,
                       voteValue: false,
-                    })
-                  })
+                    });
+                  });
                 }}
                 className={styles.button}
               />
@@ -273,11 +272,11 @@ export const Debug = () => {
               onClick={() => {
                 void goToStep({
                   step: "questMemberVote",
-                })
+                });
               }}
               disabled={Boolean(questMemberSelectCanContinue() !== true)}
               onClickDisabled={() => {
-                showToast(String(questMemberSelectCanContinue()), "error")
+                showToast(String(questMemberSelectCanContinue()), "error");
               }}
               className={styles.button}
             />
@@ -285,5 +284,5 @@ export const Debug = () => {
         </div>
       </Modal>
     </>
-  )
-}
+  );
+};

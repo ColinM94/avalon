@@ -1,6 +1,7 @@
 .container {
   flex-direction: row;
   gap: vars.$spacing-secondary;
+  cursor: pointer;
 
   .quest {
     border-radius: 50%;
@@ -38,34 +39,6 @@
     }
   }
 
-  .questVotes {
-    border-radius: 2px;
-    width: 100%;
-    flex: 1;
-    flex-direction: row;
-    gap: vars.$spacing-tertiary;
-    justify-content: center;
-    padding-top: vars.$spacing-secondary;
-
-    .questVote {
-      aspect-ratio: 0.7;
-      border-radius: 2px;
-      height: 20px;
-    }
-
-    .questVoteSuccess {
-      @extend .questVote;
-      background-color: vars.$color-success;
-      filter: brightness(0.8);
-    }
-
-    .questVoteFailed {
-      @extend .questVote;
-      background-color: vars.$color-danger;
-      filter: brightness(0.8);
-    }
-  }
-
   .questActive {
     outline: 2px solid vars.$color-primary;
   }
@@ -77,4 +50,38 @@
   .questSucceeded {
     background-color: vars.$color-success;
   }
+}
+
+.questVotes {
+  border-radius: 2px;
+  width: 100%;
+  flex: 1;
+  flex-direction: row;
+  gap: vars.$spacing-tertiary;
+  justify-content: center;
+  padding-top: vars.$spacing-secondary;
+
+  .questVote {
+    aspect-ratio: 0.7;
+    border-radius: 2px;
+    height: 20px;
+    outline: 2px solid vars.$color-surface3;
+  }
+
+  .questVoteSuccess {
+    @extend .questVote;
+    background-color: vars.$color-success;
+    filter: brightness(0.8);
+  }
+
+  .questVoteFailed {
+    @extend .questVote;
+    background-color: vars.$color-danger;
+    filter: brightness(0.8);
+  }
+}
+
+.modal {
+  background-color: vars.$color-surface;
+  padding: vars.$spacing-primary;
 }

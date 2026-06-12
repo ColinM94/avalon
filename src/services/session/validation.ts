@@ -1,5 +1,5 @@
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
-import { Player } from "types/gameSession";
+import { GameSession, Player, Quest } from "types/gameSession";
 import { Characters } from "types/characters";
 import { shuffleArray } from "utils/shuffleArray";
 import { maxCharacters } from "consts/characters";
@@ -9,6 +9,7 @@ import { updateActiveQuest } from "./updateActiveQuest";
 import { updatePlayer } from "./updatePlayer";
 import { updateSession } from "./updateSession";
 import { goToStep } from "./goToStep";
+import { updateDocument } from "services/firestore/updateDocument";
 
 // -------------
 // 1. Lobby
@@ -40,7 +41,7 @@ export const lobbyCanContinue = () => {
 };
 
 export const lobbyContinue = async () => {
-  const { playersArray, session } = useSessionStore.getState();
+  const { playersArray, numPlayers, session } = useSessionStore.getState();
 
   const playerUpdates: Record<string, Partial<Player>> = {};
 
@@ -48,6 +49,16 @@ export const lobbyContinue = async () => {
     playerUpdates[player.id] = {
       characterId: session.characters[index] || "",
     };
+  });
+
+  Object.keys(session.quests).forEach((questIndex) => {
+    void updateDocument<GameSession>({
+      id: session.id,
+      collection: "sessions",
+      data: {
+        [`quests.${questIndex}.numPlayers`]: numPlayersByQuest[Number(questIndex)][numPlayers - 5],
+      },
+    });
   });
 
   await goToStep({

@@ -1,19 +1,24 @@
-import { Divider } from "components/divider/divider"
-import { MenuBar } from "components/menuBar/menuBar"
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { classes } from "utils/classes"
-import { questSucceedVote } from "services/session/questSucceedVote"
+import { Divider } from "components/divider/divider";
+import { MenuBar } from "components/menuBar/menuBar";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { classes } from "utils/classes";
+import { questSucceedVote } from "services/session/questSucceedVote";
+import {
+  questVoteCanContinue,
+  questVoteCanReady,
+  questVoteContinue,
+  questVoteReady,
+} from "services/session/validation";
 
-import { Props } from "./types"
-import styles from "./styles.module.scss"
-import { questVoteCanContinue, questVoteCanReady, questVoteContinue, questVoteReady } from "services/session/validation"
+import { Props } from "./types";
+import styles from "./styles.module.scss";
 
 export const GameQuestVote = (props: Props) => {
-  const { className } = props
+  const { className } = props;
 
-  const { myPlayer, isMyPlayerHost, activeQuest } = useSessionStore()
+  const { myPlayer, isMyPlayerHost, activeQuest } = useSessionStore();
 
-  const vote = Boolean(activeQuest?.votesToSucceed?.[myPlayer.id])
+  const vote = Boolean(activeQuest?.votesToSucceed?.[myPlayer.id]);
 
   const handleVoteClick = (voteValue: boolean) => {
     // if (myPlayer.isReady && !isMyPlayerHost) return
@@ -21,8 +26,8 @@ export const GameQuestVote = (props: Props) => {
     void questSucceedVote({
       playerId: myPlayer.id,
       voteValue,
-    })
-  }
+    });
+  };
 
   return (
     <div className={classes(styles.container, className)}>
@@ -58,5 +63,5 @@ export const GameQuestVote = (props: Props) => {
         onReady={() => questVoteReady(myPlayer.id)}
       />
     </div>
-  )
-}
+  );
+};

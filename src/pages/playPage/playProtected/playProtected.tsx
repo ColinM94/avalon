@@ -47,8 +47,6 @@ export const PlayProtected = ({ sessionId }: Props) => {
     }
   };
 
-  console.log(session);
-
   React.useEffect(() => {
     if (!sessionId || user.sessionId !== sessionId) return;
 
