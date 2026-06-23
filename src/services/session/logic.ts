@@ -1,15 +1,15 @@
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
-import { GameSession, Player, Quest } from "types/gameSession";
+import { GameSession, Player } from "types/gameSession";
 import { Characters } from "types/characters";
 import { shuffleArray } from "utils/shuffleArray";
 import { maxCharacters } from "consts/characters";
 import { numPlayersByQuest } from "consts/general";
+import { updateDocument } from "services/firestore/updateDocument";
 
 import { updateActiveQuest } from "./updateActiveQuest";
 import { updatePlayer } from "./updatePlayer";
 import { updateSession } from "./updateSession";
 import { goToStep } from "./goToStep";
-import { updateDocument } from "services/firestore/updateDocument";
 
 // -------------
 // 1. Lobby
@@ -41,25 +41,31 @@ export const lobbyCanContinue = () => {
 };
 
 export const lobbyContinue = async () => {
-  const { playersArray, numPlayers, session } = useSessionStore.getState();
+  const { playersArray, numPlayers, characters, quests, sessionId } = useSessionStore.getState();
 
   const playerUpdates: Record<string, Partial<Player>> = {};
 
   playersArray.forEach((player, index) => {
     playerUpdates[player.id] = {
-      characterId: session.characters[index] || "",
+      characterId: characters[index] || "",
     };
   });
 
-  Object.keys(session.quests).forEach((questIndex) => {
-    void updateDocument<GameSession>({
-      id: session.id,
+  const promises: Promise<boolean>[] = [];
+
+  Object.keys(quests).forEach((questIndex) => {
+    const promise = updateDocument<GameSession>({
+      id: sessionId,
       collection: "sessions",
       data: {
         [`quests.${questIndex}.numPlayers`]: numPlayersByQuest[Number(questIndex)][numPlayers - 5],
       },
     });
+
+    promises.push(promise);
   });
+
+  await Promise.all(promises);
 
   await goToStep({
     step: "setup",
@@ -141,15 +147,15 @@ export const revealCanContinue = (isCharacterRevealed: boolean) => {
 };
 
 export const revealContinue = async () => {
-  const { session, playersArray, activeQuest } = useSessionStore.getState();
+  const { playersArray, activeQuest, numPlayers } = useSessionStore.getState();
 
   await updateActiveQuest({
-    numPlayers: numPlayersByQuest[activeQuest.index][session.numPlayers - 5],
+    numPlayers: numPlayersByQuest[activeQuest.index][numPlayers - 5],
     leaderId: playersArray[0].id,
   });
 
   await goToStep({
-    step: "questMemberSelect",
+    step: "memberSelect",
   });
 };
 
@@ -166,28 +172,28 @@ export const revealReady = async (playerId: string) => {
 };
 
 // ------------------------
-// 4. Quest Member Select
+// 4. Member Select
 // ------------------------
-export const questMemberSelectCanContinue = () => {
+export const memberSelectCanContinue = () => {
   const { activeQuest } = useSessionStore.getState();
 
   if (activeQuest.numPlayers !== activeQuest.players.length) {
     return `Please select ${activeQuest.numPlayers} players.`;
   }
 
-  return lobbyCanReady();
+  return true;
 };
 
-export const questMemberSelectContinue = async () => {
+export const memberSelectContinue = async () => {
   await goToStep({
-    step: "questMemberVote",
+    step: "memberSelectVote",
   });
 };
 
 // ------------------------
-// 5. Quest Member Vote
+// 5. Member Select Vote
 // ------------------------
-export const questMemberVoteCanContinue = () => {
+export const memberSelectVoteCanContinue = () => {
   const { isAllReady } = useSessionStore.getState();
 
   if (!isAllReady) return "All players are not ready";
@@ -195,36 +201,34 @@ export const questMemberVoteCanContinue = () => {
   return true;
 };
 
-export const questMemberVoteContinue = async () => {
-  const { activeQuest, session } = useSessionStore.getState();
+export const memberSelectVoteContinue = async () => {
+  const { activeMemberSelectVotes, activeMemberSelectVoteIndex } = useSessionStore.getState();
 
-  const votes = Object.values(activeQuest.votesToApprove).sort((a, b) => Number(b) - Number(a));
-  const hasPassed = Boolean(votes.filter((vote) => vote).length > votes.length / 2);
+  // if (!hasPassed) {
+  //   await updateSession({
+  //     // numFailVotesToApproveMembers: numFailVotesToApproveMembers + 1,
+  //     activeMemberSelectVoteIndex: activeMemberSelectVoteIndex + 1,
+  //   });
 
-  if (!hasPassed) {
-    await updateSession({
-      numFailVotes: session.numFailVotes + 1,
-    });
-  }
+  //   // await updateActiveQuest({
+  //   //   votesToApproveHistory: ,
+  //   // });
+  // } else {
+  //   await updateSession({
+  //     activeMemberSelectVoteIndex: 0,
+  //   });
+  // }
 
   await goToStep({
-    step: "questMemberResult",
+    step: "memberSelectResult",
   });
 };
 
 // ------------------------
-// 5. Quest Member Result
+// 6. Member Select Result
 // ------------------------
-export const questMemberResultContinue = async (hasPassed: boolean) => {
-  const { activeQuest, session, playersArray } = useSessionStore.getState();
-
-  if (session.numFailVotes >= 5) {
-    await goToStep({
-      step: "gameOver",
-    });
-
-    return;
-  }
+export const memberSelectResultContinue = async (hasPassed: boolean) => {
+  const { activeQuest, playersArray, activeMemberSelectVoteIndex } = useSessionStore.getState();
 
   if (hasPassed) {
     await goToStep({
@@ -237,20 +241,23 @@ export const questMemberResultContinue = async (hasPassed: boolean) => {
   const currentLeaderIndex = playersArray.findIndex((item) => item.id === activeQuest.leaderId);
   const newLeader = playersArray?.[currentLeaderIndex + 1] || playersArray[0];
 
+  await updateSession({
+    activeMemberSelectVoteIndex: activeMemberSelectVoteIndex + 1,
+  });
+
   await updateActiveQuest({
     leaderId: newLeader.id,
     players: [],
-    votesToApprove: {},
     votesToSucceed: {},
   });
 
   await goToStep({
-    step: "questMemberSelect",
+    step: "memberSelect",
   });
 };
 
 // ------------------------
-// 5. Quest Vote
+// 7. Quest Vote
 // ------------------------
 export const questVoteCanContinue = () => {
   const { activeQuest, players } = useSessionStore.getState();
@@ -263,7 +270,7 @@ export const questVoteCanContinue = () => {
 };
 
 export const questVoteContinue = async () => {
-  const { activeQuest, players, isMyPlayerHost, session } = useSessionStore.getState();
+  const { activeQuest, players, isMyPlayerHost, numFailQuests } = useSessionStore.getState();
 
   if (!isMyPlayerHost) return;
 
@@ -283,7 +290,7 @@ export const questVoteContinue = async () => {
 
   if (Object.values(activeQuest.votesToSucceed).some((vote) => vote === false)) {
     await updateSession({
-      numFailQuests: Number(session.numFailQuests) + 1,
+      numFailQuests: Number(numFailQuests) + 1,
     });
   }
 
@@ -307,12 +314,12 @@ export const questVoteReady = async (playerId: string) => {
 };
 
 // ------------------------
-// 6. Quest Result
+// 8. Quest Result
 // ------------------------
 export const questResultCanContinue = () => {};
 
 export const questResultContinue = async (hasPassed: boolean) => {
-  const { isMyPlayerHost, playersArray, activeQuest, session } = useSessionStore.getState();
+  const { isMyPlayerHost, playersArray, activeQuest, numFailMemberSelectVotes } = useSessionStore.getState();
 
   if (!isMyPlayerHost) return;
 
@@ -330,13 +337,13 @@ export const questResultContinue = async (hasPassed: boolean) => {
   });
 
   if (!hasPassed) {
-    await updateSession({
-      numFailVotes: Number(session.numFailVotes) + 1,
-    });
+    // await updateSession({
+    //   numFailMemberSelectVotes: Number(numFailMemberSelectVotes) + 1,
+    // });
   }
 
   await goToStep({
-    step: "questMemberSelect",
+    step: "memberSelect",
   });
 };
 

@@ -1,41 +1,41 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { deleteField } from "firebase/firestore"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { deleteField } from "firebase/firestore";
 
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { updateSession } from "services/session/updateSession"
-import { classes } from "utils/classes"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { updateSession } from "services/session/updateSession";
+import { classes } from "utils/classes";
 
-import { Props } from "./types"
-import styles from "./styles.module.scss"
+import { Props } from "./types";
+import styles from "./styles.module.scss";
 
 export const PlayerCard = (props: Props) => {
-  const { player, connected = true, onClick, showName, showIsReady, showLeaderIcon, width = 1, className } = props
+  const { player, connected = true, onClick, showName, showIsReady, showLeaderIcon, width = 1, className } = props;
 
-  const { myPlayer, activeQuest, isMyPlayerHost, session } = useSessionStore()
+  const { myPlayer, activeQuest, isMyPlayerHost, step } = useSessionStore();
 
   // const isMyPlayer = player?.id === myPlayer.id
-  const showKick = isMyPlayerHost && player?.id !== myPlayer.id && connected
-  const isLeader = activeQuest && activeQuest.leaderId && activeQuest?.leaderId === player?.id
+  const showKick = isMyPlayerHost && player?.id !== myPlayer.id && connected;
+  const isLeader = activeQuest && activeQuest.leaderId && activeQuest?.leaderId === player?.id;
 
   const handleKick = async () => {
-    if (session.step !== "lobby") return
+    if (step !== "lobby") return;
 
-    const shouldKick = confirm(`Are you sure you want to kick ${player?.name}`)
+    const shouldKick = confirm(`Are you sure you want to kick ${player?.name}`);
 
-    if (!shouldKick) return
+    if (!shouldKick) return;
 
     await updateSession({
       [`players.${player?.id}`]: deleteField(),
-    })
-  }
+    });
+  };
 
   const handleClick = () => {
-    onClick?.()
+    onClick?.();
 
-    if (session.step !== "lobby") return
+    if (step !== "lobby") return;
 
-    if (showKick) void handleKick()
-  }
+    if (showKick) void handleKick();
+  };
 
   const classNames = () => {
     return classes(
@@ -47,19 +47,19 @@ export const PlayerCard = (props: Props) => {
       width === 1 && styles.width1,
       width === 2 && styles.width2,
       width === 3 && styles.width3,
-    )
-  }
+    );
+  };
 
   return (
     <>
-      <div onClick={handleClick} className={classNames()}>
+      <div title={isLeader ? "Leader" : ""} onClick={handleClick} className={classNames()}>
         {player?.imageUrl && <img src={player.imageUrl} className={styles.image} />}
 
         {connected && !player?.imageUrl && <FontAwesomeIcon icon="user" className={styles.playerIcon} />}
 
         {isLeader && showLeaderIcon && <FontAwesomeIcon icon="crown" className={styles.hostIcon} />}
 
-        {showKick && session.step === "lobby" && <FontAwesomeIcon icon="x" className={styles.kickIcon} />}
+        {showKick && step === "lobby" && <FontAwesomeIcon icon="x" className={styles.kickIcon} />}
 
         {connected === false && <FontAwesomeIcon icon="user" className={styles.waitingIcon} />}
 
@@ -72,5 +72,5 @@ export const PlayerCard = (props: Props) => {
         {player?.isReady && showIsReady && <FontAwesomeIcon icon="check" className={styles.readyIcon} />}
       </div>
     </>
-  )
-}
+  );
+};

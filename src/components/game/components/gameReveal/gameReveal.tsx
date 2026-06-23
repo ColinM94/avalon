@@ -1,27 +1,27 @@
-import * as React from "react"
+import * as React from "react";
 
-import { Button } from "components/button/button"
-import { CharacterCard } from "components/characterCard/characterCard"
-import { MenuBar } from "components/menuBar/menuBar"
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { classes } from "utils/classes"
-import { charactersDefault } from "consts/defaults"
-import { revealCanContinue, revealCanReady, revealContinue, revealReady } from "services/session/validation"
+import { Button } from "components/button/button";
+import { CharacterCard } from "components/characterCard/characterCard";
+import { MenuBar } from "components/menuBar/menuBar";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { classes } from "utils/classes";
+import { charactersDefault } from "consts/defaults";
+import { revealCanContinue, revealCanReady, revealContinue, revealReady } from "services/session/logic";
 
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
 
 export const GameReveal = () => {
-  const { myPlayer, isMyPlayerHost, session } = useSessionStore()
+  const { myPlayer, isMyPlayerHost, players } = useSessionStore();
 
-  const [showCharacter, setShowCharacter] = React.useState(false)
-  const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false)
+  const [showCharacter, setShowCharacter] = React.useState(false);
+  const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false);
 
-  const characterId = session.players?.[myPlayer.id]?.characterId
+  const characterId = players?.[myPlayer.id]?.characterId;
 
   const handleReveal = () => {
-    setIsCharacterRevealed(true)
-    setShowCharacter(!showCharacter)
-  }
+    setIsCharacterRevealed(true);
+    setShowCharacter(!showCharacter);
+  };
 
   return (
     <>
@@ -48,5 +48,5 @@ export const GameReveal = () => {
         onReady={() => revealReady(myPlayer.id)}
       />
     </>
-  )
-}
+  );
+};

@@ -14,10 +14,11 @@ export type Quest = {
   numPlayers: number;
   leaderId: string;
   players: string[];
-  votesToApprove: Record<string, boolean>;
+  memberSelectVotes: Record<number, Record<string, boolean>>;
   votesToSucceed: Record<string, boolean>;
   isApproved: boolean;
   isSuccessful: boolean;
+  isFailed: boolean;
 };
 
 export type GameSession = {
@@ -30,9 +31,9 @@ export type GameSession = {
     | "setup"
     | "characterReveal"
     | "ritual"
-    | "questMemberSelect"
-    | "questMemberVote"
-    | "questMemberResult"
+    | "memberSelect"
+    | "memberSelectVote"
+    | "memberSelectResult"
     | "questVote"
     | "questResult"
     | "gameOver"
@@ -43,7 +44,8 @@ export type GameSession = {
   isMyPlayerHostPlaying: boolean;
   quests: Record<number, Quest>;
   activeQuestIndex: number;
-  numFailVotes: number;
+  numFailMemberSelectVotes: number;
   numFailQuests: number;
   isRitualFinished: boolean;
+  activeMemberSelectVoteIndex: number;
 };

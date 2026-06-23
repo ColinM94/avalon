@@ -5,24 +5,24 @@ import { Players } from "components/players/players";
 import { GameSetup } from "./components/gameSetup/gameSetup";
 import { GameLobby } from "./components/gameLobby/gameLobby";
 import { GameReveal } from "./components/gameReveal/gameReveal";
-import { GameQuestMemberResult } from "./components/gameQuestMemberResult/gameQuestMemberResult";
-import { GameQuestMemberSelect } from "./components/gameQuestMemberSelect/gameQuestMemberSelect";
-import { GameQuestMemberVote } from "./components/gameQuestMemberVote/gameQuestMemberVote";
 import { GameQuestResult } from "./components/gameQuestResult/gameQuestResult";
 import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote";
 import { GameOver } from "./components/gameOver/gameOver";
 import { GameQuests } from "./components/gameQuests/gameQuests";
+import { GameMemberSelectVote } from "./components/gameMemberSelectVote/gameMemberSelectVote";
 import styles from "./styles.module.scss";
+import { GameMemberSelect } from "./components/gameMemberSelect/gameMemberSelect";
+import { GameMemberSelectResult } from "./components/gameMemberSelectResult/gameMemberSelectResult";
 
 export const Game = () => {
-  const { session, heading, players, activeQuest } = useSessionStore();
+  const { heading, step } = useSessionStore();
 
   return (
     <>
       <MainLayout heading={heading.title} className={styles.container}>
-        <Players width={1} showEmptySlots={session.step === "lobby"} showIsReady />
+        <Players width={1} showEmptySlots={step === "lobby"} showIsReady />
 
-        {!["lobby", "setup", "characterReveal"].includes(session.step) && <GameQuests className={styles.quests} />}
+        {!["lobby", "setup", "characterReveal"].includes(step) && <GameQuests className={styles.quests} />}
         {/* 
         {!["setup", "lobby", "characterReveal", "ritual"].includes(session.step) && (
           <div className={styles.info}>
@@ -49,23 +49,23 @@ export const Game = () => {
         )} */}
 
         <div className={styles.content}>
-          {session.step === "lobby" && <GameLobby />}
+          {step === "lobby" && <GameLobby />}
 
-          {session.step === "setup" && <GameSetup />}
+          {step === "setup" && <GameSetup />}
 
-          {session.step === "characterReveal" && <GameReveal />}
+          {step === "characterReveal" && <GameReveal />}
 
-          {session.step === "questMemberSelect" && <GameQuestMemberSelect />}
+          {step === "memberSelect" && <GameMemberSelect />}
 
-          {session.step === "questMemberVote" && <GameQuestMemberVote />}
+          {step === "memberSelectVote" && <GameMemberSelectVote />}
 
-          {session.step === "questMemberResult" && <GameQuestMemberResult />}
+          {step === "memberSelectResult" && <GameMemberSelectResult />}
 
-          {session.step === "questVote" && <GameQuestVote />}
+          {step === "questVote" && <GameQuestVote />}
 
-          {session.step === "questResult" && <GameQuestResult />}
+          {step === "questResult" && <GameQuestResult />}
 
-          {session.step === "gameOver" && <GameOver />}
+          {step === "gameOver" && <GameOver />}
         </div>
       </MainLayout>
     </>

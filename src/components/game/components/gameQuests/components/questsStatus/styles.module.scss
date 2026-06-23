@@ -84,4 +84,8 @@
 .modal {
   background-color: vars.$color-surface;
   padding: vars.$spacing-primary;
+
+  .votes {
+    flex-direction: row;
+  }
 }

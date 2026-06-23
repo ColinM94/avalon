@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "lint": "eslint . --fix",
     "deploy-hosting": "pnpm build && firebase deploy --only hosting",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "firebase-emulator": "firebase emulators:start"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",

@@ -4,7 +4,7 @@ import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { Divider } from "components/divider/divider";
 import { MenuBar } from "components/menuBar/menuBar";
 import { classes } from "utils/classes";
-import { questResultCanReady, questResultContinue, questResultReady } from "services/session/validation";
+import { questResultCanReady, questResultContinue, questResultReady } from "services/session/logic";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";

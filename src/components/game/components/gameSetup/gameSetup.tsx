@@ -1,35 +1,33 @@
-import * as React from "react"
+import * as React from "react";
 
-import { MenuBar } from "components/menuBar/menuBar"
-import { StepDescription } from "components/stepDescription/stepDescription"
-import { maxCharacters } from "consts/characters"
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { Characters } from "types/characters"
-import { mergeReducer } from "utils/mergeReducer"
-import { setupCanContinue, setupContinue } from "services/session/validation"
-import { charactersDefault } from "consts/defaults"
+import { MenuBar } from "components/menuBar/menuBar";
+import { StepDescription } from "components/stepDescription/stepDescription";
+import { maxCharacters } from "consts/characters";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { Characters } from "types/characters";
+import { mergeReducer } from "utils/mergeReducer";
+import { setupCanContinue, setupContinue } from "services/session/logic";
+import { charactersDefault } from "consts/defaults";
 
-import { SetupCharacters } from "./components/setupCharacters/setupCharacters"
+import { SetupCharacters } from "./components/setupCharacters/setupCharacters";
 
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
 
 export const GameSetup = () => {
-  const { session, isMyPlayerHost } = useSessionStore()
+  const { numPlayers, isMyPlayerHost } = useSessionStore();
 
-  const [characters, updateCharacters] = React.useReducer(mergeReducer<Characters>, charactersDefault)
+  const [characters, updateCharacters] = React.useReducer(mergeReducer<Characters>, charactersDefault);
 
   const numActiveGoodCharacters = Object.values(characters).filter(
     (character) => character.allegiance === "good" && character.isActive,
-  ).length
+  ).length;
 
   const numActiveEvilCharacters = Object.values(characters).filter(
     (character) => character.allegiance === "evil" && character.isActive,
-  ).length
+  ).length;
 
-  const numPlayers = Object.keys(session.players).length
-
-  const maxGoodCharacters = maxCharacters[numPlayers]?.good
-  const maxEvilCharacters = maxCharacters[numPlayers]?.evil
+  const maxGoodCharacters = maxCharacters[numPlayers]?.good;
+  const maxEvilCharacters = maxCharacters[numPlayers]?.evil;
 
   return (
     <>
@@ -65,5 +63,5 @@ export const GameSetup = () => {
         onContinue={() => setupContinue(characters)}
       />
     </>
-  )
-}
+  );
+};

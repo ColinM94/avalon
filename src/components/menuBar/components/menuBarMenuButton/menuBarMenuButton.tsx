@@ -1,36 +1,36 @@
-import * as React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { deleteField } from "firebase/firestore"
-import { useLocation } from "wouter"
+import * as React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { deleteField } from "firebase/firestore";
+import { useLocation } from "wouter";
 
-import { Button } from "components/button/button"
-import { Modal } from "components/modal/modal"
-import { deleteDocument } from "services/firestore/deleteDocument"
-import { updateDocument } from "services/firestore/updateDocument"
-import { updateSession } from "services/session/updateSession"
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { User } from "types/user"
-import { capitaliseFirstLetter } from "utils/capitaliseFirstLetter"
-import { classes } from "utils/classes"
-import { useAppStore } from "stores/useAppStore/useAppStore"
-import { charactersDefault } from "consts/defaults"
+import { Button } from "components/button/button";
+import { Modal } from "components/modal/modal";
+import { deleteDocument } from "services/firestore/deleteDocument";
+import { updateDocument } from "services/firestore/updateDocument";
+import { updateSession } from "services/session/updateSession";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { User } from "types/user";
+import { capitaliseFirstLetter } from "utils/capitaliseFirstLetter";
+import { classes } from "utils/classes";
+import { useAppStore } from "stores/useAppStore/useAppStore";
+import { charactersDefault } from "consts/defaults";
 
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
 
 export const MenuBarMenuButton = () => {
-  const [, navigate] = useLocation()
+  const [, navigate] = useLocation();
 
-  const { myPlayer, session, isMyPlayerHost } = useSessionStore()
-  const { showToast } = useAppStore()
+  const { sessionId, myPlayer, step, isMyPlayerHost } = useSessionStore();
+  const { showToast } = useAppStore();
 
-  const [showMenu, setShowMenu] = React.useState(false)
-  const [showCharacter, setShowCharacter] = React.useState(false)
+  const [showMenu, setShowMenu] = React.useState(false);
+  const [showCharacter, setShowCharacter] = React.useState(false);
 
   const handleLeave = async () => {
     try {
-      const confirmed = confirm("Are you sure you want to leave? This will end the game for everyone!")
+      const confirmed = confirm("Are you sure you want to leave? This will end the game for everyone!");
 
-      if (!confirmed) return
+      if (!confirmed) return;
 
       const promises = [
         updateDocument<User>({
@@ -40,35 +40,35 @@ export const MenuBarMenuButton = () => {
             sessionId: null,
           },
         }),
-      ]
+      ];
 
-      if (session.step === "lobby") {
+      if (step === "lobby") {
         promises.push(
           updateSession({
             [`players.${myPlayer.id}`]: deleteField(),
           }),
-        )
+        );
       }
 
-      if (isMyPlayerHost || session.step !== "lobby") {
+      if (isMyPlayerHost || step !== "lobby") {
         promises.push(
           deleteDocument({
-            id: session.id,
+            id: sessionId,
             collection: "sessions",
           }),
-        )
+        );
       }
 
-      navigate("/")
+      navigate("/");
 
-      await Promise.all(promises)
+      await Promise.all(promises);
     } catch (error) {
-      const err = error as Error
-      showToast(err.message)
+      const err = error as Error;
+      showToast(err.message);
     }
-  }
+  };
 
-  const isLobby = session.step === "lobby"
+  const isLobby = step === "lobby";
 
   return (
     <>
@@ -89,7 +89,7 @@ export const MenuBarMenuButton = () => {
         >
           <FontAwesomeIcon icon="hat-wizard" className={styles.menuItemIcon} />
 
-          <div className={classes(styles.menuItemText, session.step === "lobby" && styles.menuItemDisabled)}>
+          <div className={classes(styles.menuItemText, step === "lobby" && styles.menuItemDisabled)}>
             <div className={styles.menuItemTextTitle}>
               {showCharacter ? capitaliseFirstLetter(charactersDefault[myPlayer.characterId].id) : "Your Character"}
             </div>
@@ -109,5 +109,5 @@ export const MenuBarMenuButton = () => {
         </div>
       </Modal>
     </>
-  )
-}
+  );
+};

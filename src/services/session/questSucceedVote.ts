@@ -7,10 +7,10 @@ interface Props {
   voteValue: boolean;
 }
 export const questSucceedVote = async ({ playerId, voteValue }: Props) => {
-  const { session, activeQuest } = useSessionStore.getState();
+  const { sessionId, activeQuest } = useSessionStore.getState();
 
   await updateDocument<GameSession>({
-    id: session.id,
+    id: sessionId,
     collection: "sessions",
     data: {
       [`quests.${activeQuest.index}.votesToSucceed.${playerId}`]: voteValue,

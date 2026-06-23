@@ -1,30 +1,30 @@
-import { useLocation } from "wouter"
+import { useLocation } from "wouter";
 
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { Button } from "components/button/button"
-import { deleteField } from "firebase/firestore"
-import { deleteDocument } from "services/firestore/deleteDocument"
-import { updateDocument } from "services/firestore/updateDocument"
-import { updateSession } from "services/session/updateSession"
-import { User } from "types/user"
-import { useAppStore } from "stores/useAppStore/useAppStore"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { Button } from "components/button/button";
+import { deleteField } from "firebase/firestore";
+import { deleteDocument } from "services/firestore/deleteDocument";
+import { updateDocument } from "services/firestore/updateDocument";
+import { updateSession } from "services/session/updateSession";
+import { User } from "types/user";
+import { useAppStore } from "stores/useAppStore/useAppStore";
 
-import { Props } from "./types"
-import styles from "./styles.module.scss"
+import { Props } from "./types";
+import styles from "./styles.module.scss";
 
 export const Header = (props: Props) => {
-  const { headingTitle, showBackButton } = props
+  const { headingTitle, showBackButton } = props;
 
-  const { myPlayer, isMyPlayerHost, session } = useSessionStore()
-  const { showToast } = useAppStore()
+  const { step, myPlayer, isMyPlayerHost, sessionId } = useSessionStore();
+  const { showToast } = useAppStore();
 
-  const [, navigate] = useLocation()
+  const [, navigate] = useLocation();
 
   const handleLeave = async () => {
     try {
-      const confirmed = confirm("Are you sure you want to leave? This will end the game for everyone!")
+      const confirmed = confirm("Are you sure you want to leave? This will end the game for everyone!");
 
-      if (!confirmed) return
+      if (!confirmed) return;
 
       const promises = [
         updateDocument<User>({
@@ -34,33 +34,33 @@ export const Header = (props: Props) => {
             sessionId: null,
           },
         }),
-      ]
+      ];
 
-      if (session.step === "lobby") {
+      if (step === "lobby") {
         promises.push(
           updateSession({
             [`players.${myPlayer.id}`]: deleteField(),
           }),
-        )
+        );
       }
 
-      if (isMyPlayerHost || session.step !== "lobby") {
+      if (isMyPlayerHost || step !== "lobby") {
         promises.push(
           deleteDocument({
-            id: session.id,
+            id: sessionId,
             collection: "sessions",
           }),
-        )
+        );
       }
 
-      navigate("/")
+      navigate("/");
 
-      await Promise.all(promises)
+      await Promise.all(promises);
     } catch (error) {
-      const err = error as Error
-      showToast(err.message, "error")
+      const err = error as Error;
+      showToast(err.message, "error");
     }
-  }
+  };
 
   return (
     <div className={styles.container}>
@@ -77,9 +77,9 @@ export const Header = (props: Props) => {
         <div className={styles.headingTitle}>{headingTitle}</div>
       </div>
 
-      {session.id && (
+      {sessionId && (
         <Button icon="x" onClick={handleLeave} className={styles.closeButton} iconClassName={styles.buttonIcon} />
       )}
     </div>
-  )
-}
+  );
+};

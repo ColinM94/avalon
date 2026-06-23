@@ -1,45 +1,45 @@
-import { useLocation } from "wouter"
+import { useLocation } from "wouter";
 
-import { Button } from "components/button/button"
-import { deleteDocument } from "services/firestore/deleteDocument"
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
+import { Button } from "components/button/button";
+import { deleteDocument } from "services/firestore/deleteDocument";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
 
 export const ErrorPage = () => {
-  const { session } = useSessionStore()
+  const { sessionId } = useSessionStore();
   // const error = useRouteError() as Error
 
-  const [, navigate] = useLocation()
+  const [, navigate] = useLocation();
 
   const parseStackTrace = (stackTrace: string | undefined) => {
-    if (stackTrace === undefined) return null
+    if (stackTrace === undefined) return null;
 
-    const lines = stackTrace.split("\n")
+    const lines = stackTrace.split("\n");
 
-    const line = lines[1]
+    const line = lines[1];
 
-    let mySubString = ""
+    let mySubString = "";
 
     if (line.includes(".tsx")) {
-      mySubString = line.substring(line.indexOf("src") + 4, line.indexOf(".tsx") + 4)
+      mySubString = line.substring(line.indexOf("src") + 4, line.indexOf(".tsx") + 4);
     } else if (line.includes(".ts")) {
-      mySubString = line.substring(line.indexOf("src") + 4, line.indexOf(".ts") + 3)
+      mySubString = line.substring(line.indexOf("src") + 4, line.indexOf(".ts") + 3);
     }
 
-    return mySubString
-  }
+    return mySubString;
+  };
 
   const handleReset = async () => {
-    if (!session?.id) return
+    if (!sessionId) return;
 
     await deleteDocument({
-      id: session.id,
+      id: sessionId,
       collection: "sessions",
-    })
+    });
 
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   return (
     <div className={styles.container}>
@@ -50,5 +50,5 @@ export const ErrorPage = () => {
 
       <Button label="Reset" onClick={handleReset} />
     </div>
-  )
-}
+  );
+};

@@ -2,7 +2,7 @@ import { PersistOptions } from "zustand/middleware";
 
 export type ZustandSet<T> = (
   partial: T | Partial<T> | ((state: T) => T | Partial<T>),
-  replace?: boolean | undefined
+  replace?: boolean  
 ) => void;
 
 export interface ZustandConfig<T>
@@ -17,6 +17,6 @@ export interface ZustandConfig<T>
 
 export type SetStoreState<T> = (
   partial: T | Partial<T>,
-  replace?: boolean | undefined
+  replace?: boolean  
 ) => void;
 export type GetStoreState<T> = () => T;

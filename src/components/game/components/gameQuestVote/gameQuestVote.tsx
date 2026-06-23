@@ -3,12 +3,7 @@ import { MenuBar } from "components/menuBar/menuBar";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { classes } from "utils/classes";
 import { questSucceedVote } from "services/session/questSucceedVote";
-import {
-  questVoteCanContinue,
-  questVoteCanReady,
-  questVoteContinue,
-  questVoteReady,
-} from "services/session/validation";
+import { questVoteCanContinue, questVoteCanReady, questVoteContinue, questVoteReady } from "services/session/logic";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";

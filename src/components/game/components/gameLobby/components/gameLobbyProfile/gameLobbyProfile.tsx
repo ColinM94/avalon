@@ -1,37 +1,37 @@
-import * as React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import * as React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { InputText } from "components/inputText/inputText"
-import { updateDocument } from "services/firestore/updateDocument"
-import { updateMyPlayer } from "services/session/updateMyPlayer"
-import { getFileUrl } from "services/storage/getFileUrl"
-import { uploadFile } from "services/storage/uploadFile"
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { User } from "types/user"
-import { classes } from "utils/classes"
+import { InputText } from "components/inputText/inputText";
+import { updateDocument } from "services/firestore/updateDocument";
+import { updateMyPlayer } from "services/session/updateMyPlayer";
+import { getFileUrl } from "services/storage/getFileUrl";
+import { uploadFile } from "services/storage/uploadFile";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { User } from "types/user";
+import { classes } from "utils/classes";
 
-import styles from "./styles.module.scss"
-import { Props } from "./types"
+import styles from "./styles.module.scss";
+import { Props } from "./types";
 
 export const GameLobbyProfile = ({ className }: Props) => {
-  const { myPlayer, session } = useSessionStore()
+  const { myPlayer, sessionId } = useSessionStore();
 
-  const imageInputRef = React.useRef<HTMLInputElement | null>(null)
+  const imageInputRef = React.useRef<HTMLInputElement | null>(null);
 
-  const [name, setName] = React.useState(myPlayer.name)
-  const [image, setImage] = React.useState<File>()
+  const [name, setName] = React.useState(myPlayer.name);
+  const [image, setImage] = React.useState<File>();
 
-  const fileUrl = image ? URL.createObjectURL(image) : null
+  const fileUrl = image ? URL.createObjectURL(image) : null;
 
   React.useEffect(() => {
-    if (!image) return
+    if (!image) return;
     void (async () => {
-      await uploadFile(image, `images/${session.id}/${myPlayer.id}.png`)
-      const url = await getFileUrl(`images/${session.id}/${myPlayer.id}.png`)
+      await uploadFile(image, `images/${sessionId}/${myPlayer.id}.png`);
+      const url = await getFileUrl(`images/${sessionId}/${myPlayer.id}.png`);
 
       void updateMyPlayer({
         imageUrl: url || "",
-      })
+      });
 
       void updateDocument<User>({
         collection: "users",
@@ -39,25 +39,25 @@ export const GameLobbyProfile = ({ className }: Props) => {
         data: {
           imageUrl: url || "",
         },
-      })
-    })()
-  }, [image])
+      });
+    })();
+  }, [image]);
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       void updateMyPlayer({
         name,
-      })
-    }, 200)
+      });
+    }, 200);
 
-    return () => clearTimeout(timeout)
-  }, [name])
+    return () => clearTimeout(timeout);
+  }, [name]);
 
   React.useEffect(() => {
     void updateMyPlayer({
       isReady: false,
-    })
-  }, [name])
+    });
+  }, [name]);
 
   return (
     <>
@@ -87,5 +87,5 @@ export const GameLobbyProfile = ({ className }: Props) => {
         />
       </div>
     </>
-  )
-}
+  );
+};

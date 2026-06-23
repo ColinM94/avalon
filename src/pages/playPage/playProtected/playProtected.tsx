@@ -2,19 +2,18 @@ import * as React from "react";
 import { useLocation } from "wouter";
 
 import { Game } from "components/game/game";
-import { LoadingOverlay } from "components/loadingOverlay/loadingOverlay";
 import { getDocumentSnapshot } from "services/firestore/getDocumentSnapshot";
 import { useAppStore } from "stores/useAppStore/useAppStore";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { GameSession } from "types/gameSession";
 
-import { Props } from "./types";
-
-export const PlayProtected = ({ sessionId }: Props) => {
+export const PlayProtected = () => {
   const [, navigate] = useLocation();
-  const { session, updateSessionStore } = useSessionStore();
+  const { sessionId, updateSessionStore } = useSessionStore();
   const { showToast } = useAppStore();
   const { user } = useAppStore();
+
+  console.log(useSessionStore.getState());
 
   const updateState = (data: GameSession | undefined) => {
     try {
@@ -27,22 +26,37 @@ export const PlayProtected = ({ sessionId }: Props) => {
         .every((player) => player.isReady === true);
 
       const activeQuest = data.quests[data.activeQuestIndex];
+
+      const activeMemberSelectVotes = activeQuest.memberSelectVotes[data.activeMemberSelectVoteIndex] || {};
+
       const myPlayer = data.players[user.id];
+      const numPlayers = Object.values(data.players).length;
+      const numFailMemberSelectVotes = Object.values(activeQuest.memberSelectVotes).map(
+        (votes) => Object.values(votes).filter((vote) => vote === false).length >= data.numPlayers / 2,
+      ).length;
+      const numFailQuests = Object.values(data.quests).filter((quest) => quest.isFailed === true).length;
 
       updateSessionStore({
+        sessionId: data.id,
         players: data.players,
         myPlayer,
         isMyPlayerHost: data.createdBy === user.id,
         isMyPlayerLeader: activeQuest.leaderId == myPlayer.id,
         isAllReady,
         activeQuest,
+        activeMemberSelectVotes,
         playersArray: Object.values(data.players).sort((a, b) => a.joinedAt - b.joinedAt),
-        numPlayers: Object.values(data.players).length,
-        session: data,
+        numPlayers,
+        numFailMemberSelectVotes,
+        numFailQuests,
+        characters: data.characters,
+        quests: data.quests,
+        step: data.step,
+        activeMemberSelectVoteIndex: data.activeMemberSelectVoteIndex,
+        // session: data,
       });
     } catch (error) {
-      const err = error as Error;
-      showToast(err.message, "error");
+      showToast((error as Error).message, "error");
       navigate("/");
     }
   };
@@ -58,8 +72,6 @@ export const PlayProtected = ({ sessionId }: Props) => {
 
     return () => unsubscribe?.();
   }, [sessionId]);
-
-  if (!sessionId || session.id !== sessionId) return <LoadingOverlay />;
 
   return <Game />;
 };

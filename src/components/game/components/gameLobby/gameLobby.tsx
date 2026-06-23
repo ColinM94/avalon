@@ -1,14 +1,14 @@
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { MenuBar } from "components/menuBar/menuBar"
-import { lobbyCanContinue, lobbyCanReady, lobbyContinue } from "services/session/validation"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { MenuBar } from "components/menuBar/menuBar";
+import { lobbyCanContinue, lobbyCanReady, lobbyContinue } from "services/session/logic";
 
-import { GameLobbyProfile } from "./components/gameLobbyProfile/gameLobbyProfile"
-import { GameLobbyInfo } from "./components/gameLobbyInfo/gameLobbyInfo"
+import { GameLobbyProfile } from "./components/gameLobbyProfile/gameLobbyProfile";
+import { GameLobbyInfo } from "./components/gameLobbyInfo/gameLobbyInfo";
 
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
 
 export const GameLobby = () => {
-  const { isMyPlayerHost } = useSessionStore()
+  const { isMyPlayerHost } = useSessionStore();
 
   return (
     <>
@@ -23,5 +23,5 @@ export const GameLobby = () => {
         canReady={lobbyCanReady}
       />
     </>
-  )
-}
+  );
+};

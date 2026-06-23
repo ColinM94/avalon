@@ -1,24 +1,23 @@
-import { useLocation } from "wouter"
+import { useLocation } from "wouter";
 
-import { MainLayout } from "layouts/mainLayout/mainLayout"
-import { setDocument } from "services/firestore/setDocument"
-import { useAppStore } from "stores/useAppStore/useAppStore"
-import { GameSession } from "types/gameSession"
-import { generateLobbyCode } from "utils/generateLobbyCode"
-import { sessionDefault } from "consts/defaults"
+import { MainLayout } from "layouts/mainLayout/mainLayout";
+import { setDocument } from "services/firestore/setDocument";
+import { useAppStore } from "stores/useAppStore/useAppStore";
+import { GameSession } from "types/gameSession";
+import { generateLobbyCode } from "utils/generateLobbyCode";
+import { sessionDefault } from "consts/defaults";
 
-import { MainMenuButton } from "./components/mainMenuButton/mainMenuButton"
-import styles from "./styles.module.scss"
+import { MainMenuButton } from "./components/mainMenuButton/mainMenuButton";
+import styles from "./styles.module.scss";
 
 export const MainMenuPage = () => {
-  const [, navigate] = useLocation()
+  const [, navigate] = useLocation();
 
-  const { user } = useAppStore()
-  const { showToast } = useAppStore()
+  const { user, showToast } = useAppStore();
 
   const handleCreateSession = async () => {
     try {
-      const id = generateLobbyCode()
+      const id = generateLobbyCode();
 
       const result = await setDocument<GameSession>({
         id: id,
@@ -28,28 +27,28 @@ export const MainMenuPage = () => {
           id,
           createdBy: user.id,
         },
-      })
+      });
 
-      if (!result) throw new Error("Error creating game session")
+      if (!result) throw new Error("Error creating game session");
 
-      navigate(`/play/${id}`)
+      navigate(`/play/${id}`);
     } catch (error) {
-      const err = error as Error
-      showToast(err.message, "error")
+      const err = error as Error;
+      showToast(err.message, "error");
     }
-  }
+  };
 
   const handleJoinLobby = () => {
-    navigate(`/join`)
-  }
+    navigate(`/join`);
+  };
 
   const handleRules = () => {
-    navigate("/rules")
-  }
+    navigate("/rules");
+  };
 
   const handleCharacters = () => {
-    navigate("/characters")
-  }
+    navigate("/characters");
+  };
 
   return (
     <MainLayout className={styles.container}>
@@ -69,5 +68,5 @@ export const MainMenuPage = () => {
         <div className={styles.createdBy}>Created by Colin Maher</div>
       </div>
     </MainLayout>
-  )
-}
+  );
+};

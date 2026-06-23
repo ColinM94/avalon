@@ -2,7 +2,7 @@ import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { updateSession } from "./updateSession";
 
 export const selectQuestMember = (playerId: string) => {
-  const { activeQuest, session } = useSessionStore.getState();
+  const { activeQuest, quests } = useSessionStore.getState();
 
   const isMaxPlayers = activeQuest.players.length >= activeQuest.numPlayers;
 
@@ -16,7 +16,7 @@ export const selectQuestMember = (playerId: string) => {
     return;
   }
 
-  const updatedQuests = structuredClone(session.quests);
+  const updatedQuests = structuredClone(quests);
 
   updatedQuests[activeQuest.index].players = updatedQuestPlayers;
 

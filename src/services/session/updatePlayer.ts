@@ -1,16 +1,16 @@
-import { updateDocument } from "services/firestore/updateDocument"
-import { useAppStore } from "stores/useAppStore/useAppStore"
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { Player, GameSession } from "types/gameSession"
-import { User } from "types/user"
+import { updateDocument } from "services/firestore/updateDocument";
+import { useAppStore } from "stores/useAppStore/useAppStore";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { Player, GameSession } from "types/gameSession";
+import { User } from "types/user";
 
 export const updatePlayer = async (userId: string, update: Partial<Player>) => {
-  const { session, players } = useSessionStore.getState()
-  const { showToast } = useAppStore.getState()
+  const { sessionId, players } = useSessionStore.getState();
+  const { showToast } = useAppStore.getState();
 
   try {
     await updateDocument<GameSession>({
-      id: session.id,
+      id: sessionId,
       collection: "sessions",
       data: {
         [`players.${userId}`]: {
@@ -18,7 +18,7 @@ export const updatePlayer = async (userId: string, update: Partial<Player>) => {
           ...update,
         },
       },
-    })
+    });
 
     if (update.name) {
       await updateDocument<User>({
@@ -27,10 +27,10 @@ export const updatePlayer = async (userId: string, update: Partial<Player>) => {
         data: {
           name: update.name,
         },
-      })
+      });
     }
   } catch (error) {
-    const err = error as Error
-    showToast(err.message, "error")
+    const err = error as Error;
+    showToast(err.message, "error");
   }
-}
+};
