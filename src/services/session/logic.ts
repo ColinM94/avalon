@@ -202,23 +202,6 @@ export const memberSelectVoteCanContinue = () => {
 };
 
 export const memberSelectVoteContinue = async () => {
-  const { activeMemberSelectVotes, activeMemberSelectVoteIndex } = useSessionStore.getState();
-
-  // if (!hasPassed) {
-  //   await updateSession({
-  //     // numFailVotesToApproveMembers: numFailVotesToApproveMembers + 1,
-  //     activeMemberSelectVoteIndex: activeMemberSelectVoteIndex + 1,
-  //   });
-
-  //   // await updateActiveQuest({
-  //   //   votesToApproveHistory: ,
-  //   // });
-  // } else {
-  //   await updateSession({
-  //     activeMemberSelectVoteIndex: 0,
-  //   });
-  // }
-
   await goToStep({
     step: "memberSelectResult",
   });
@@ -231,6 +214,10 @@ export const memberSelectResultContinue = async (hasPassed: boolean) => {
   const { activeQuest, playersArray, activeMemberSelectVoteIndex } = useSessionStore.getState();
 
   if (hasPassed) {
+    await updateSession({
+      activeMemberSelectVoteIndex: 0,
+    });
+
     await goToStep({
       step: "questVote",
     });
@@ -247,8 +234,6 @@ export const memberSelectResultContinue = async (hasPassed: boolean) => {
 
   await updateActiveQuest({
     leaderId: newLeader.id,
-    players: [],
-    votesToSucceed: {},
   });
 
   await goToStep({

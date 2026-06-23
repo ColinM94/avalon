@@ -33,15 +33,22 @@ export const QuestsStatus = ({ className }: Props) => {
   const renderQuestVotes = (questIndex: number) => {
     const quest = quests[questIndex];
 
+    console.log(quest);
+
+    const votes = Object.values(quest.votesToSucceed);
+
     return (
-      <>
-        <div className={styles.questVotes}>
-          {Object.values(quest.votesToSucceed).map((vote) => (
-            <div className={classes(styles.questVote, vote ? styles.questVoteSuccess : styles.questVoteFailed)} />
-          ))}
-          <div className={styles.vote} />
-        </div>
-      </>
+      <div className={styles.questVotes}>
+        {votes.map((vote) => (
+          <div
+            className={classes(
+              styles.questVote,
+              vote === true && styles.questVoteSuccess,
+              vote === false && styles.questVoteFailed,
+            )}
+          />
+        ))}
+      </div>
     );
   };
 

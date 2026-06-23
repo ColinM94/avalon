@@ -13,8 +13,6 @@ export const PlayProtected = () => {
   const { showToast } = useAppStore();
   const { user } = useAppStore();
 
-  console.log(useSessionStore.getState());
-
   const updateState = (data: GameSession | undefined) => {
     try {
       if (!sessionId) throw new Error("Invalid Session ID");
