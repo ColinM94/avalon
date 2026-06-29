@@ -25,7 +25,7 @@ export const GameQuestVote = (props: Props) => {
   };
 
   return (
-    <div className={classes(styles.container, className)}>
+    <>
       {!activeQuest.players.includes(myPlayer.id) && <Divider description="The Quest is in progress" />}
 
       {activeQuest.players.includes(myPlayer.id) && (
@@ -57,6 +57,6 @@ export const GameQuestVote = (props: Props) => {
         canReady={() => questVoteCanReady(myPlayer.id)}
         onReady={() => questVoteReady(myPlayer.id)}
       />
-    </div>
+    </>
   );
 };

@@ -12,7 +12,7 @@ import styles from "./styles.module.scss";
 export const GameMemberSelectResult = (props: Props) => {
   const { className } = props;
 
-  const { isMyPlayerHost, activeMemberSelectVotes } = useSessionStore();
+  const { isMyPlayerHost, activeMemberSelectVotes, activeMemberSelectVoteIndex, activeQuest } = useSessionStore();
 
   const votes = Object.values(activeMemberSelectVotes).sort((a, b) => Number(b) - Number(a));
 
@@ -27,6 +27,8 @@ export const GameMemberSelectResult = (props: Props) => {
 
     return items;
   };
+
+  console.log(activeMemberSelectVoteIndex, activeQuest);
 
   return (
     <>

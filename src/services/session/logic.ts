@@ -33,6 +33,8 @@ export const lobbyCanReady = () => {
 export const lobbyCanContinue = () => {
   const { playersArray, isAllReady } = useSessionStore.getState();
 
+  if (lobbyCanReady() !== true) return lobbyCanReady();
+
   if (playersArray.length < 5) return "There has to be at least 5 players to start";
 
   if (!isAllReady) return "All players are not ready";
@@ -225,6 +227,14 @@ export const memberSelectResultContinue = async (hasPassed: boolean) => {
     return;
   }
 
+  if (useSessionStore.getState().activeMemberSelectVoteIndex >= 5) {
+    await goToStep({
+      step: "gameOver",
+    });
+
+    return;
+  }
+
   const currentLeaderIndex = playersArray.findIndex((item) => item.id === activeQuest.leaderId);
   const newLeader = playersArray?.[currentLeaderIndex + 1] || playersArray[0];
 
@@ -304,7 +314,7 @@ export const questVoteReady = async (playerId: string) => {
 export const questResultCanContinue = () => {};
 
 export const questResultContinue = async (hasPassed: boolean) => {
-  const { isMyPlayerHost, playersArray, activeQuest, numFailMemberSelectVotes } = useSessionStore.getState();
+  const { isMyPlayerHost, playersArray, activeQuest, numFailQuests } = useSessionStore.getState();
 
   if (!isMyPlayerHost) return;
 
@@ -322,9 +332,9 @@ export const questResultContinue = async (hasPassed: boolean) => {
   });
 
   if (!hasPassed) {
-    // await updateSession({
-    //   numFailMemberSelectVotes: Number(numFailMemberSelectVotes) + 1,
-    // });
+    await updateSession({
+      numFailQuests: Number(numFailQuests) + 1,
+    });
   }
 
   await goToStep({

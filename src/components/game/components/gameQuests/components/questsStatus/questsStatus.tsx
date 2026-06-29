@@ -33,8 +33,6 @@ export const QuestsStatus = ({ className }: Props) => {
   const renderQuestVotes = (questIndex: number) => {
     const quest = quests[questIndex];
 
-    console.log(quest);
-
     const votes = Object.values(quest.votesToSucceed);
 
     return (
