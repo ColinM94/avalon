@@ -1,3 +1,22 @@
+.vote {
+  aspect-ratio: 0.7;
+  border-radius: 2px;
+  height: 20px;
+  outline: 2px solid vars.$color-surface3;
+}
+
+.voteSuccess {
+  @extend .vote;
+  background-color: vars.$color-success;
+  filter: brightness(0.8);
+}
+
+.voteFailed {
+  @extend .vote;
+  background-color: vars.$color-danger;
+  filter: brightness(0.8);
+}
+
 .container {
   flex-direction: row;
   gap: vars.$spacing-secondary;
@@ -60,30 +79,23 @@
   gap: vars.$spacing-tertiary;
   justify-content: center;
   padding-top: vars.$spacing-secondary;
-
-  .questVote {
-    aspect-ratio: 0.7;
-    border-radius: 2px;
-    height: 20px;
-    outline: 2px solid vars.$color-surface3;
-  }
-
-  .questVoteSuccess {
-    @extend .questVote;
-    background-color: vars.$color-success;
-    filter: brightness(0.8);
-  }
-
-  .questVoteFailed {
-    @extend .questVote;
-    background-color: vars.$color-danger;
-    filter: brightness(0.8);
-  }
 }
 
 .modal {
   background-color: vars.$color-surface;
   padding: vars.$spacing-primary;
+  align-items: center;
+  gap: vars.$spacing-secondary;
+
+  .votesRow {
+    flex-direction: row;
+    gap: vars.$spacing-secondary;
+
+    .votesRowLabel {
+      width: 20px;
+      text-align: center;
+    }
+  }
 
   .votes {
     flex-direction: row;

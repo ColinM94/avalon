@@ -23,9 +23,9 @@ export const maxCharacters: Record<number, { good: number; evil: number }> = {
     good: 6,
     evil: 4,
   },
-}
+};
 
-export const characterNames: Record<string, string> = {
+export const characterNames = {
   merlin: "Merlin",
   percival: "Percival",
   juniorMessenger: "Junior Messenger",
@@ -55,4 +55,4 @@ export const characterNames: Record<string, string> = {
   minion1: "Minion",
   minion2: "Minion",
   minion3: "Minion",
-}
+} as const;

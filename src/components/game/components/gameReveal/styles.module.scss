@@ -1,15 +1,38 @@
-.character {
-  width: calc(100% - vars.$spacing-primary * 2);
-  max-height: 400px;
-  flex: 1;
+.container {
   transition: opacity 0.2s;
-  align-self: center;
-  margin-bottom: vars.$spacing-primary;
-  margin-top: auto;
-}
+  flex: 1;
+  justify-content: center;
+  gap: vars.$spacing-primary;
 
-.characterHidden {
-  opacity: 0;
+  .characterName {
+    font-size: vars.$font-size-display;
+    text-align: center;
+    margin-bottom: vars.$spacing-secondary;
+  }
+
+  .character {
+    width: calc(100% - vars.$spacing-primary * 2);
+    align-self: center;
+    margin-bottom: calc(vars.$spacing-primary * 2);
+    height: 400px;
+    width: 300px;
+    justify-content: center;
+  }
+
+  .howToPlay {
+  }
+
+  .playerCards {
+    flex-direction: row;
+    gap: vars.$spacing-primary;
+    margin-top: vars.$spacing-primary;
+  }
+
+  .section {
+    .sectionHeading {
+      font-size: vars.$font-size-body;
+    }
+  }
 }
 
 .revealButton {
@@ -17,4 +40,8 @@
   max-width: 200px;
   margin-top: auto;
   background-color: vars.$color-surface2;
+}
+
+.hidden {
+  opacity: 0;
 }

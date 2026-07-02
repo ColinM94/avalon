@@ -1,10 +1,14 @@
+import { CharacterId } from "./general";
+
 export interface Character {
-  id: string
-  allegiance: "good" | "evil"
-  isActive: boolean
-  isOptional: boolean
-  description: string[]
-  disabled: boolean
+  id: CharacterId;
+  allegiance: "good" | "evil";
+  name: string;
+  isActive: boolean;
+  isOptional: boolean;
+  description: string[];
+  howToPlay: string;
+  disabled: boolean;
 }
 
-export type Characters = Record<string, Character>
+export type Characters = Record<string, Character>;

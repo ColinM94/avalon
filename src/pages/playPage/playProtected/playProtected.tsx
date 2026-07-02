@@ -43,6 +43,7 @@ export const PlayProtected = () => {
         isAllReady,
         activeQuest,
         activeMemberSelectVotes,
+        activeMemberSelectVoteIndex: data.activeMemberSelectVoteIndex,
         playersArray: Object.values(data.players).sort((a, b) => a.joinedAt - b.joinedAt),
         numPlayers,
         numFailMemberSelectVotes,
@@ -50,7 +51,6 @@ export const PlayProtected = () => {
         characters: data.characters,
         quests: data.quests,
         step: data.step,
-        activeMemberSelectVoteIndex: data.activeMemberSelectVoteIndex,
         // session: data,
       });
     } catch (error) {

@@ -46,10 +46,8 @@ $goodColor: #43839a;
   }
 
   .name {
-    font-size: vars.$font-size-body2;
     text-align: center;
     color: vars.$color-text-primary;
-    // margin-bottom: vars.$spacing-secondary;
   }
 
   .description {
@@ -83,7 +81,6 @@ $goodColor: #43839a;
 
 .evil {
   background-color: $evilColor;
-
   background: rgb(176, 125, 74);
   background: radial-gradient(circle, rgba(176, 125, 74, 1) 0%, rgba(213, 126, 38, 1) 45%, rgba(255, 129, 0, 1) 81%);
 }
@@ -94,6 +91,9 @@ $goodColor: #43839a;
 }
 
 .portrait {
+  justify-content: center;
+  align-items: center;
+
   .image {
     position: absolute;
     height: 100%;
@@ -150,8 +150,11 @@ $goodColor: #43839a;
     height: 100%;
     width: 60%;
 
-    .descriptionItem {
+    .descriptionText {
       font-size: vars.$font-size-body2;
+    }
+
+    .descriptionItem {
       color: vars.$color-text-secondary;
     }
   }

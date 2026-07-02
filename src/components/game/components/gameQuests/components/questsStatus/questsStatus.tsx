@@ -8,26 +8,26 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const QuestsStatus = ({ className }: Props) => {
-  const { quests, activeQuest } = useSessionStore();
+  const { quests, activeQuest, numPlayers } = useSessionStore();
 
   const [selectedQuest, setSelectedQuest] = React.useState<number | null>(null);
 
-  const renderVotes = (questIndex: number) => {
+  const renderVotes = (questIndex: number, voteIndex: number) => {
     const quest = quests[questIndex];
 
-    return (
-      <>
-        {Object.values(quest.memberSelectVotes).map((votes, index) => (
-          <div className={styles.questVotes}>
-            Round {index + 1}
-            {Object.values(votes).map((vote) => (
-              <div className={classes(styles.questVote, vote ? styles.questVoteSuccess : styles.questVoteFailed)} />
-            ))}
-            <div className={styles.vote} />
-          </div>
-        ))}
-      </>
-    );
+    const items = [];
+
+    for (let i = 0; i < numPlayers; i++) {
+      const vote = quest.memberSelectVotes[voteIndex]?.[i];
+
+      items.push(
+        <div
+          className={classes(styles.vote, vote === true && styles.voteSuccess, vote === false && styles.voteFailed)}
+        />,
+      );
+    }
+
+    return items;
   };
 
   const renderQuestVotes = (questIndex: number) => {
@@ -41,8 +41,8 @@ export const QuestsStatus = ({ className }: Props) => {
           <div
             className={classes(
               styles.questVote,
-              vote === true && styles.questVoteSuccess,
-              vote === false && styles.questVoteFailed,
+              vote === true && styles.voteSuccess,
+              vote === false && styles.voteFailed,
             )}
           />
         ))}
@@ -89,7 +89,21 @@ export const QuestsStatus = ({ className }: Props) => {
         {selectedQuest !== null && (
           <>
             Quest {selectedQuest + 1} Votes
-            {renderVotes(selectedQuest)}
+            <div className={styles.votesRow}>
+              <div className={styles.votesRowLabel}>1.</div> {renderVotes(selectedQuest, 0)}
+            </div>
+            <div className={styles.votesRow}>
+              <div className={styles.votesRowLabel}>2.</div> {renderVotes(selectedQuest, 1)}
+            </div>
+            <div className={styles.votesRow}>
+              <div className={styles.votesRowLabel}>3.</div> {renderVotes(selectedQuest, 2)}
+            </div>
+            <div className={styles.votesRow}>
+              <div className={styles.votesRowLabel}>4.</div> {renderVotes(selectedQuest, 3)}
+            </div>
+            <div className={styles.votesRow}>
+              <div className={styles.votesRowLabel}>5.</div> {renderVotes(selectedQuest, 4)}
+            </div>
           </>
         )}
       </Modal>

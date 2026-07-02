@@ -1,25 +1,25 @@
-import { classes } from "utils/classes"
-import { Heading } from "components/heading/heading"
-import { CharacterCard } from "components/characterCard/characterCard"
+import { classes } from "utils/classes";
+import { Heading } from "components/heading/heading";
+import { CharacterCard } from "components/characterCard/characterCard";
 
-import styles from "./styles.module.scss"
-import { Props } from "./types"
+import styles from "./styles.module.scss";
+import { Props } from "./types";
 
 export const SetupCharacters = (props: Props) => {
   const { heading, characters, maxActiveCharacters, numActiveCharacters, allegiance, updateCharacters, className } =
-    props
+    props;
 
   const handleCharacterClick = (characterId: string) => {
-    const character = characters[characterId]
+    const character = characters[characterId];
 
-    if (!character.isOptional) return
+    if (!character.isOptional) return;
 
     if (
       character.allegiance === allegiance &&
       !characters[characterId].isActive &&
       numActiveCharacters >= maxActiveCharacters
     ) {
-      return
+      return;
     }
 
     updateCharacters({
@@ -27,12 +27,12 @@ export const SetupCharacters = (props: Props) => {
         ...character,
         isActive: !characters[characterId].isActive,
       },
-    })
-  }
+    });
+  };
 
   const filteredCharacters = Object.values(characters).filter(
     (character) => character.allegiance === allegiance && !character.disabled,
-  )
+  );
 
   return (
     <div className={classes(styles.container, className)}>
@@ -56,5 +56,5 @@ export const SetupCharacters = (props: Props) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};

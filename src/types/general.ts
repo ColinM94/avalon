@@ -1,6 +1,8 @@
+import { characterNames } from "consts/characters";
+
 /** Includes keys of all nested objects. */
 export type KeyOf<T> = {
-  [K in keyof T & (string | number)]: T[K] extends object
-    ? `${K}` | `${K}.${KeyOf<T[K]>}`
-    : `${K}`;
+  [K in keyof T & (string | number)]: T[K] extends object ? `${K}` | `${K}.${KeyOf<T[K]>}` : `${K}`;
 }[keyof T & (string | number)];
+
+export type CharacterId = keyof typeof characterNames;

@@ -1,13 +1,13 @@
-import { CharacterCard } from "components/characterCard/characterCard"
-import { Heading } from "components/heading/heading"
-import { Modal } from "components/modal/modal"
-import { charactersDefault } from "consts/defaults"
+import { CharacterCard } from "components/characterCard/characterCard";
+import { Heading } from "components/heading/heading";
+import { Modal } from "components/modal/modal";
+import { charactersDefault } from "consts/defaults";
 
-import { Props } from "./types"
-import styles from "./styles.module.scss"
+import { Props } from "./types";
+import styles from "./styles.module.scss";
 
 export const CharacterModal = (props: Props) => {
-  const { characterId, show, setShow, headingTitle, headingSubtitle } = props
+  const { characterId, show, setShow, headingTitle, headingSubtitle } = props;
 
   return (
     <Modal show={show} setShow={setShow}>
@@ -22,5 +22,5 @@ export const CharacterModal = (props: Props) => {
         className={styles.character}
       />
     </Modal>
-  )
-}
+  );
+};

@@ -1,3 +1,5 @@
+import { CharacterId } from "./general";
+
 export type Player = {
   id: string;
   name: string;
@@ -5,7 +7,7 @@ export type Player = {
   isReady: boolean;
   joinedAt: number;
   imageUrl?: string;
-  characterId: string;
+  characterId: CharacterId;
 };
 
 export type Quest = {
@@ -39,7 +41,7 @@ export type GameSession = {
     | "gameOver"
     | "";
   numPlayers: number;
-  characters: string[];
+  characters: CharacterId[];
   createdBy: string;
   isMyPlayerHostPlaying: boolean;
   quests: Record<number, Quest>;
