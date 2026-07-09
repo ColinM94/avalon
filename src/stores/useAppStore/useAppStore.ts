@@ -1,28 +1,29 @@
-import { Actions, State } from "./types";
-import { createZustandStore } from "../createZustandStore";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+
 import { userDefault } from "consts/defaults";
-import { SetStoreState } from "stores/types";
-import { Toast } from "types/toast";
+import { Actions, State } from "./types";
 
-const showToast = (set: SetStoreState<State>, text: string, type?: Toast["type"]) => {
-  set({
-    toast: {
-      text,
-      type,
-      createdAt: Date.now(),
+export const useAppStore = create<State & Actions>()(
+  persist(
+    (set) => ({
+      user: userDefault(),
+      toast: null,
+      showToast: (text, type) =>
+        set({
+          toast: {
+            text,
+            type,
+            createdAt: Date.now(),
+          },
+        }),
+      deleteToast: () => set({ toast: null }),
+      updateAppStore: (update) => set(update),
+    }),
+    {
+      name: "app",
+      storage: createJSONStorage(() => sessionStorage),
+      partialize: (state) => ({ user: state.user }),
     },
-  });
-};
-
-export const useAppStore = createZustandStore<State & Actions>({
-  name: "app",
-  data: (set) => ({
-    user: userDefault(),
-    toast: null,
-    showToast: (text, type) => showToast(set, text, type),
-    deleteToast: () => set({ toast: null }),
-    updateAppStore: (update) => set({ ...update }),
-  }),
-  storageType: "localStorage",
-  persistState: true,
-});
+  ),
+);

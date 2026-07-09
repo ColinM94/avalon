@@ -1,5 +1,8 @@
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+
 import { playerDefault } from "consts/defaults";
-import { createZustandStore } from "../createZustandStore";
+
 import { Actions, State } from "./types";
 
 const initialState: State = {
@@ -36,12 +39,16 @@ const initialState: State = {
   activeMemberSelectVoteIndex: 0,
 };
 
-export const useSessionStore = createZustandStore<State & Actions>({
-  name: "session",
-  data: (set) => ({
-    ...initialState,
-    updateSessionStore: (update) => set({ ...update }),
-    resetSessionsStore: () => set({ ...initialState }),
-  }),
-  storageType: "localStorage",
-});
+export const useSessionStore = create<State & Actions>()(
+  persist(
+    (set) => ({
+      ...initialState,
+      updateSessionStore: (update) => set({ ...update }),
+      resetSessionsStore: () => set({ ...initialState }),
+    }),
+    {
+      name: "app",
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
+);
