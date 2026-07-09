@@ -3,6 +3,7 @@ import { CharacterId } from "types/general";
 export interface Props {
   heading: string;
   characters: CharacterId[];
+  selectedCharacters: string[];
   maxActiveCharacters: number;
   numActiveCharacters: number;
   allegiance: "evil" | "good";

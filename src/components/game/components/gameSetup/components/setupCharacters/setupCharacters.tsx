@@ -8,20 +8,30 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const SetupCharacters = (props: Props) => {
-  const { heading, characters, maxActiveCharacters, numActiveCharacters, allegiance, setCharacters, className } = props;
+  const {
+    heading,
+    characters,
+    maxActiveCharacters,
+    numActiveCharacters,
+    allegiance,
+    selectedCharacters,
+    setCharacters,
+    className,
+  } = props;
 
   const handleCharacterClick = (characterId: CharacterId) => {
     const character = charactersDefault[characterId];
+    const isSelected = selectedCharacters.includes(characterId);
 
     if (!character.isOptional) return;
 
-    if (character.allegiance === allegiance && numActiveCharacters >= maxActiveCharacters) {
+    if (character.allegiance === allegiance && numActiveCharacters >= maxActiveCharacters && !isSelected) {
       return;
     }
 
     setCharacters((prev) => {
-      if (prev.includes(characterId)) return prev.filter((id) => id !== characterId);
-      return [...prev, characterId];
+      if (!isSelected) return [...prev, character.id];
+      return prev.filter((id) => id !== characterId);
     });
   };
 
@@ -44,7 +54,7 @@ export const SetupCharacters = (props: Props) => {
             character={charactersDefault[characterId]}
             onClick={handleCharacterClick}
             showName
-            isActive={characters.includes(characterId)}
+            isActive={selectedCharacters.includes(characterId)}
             key={characterId}
             orientation="portrait"
             showInfoButton

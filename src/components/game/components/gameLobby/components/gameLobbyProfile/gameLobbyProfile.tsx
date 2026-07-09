@@ -25,9 +25,12 @@ export const GameLobbyProfile = ({ className }: Props) => {
 
   React.useEffect(() => {
     if (!image) return;
+
     void (async () => {
-      await uploadFile(image, `images/${sessionId}/${myPlayer.id}.png`);
-      const url = await getFileUrl(`images/${sessionId}/${myPlayer.id}.png`);
+      const imagePath = `images/${sessionId}/${myPlayer.id}.png`;
+
+      await uploadFile(image, imagePath);
+      const url = await getFileUrl(imagePath);
 
       void updateMyPlayer({
         imageUrl: url || "",

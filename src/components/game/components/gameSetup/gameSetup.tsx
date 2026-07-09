@@ -17,10 +17,18 @@ export const GameSetup = () => {
 
   // const [characters, updateCharacters] = React.useReducer(mergeReducer<Characters>, charactersDefault);
 
-  const [selectedCharacters, setSelectedCharacters] = React.useState<CharacterId[]>([]);
+  const [selectedCharacters, setSelectedCharacters] = React.useState<CharacterId[]>(["merlin", "assassin"]);
 
   const goodCharacters = Object.values(charactersDefault).filter((character) => character.allegiance === "good");
   const evilCharacters = Object.values(charactersDefault).filter((character) => character.allegiance === "evil");
+
+  const numActiveGoodCharacters = selectedCharacters.filter((characterId) =>
+    goodCharacters.find((character) => character.id === characterId),
+  ).length;
+
+  const numActiveEvilCharacters = selectedCharacters.filter((characterId) =>
+    evilCharacters.find((character) => character.id === characterId),
+  ).length;
 
   const maxGoodCharacters = maxCharacters[numPlayers]?.good;
   const maxEvilCharacters = maxCharacters[numPlayers]?.evil;
@@ -32,20 +40,22 @@ export const GameSetup = () => {
           <SetupCharacters
             heading="Good Characters"
             allegiance="good"
+            selectedCharacters={selectedCharacters}
             characters={goodCharacters.map((character) => character.id)}
             maxActiveCharacters={maxGoodCharacters}
             setCharacters={setSelectedCharacters}
-            numActiveCharacters={goodCharacters.length}
+            numActiveCharacters={numActiveGoodCharacters}
             className={styles.section}
           />
 
           <SetupCharacters
             heading="Evil Characters"
             allegiance="evil"
+            selectedCharacters={selectedCharacters}
             characters={evilCharacters.map((character) => character.id)}
             maxActiveCharacters={maxEvilCharacters}
             setCharacters={setSelectedCharacters}
-            numActiveCharacters={goodCharacters.length}
+            numActiveCharacters={numActiveEvilCharacters}
             className={styles.section}
           />
         </>
