@@ -1,37 +1,33 @@
 import { classes } from "utils/classes";
 import { Heading } from "components/heading/heading";
 import { CharacterCard } from "components/characterCard/characterCard";
+import { charactersDefault } from "consts/defaults";
+import { CharacterId } from "types/general";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const SetupCharacters = (props: Props) => {
-  const { heading, characters, maxActiveCharacters, numActiveCharacters, allegiance, updateCharacters, className } =
-    props;
+  const { heading, characters, maxActiveCharacters, numActiveCharacters, allegiance, setCharacters, className } = props;
 
-  const handleCharacterClick = (characterId: string) => {
-    const character = characters[characterId];
+  const handleCharacterClick = (characterId: CharacterId) => {
+    const character = charactersDefault[characterId];
 
     if (!character.isOptional) return;
 
-    if (
-      character.allegiance === allegiance &&
-      !characters[characterId].isActive &&
-      numActiveCharacters >= maxActiveCharacters
-    ) {
+    if (character.allegiance === allegiance && numActiveCharacters >= maxActiveCharacters) {
       return;
     }
 
-    updateCharacters({
-      [characterId]: {
-        ...character,
-        isActive: !characters[characterId].isActive,
-      },
+    setCharacters((prev) => {
+      if (prev.includes(characterId)) return prev.filter((id) => id !== characterId);
+      return [...prev, characterId];
     });
   };
 
-  const filteredCharacters = Object.values(characters).filter(
-    (character) => character.allegiance === allegiance && !character.disabled,
+  const filteredCharacters = characters.filter(
+    (characterId) =>
+      charactersDefault[characterId].allegiance === allegiance && !charactersDefault[characterId].disabled,
   );
 
   return (
@@ -43,12 +39,13 @@ export const SetupCharacters = (props: Props) => {
       />
 
       <div className={styles.characters}>
-        {filteredCharacters.map((character) => (
+        {filteredCharacters.map((characterId) => (
           <CharacterCard
-            character={character}
+            character={charactersDefault[characterId]}
             onClick={handleCharacterClick}
             showName
-            key={character.id}
+            isActive={characters.includes(characterId)}
+            key={characterId}
             orientation="portrait"
             showInfoButton
             className={styles.character}

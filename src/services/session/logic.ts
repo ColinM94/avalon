@@ -1,10 +1,10 @@
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { GameSession, Player } from "types/gameSession";
-import { Characters } from "types/characters";
 import { shuffleArray } from "utils/shuffleArray";
 import { maxCharacters } from "consts/characters";
 import { numPlayersByQuest } from "consts/general";
 import { updateDocument } from "services/firestore/updateDocument";
+import { CharacterId } from "types/general";
 
 import { updateActiveQuest } from "./updateActiveQuest";
 import { updatePlayer } from "./updatePlayer";
@@ -78,21 +78,13 @@ export const lobbyContinue = async () => {
 // ------------------------
 // 2. Setup
 // ------------------------
-export const setupCanContinue = (characters: Characters) => {
+export const setupCanContinue = (numActiveGoodCharacters: number, numActiveEvilCharacters: number) => {
   const { playersArray } = useSessionStore.getState();
 
   const numPlayers = playersArray.length;
 
   const maxGoodCharacters = maxCharacters[numPlayers]?.good;
   const maxEvilCharacters = maxCharacters[numPlayers]?.evil;
-
-  const numActiveGoodCharacters = Object.values(characters).filter(
-    (character) => character.allegiance === "good" && character.isActive,
-  ).length;
-
-  const numActiveEvilCharacters = Object.values(characters).filter(
-    (character) => character.allegiance === "evil" && character.isActive,
-  ).length;
 
   if (numActiveGoodCharacters > maxGoodCharacters) {
     return "You have selected too many Good characters!";
@@ -113,14 +105,10 @@ export const setupCanContinue = (characters: Characters) => {
   return true;
 };
 
-export const setupContinue = async (characters: Characters) => {
+export const setupContinue = async (characterIds: CharacterId[]) => {
   const { playersArray } = useSessionStore.getState();
 
-  const shuffledCharacters = shuffleArray(
-    Object.values(characters)
-      .filter((character) => character.isActive)
-      .map((character) => character.id),
-  );
+  const shuffledCharacters = shuffleArray(characterIds) as CharacterId[];
 
   const playerUpdates: Record<string, Partial<Player>> = {};
 

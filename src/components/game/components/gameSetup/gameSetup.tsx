@@ -4,10 +4,9 @@ import { MenuBar } from "components/menuBar/menuBar";
 import { StepDescription } from "components/stepDescription/stepDescription";
 import { maxCharacters } from "consts/characters";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
-import { Characters } from "types/characters";
-import { mergeReducer } from "utils/mergeReducer";
 import { setupCanContinue, setupContinue } from "services/session/logic";
 import { charactersDefault } from "consts/defaults";
+import { CharacterId } from "types/general";
 
 import { SetupCharacters } from "./components/setupCharacters/setupCharacters";
 
@@ -16,15 +15,12 @@ import styles from "./styles.module.scss";
 export const GameSetup = () => {
   const { numPlayers, isMyPlayerHost } = useSessionStore();
 
-  const [characters, updateCharacters] = React.useReducer(mergeReducer<Characters>, charactersDefault);
+  // const [characters, updateCharacters] = React.useReducer(mergeReducer<Characters>, charactersDefault);
 
-  const numActiveGoodCharacters = Object.values(characters).filter(
-    (character) => character.allegiance === "good" && character.isActive,
-  ).length;
+  const [selectedCharacters, setSelectedCharacters] = React.useState<CharacterId[]>([]);
 
-  const numActiveEvilCharacters = Object.values(characters).filter(
-    (character) => character.allegiance === "evil" && character.isActive,
-  ).length;
+  const goodCharacters = Object.values(charactersDefault).filter((character) => character.allegiance === "good");
+  const evilCharacters = Object.values(charactersDefault).filter((character) => character.allegiance === "evil");
 
   const maxGoodCharacters = maxCharacters[numPlayers]?.good;
   const maxEvilCharacters = maxCharacters[numPlayers]?.evil;
@@ -36,20 +32,20 @@ export const GameSetup = () => {
           <SetupCharacters
             heading="Good Characters"
             allegiance="good"
-            characters={characters}
+            characters={goodCharacters.map((character) => character.id)}
             maxActiveCharacters={maxGoodCharacters}
-            updateCharacters={updateCharacters}
-            numActiveCharacters={numActiveGoodCharacters}
+            setCharacters={setSelectedCharacters}
+            numActiveCharacters={goodCharacters.length}
             className={styles.section}
           />
 
           <SetupCharacters
             heading="Evil Characters"
             allegiance="evil"
-            characters={characters}
+            characters={evilCharacters.map((character) => character.id)}
             maxActiveCharacters={maxEvilCharacters}
-            updateCharacters={updateCharacters}
-            numActiveCharacters={numActiveEvilCharacters}
+            setCharacters={setSelectedCharacters}
+            numActiveCharacters={goodCharacters.length}
             className={styles.section}
           />
         </>
@@ -59,8 +55,8 @@ export const GameSetup = () => {
 
       <MenuBar
         showContinue={isMyPlayerHost}
-        canContinue={() => setupCanContinue(characters)}
-        onContinue={() => setupContinue(characters)}
+        canContinue={() => setupCanContinue(goodCharacters.length, evilCharacters.length)}
+        onContinue={() => setupContinue(selectedCharacters)}
       />
     </>
   );

@@ -42,8 +42,9 @@ export const GameReveal = () => {
 
   const isMordredPlaying = allPlayers.find((player) => player.characterId === "mordred");
   const isMorganaPlaying = allPlayers.find((player) => player.characterId === "morgana");
+  const isOberonPlaying = allPlayers.find((player) => player.characterId === "oberon");
 
-  const characterId: CharacterId = "percival";
+  const characterId: CharacterId = "oberon";
   const character = charactersDefault[characterId];
 
   return (
@@ -68,7 +69,9 @@ export const GameReveal = () => {
               {isMordredPlaying && (
                 <div className={styles.sectionHeading}>These are the evil players, except Mordred is missing.</div>
               )}
+
               {!isMordredPlaying && <div className={styles.sectionHeading}>These are the evil players:</div>}
+
               <div className={styles.playerCards}>
                 {evilPlayersExceptMordred.map((player) => (
                   <PlayerCard player={player} showName />
@@ -80,10 +83,9 @@ export const GameReveal = () => {
           {character.id === "percival" && (
             <>
               {isMorganaPlaying && (
-                <div className={styles.sectionHeading}>
-                  One of these players is Merlin, and one is Morgana. Which is which, is up to you to find out:
-                </div>
+                <div className={styles.sectionHeading}>One of these players is Merlin, and one is Morgana:</div>
               )}
+
               {!isMorganaPlaying && <div className={styles.sectionHeading}>Merlin:</div>}
 
               <div className={styles.playerCards}>
@@ -94,26 +96,22 @@ export const GameReveal = () => {
             </>
           )}
 
-          {character.allegiance === "evil" && (
-            <div className={styles.playerCards}>
-              {evilPlayersExceptOberon.map((player) => (
-                <PlayerCard player={player} showName />
-              ))}
-            </div>
+          {character.allegiance === "evil" && character.id !== "oberon" && (
+            <>
+              {isOberonPlaying && (
+                <div className={styles.sectionHeading}>These are the other evil players, except for Oberon:</div>
+              )}
+
+              {!isOberonPlaying && <div className={styles.sectionHeading}>These are the other evil players:</div>}
+
+              <div className={styles.playerCards}>
+                {evilPlayersExceptOberon.map((player) => (
+                  <PlayerCard player={player} showName />
+                ))}
+              </div>
+            </>
           )}
         </div>
-
-        {/* {characterId === "merlin" && (
-          <div className={styles.section}>
-            <div className={styles.sectionHeading}>You are an Agent of Evil. Here are the other Asians of Evil.</div>
-
-            <div className={styles.playerCards}>
-              {evilPlayers().map((player) => (
-                <PlayerCard player={player} showName />
-              ))}
-            </div>
-          </div>
-        )} */}
       </div>
 
       <Button

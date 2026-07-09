@@ -5,8 +5,8 @@ export interface Props {
   character: Character;
   onClick?: (characterId: CharacterId) => void;
   orientation?: "portrait" | "landscape";
+  isActive?: boolean;
   showInfoButton?: boolean;
-  alwaysActive?: boolean;
   disableAnimation?: boolean;
   showName?: boolean;
   showDescription?: boolean;

@@ -11,7 +11,7 @@ import { Props } from "./types";
 export const GameLobbyInfo = ({ className }: Props) => {
   const { sessionId } = useSessionStore();
 
-  const url = `${baseUrl}/join/${sessionId}`;
+  const url = `${baseUrl}/play/${sessionId}`;
 
   const handleShare = () => {
     void navigator.share({

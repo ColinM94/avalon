@@ -23,7 +23,7 @@ export const JoinPage = () => {
     navigate(`/play/${code}`);
   };
 
-  const openCamera = () => {
+  const handleOpenCamera = () => {
     setShowScanner(true);
   };
 
@@ -41,7 +41,7 @@ export const JoinPage = () => {
           className={styles.scanner}
         />
 
-        <Button label="Scan" onClick={openCamera} />
+        <Button label="Scan" onClick={handleOpenCamera} />
       </div>
 
       <Divider label="or" className={styles.divider} />

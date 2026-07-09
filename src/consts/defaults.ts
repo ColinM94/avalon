@@ -312,7 +312,7 @@ export const charactersDefault: Characters = {
     isOptional: true,
     description: ["Does not reveal himself to other evil players.", "Makes Good more powerful."],
     howToPlay:
-      "You are evil, but at the start of the game you do not know the other evil players, and they do not know you. Work against the good team without revealing yourself, even though you cannot openly coordinate with evil.",
+      "You are evil, but you do not know the other evil players, and they do not know you. Work against the good team without revealing yourself, even though you cannot openly coordinate with evil.",
     disabled: false,
   },
   mordred: {

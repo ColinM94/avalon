@@ -1,11 +1,11 @@
-import { Character } from "types/characters"
+import { CharacterId } from "types/general";
 
 export interface Props {
-  heading: string
-  characters: Record<string, Character>
-  maxActiveCharacters: number
-  numActiveCharacters: number
-  allegiance: "evil" | "good"
-  updateCharacters: (update: Partial<Record<string, Character>>) => void
-  className?: string
+  heading: string;
+  characters: CharacterId[];
+  maxActiveCharacters: number;
+  numActiveCharacters: number;
+  allegiance: "evil" | "good";
+  setCharacters: React.Dispatch<React.SetStateAction<CharacterId[]>>;
+  className?: string;
 }
