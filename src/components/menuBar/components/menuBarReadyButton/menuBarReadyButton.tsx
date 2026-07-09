@@ -1,25 +1,25 @@
-import * as React from "react"
+import * as React from "react";
 
-import { useSessionStore } from "stores/useSessionStore/useSessionStore"
-import { updateMyPlayer } from "services/session/updateMyPlayer"
-import { Button } from "components/button/button"
-import { classes } from "utils/classes"
-import { LoadingOverlay } from "components/loadingOverlay/loadingOverlay"
-import { useAppStore } from "stores/useAppStore/useAppStore"
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
+import { updateMyPlayer } from "services/session/updateMyPlayer";
+import { Button } from "components/button/button";
+import { classes } from "utils/classes";
+import { LoadingOverlay } from "components/loadingOverlay/loadingOverlay";
+import { useAppStore } from "stores/useAppStore/useAppStore";
 
-import styles from "./styles.module.scss"
-import { Props } from "./types"
+import styles from "./styles.module.scss";
+import { Props } from "./types";
 
 export const MenuBarReadyButton = (props: Props) => {
-  const { canReady, onReady, showContinue, canContinue, onContinue } = props
+  const { canReady, onReady, showContinue, canContinue, onContinue } = props;
 
-  const { myPlayer } = useSessionStore()
-  const { showToast } = useAppStore()
+  const { myPlayer } = useSessionStore();
+  const { showToast } = useAppStore();
 
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const isContinueDisabled = Boolean((canContinue && canContinue() !== true) || isLoading)
-  const isReadyDisabled = Boolean((canReady && canReady() !== true) || isLoading)
+  const isContinueDisabled = Boolean((canContinue && canContinue() !== true) || isLoading);
+  const isReadyDisabled = Boolean((canReady && canReady() !== true) || isLoading);
 
   // React.useEffect(() => {
   //   void (() => {
@@ -32,54 +32,54 @@ export const MenuBarReadyButton = (props: Props) => {
   // }, [])
 
   const handleCanReady = (alertUser: boolean) => {
-    if (!canReady) return
+    if (!canReady) return;
 
-    const result = canReady?.()
+    const result = canReady?.();
 
-    if (result === true) return result
+    if (result === true) return result;
 
-    if (alertUser) showToast(result, "error")
-  }
+    if (alertUser) showToast(result, "error");
+  };
 
   const handleReady = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
-      const result = canReady?.()
+      const result = canReady?.();
 
-      if (result !== true && typeof result === "string") throw new Error(result)
+      if (result !== true && typeof result === "string") throw new Error(result);
 
-      await onReady?.()
+      await onReady?.();
 
       await updateMyPlayer({
         isReady: true,
-      })
+      });
     } catch (error) {
-      const err = error as Error
-      showToast(err.message, "error")
+      const err = error as Error;
+      showToast(err.message, "error");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleContinue = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
       if (canContinue) {
-        const result = canContinue()
+        const result = canContinue();
 
-        if (result !== true) throw new Error(result)
+        if (result !== true) throw new Error(result);
       }
 
-      await onContinue?.()
+      await onContinue?.();
     } catch (error) {
-      const err = error as Error
-      showToast(err.message, "error")
+      const err = error as Error;
+      showToast(err.message, "error");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <>
@@ -95,7 +95,7 @@ export const MenuBarReadyButton = (props: Props) => {
         />
       )}
 
-      {!showContinue && onReady && (
+      {!showContinue && (
         <Button
           label={"Ready"}
           onClick={handleReady}
@@ -105,5 +105,5 @@ export const MenuBarReadyButton = (props: Props) => {
         />
       )}
     </>
-  )
-}
+  );
+};

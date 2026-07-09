@@ -10,9 +10,9 @@ import { GameQuestVote } from "./components/gameQuestVote/gameQuestVote";
 import { GameOver } from "./components/gameOver/gameOver";
 import { GameQuests } from "./components/gameQuests/gameQuests";
 import { GameMemberSelectVote } from "./components/gameMemberSelectVote/gameMemberSelectVote";
-import styles from "./styles.module.scss";
 import { GameMemberSelect } from "./components/gameMemberSelect/gameMemberSelect";
 import { GameMemberSelectResult } from "./components/gameMemberSelectResult/gameMemberSelectResult";
+import styles from "./styles.module.scss";
 
 export const Game = () => {
   const { heading, step } = useSessionStore();
