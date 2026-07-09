@@ -8,24 +8,26 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const QuestsStatus = ({ className }: Props) => {
-  const { quests, activeQuest, numPlayers } = useSessionStore();
+  const { quests, activeQuest, numPlayers, playersArray } = useSessionStore();
 
   const [selectedQuest, setSelectedQuest] = React.useState<number | null>(null);
+
+  console.log(quests);
 
   const renderVotes = (questIndex: number, voteIndex: number) => {
     const quest = quests[questIndex];
 
-    const items = [];
+    const items: React.ReactNode[] = [];
 
-    for (let i = 0; i < numPlayers; i++) {
-      const vote = quest.memberSelectVotes[voteIndex]?.[i];
+    playersArray.forEach((player) => {
+      const vote = quest.memberSelectVotes[voteIndex][player.id];
 
       items.push(
         <div
           className={classes(styles.vote, vote === true && styles.voteSuccess, vote === false && styles.voteFailed)}
         />,
       );
-    }
+    });
 
     return items;
   };
