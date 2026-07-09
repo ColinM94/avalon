@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { PersistOptions, PersistStorage, createJSONStorage, persist } from "zustand/middleware";
 import { getStoreData, removeStoreData, setStoreData } from "./persistStorage";
-import { ZustandConfig } from "./types";
+import { SetStoreState, ZustandConfig } from "./types";
 
 export const createZustandStore = <T>(config: ZustandConfig<T>) => {
   const { name, data, persistState, storageType, ...rest } = config;
 
   if (!persistState) {
-    const store = create<T>((set, get) => data(set, get));
+    const store = create<T>((set, get) => data(set as unknown as SetStoreState<T>, get));
     return store;
   }
 
@@ -35,6 +35,6 @@ export const createZustandStore = <T>(config: ZustandConfig<T>) => {
     ...rest,
   };
 
-  const store = create(persist((set, get) => data(set, get), persistOptions));
+  const store = create(persist((set, get) => data(set as unknown as SetStoreState<T>, get), persistOptions));
   return store;
 };
