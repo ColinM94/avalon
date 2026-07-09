@@ -22,8 +22,14 @@ export const QuestsStatus = ({ className }: Props) => {
 
       items.push(
         <div
-          className={classes(styles.vote, vote === true && styles.voteSuccess, vote === false && styles.voteFailed)}
-        />,
+          className={classes(
+            styles.memberVote,
+            vote === true && styles.voteSuccess,
+            vote === false && styles.voteFailed,
+          )}
+        >
+          {vote === true && "✔"} {vote === false && "✗"}
+        </div>,
       );
     });
 
@@ -88,7 +94,7 @@ export const QuestsStatus = ({ className }: Props) => {
       <Modal show={Boolean(selectedQuest !== null)} setShow={() => setSelectedQuest(null)} className={styles.modal}>
         {selectedQuest !== null && (
           <>
-            Quest {selectedQuest + 1} Votes
+            Quest {selectedQuest + 1} Votes to Approve Quest Members
             <div className={styles.votesRow}>
               <div className={styles.votesRowLabel}>1.</div> {renderVotes(selectedQuest, 0)}
             </div>

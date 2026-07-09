@@ -87,13 +87,24 @@
   align-items: center;
   gap: vars.$spacing-secondary;
 
+  .memberVote {
+    @extend .vote;
+
+    height: 75px;
+    width: 50px;
+    justify-content: center;
+    align-items: center;
+  }
+
   .votesRow {
     flex-direction: row;
     gap: vars.$spacing-secondary;
+    align-items: center;
 
     .votesRowLabel {
-      width: 20px;
       text-align: center;
+      font-size: vars.$font-size-h1;
+      width: calc(vars.$font-size-h1 + vars.$spacing-primary);
     }
   }
 
