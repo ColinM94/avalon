@@ -8,11 +8,9 @@ import { Props } from "./types";
 import styles from "./styles.module.scss";
 
 export const QuestsStatus = ({ className }: Props) => {
-  const { quests, activeQuest, numPlayers, playersArray } = useSessionStore();
+  const { quests, activeQuest, playersArray } = useSessionStore();
 
   const [selectedQuest, setSelectedQuest] = React.useState<number | null>(null);
-
-  console.log(quests);
 
   const renderVotes = (questIndex: number, voteIndex: number) => {
     const quest = quests[questIndex];

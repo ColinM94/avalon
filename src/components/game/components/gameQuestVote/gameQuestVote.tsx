@@ -4,14 +4,12 @@ import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { classes } from "utils/classes";
 import { questSucceedVote } from "services/session/questSucceedVote";
 import { questVoteCanContinue, questVoteCanReady, questVoteContinue, questVoteReady } from "services/session/logic";
+import { PlayerCard } from "components/playerCard/playerCard";
 
-import { Props } from "./types";
 import styles from "./styles.module.scss";
 
-export const GameQuestVote = (props: Props) => {
-  const { className } = props;
-
-  const { myPlayer, isMyPlayerHost, activeQuest } = useSessionStore();
+export const GameQuestVote = () => {
+  const { myPlayer, isMyPlayerHost, activeQuest, players } = useSessionStore();
 
   const vote = Boolean(activeQuest?.votesToSucceed?.[myPlayer.id]);
 
@@ -24,9 +22,22 @@ export const GameQuestVote = (props: Props) => {
     });
   };
 
+  const playersToShow = activeQuest.players.filter((playerId) => playerId !== myPlayer.id);
+
+  const myPlayerIsOnQuest = activeQuest.players.includes(myPlayer.id);
+
   return (
     <>
-      {!activeQuest.players.includes(myPlayer.id) && <Divider description="The Quest is in progress" />}
+      {!myPlayerIsOnQuest && <Divider description="These players are currently on a quest" />}
+      {myPlayerIsOnQuest && <Divider description="You are currently on a quest with these player(s)" />}
+
+      {!activeQuest.players.includes(myPlayer.id) && (
+        <div className={styles.players}>
+          {playersToShow.map((player) => (
+            <PlayerCard player={players[player]} showName showLeaderIcon />
+          ))}
+        </div>
+      )}
 
       {activeQuest.players.includes(myPlayer.id) && (
         <>
