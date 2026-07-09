@@ -26,7 +26,7 @@ export const joinSession = async ({ sessionId, user }: Props): APIResponse<void>
     }
 
     if (!tempSession.players[user.id]) {
-      const defaultName = `Player ${tempSession.numPlayers + 1}`;
+      const defaultName = `Player ${Object.keys(tempSession.players).length + 1}`;
 
       const joinedSession = await updateSession(
         {
