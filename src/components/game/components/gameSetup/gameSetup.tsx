@@ -15,8 +15,6 @@ import styles from "./styles.module.scss";
 export const GameSetup = () => {
   const { numPlayers, isMyPlayerHost } = useSessionStore();
 
-  // const [characters, updateCharacters] = React.useReducer(mergeReducer<Characters>, charactersDefault);
-
   const [selectedCharacters, setSelectedCharacters] = React.useState<CharacterId[]>(["merlin", "assassin"]);
 
   const goodCharacters = Object.values(charactersDefault).filter((character) => character.allegiance === "good");

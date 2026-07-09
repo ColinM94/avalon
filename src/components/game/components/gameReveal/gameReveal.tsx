@@ -19,12 +19,8 @@ export const GameReveal = () => {
   const [showCharacter, setShowCharacter] = React.useState(false);
   const [isCharacterRevealed, setIsCharacterRevealed] = React.useState(false);
 
-  // const characterId = players?.[myPlayer.id]?.characterId;
-
-  const handleReveal = () => {
-    setIsCharacterRevealed(true);
-    setShowCharacter(!showCharacter);
-  };
+  const characterId = players?.[myPlayer.id]?.characterId;
+  const character = charactersDefault[characterId];
 
   const allPlayers = Object.values(players);
 
@@ -44,8 +40,12 @@ export const GameReveal = () => {
   const isMorganaPlaying = allPlayers.find((player) => player.characterId === "morgana");
   const isOberonPlaying = allPlayers.find((player) => player.characterId === "oberon");
 
-  const characterId: CharacterId = "oberon";
-  const character = charactersDefault[characterId];
+  // const characterId: CharacterId = "oberon";
+
+  const handleReveal = () => {
+    setIsCharacterRevealed(true);
+    setShowCharacter(!showCharacter);
+  };
 
   return (
     <>
