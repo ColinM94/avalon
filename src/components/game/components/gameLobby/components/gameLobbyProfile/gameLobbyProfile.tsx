@@ -61,6 +61,7 @@ export const GameLobbyProfile = ({ className }: Props) => {
           {(fileUrl || myPlayer.imageUrl) && <img src={fileUrl || myPlayer.imageUrl} className={styles.avatarImage} />}
 
           {!myPlayer.imageUrl && !image && <FontAwesomeIcon icon="camera" className={styles.avatarIcon} />}
+          {(myPlayer.imageUrl || image) && <FontAwesomeIcon icon="pencil" className={styles.editIcon} />}
 
           <input
             type="file"
