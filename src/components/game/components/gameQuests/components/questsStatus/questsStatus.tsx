@@ -62,14 +62,18 @@ export const QuestsStatus = ({ className }: Props) => {
     for (let i = 0; i < 5; i++) {
       const quest = quests[i];
 
+      const isSuccessful =
+        Object.values(quest.votesToSucceed).filter((vote) => vote === true) >
+        Object.values(quest.votesToSucceed).filter((vote) => vote === false);
+
       items.push(
         <div
           key={i}
           onClick={() => setSelectedQuest(i)}
           className={classes(
             styles.quest,
-            quest.status === "fail" && styles.questFailed,
-            quest.status === "success" && styles.questSucceeded,
+            quest.index <= activeQuest.index && quest.status === "success" && styles.questSucceeded,
+            quest.index <= activeQuest.index && quest.status === "fail" && styles.questFailed,
             quest.index === activeQuest.index && styles.questActive,
           )}
         >
@@ -94,7 +98,7 @@ export const QuestsStatus = ({ className }: Props) => {
       <Modal show={Boolean(selectedQuest !== null)} setShow={() => setSelectedQuest(null)} className={styles.modal}>
         {selectedQuest !== null && (
           <>
-            Quest {selectedQuest + 1} Votes to Approve Quest Members
+            <div className={styles.modalHeading}>Quest {selectedQuest + 1} Votes to Approve Quest Members</div>
             <div className={styles.votesRow}>
               <div className={styles.votesRowLabel}>1.</div> {renderVotes(selectedQuest, 0)}
             </div>

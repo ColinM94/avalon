@@ -283,9 +283,21 @@ export const questVoteContinue = async () => {
 
   if (!shouldProceed) return;
 
-  if (Object.values(activeQuest.votesToSucceed).some((vote) => vote === false)) {
+  const questFailed = Object.values(activeQuest.votesToSucceed).some((vote) => vote === false);
+
+  if (questFailed) {
+    await updateActiveQuest({
+      status: "fail",
+    });
+
     await updateSession({
       numFailQuests: Number(numFailQuests) + 1,
+    });
+  }
+
+  if (!questFailed) {
+    await updateActiveQuest({
+      status: "success",
     });
   }
 

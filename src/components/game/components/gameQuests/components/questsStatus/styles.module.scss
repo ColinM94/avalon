@@ -59,15 +59,15 @@
   }
 
   .questActive {
-    outline: 2px solid vars.$color-primary;
+    outline: 2px solid vars.$color-primary !important;
   }
 
   .questFailed {
-    background-color: vars.$color-danger;
+    outline: 1px solid vars.$color-danger;
   }
 
   .questSucceeded {
-    background-color: vars.$color-success;
+    outline: 1px solid vars.$color-success;
   }
 }
 
@@ -86,6 +86,10 @@
   padding: vars.$spacing-primary;
   align-items: center;
   gap: vars.$spacing-secondary;
+
+  .modalHeading {
+    text-align: center;
+  }
 
   .memberVote {
     @extend .vote;
