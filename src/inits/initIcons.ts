@@ -1,4 +1,4 @@
-import { library } from "@fortawesome/fontawesome-svg-core"
+import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faArrowLeft,
   faArrowRotateBack,
@@ -22,7 +22,8 @@ import {
   faUser,
   faX,
   faMinus,
-} from "@fortawesome/free-solid-svg-icons"
+  faSave,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const initIcons = () => {
   library.add(
@@ -48,5 +49,6 @@ export const initIcons = () => {
     faSquareCheck,
     faPlus,
     faMinus,
-  )
-}
+    faSave,
+  );
+};

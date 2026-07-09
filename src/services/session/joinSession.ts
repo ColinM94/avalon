@@ -26,12 +26,14 @@ export const joinSession = async ({ sessionId, user }: Props): APIResponse<void>
     }
 
     if (!tempSession.players[user.id]) {
+      const defaultName = `Player ${tempSession.numPlayers + 1}`;
+
       const joinedSession = await updateSession(
         {
           [`players.${user.id}`]: {
             ...playerDefault(),
             id: user.id,
-            name: user.name,
+            name: user.name || defaultName,
             imageUrl: user.imageUrl || "",
             joinedAt: Date.now(),
           },

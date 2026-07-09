@@ -1,7 +1,7 @@
-import { classes } from "utils/classes"
+import { classes } from "utils/classes";
 
-import { Props } from "./types"
-import styles from "./styles.module.scss"
+import { Props } from "./types";
+import styles from "./styles.module.scss";
 
 export const InputText = (props: Props) => {
   const {
@@ -12,16 +12,17 @@ export const InputText = (props: Props) => {
     onEnterClick,
     disabled,
     maxLength,
+    children,
     inputClassName,
     className,
-  } = props
+  } = props;
 
   const classNames = classes(
     styles.container,
     className,
     disabled && styles.disabled,
     // disabled && styles.disabled
-  )
+  );
 
   return (
     <div className={classNames}>
@@ -36,6 +37,8 @@ export const InputText = (props: Props) => {
         disabled={disabled}
         className={classes(styles.input, inputClassName)}
       />
+
+      {children}
     </div>
-  )
-}
+  );
+};

@@ -9,6 +9,7 @@ import { uploadFile } from "services/storage/uploadFile";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { User } from "types/user";
 import { classes } from "utils/classes";
+import { Button } from "components/button/button";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -22,6 +23,8 @@ export const GameLobbyProfile = ({ className }: Props) => {
   const [image, setImage] = React.useState<File>();
 
   const fileUrl = image ? URL.createObjectURL(image) : null;
+
+  const isNameChanged = name !== myPlayer.name;
 
   React.useEffect(() => {
     if (!image) return;
@@ -47,20 +50,9 @@ export const GameLobbyProfile = ({ className }: Props) => {
   }, [image]);
 
   React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      void updateMyPlayer({
-        name,
-      });
-    }, 200);
-
-    return () => clearTimeout(timeout);
-  }, [name]);
-
-  React.useEffect(() => {
-    void updateMyPlayer({
-      isReady: false,
-    });
-  }, [name]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setName(myPlayer.name);
+  }, [myPlayer.name]);
 
   return (
     <>
@@ -80,14 +72,28 @@ export const GameLobbyProfile = ({ className }: Props) => {
           />
         </div>
 
-        <InputText
-          value={name}
-          setValue={setName}
-          placeholder="Your Name"
-          maxLength={10}
-          inputClassName={styles.nameInput}
-          className={styles.name}
-        />
+        <div className={styles.nameContainer}>
+          <InputText
+            value={name}
+            setValue={setName}
+            placeholder="Your Name"
+            maxLength={10}
+            inputClassName={styles.nameInput}
+            className={styles.name}
+          >
+            {isNameChanged && (
+              <Button
+                icon="save"
+                onClick={() => {
+                  void updateMyPlayer({
+                    name,
+                  });
+                }}
+                className={styles.saveNameButton}
+              />
+            )}
+          </InputText>
+        </div>
       </div>
     </>
   );
