@@ -1,12 +1,12 @@
-import { CharacterCard } from "components/characterCard/characterCard"
-import { Players } from "components/players/players"
-import { charactersDefault } from "consts/defaults"
+import { CharacterCard } from "components/characterCard/characterCard";
+import { Players } from "components/players/players";
+import { charactersDefault } from "consts/defaults";
 
-import { Props } from "./types"
-import styles from "./styles.module.scss"
+import { Props } from "./types";
+import styles from "./styles.module.scss";
 
 export const CharacterRevealer = (props: Props) => {
-  const { characterId, show } = props
+  const { characterId, show } = props;
 
   return (
     <>
@@ -18,7 +18,6 @@ export const CharacterRevealer = (props: Props) => {
           showName
           disableAnimation
           showDescription
-          alwaysActive
           orientation="landscape"
           className={styles.card}
         />
@@ -26,5 +25,5 @@ export const CharacterRevealer = (props: Props) => {
 
       <Players showIsReady />
     </>
-  )
-}
+  );
+};

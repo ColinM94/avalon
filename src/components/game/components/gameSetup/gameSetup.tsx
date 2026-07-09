@@ -65,7 +65,7 @@ export const GameSetup = () => {
 
       <MenuBar
         showContinue={isMyPlayerHost}
-        canContinue={() => setupCanContinue(goodCharacters.length, evilCharacters.length)}
+        canContinue={() => setupCanContinue(numActiveGoodCharacters, numActiveEvilCharacters)}
         onContinue={() => setupContinue(selectedCharacters)}
       />
     </>

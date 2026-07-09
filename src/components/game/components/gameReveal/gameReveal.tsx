@@ -52,14 +52,7 @@ export const GameReveal = () => {
       <div className={classes(styles.container, !showCharacter && styles.hidden)}>
         <div className={styles.characterName}>{characterNames[characterId]}</div>
 
-        <CharacterCard
-          character={charactersDefault[characterId]}
-          // showDescription
-          // showName
-          alwaysActive
-          // orientation="landscape"
-          className={styles.character}
-        />
+        <CharacterCard character={charactersDefault[characterId]} className={styles.character} />
 
         <div className={styles.howToPlay}>{charactersDefault[characterId].howToPlay}</div>
 
