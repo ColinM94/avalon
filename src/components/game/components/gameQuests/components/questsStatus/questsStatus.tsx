@@ -62,10 +62,6 @@ export const QuestsStatus = ({ className }: Props) => {
     for (let i = 0; i < 5; i++) {
       const quest = quests[i];
 
-      const isSuccessful =
-        Object.values(quest.votesToSucceed).filter((vote) => vote === true) >
-        Object.values(quest.votesToSucceed).filter((vote) => vote === false);
-
       items.push(
         <div
           key={i}

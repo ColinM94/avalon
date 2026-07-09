@@ -10,7 +10,6 @@ import { updateActiveQuest } from "./updateActiveQuest";
 import { updatePlayer } from "./updatePlayer";
 import { updateSession } from "./updateSession";
 import { goToStep } from "./goToStep";
-import { useAppStore } from "stores/useAppStore/useAppStore";
 
 // -------------
 // 1. Lobby

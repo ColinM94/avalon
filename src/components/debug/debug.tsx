@@ -38,7 +38,7 @@ export const Debug = () => {
           isMyPlayerHost: false,
           isReady: false,
           joinedAt: Date.now(),
-          characterId: "",
+          characterId: "servant1",
         };
 
         break;
@@ -74,7 +74,6 @@ export const Debug = () => {
                     {player.characterId && (
                       <CharacterCard
                         character={charactersDefault[player.characterId]}
-                        alwaysActive
                         className={styles.characterCard}
                       />
                     )}

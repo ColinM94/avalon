@@ -9,7 +9,6 @@ import { charactersDefault } from "consts/defaults";
 import { revealCanContinue, revealCanReady, revealContinue, revealReady } from "services/session/logic";
 import { PlayerCard } from "components/playerCard/playerCard";
 import { characterNames } from "consts/characters";
-import { CharacterId } from "types/general";
 
 import styles from "./styles.module.scss";
 

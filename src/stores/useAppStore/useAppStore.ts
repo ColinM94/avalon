@@ -1,8 +1,8 @@
-import { Actions, State } from "./types"
-import { createZustandStore } from "../createZustandStore"
-import { userDefault } from "consts/defaults"
-import { SetStoreState } from "stores/types"
-import { Toast } from "types/toast"
+import { Actions, State } from "./types";
+import { createZustandStore } from "../createZustandStore";
+import { userDefault } from "consts/defaults";
+import { SetStoreState } from "stores/types";
+import { Toast } from "types/toast";
 
 const showToast = (set: SetStoreState<State>, text: string, type?: Toast["type"]) => {
   set({
@@ -11,8 +11,8 @@ const showToast = (set: SetStoreState<State>, text: string, type?: Toast["type"]
       type,
       createdAt: Date.now(),
     },
-  })
-}
+  });
+};
 
 export const useAppStore = createZustandStore<State & Actions>({
   name: "app",
@@ -25,4 +25,4 @@ export const useAppStore = createZustandStore<State & Actions>({
   }),
   storageType: "localStorage",
   persistState: true,
-})
+});

@@ -15,7 +15,6 @@ export const CharacterModal = (props: Props) => {
 
       <CharacterCard
         character={charactersDefault[characterId]}
-        alwaysActive
         showDescription
         showName
         orientation="landscape"

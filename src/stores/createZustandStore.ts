@@ -1,10 +1,5 @@
 import { create } from "zustand";
-import {
-  PersistOptions,
-  PersistStorage,
-  createJSONStorage,
-  persist,
-} from "zustand/middleware";
+import { PersistOptions, PersistStorage, createJSONStorage, persist } from "zustand/middleware";
 import { getStoreData, removeStoreData, setStoreData } from "./persistStorage";
 import { ZustandConfig } from "./types";
 
