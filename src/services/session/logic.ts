@@ -10,6 +10,7 @@ import { updateActiveQuest } from "./updateActiveQuest";
 import { updatePlayer } from "./updatePlayer";
 import { updateSession } from "./updateSession";
 import { goToStep } from "./goToStep";
+import { useAppStore } from "stores/useAppStore/useAppStore";
 
 // -------------
 // 1. Lobby
@@ -183,6 +184,17 @@ export const memberSelectContinue = async () => {
 // ------------------------
 // 5. Member Select Vote
 // ------------------------
+
+export const memberSelectVoteCanReady = (playerId: string) => {
+  const { activeMemberSelectVotes } = useSessionStore.getState();
+
+  const voteValue = activeMemberSelectVotes[playerId];
+
+  if (voteValue !== true && voteValue !== false) return "You must vote";
+
+  return true;
+};
+
 export const memberSelectVoteCanContinue = () => {
   const { isAllReady } = useSessionStore.getState();
 

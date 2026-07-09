@@ -4,7 +4,11 @@ import { Players } from "components/players/players";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { classes } from "utils/classes";
 import { voteToApproveMember } from "services/session/voteToApproveMember";
-import { memberSelectVoteCanContinue, memberSelectVoteContinue } from "services/session/logic";
+import {
+  memberSelectVoteCanContinue,
+  memberSelectVoteCanReady,
+  memberSelectVoteContinue,
+} from "services/session/logic";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -51,6 +55,7 @@ export const GameMemberSelectVote = (props: Props) => {
 
       <MenuBar
         showContinue={isMyPlayerHost}
+        canReady={() => memberSelectVoteCanReady(myPlayer.id)}
         canContinue={memberSelectVoteCanContinue}
         onContinue={memberSelectVoteContinue}
       />

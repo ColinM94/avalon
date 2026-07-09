@@ -10,8 +10,6 @@ interface Props {
 export const voteToApproveMember = async ({ playerId, voteValue }: Props) => {
   const { sessionId, activeQuest, activeMemberSelectVoteIndex } = useSessionStore.getState();
 
-  console.log(`quests.${activeQuest.index}.memberSelectVotes${activeMemberSelectVoteIndex}.${playerId}`);
-
   await updateDocument<GameSession>({
     id: sessionId,
     collection: "sessions",
