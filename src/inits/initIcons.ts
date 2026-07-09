@@ -23,6 +23,7 @@ import {
   faX,
   faMinus,
   faSave,
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const initIcons = () => {
@@ -50,5 +51,6 @@ export const initIcons = () => {
     faPlus,
     faMinus,
     faSave,
+    faEdit,
   );
 };

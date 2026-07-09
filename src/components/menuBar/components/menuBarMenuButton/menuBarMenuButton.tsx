@@ -1,72 +1,21 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deleteField } from "firebase/firestore";
-import { useLocation } from "wouter";
-
 import { Button } from "components/button/button";
 import { Modal } from "components/modal/modal";
-import { deleteDocument } from "services/firestore/deleteDocument";
-import { updateDocument } from "services/firestore/updateDocument";
-import { updateSession } from "services/session/updateSession";
-import { useSessionStore } from "stores/useSessionStore/useSessionStore";
-import { User } from "types/user";
 import { capitaliseFirstLetter } from "utils/capitaliseFirstLetter";
 import { classes } from "utils/classes";
-import { useAppStore } from "stores/useAppStore/useAppStore";
 import { charactersDefault } from "consts/defaults";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 
 import styles from "./styles.module.scss";
+import { leaveSession } from "services/session/leaveSession";
 
 export const MenuBarMenuButton = () => {
-  const [, navigate] = useLocation();
-
-  const { sessionId, myPlayer, step, isMyPlayerHost } = useSessionStore();
-  const { showToast } = useAppStore();
+  const { myPlayer, step } = useSessionStore();
 
   const [showMenu, setShowMenu] = React.useState(false);
   const [showCharacter, setShowCharacter] = React.useState(false);
-
-  const handleLeave = async () => {
-    try {
-      const confirmed = confirm("Are you sure you want to leave? This will end the game for everyone!");
-
-      if (!confirmed) return;
-
-      const promises = [
-        updateDocument<User>({
-          id: myPlayer.id,
-          collection: "users",
-          data: {
-            sessionId: null,
-          },
-        }),
-      ];
-
-      if (step === "lobby") {
-        promises.push(
-          updateSession({
-            [`players.${myPlayer.id}`]: deleteField(),
-          }),
-        );
-      }
-
-      if (isMyPlayerHost || step !== "lobby") {
-        promises.push(
-          deleteDocument({
-            id: sessionId,
-            collection: "sessions",
-          }),
-        );
-      }
-
-      navigate("/");
-
-      await Promise.all(promises);
-    } catch (error) {
-      const err = error as Error;
-      showToast(err.message);
-    }
-  };
 
   const isLobby = step === "lobby";
 
@@ -99,7 +48,7 @@ export const MenuBarMenuButton = () => {
           </div>
         </div>
 
-        <div onClick={handleLeave} className={styles.menuItem}>
+        <div onClick={leaveSession} className={styles.menuItem}>
           <FontAwesomeIcon icon="right-from-bracket" className={styles.menuItemIcon} />
 
           <div className={styles.menuItemText}>

@@ -6,12 +6,13 @@
 
   .avatar {
     aspect-ratio: 1;
-    width: 150px;
+    width: 100px;
     background-color: vars.$color-surface;
     border-radius: vars.$roundness;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    cursor: pointer;
 
     .avatarImage {
       position: absolute;
@@ -24,13 +25,20 @@
       font-size: vars.$icon-size-large;
     }
 
+    .editIcon {
+      font-size: vars.$icon-size-small;
+      position: absolute;
+      top: vars.$spacing-secondary;
+      right: vars.$spacing-secondary;
+    }
+
     .imageInput {
       display: none;
     }
   }
 
   .nameContainer {
-    flex: 1;
+    flex: 1.5;
     flex-direction: row;
     gap: vars.$spacing-primary;
 
