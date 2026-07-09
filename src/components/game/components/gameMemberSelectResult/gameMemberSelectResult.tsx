@@ -22,7 +22,7 @@ export const GameMemberSelectResult = (props: Props) => {
     const items: React.ReactNode[] = [];
 
     votes.forEach((vote) => {
-      items.push(<div className={vote ? styles.yesVote : styles.noVote}>{vote ? "Success" : "Fail"}</div>);
+      items.push(<div className={vote ? styles.yesVote : styles.noVote}>{vote ? "✔" : "✗"}</div>);
     });
 
     return items;
