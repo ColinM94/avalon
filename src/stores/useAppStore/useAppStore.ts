@@ -22,7 +22,7 @@ export const useAppStore = create<State & Actions>()(
     }),
     {
       name: "app",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({ user: state.user }),
     },
   ),
