@@ -66,7 +66,7 @@ export const GameReveal = () => {
 
               <div className={styles.playerCards}>
                 {evilPlayersExceptMordred.map((player) => (
-                  <PlayerCard player={player} showName />
+                  <PlayerCard player={player} showName key={player.id} />
                 ))}
               </div>
             </>
@@ -82,7 +82,7 @@ export const GameReveal = () => {
 
               <div className={styles.playerCards}>
                 {merlinAndMorganaPlayers.map((player) => (
-                  <PlayerCard player={player} showName />
+                  <PlayerCard player={player} showName key={player.id} />
                 ))}
               </div>
             </>
@@ -98,7 +98,7 @@ export const GameReveal = () => {
 
               <div className={styles.playerCards}>
                 {evilPlayersExceptOberon.map((player) => (
-                  <PlayerCard player={player} showName />
+                  <PlayerCard player={player} showName key={player.id} />
                 ))}
               </div>
             </>

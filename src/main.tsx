@@ -90,7 +90,6 @@ if (!rootElement.innerHTML) {
   );
 }
 
-// Evil players can see themseleves in other evil players list.
 // Disabled ready button still works
 // Can change votes while readied up
 // Show who voted yes and no for member selection.

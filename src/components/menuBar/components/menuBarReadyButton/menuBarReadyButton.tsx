@@ -97,7 +97,7 @@ export const MenuBarReadyButton = (props: Props) => {
 
       {!showContinue && (
         <Button
-          label={"Ready"}
+          label="Ready"
           onClick={handleReady}
           onClickDisabled={() => handleCanReady(true)}
           disabled={isReadyDisabled}
