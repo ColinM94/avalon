@@ -89,3 +89,17 @@ if (!rootElement.innerHTML) {
     </React.StrictMode>,
   );
 }
+
+// Evil players can see themseleves in other evil players list.
+// Disabled ready button still works
+// Can change votes while readied up
+// Show who voted yes and no for member selection.
+// Make vote result dramatic.
+// Quest member selection is nt being reset between chracters.
+// Show chips for votes fail/win
+// Hide quest votes during quest
+// Host should have ready button
+// List of other players on quest not working
+// Remove ready buttons on screens where not needed
+// Show who went on quest in quest info
+// Disable fail quest button for good guys

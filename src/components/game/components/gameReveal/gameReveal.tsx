@@ -24,7 +24,7 @@ export const GameReveal = () => {
   const allPlayers = Object.values(players);
 
   const evilPlayers = Object.values(allPlayers).filter(
-    (player) => charactersDefault[player.characterId].allegiance === "evil",
+    (player) => charactersDefault[player.characterId].allegiance === "evil" && player.id !== myPlayer.id,
   );
 
   const evilPlayersExceptMordred = evilPlayers.filter((player) => player.id !== "mordred");

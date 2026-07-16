@@ -2,17 +2,17 @@
   transition: opacity 0.2s;
   flex: 1;
   justify-content: center;
-  gap: vars.$spacing-primary;
+  gap: vars.$spacing-secondary;
 
   .characterName {
-    font-size: vars.$font-size-display;
+    font-size: vars.$font-size-h1;
     text-align: center;
   }
 
   .character {
     width: calc(100% - vars.$spacing-primary * 2);
     align-self: center;
-    margin-bottom: calc(vars.$spacing-primary * 2);
+    margin-bottom: calc(vars.$spacing-primary);
     flex: 1;
     max-width: 300px;
     max-height: 400px;
