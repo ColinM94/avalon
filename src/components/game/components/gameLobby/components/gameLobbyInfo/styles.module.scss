@@ -1,28 +1,38 @@
 .container {
-  align-items: center;
-  width: 100%;
-  gap: vars.$spacing-primary;
-  justify-content: center;
   flex: 1;
-  padding-block: vars.$spacing-primary;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: vars.$spacing-primary;
+  gap: vars.$spacing-primary;
 
-  .info {
-    flex-direction: row;
-    cursor: pointer;
-    padding-left: vars.$icon-size-medium;
+  .qrCodeContainer {
+    border: 2px solid vars.$color-primary;
+    border-radius: vars.$roundness;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
 
-    .infoCode {
+    .copyButton {
+      position: absolute;
       justify-content: center;
       align-items: center;
-      font-size: 2.5rem;
+      padding: vars.$spacing-secondary !important;
+      aspect-ratio: 1;
+      background-color: rgba(26, 32, 40, 0.95);
+      border: 2px solid vars.$color-primary;
+
+      &:hover {
+        background-color: vars.$color-surface2;
+      }
     }
 
-    .infoCopyIcon {
-      cursor: pointer;
-      margin-left: vars.$spacing-secondary;
-      margin-bottom: 4px;
-      align-self: center;
-      font-size: vars.$icon-size-medium;
+    .copyButtonIcon {
+      font-size: vars.$icon-size-large;
+      color: vars.$color-text-secondary;
     }
+  }
+
+  .code {
+    font-size: vars.$font-size-display;
   }
 }
