@@ -17,8 +17,16 @@ export const GameSetup = () => {
 
   const [selectedCharacters, setSelectedCharacters] = React.useState<CharacterId[]>(["merlin", "assassin"]);
 
-  const goodCharacters = Object.values(charactersDefault).filter((character) => character.allegiance === "good");
-  const evilCharacters = Object.values(charactersDefault).filter((character) => character.allegiance === "evil");
+  const goodCharacters = Object.values(charactersDefault).filter(
+    (character) =>
+      character.allegiance === "good" &&
+      !(["merlin", "servant1", "servant2", "servant3", "servant4", "servant5"] as CharacterId[]).includes(character.id),
+  );
+  const evilCharacters = Object.values(charactersDefault).filter(
+    (character) =>
+      character.allegiance === "evil" &&
+      !(["assassin", "minion1", "minion2", "minion3"] as CharacterId[]).includes(character.id),
+  );
 
   const numActiveGoodCharacters = selectedCharacters.filter((characterId) =>
     goodCharacters.find((character) => character.id === characterId),

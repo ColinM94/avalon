@@ -81,6 +81,8 @@ export const MenuBarReadyButton = (props: Props) => {
     }
   };
 
+  const showReadyButton = !showContinue && handleCanReady(false);
+
   return (
     <>
       {isLoading && <LoadingOverlay />}
@@ -95,7 +97,7 @@ export const MenuBarReadyButton = (props: Props) => {
         />
       )}
 
-      {!showContinue && (
+      {showReadyButton && (
         <Button
           label="Ready"
           onClick={handleReady}
