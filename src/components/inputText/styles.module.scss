@@ -2,8 +2,7 @@
   flex-direction: row;
   gap: vars.$spacing-primary;
   width: 100%;
-  // padding-left: vars.$spacing-primary;
-  // padding-right: vars.$spacing-primary;
+  height: vars.$layout-input-height;
 
   .input {
     background-color: vars.$color-surface;
@@ -15,7 +14,8 @@
     min-width: 0;
     flex: 1;
 
-    &:active {
+    &:focus {
+      outline: 2px solid vars.$color-primary !important;
     }
   }
 

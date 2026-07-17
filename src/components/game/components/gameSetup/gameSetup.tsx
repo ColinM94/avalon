@@ -20,12 +20,28 @@ export const GameSetup = () => {
   const goodCharacters = Object.values(charactersDefault).filter(
     (character) =>
       character.allegiance === "good" &&
-      !(["merlin", "servant1", "servant2", "servant3", "servant4", "servant5"] as CharacterId[]).includes(character.id),
+      !(
+        [
+          "merlin",
+          "rogueGood",
+          "sorcererGood",
+          "untrustworthyServant",
+          "lancelotGood",
+          "cleric",
+          "servant1",
+          "servant2",
+          "servant3",
+          "servant4",
+          "servant5",
+        ] as CharacterId[]
+      ).includes(character.id),
   );
   const evilCharacters = Object.values(charactersDefault).filter(
     (character) =>
       character.allegiance === "evil" &&
-      !(["assassin", "minion1", "minion2", "minion3"] as CharacterId[]).includes(character.id),
+      !(["assassin", "lunatic", "sorcererEvil", "minion1", "minion2", "minion3"] as CharacterId[]).includes(
+        character.id,
+      ),
   );
 
   const numActiveGoodCharacters = selectedCharacters.filter((characterId) =>

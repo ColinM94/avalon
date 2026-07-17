@@ -2,6 +2,7 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { InputText } from "components/inputText/inputText";
+import { Button } from "components/button/button";
 import { updateDocument } from "services/firestore/updateDocument";
 import { updateMyPlayer } from "services/session/updateMyPlayer";
 import { getFileUrl } from "services/storage/getFileUrl";
@@ -9,7 +10,6 @@ import { uploadFile } from "services/storage/uploadFile";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { User } from "types/user";
 import { classes } from "utils/classes";
-import { Button } from "components/button/button";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -55,47 +55,45 @@ export const GameLobbyProfile = ({ className }: Props) => {
   }, [myPlayer.name]);
 
   return (
-    <>
-      <div className={classes(styles.container, className)}>
-        <div onClick={() => imageInputRef.current?.click()} className={styles.avatar}>
-          {(fileUrl || myPlayer.imageUrl) && <img src={fileUrl || myPlayer.imageUrl} className={styles.avatarImage} />}
+    <div className={classes(styles.container, className)}>
+      <div onClick={() => imageInputRef.current?.click()} className={styles.avatar}>
+        {(fileUrl || myPlayer.imageUrl) && <img src={fileUrl || myPlayer.imageUrl} className={styles.avatarImage} />}
 
-          {!myPlayer.imageUrl && !image && <FontAwesomeIcon icon="camera" className={styles.avatarIcon} />}
-          {(myPlayer.imageUrl || image) && <FontAwesomeIcon icon="pencil" className={styles.editIcon} />}
+        {!myPlayer.imageUrl && !image && <FontAwesomeIcon icon="camera" className={styles.avatarIcon} />}
+        {(myPlayer.imageUrl || image) && <FontAwesomeIcon icon="pencil" className={styles.editIcon} />}
 
-          <input
-            type="file"
-            accept="image/png"
-            capture="user"
-            onChange={(e) => setImage(e.target.files?.[0])}
-            ref={imageInputRef}
-            className={styles.imageInput}
-          />
-        </div>
-
-        <div className={styles.nameContainer}>
-          <InputText
-            value={name}
-            setValue={setName}
-            placeholder="Your Name"
-            maxLength={10}
-            inputClassName={styles.nameInput}
-            className={styles.name}
-          >
-            {isNameChanged && (
-              <Button
-                icon="save"
-                onClick={() => {
-                  void updateMyPlayer({
-                    name,
-                  });
-                }}
-                className={styles.saveNameButton}
-              />
-            )}
-          </InputText>
-        </div>
+        <input
+          type="file"
+          accept="image/png"
+          capture="user"
+          onChange={(e) => setImage(e.target.files?.[0])}
+          ref={imageInputRef}
+          className={styles.imageInput}
+        />
       </div>
-    </>
+
+      <div className={styles.nameContainer}>
+        <InputText
+          value={name}
+          setValue={setName}
+          placeholder="Your Name"
+          maxLength={10}
+          inputClassName={styles.nameInput}
+          className={styles.name}
+        >
+          {isNameChanged && (
+            <Button
+              icon="save"
+              onClick={() => {
+                void updateMyPlayer({
+                  name,
+                });
+              }}
+              className={styles.saveNameButton}
+            />
+          )}
+        </InputText>
+      </div>
+    </div>
   );
 };

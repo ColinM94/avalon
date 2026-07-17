@@ -23,7 +23,7 @@ export const GameLobbyInfo = ({ className }: Props) => {
   return (
     <div className={classes(styles.container, className)}>
       <div onClick={handleCopy} className={styles.qrCodeContainer}>
-        <QRCode size={225} value={url} eyeColor="#a1701f" fgColor="#404f63" bgColor="#1a2028" />
+        <QRCode size={200} value={url} eyeColor="#a1701f" fgColor="#404f63" bgColor="#1a2028" />
 
         <Button icon="copy" onClick={handleCopy} iconClassName={styles.copyButtonIcon} className={styles.copyButton} />
       </div>

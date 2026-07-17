@@ -1,13 +1,13 @@
 .container {
   border-radius: vars.$roundness;
   background-color: vars.$color-surface;
-  border: 1px solid vars.$color-surface2;
   aspect-ratio: 1;
   justify-content: center;
   align-items: center;
   font-size: vars.$font-size-body2;
   text-align: center;
   cursor: pointer;
+  outline: 2px solid vars.$color-surface2;
 
   .image {
     position: absolute;
