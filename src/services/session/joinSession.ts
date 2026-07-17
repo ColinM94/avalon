@@ -21,7 +21,13 @@ export const joinSession = async ({ sessionId, user }: Props): APIResponse<void>
 
     if (!tempSession) throw new Error("Session not found!");
 
-    if (!tempSession?.players[user.id] && Object.keys(tempSession.players).length >= tempSession.numPlayers) {
+    const isUserPartOfSession = tempSession?.players[user.id];
+
+    if (!isUserPartOfSession && tempSession.step !== "lobby") {
+      throw new Error("Game is already in progress");
+    }
+
+    if (!isUserPartOfSession && Object.keys(tempSession.players).length >= 10) {
       throw new Error("Lobby is full");
     }
 
