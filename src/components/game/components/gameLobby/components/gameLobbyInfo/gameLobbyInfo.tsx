@@ -7,17 +7,18 @@ import { classes } from "utils/classes";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
+import { useAppStore } from "stores/useAppStore/useAppStore";
 
 export const GameLobbyInfo = ({ className }: Props) => {
+  const { showToast } = useAppStore();
   const { sessionId } = useSessionStore();
 
   const url = `${baseUrl}/play/${sessionId}`;
 
   const handleShare = () => {
-    void navigator.share({
-      title: "Join my game of Avalon",
-      url,
-    });
+    void navigator.clipboard.writeText(url);
+
+    showToast("Copied!");
   };
 
   return (
@@ -25,7 +26,7 @@ export const GameLobbyInfo = ({ className }: Props) => {
       <div onClick={handleShare} className={styles.info}>
         <div className={styles.infoCode}>{sessionId}</div>
 
-        <FontAwesomeIcon icon="share-nodes" className={styles.infoCopyIcon} />
+        <FontAwesomeIcon icon="copy" className={styles.infoCopyIcon} />
       </div>
 
       <QRCode value={url} />

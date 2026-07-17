@@ -102,3 +102,4 @@ if (!rootElement.innerHTML) {
 // Remove ready buttons on screens where not needed
 // Show who went on quest in quest info
 // Disable fail quest button for good guys
+// Remove servants from character select. Just choose special characters.

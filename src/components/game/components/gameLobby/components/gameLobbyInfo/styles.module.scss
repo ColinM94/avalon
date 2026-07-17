@@ -1,13 +1,13 @@
 .container {
   align-items: center;
   width: 100%;
-  gap: vars.$spacing-tertiary;
+  gap: vars.$spacing-primary;
   justify-content: center;
   flex: 1;
+  padding-block: vars.$spacing-primary;
 
   .info {
     flex-direction: row;
-    margin-bottom: vars.$spacing-tertiary;
     cursor: pointer;
     padding-left: vars.$icon-size-medium;
 
