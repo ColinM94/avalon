@@ -3,6 +3,7 @@
   gap: vars.$spacing-primary;
   width: 100%;
   height: vars.$layout-input-height;
+  align-items: center;
 
   .input {
     background-color: vars.$color-surface;
@@ -28,4 +29,11 @@
 
 .disabled {
   filter: brightness(vars.$disabled-brightness-filter);
+}
+
+.rightLabel {
+  position: absolute;
+  right: vars.$spacing-primary;
+  color: vars.$color-text-secondary;
+  font-size: vars.$font-size-body2;
 }

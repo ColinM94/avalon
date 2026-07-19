@@ -7,6 +7,7 @@ export interface Props {
   disabled?: boolean;
   maxLength?: number;
   children?: React.ReactNode;
+  rightLabel?: string;
   inputClassName?: string;
   className?: string;
 }

@@ -2,14 +2,15 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { InputText } from "components/inputText/inputText";
-import { Button } from "components/button/button";
 import { updateDocument } from "services/firestore/updateDocument";
 import { updateMyPlayer } from "services/session/updateMyPlayer";
 import { getFileUrl } from "services/storage/getFileUrl";
 import { uploadFile } from "services/storage/uploadFile";
+import { lobbyCanReady, lobbyReady } from "services/session/logic";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { User } from "types/user";
 import { classes } from "utils/classes";
+import { ReadyButton } from "components/readyButton/readyButton";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -54,11 +55,17 @@ export const GameLobbyProfile = ({ className }: Props) => {
     setName(myPlayer.name);
   }, [myPlayer.name]);
 
+  React.useEffect(() => {
+    if (isNameChanged)
+      void updateMyPlayer({
+        isReady: false,
+      });
+  }, [isNameChanged]);
+
   return (
     <div className={classes(styles.container, className)}>
       <div onClick={() => imageInputRef.current?.click()} className={styles.avatar}>
         {(fileUrl || myPlayer.imageUrl) && <img src={fileUrl || myPlayer.imageUrl} className={styles.avatarImage} />}
-
         {!myPlayer.imageUrl && !image && <FontAwesomeIcon icon="camera" className={styles.avatarIcon} />}
         {(myPlayer.imageUrl || image) && <FontAwesomeIcon icon="pencil" className={styles.editIcon} />}
 
@@ -72,28 +79,17 @@ export const GameLobbyProfile = ({ className }: Props) => {
         />
       </div>
 
-      <div className={styles.nameContainer}>
-        <InputText
-          value={name}
-          setValue={setName}
-          placeholder="Your Name"
-          maxLength={10}
-          inputClassName={styles.nameInput}
-          className={styles.name}
-        >
-          {isNameChanged && (
-            <Button
-              icon="save"
-              onClick={() => {
-                void updateMyPlayer({
-                  name,
-                });
-              }}
-              className={styles.saveNameButton}
-            />
-          )}
-        </InputText>
-      </div>
+      <InputText
+        value={name}
+        setValue={setName}
+        placeholder="Your Name"
+        maxLength={10}
+        rightLabel={`${name.length}/10`}
+        inputClassName={styles.nameInput}
+        className={styles.name}
+      />
+
+      <ReadyButton canReady={lobbyCanReady(myPlayer, name)} onReady={lobbyReady} />
     </div>
   );
 };
