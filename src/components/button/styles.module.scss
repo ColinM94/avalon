@@ -2,6 +2,7 @@ $evilColor: #f07e0a;
 $goodColor: #43839a;
 
 .container {
+  height: vars.$layout-input-height;
   box-shadow: vars.$shadow;
   background-color: vars.$color-surface;
   border-radius: vars.$roundness;
@@ -11,7 +12,7 @@ $goodColor: #43839a;
   justify-content: center;
   align-items: center;
   transition: scale 0.2s;
-  padding: vars.$spacing-primary;
+  // background-color: vars.$color-surface !important;
 
   .icon {
     font-size: vars.$icon-size-large;

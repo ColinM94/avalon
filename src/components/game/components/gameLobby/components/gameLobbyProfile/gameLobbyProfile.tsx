@@ -6,7 +6,7 @@ import { updateDocument } from "services/firestore/updateDocument";
 import { updateMyPlayer } from "services/session/updateMyPlayer";
 import { getFileUrl } from "services/storage/getFileUrl";
 import { uploadFile } from "services/storage/uploadFile";
-import { lobbyCanReady, lobbyReady } from "services/session/logic";
+import { lobbyCanReady } from "services/session/logic";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { User } from "types/user";
 import { classes } from "utils/classes";
@@ -89,7 +89,7 @@ export const GameLobbyProfile = ({ className }: Props) => {
         className={styles.name}
       />
 
-      <ReadyButton canReady={lobbyCanReady(myPlayer, name)} onReady={lobbyReady} />
+      <ReadyButton canReady={lobbyCanReady(myPlayer, name)} onReady={() => updateMyPlayer({ name, isReady: true })} />
     </div>
   );
 };

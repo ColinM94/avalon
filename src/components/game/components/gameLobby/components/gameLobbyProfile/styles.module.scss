@@ -6,8 +6,8 @@
   height: vars.$layout-input-height;
 
   .avatar {
-    aspect-ratio: 1;
-    height: 100%;
+    min-width: vars.$layout-input-height;
+    min-height: vars.$layout-input-height;
     background-color: vars.$color-surface;
     border-radius: vars.$roundness;
     justify-content: center;
@@ -29,8 +29,6 @@
     .editIcon {
       font-size: vars.$icon-size-small;
       position: absolute;
-      top: vars.$spacing-secondary;
-      right: vars.$spacing-secondary;
     }
 
     .imageInput {
@@ -38,36 +36,32 @@
     }
   }
 
-  .nameContainer {
-    flex: 1.5;
-    flex-direction: row;
-    gap: vars.$spacing-primary;
+  .name {
+    justify-content: center;
+  }
 
-    .name {
-      justify-content: center;
-    }
+  .nameInput {
+    min-width: 0;
+    font-size: vars.$font-size-body;
+    text-align: center;
+    background-color: vars.$color-surface;
+  }
 
-    .nameInput {
-      width: 150px;
-      font-size: vars.$font-size-body;
-      text-align: center;
-      background-color: vars.$color-surface;
-      padding-right: calc(vars.$spacing-secondary + vars.$spacing-secondary + 40px);
-      height: 100%;
-    }
+  .saveNameButton {
+    position: absolute;
+    right: vars.$spacing-secondary;
+    height: calc(vars.$layout-input-height - vars.$spacing-secondary);
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: 0;
+    background-color: vars.$color-success;
 
-    .saveNameButton {
-      position: absolute;
-      right: vars.$spacing-secondary;
-      height: calc(vars.$layout-input-height - vars.$spacing-secondary);
-      top: 50%;
-      transform: translateY(-50%);
-      bottom: 0;
-      background-color: vars.$color-success;
-
-      svg {
-        font-size: vars.$icon-size-medium !important;
-      }
+    svg {
+      font-size: vars.$icon-size-medium !important;
     }
   }
+}
+
+.readyButton {
+  background-color: vars.$color-surface;
 }

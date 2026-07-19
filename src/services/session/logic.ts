@@ -14,16 +14,16 @@ import { goToStep } from "./goToStep";
 // -------------
 // 1. Lobby
 // -------------
-export const lobbyCanReady = () => {
-  const { playersArray, myPlayer, isMyPlayerHost } = useSessionStore.getState();
+export const lobbyCanReady = (player: Player, newName: string) => {
+  const { playersArray } = useSessionStore.getState();
 
-  if (myPlayer.isReady && !isMyPlayerHost) return "You are ready";
-  if (!myPlayer.name) return "You must enter a name";
-  // if (!myPlayer.imageUrl) return "You must select an image"
+  if (player.isReady && !player.isMyPlayerHost) return "You are ready";
+  if (!newName) return "You must enter a name";
+  // if (!player.imageUrl) return "You must select an image";
 
-  const filteredPlayers = playersArray.filter((player) => player.id !== myPlayer.id);
+  const otherPlayers = playersArray.filter((otherPlayer) => otherPlayer.id !== player.id);
 
-  if (filteredPlayers.some((player) => player.name.toLocaleLowerCase() === myPlayer.name.toLocaleLowerCase())) {
+  if (otherPlayers.some((otherPlayer) => otherPlayer.name.toLocaleLowerCase() === newName.toLocaleLowerCase())) {
     return "This name is taken";
   }
 
@@ -33,7 +33,7 @@ export const lobbyCanReady = () => {
 export const lobbyCanContinue = () => {
   const { playersArray, isAllReady } = useSessionStore.getState();
 
-  if (lobbyCanReady() !== true) return lobbyCanReady();
+  if (lobbyCanReady("") !== true) return lobbyCanReady("");
 
   if (playersArray.length < 5) return "There has to be at least 5 players to start";
 

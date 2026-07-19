@@ -12,6 +12,7 @@ export const InputText = (props: Props) => {
     onEnterClick,
     disabled,
     maxLength,
+    rightLabel,
     children,
     inputClassName,
     className,
@@ -37,6 +38,8 @@ export const InputText = (props: Props) => {
         disabled={disabled}
         className={classes(styles.input, inputClassName)}
       />
+
+      {rightLabel && <div className={styles.rightLabel}>{rightLabel}</div>}
 
       {children}
     </div>
