@@ -8,11 +8,13 @@
   overflow: hidden;
   filter: brightness(0.7);
   cursor: pointer;
+  border: 1px solid vars.$color-surface2;
 
   .text {
     flex: 1;
     padding: vars.$spacing-secondary;
     padding-inline: vars.$spacing-primary;
+    height: 100%;
 
     .nameContainer {
       flex-direction: row;
@@ -21,6 +23,7 @@
 
       .name {
         font-size: vars.$font-size-h3;
+        flex: 1;
       }
     }
 
@@ -28,21 +31,6 @@
       font-size: vars.$font-size-body2;
       color: vars.$color-text-secondary;
       white-space: wrap;
-    }
-
-    .boosts {
-      font-size: vars.$font-size-body2;
-      margin-top: vars.$spacing-tertiary;
-    }
-
-    .boostsGood {
-      @extend .boosts;
-      color: vars.$color-success;
-    }
-
-    .boostsBad {
-      @extend .boosts;
-      color: vars.$color-danger;
     }
   }
 
@@ -69,12 +57,12 @@
   .imageContainerGood {
     @extend .imageContainer;
 
-    background: vars.$color-good;
+    background: vars.$gradient-good;
   }
 
   .imageContainerEvil {
     @extend .imageContainer;
-    background: vars.$color-evil;
+    background: vars.$gradient-evil;
   }
 
   .checkButtonContainer {
@@ -101,16 +89,42 @@
   .boostGoodIcon {
     @extend .boostIcon;
 
-    color: vars.$color-success;
+    color: vars.$color-good;
   }
 
   .boostBadIcon {
     @extend .boostIcon;
 
-    color: vars.$color-danger;
+    color: vars.$color-evil;
   }
 }
 
 .containerChecked {
   filter: brightness(1);
+}
+
+.boosts {
+  font-size: vars.$font-size-body2;
+  margin-right: 4px;
+  position: absolute;
+  top: 0;
+  right: -4px;
+  background-color: vars.$color-surface2;
+  padding-left: vars.$spacing-tertiary;
+  padding-right: vars.$spacing-tertiary;
+  padding-top: 3px;
+  padding-bottom: 2px;
+  border-bottom-left-radius: vars.$roundness;
+  outline: 1px solid vars.$color-surface3;
+  width: 80px;
+}
+
+.boostsGood {
+  @extend .boosts;
+  color: vars.$color-good;
+}
+
+.boostsBad {
+  @extend .boosts;
+  color: vars.$color-evil;
 }

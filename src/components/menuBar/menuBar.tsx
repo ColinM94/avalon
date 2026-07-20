@@ -1,31 +1,31 @@
-import { classes } from "utils/classes"
-import { Debug } from "components/debug/debug"
-import { isDev } from "consts/general"
+import { classes } from "utils/classes";
+import { Debug } from "components/debug/debug";
+import { isDev } from "consts/general";
 
-import { MenuBarMenuButton } from "./components/menuBarMenuButton/menuBarMenuButton"
-import { MenuBarReadyButton } from "./components/menuBarReadyButton/menuBarReadyButton"
+import { MenuBarMenuButton } from "./components/menuBarMenuButton/menuBarMenuButton";
+import { MenuBarReadyButton } from "./components/menuBarReadyButton/menuBarReadyButton";
 
-import styles from "./styles.module.scss"
-import { Props } from "./types"
+import styles from "./styles.module.scss";
+import { Props } from "./types";
 
 export const MenuBar = (props: Props) => {
-  const { canContinue, canReady, onContinue, onReady, showContinue, className } = props
+  const { canContinue, canReady, onContinue, onReady, hideReadyButton, className } = props;
 
   return (
     <div className={classes(styles.container, className)}>
       <MenuBarMenuButton />
 
       <MenuBarReadyButton
-        showContinue={showContinue}
         canContinue={canContinue}
         canReady={canReady}
         onContinue={onContinue}
         onReady={onReady}
+        hideReadyButton={hideReadyButton}
       />
 
       {isDev && <Debug />}
 
       {!isDev && <div className={styles.rightSpace} />}
     </div>
-  )
-}
+  );
+};

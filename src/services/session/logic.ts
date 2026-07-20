@@ -92,14 +92,6 @@ export const setupCanContinue = (numActiveGoodCharacters: number, numActiveEvilC
     return `You have selected too many evil characters`;
   }
 
-  if (numActiveGoodCharacters < maxGoodCharacters) {
-    return `You must select ${maxGoodCharacters} good characters`;
-  }
-
-  if (numActiveEvilCharacters < maxEvilCharacters) {
-    return `You must select ${maxEvilCharacters} evil characters`;
-  }
-
   return true;
 };
 

@@ -6,6 +6,7 @@ import { classes } from "utils/classes";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const SetupModule = (props: Props) => {
   const { characterId, selected, onSelect } = props;
@@ -48,10 +49,6 @@ export const SetupModule = (props: Props) => {
         </div>
 
         <div className={styles.description}>{character.description}</div>
-
-        <div className={character.boosts === "good" ? styles.boostsGood : styles.boostsBad}>
-          {character.boosts === "good" ? "Makes Good Stronger" : "Makes Evil Stronger"}
-        </div>
       </div>
 
       {/* <FontAwesomeIcon
@@ -62,6 +59,10 @@ export const SetupModule = (props: Props) => {
       {/* <div className={styles.checkButtonContainer}>
         {checked && <FontAwesomeIcon icon="check" className={styles.checkButtonIcon} />}
       </div> */}
+
+      <div className={character.boosts === "good" ? styles.boostsGood : styles.boostsBad}>
+        {character.boosts === "good" ? "Boosts Good" : "Boosts Evil"}
+      </div>
     </div>
   );
 };

@@ -3,19 +3,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { InputText } from "components/inputText/inputText";
 import { updateDocument } from "services/firestore/updateDocument";
-import { updateMyPlayer } from "services/session/updateMyPlayer";
 import { getFileUrl } from "services/storage/getFileUrl";
 import { uploadFile } from "services/storage/uploadFile";
-import { lobbyCanReady } from "services/session/logic";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { User } from "types/user";
 import { classes } from "utils/classes";
-import { ReadyButton } from "components/readyButton/readyButton";
+import { Button } from "components/button/button";
+import { updateMyPlayer } from "services/session/updateMyPlayer";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
+import { useAppStore } from "stores/useAppStore/useAppStore";
 
 export const GameLobbyProfile = ({ className }: Props) => {
+  const { showToast } = useAppStore();
   const { myPlayer, sessionId } = useSessionStore();
 
   const imageInputRef = React.useRef<HTMLInputElement | null>(null);
@@ -55,12 +56,10 @@ export const GameLobbyProfile = ({ className }: Props) => {
     setName(myPlayer.name);
   }, [myPlayer.name]);
 
-  React.useEffect(() => {
-    if (isNameChanged)
-      void updateMyPlayer({
-        isReady: false,
-      });
-  }, [isNameChanged]);
+  const handleSave = async () => {
+    await updateMyPlayer({ name });
+    showToast("Name Saved!");
+  };
 
   return (
     <div className={classes(styles.container, className)}>
@@ -89,7 +88,7 @@ export const GameLobbyProfile = ({ className }: Props) => {
         className={styles.name}
       />
 
-      <ReadyButton canReady={lobbyCanReady(myPlayer, name)} onReady={() => updateMyPlayer({ name, isReady: true })} />
+      <Button icon="save" disabled={myPlayer.name === name} onClick={handleSave} className={styles.saveButton} />
     </div>
   );
 };

@@ -107,7 +107,7 @@ export const characters: Characters = {
     allegiance: "good",
     isOptional: true,
     boosts: "good",
-    description: "Can see which player is Merlin",
+    description: "Makes good stronger. Can see which player is Merlin.",
     howToPlay:
       "You see Merlin and Morgana, but you do not know which player is which. Use this information to help protect Merlin, while being careful not to make Merlin's identity obvious to evil.",
     disabled: false,
@@ -289,7 +289,7 @@ export const characters: Characters = {
     allegiance: "evil",
     isOptional: true,
     boosts: "evil",
-    description: "Adds confusion for Good by making Percival unsure who Merlin is",
+    description: "Adds confusion for Good by making Percival unsure who Merlin is.",
     howToPlay:
       "You are evil. At the start of the game, Percival sees you as a possible Merlin, just as they see the real Merlin. Use this to confuse Percival and weaken the good team's ability to protect Merlin.",
     disabled: false,

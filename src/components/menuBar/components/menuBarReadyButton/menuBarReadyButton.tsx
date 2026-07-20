@@ -11,9 +11,9 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const MenuBarReadyButton = (props: Props) => {
-  const { canReady, onReady, showContinue, canContinue, onContinue } = props;
+  const { canReady, onReady, canContinue, onContinue, hideReadyButton } = props;
 
-  const { myPlayer } = useSessionStore();
+  const { myPlayer, isMyPlayerHost } = useSessionStore();
   const { showToast } = useAppStore();
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -81,7 +81,7 @@ export const MenuBarReadyButton = (props: Props) => {
     }
   };
 
-  const showReadyButton = !showContinue && handleCanReady(false);
+  const showContinue = (myPlayer.isReady || hideReadyButton) && isMyPlayerHost;
 
   return (
     <>
@@ -97,7 +97,7 @@ export const MenuBarReadyButton = (props: Props) => {
         />
       )}
 
-      {showReadyButton && (
+      {!showContinue && !hideReadyButton && (
         <Button
           label="Ready"
           onClick={handleReady}

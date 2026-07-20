@@ -10,6 +10,7 @@ import { revealCanContinue, revealCanReady, revealContinue, revealReady } from "
 import { PlayerCard } from "components/playerCard/playerCard";
 
 import styles from "./styles.module.scss";
+import { SetupModule } from "../gameSetup/components/setupModule/setupModule";
 
 export const GameReveal = () => {
   const { myPlayer, isMyPlayerHost, players } = useSessionStore();
@@ -50,9 +51,11 @@ export const GameReveal = () => {
   return (
     <>
       <div className={classes(styles.container, !showCharacter && styles.hidden)}>
-        <div className={styles.characterName}>{characterNames[characterId]}</div>
+        {/* <div className={styles.characterName}>{characterNames[characterId]}</div> */}
 
-        <CharacterCard character={characters[characterId]} className={styles.character} />
+        <SetupModule characterId={characterId} selected={true} />
+
+        {/* <CharacterCard character={characters[]} className={styles.character} /> */}
 
         <div className={styles.howToPlay}>{characters[characterId].howToPlay}</div>
 

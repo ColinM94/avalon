@@ -6,10 +6,10 @@ import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { setupCanContinue, setupContinue } from "services/session/logic";
 import { CharacterId } from "types/general";
 import { useAppStore } from "stores/useAppStore/useAppStore";
+import { Divider } from "components/divider/divider";
 
 import { SetupModule } from "./components/setupModule/setupModule";
 import styles from "./styles.module.scss";
-import { Divider } from "components/divider/divider";
 
 export const GameSetup = () => {
   const { showToast } = useAppStore();
@@ -94,12 +94,12 @@ export const GameSetup = () => {
           onSelect={handleSelect}
         />
         <SetupModule characterId="morgana" selected={selectedCharacters.includes("morgana")} onSelect={handleSelect} />
-        <SetupModule characterId="mordred" selected={selectedCharacters.includes("mordred")} onSelect={handleSelect} />
         <SetupModule characterId="oberon" selected={selectedCharacters.includes("oberon")} onSelect={handleSelect} />
+        <SetupModule characterId="mordred" selected={selectedCharacters.includes("mordred")} onSelect={handleSelect} />
       </div>
 
       <MenuBar
-        showContinue={isMyPlayerHost}
+        hideReadyButton
         canContinue={() => setupCanContinue(numActiveGoodCharacters, numActiveEvilCharacters)}
         onContinue={() => setupContinue(selectedCharacters)}
       />
