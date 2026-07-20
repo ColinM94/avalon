@@ -24,6 +24,7 @@ import {
   faMinus,
   faSave,
   faEdit,
+  faAnglesUp,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const initIcons = () => {
@@ -52,5 +53,6 @@ export const initIcons = () => {
     faMinus,
     faSave,
     faEdit,
+    faAnglesUp,
   );
 };

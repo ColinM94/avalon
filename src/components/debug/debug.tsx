@@ -12,7 +12,7 @@ import { goToStep } from "services/session/goToStep";
 import { voteToApproveMember } from "services/session/voteToApproveMember";
 import { classes } from "utils/classes";
 import { questSucceedVote } from "services/session/questSucceedVote";
-import { charactersDefault } from "consts/defaults";
+import { characters } from "consts/characters";
 import { useAppStore } from "stores/useAppStore/useAppStore";
 
 import styles from "./styles.module.scss";
@@ -72,10 +72,7 @@ export const Debug = () => {
 
                   <div className={styles.playerContent}>
                     {player.characterId && (
-                      <CharacterCard
-                        character={charactersDefault[player.characterId]}
-                        className={styles.characterCard}
-                      />
+                      <CharacterCard character={characters[player.characterId]} className={styles.characterCard} />
                     )}
 
                     <div className={styles.playerControls}>

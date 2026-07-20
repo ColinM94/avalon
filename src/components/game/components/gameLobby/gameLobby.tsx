@@ -2,6 +2,8 @@ import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 
 import { GameLobbyProfile } from "./components/gameLobbyProfile/gameLobbyProfile";
 import { GameLobbyInfo } from "./components/gameLobbyInfo/gameLobbyInfo";
+import { MenuBar } from "components/menuBar/menuBar";
+import { lobbyContinue } from "services/session/logic";
 
 import styles from "./styles.module.scss";
 
@@ -14,12 +16,12 @@ export const GameLobby = () => {
 
       <GameLobbyProfile className={styles.profile} />
 
-      {/* <MenuBar
+      <MenuBar
         showContinue={isMyPlayerHost}
-        canContinue={lobbyCanContinue}
+        // canContinue={lobbyCanContinue}
         onContinue={lobbyContinue}
-        canReady={lobbyCanReady}
-      /> */}
+        // canReady={lobbyCanReady}
+      />
     </>
   );
 };

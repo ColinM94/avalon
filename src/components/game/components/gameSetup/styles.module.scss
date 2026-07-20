@@ -1,10 +1,16 @@
 .container {
-  padding: vars.$spacing-primary;
-  flex: 1;
-  gap: vars.$spacing-primary * 2 !important;
-  width: 100%;
+  gap: vars.$spacing-secondary;
+  overflow: auto;
 }
 
 .section {
   margin-bottom: calc(vars.$spacing-primary * 2);
+}
+
+.divider {
+  // margin-top: vars.$spacing-tertiary;
+  // marging-
+  margin-bottom: 0;
+  width: 50%;
+  margin-inline: auto;
 }

@@ -1,7 +1,7 @@
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { GameSession, Player } from "types/gameSession";
 import { shuffleArray } from "utils/shuffleArray";
-import { maxCharacters } from "consts/characters";
+import { characters, maxCharacters, maxSpecialCharacters } from "consts/characters";
 import { numPlayersByQuest } from "consts/general";
 import { updateDocument } from "services/firestore/updateDocument";
 import { CharacterId } from "types/general";
@@ -32,8 +32,6 @@ export const lobbyCanReady = (player: Player, newName: string) => {
 
 export const lobbyCanContinue = () => {
   const { playersArray, isAllReady } = useSessionStore.getState();
-
-  if (lobbyCanReady("") !== true) return lobbyCanReady("");
 
   if (playersArray.length < 5) return "There has to be at least 5 players to start";
 
@@ -83,8 +81,8 @@ export const setupCanContinue = (numActiveGoodCharacters: number, numActiveEvilC
 
   const numPlayers = playersArray.length;
 
-  const maxGoodCharacters = maxCharacters[numPlayers]?.good;
-  const maxEvilCharacters = maxCharacters[numPlayers]?.evil;
+  const maxGoodCharacters = maxSpecialCharacters[numPlayers]?.good;
+  const maxEvilCharacters = maxSpecialCharacters[numPlayers]?.evil;
 
   if (numActiveGoodCharacters > maxGoodCharacters) {
     return "You have selected too many Good characters!";
@@ -106,15 +104,44 @@ export const setupCanContinue = (numActiveGoodCharacters: number, numActiveEvilC
 };
 
 export const setupContinue = async (characterIds: CharacterId[]) => {
-  const { playersArray } = useSessionStore.getState();
+  const { playersArray, numPlayers } = useSessionStore.getState();
 
-  const shuffledCharacters = shuffleArray(characterIds) as CharacterId[];
+  let updatedCharacterIds = [...characterIds];
+
+  const numGoodPlayers = maxCharacters[numPlayers].good;
+  const numEvilPlayers = maxCharacters[numPlayers].evil;
+
+  const numServantsToAdd =
+    numGoodPlayers - updatedCharacterIds.filter((characterId) => characters[characterId].allegiance === "good").length;
+  const numMinionsToAdd =
+    numEvilPlayers - updatedCharacterIds.filter((characterId) => characters[characterId].allegiance === "evil").length;
+
+  console.log({
+    numServantsToAdd,
+    numMinionsToAdd,
+  });
+
+  if (numServantsToAdd >= 0) {
+    for (let i = 1; i <= numServantsToAdd; i++) {
+      updatedCharacterIds.push(characters[`servant${i}`].id);
+    }
+  }
+
+  if (numMinionsToAdd >= 0) {
+    for (let i = 1; i <= numMinionsToAdd; i++) {
+      updatedCharacterIds.push(characters[`minion${i}`].id);
+    }
+  }
+
+  updatedCharacterIds = shuffleArray(updatedCharacterIds) as CharacterId[];
+
+  console.log(updatedCharacterIds, numPlayers);
 
   const playerUpdates: Record<string, Partial<Player>> = {};
 
   playersArray.forEach((player, i) => {
     playerUpdates[player.id] = {
-      characterId: shuffledCharacters[i],
+      characterId: updatedCharacterIds[i],
     };
   });
 

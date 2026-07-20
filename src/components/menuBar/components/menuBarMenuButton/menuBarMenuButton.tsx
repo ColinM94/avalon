@@ -5,7 +5,7 @@ import { Button } from "components/button/button";
 import { Modal } from "components/modal/modal";
 import { capitaliseFirstLetter } from "utils/capitaliseFirstLetter";
 import { classes } from "utils/classes";
-import { charactersDefault } from "consts/defaults";
+import { characters } from "consts/characters";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 
 import styles from "./styles.module.scss";
@@ -40,7 +40,7 @@ export const MenuBarMenuButton = () => {
 
           <div className={classes(styles.menuItemText, step === "lobby" && styles.menuItemDisabled)}>
             <div className={styles.menuItemTextTitle}>
-              {showCharacter ? capitaliseFirstLetter(charactersDefault[myPlayer.characterId].id) : "Your Character"}
+              {showCharacter ? capitaliseFirstLetter(characters[myPlayer.characterId].id) : "Your Character"}
             </div>
             <div className={styles.menuItemTextDescription}>
               Hold down to see your character. Do not let anyone see!

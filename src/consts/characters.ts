@@ -1,3 +1,5 @@
+import { Characters } from "types/characters";
+
 export const maxCharacters: Record<number, { good: number; evil: number }> = {
   5: {
     good: 3,
@@ -22,6 +24,33 @@ export const maxCharacters: Record<number, { good: number; evil: number }> = {
   10: {
     good: 6,
     evil: 4,
+  },
+};
+
+export const maxSpecialCharacters: Record<number, { good: number; evil: number }> = {
+  5: {
+    good: 1,
+    evil: 1,
+  },
+  6: {
+    good: 2,
+    evil: 1,
+  },
+  7: {
+    good: 2,
+    evil: 2,
+  },
+  8: {
+    good: 3,
+    evil: 2,
+  },
+  9: {
+    good: 3,
+    evil: 2,
+  },
+  10: {
+    good: 3,
+    evil: 3,
   },
 };
 
@@ -56,3 +85,357 @@ export const characterNames = {
   minion2: "Minion",
   minion3: "Minion",
 } as const;
+
+export const characters: Characters = {
+  // Good Characters
+  merlin: {
+    id: "merlin",
+    name: "Merlin",
+    isActive: true,
+    allegiance: "good",
+    isOptional: false,
+    boosts: "good",
+    description: "Knows which players are evil",
+    howToPlay:
+      "You know which players are evil, except Mordred if he is in the game. Use this information to guide the good team without revealing yourself too clearly. If the good team completes three successful quests, the Assassin may try to identify you; if they succeed, evil wins.",
+    disabled: false,
+  },
+  percival: {
+    id: "percival",
+    name: "Percival",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Can see which player is Merlin",
+    howToPlay:
+      "You see Merlin and Morgana, but you do not know which player is which. Use this information to help protect Merlin, while being careful not to make Merlin's identity obvious to evil.",
+    disabled: false,
+  },
+  cleric: {
+    id: "cleric",
+    name: "Cleric",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds an early clue for Good by revealing whether the first quest leader is good or evil.",
+    howToPlay:
+      "At the start of the game, you learn whether the leader of the first quest is good or evil. Use this information to guide early discussion and help the good team make better decisions.",
+    disabled: false,
+  },
+  troublemaker: {
+    id: "troublemaker",
+    name: "Troublemaker",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds false information that tends to make Good look more suspicious.",
+    howToPlay:
+      "You are on the good team, but whenever your loyalty is checked by the Cleric or by any other rule or ability, you appear as evil. Because your role creates false information, play carefully and avoid letting your power mislead the good team too far.",
+    disabled: false,
+  },
+  seniorMessenger: {
+    id: "seniorMessenger",
+    name: "Senior Messenger",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds extra starting information for Good.",
+    howToPlay:
+      "You receive information from your role at the start of the game. Use that information to support the good team, but do not share it so directly that evil can identify you.",
+    disabled: true,
+  },
+  juniorMessenger: {
+    id: "juniorMessenger",
+    name: "Junior Messenger",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds limited starting information for Good.",
+    howToPlay:
+      "You receive limited information from your role at the start of the game. Use it to help the good team, but be cautious, since your knowledge may be incomplete.",
+    disabled: true,
+  },
+  rogueGood: {
+    id: "rogueGood",
+    name: "Rogue",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds a Good player without extra visible complexity.",
+    howToPlay:
+      "You are on the good team. You have no revealed special power here, so your task is to read the table carefully, join successful quests, and help identify evil through discussion and voting.",
+    disabled: false,
+  },
+  sorcererGood: {
+    id: "sorcererGood",
+    name: "Sorcerer",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds a special Good ability that gives more influence or information.",
+    howToPlay:
+      "You are on the good team and gain information or influence through your role's special ability. Use that advantage to support good while keeping your identity hidden from evil.",
+    disabled: false,
+  },
+  lancelotGood: {
+    id: "lancelotGood",
+    name: "Lancelot",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds uncertainty around loyalty that often makes it harder for Good.",
+    howToPlay:
+      "You are on the good team. Even if your role causes suspicion, your goal is to help the good team succeed on quests and identify the evil players.",
+    disabled: false,
+  },
+  untrustworthyServant: {
+    id: "untrustworthyServant",
+    name: "Untrustworthy Servant",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds a Good role that is harder for the table to trust, often benefiting Evil.",
+    howToPlay:
+      "You are on the good team. Your role may make others doubt you, but you still win only if good wins, so focus on clear votes, solid reasoning, and successful quests.",
+    disabled: false,
+  },
+  servant1: {
+    id: "servant1",
+    name: "Servant",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds a normal Good player with no special power.",
+    howToPlay:
+      "You have no special power. Your role is to help the good team by judging proposals carefully, watching how players act, and supporting the quests you believe will succeed.",
+    disabled: false,
+  },
+  servant2: {
+    id: "servant2",
+    name: "Servant",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds a normal Good player with no special power.",
+    howToPlay:
+      "You have no special power. Your role is to help the good team by judging proposals carefully, watching how players act, and supporting the quests you believe will succeed.",
+    disabled: false,
+  },
+  servant3: {
+    id: "servant3",
+    name: "Servant",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds a normal Good player with no special power.",
+    howToPlay:
+      "You have no special power. Your role is to help the good team by judging proposals carefully, watching how players act, and supporting the quests you believe will succeed.",
+    disabled: false,
+  },
+  servant4: {
+    id: "servant4",
+    name: "Servant",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds a normal Good player with no special power.",
+    howToPlay:
+      "You have no special power. Your role is to help the good team by judging proposals carefully, watching how players act, and supporting the quests you believe will succeed.",
+    disabled: false,
+  },
+  servant5: {
+    id: "servant5",
+    name: "Servant",
+    isActive: false,
+    allegiance: "good",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds a normal Good player with no special power.",
+    howToPlay:
+      "You have no special power. Your role is to help the good team by judging proposals carefully, watching how players act, and supporting the quests you believe will succeed.",
+    disabled: false,
+  },
+
+  // Evil Characters
+  assassin: {
+    id: "assassin",
+    name: "Assassin",
+    isActive: true,
+    allegiance: "evil",
+    isOptional: false,
+    boosts: "evil",
+    description: "Endgame chance for Evil to win by identifying Merlin",
+    howToPlay:
+      "You are evil. At the end of the game, if the good team has completed three successful quests, you may choose one player to assassinate. If that player is Merlin, evil wins.",
+    disabled: false,
+  },
+  morgana: {
+    id: "morgana",
+    name: "Morgana",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds confusion for Good by making Percival unsure who Merlin is",
+    howToPlay:
+      "You are evil. At the start of the game, Percival sees you as a possible Merlin, just as they see the real Merlin. Use this to confuse Percival and weaken the good team's ability to protect Merlin.",
+    disabled: false,
+  },
+  oberon: {
+    id: "oberon",
+    name: "Oberon",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "good",
+    description: "Adds an isolated Evil role that often weakens evil coordination and helps Good",
+    howToPlay:
+      "You are evil, but you do not know the other evil players, and they do not know you. Work against the good team without revealing yourself, even though you cannot openly coordinate with evil.",
+    disabled: false,
+  },
+  mordred: {
+    id: "mordred",
+    name: "Mordred",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds a hidden Evil player that Merlin cannot see, making deception easier",
+    howToPlay:
+      "You are evil, and Merlin does not see you at the start of the game. Use this hidden status to appear trustworthy, avoid suspicion, and help the evil team from the shadows.",
+    disabled: false,
+  },
+  lunatic: {
+    id: "lunatic",
+    name: "Lunatic",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds a forced saboteur that makes quests more dangerous and helps Evil.",
+    howToPlay:
+      "You are evil. Whenever you are on a quest, you must play a Fail card. Because your role is highly disruptive and easier to detect in small games, it is recommended for games with 7 or more players.",
+    disabled: false,
+  },
+  sorcererEvil: {
+    id: "sorcererEvil",
+    name: "Sorcerer",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds a special Evil ability that creates more doubt or misinformation.",
+    howToPlay:
+      "You are evil and use your role's special ability to mislead the good team. Support evil by creating doubt, shaping discussion, and protecting the identities of your allies.",
+    disabled: false,
+  },
+  revealer: {
+    id: "revealer",
+    name: "Revealer",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds an Evil role that can use revealed information to pressure the table.",
+    howToPlay:
+      "You are evil and can use your role's information to influence the table at key moments. Reveal only what helps your team most, and keep the good team uncertain.",
+    disabled: true,
+  },
+  rogueEvil: {
+    id: "rogueEvil",
+    name: "Rogue",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds an Evil player who blends in and helps sabotage Good from within.",
+    howToPlay:
+      "You are evil. Your strength is in appearing harmless, so blend in with the good team, avoid drawing attention, and help sabotage their plans.",
+    disabled: true,
+  },
+  trickster: {
+    id: "trickster",
+    name: "Trickster",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds extra deception that makes it harder for Good to trust information.",
+    howToPlay:
+      "You are evil. Use lies, half-truths, and confusion to make the good team doubt each other. Your role is strongest when the table cannot agree on what is true.",
+    disabled: true,
+  },
+  brute: {
+    id: "brute",
+    name: "Brute",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds an Evil role that is strongest in early quests by failing them.",
+    howToPlay:
+      "You are evil. You may only play Fail on the first three quests of the game. After that, you cannot directly sabotage quests, so use your power early and rely on deception later.",
+    disabled: true,
+  },
+  lancelotEvil: {
+    id: "lancelotEvil",
+    name: "Lancelot",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds uncertainty around loyalty that usually benefits Evil.",
+    howToPlay:
+      "You are evil, though other players may not expect it. Use that false trust to stay hidden, join quests when useful, and undermine the good team from within.",
+    disabled: true,
+  },
+  minion1: {
+    id: "minion1",
+    name: "Minion",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds a normal Evil player with no special power.",
+    howToPlay:
+      "You have no special power beyond being evil. Work with your teammates to sabotage quests, mislead the good players, and protect the more important evil roles.",
+    disabled: false,
+  },
+  minion2: {
+    id: "minion2",
+    name: "Minion",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds a normal Evil player with no special power.",
+    howToPlay:
+      "You have no special power beyond being evil. Work with your teammates to sabotage quests, mislead the good players, and protect the more important evil roles.",
+    disabled: false,
+  },
+  minion3: {
+    id: "minion3",
+    name: "Minion",
+    isActive: false,
+    allegiance: "evil",
+    isOptional: true,
+    boosts: "evil",
+    description: "Adds a normal Evil player with no special power.",
+    howToPlay:
+      "You have no special power beyond being evil. Work with your teammates to sabotage quests, mislead the good players, and protect the more important evil roles.",
+    disabled: false,
+  },
+};

@@ -1,7 +1,6 @@
 import { classes } from "utils/classes";
 import { Heading } from "components/heading/heading";
 import { CharacterCard } from "components/characterCard/characterCard";
-import { charactersDefault } from "consts/defaults";
 import { CharacterId } from "types/general";
 
 import styles from "./styles.module.scss";
@@ -20,7 +19,7 @@ export const SetupCharacters = (props: Props) => {
   } = props;
 
   const handleCharacterClick = (characterId: CharacterId) => {
-    const character = charactersDefault[characterId];
+    const character = characters[characterId];
     const isSelected = selectedCharacters.includes(characterId);
 
     if (!character.isOptional) return;
@@ -36,8 +35,7 @@ export const SetupCharacters = (props: Props) => {
   };
 
   const filteredCharacters = characters.filter(
-    (characterId) =>
-      charactersDefault[characterId].allegiance === allegiance && !charactersDefault[characterId].disabled,
+    (characterId) => characters[characterId].allegiance === allegiance && !characters[characterId].disabled,
   );
 
   return (
@@ -51,7 +49,7 @@ export const SetupCharacters = (props: Props) => {
       <div className={styles.characters}>
         {filteredCharacters.map((characterId) => (
           <CharacterCard
-            character={charactersDefault[characterId]}
+            character={characters[characterId]}
             onClick={handleCharacterClick}
             showName
             isActive={selectedCharacters.includes(characterId)}

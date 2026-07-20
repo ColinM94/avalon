@@ -1,0 +1,116 @@
+.container {
+  height: 80px;
+  background-color: vars.$color-surface;
+  border-radius: vars.$roundness;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  filter: brightness(0.7);
+  cursor: pointer;
+
+  .text {
+    flex: 1;
+    padding: vars.$spacing-secondary;
+    padding-inline: vars.$spacing-primary;
+
+    .nameContainer {
+      flex-direction: row;
+      gap: vars.$spacing-tertiary;
+      align-items: center;
+
+      .name {
+        font-size: vars.$font-size-h3;
+      }
+    }
+
+    .description {
+      font-size: vars.$font-size-body2;
+      color: vars.$color-text-secondary;
+      white-space: wrap;
+    }
+
+    .boosts {
+      font-size: vars.$font-size-body2;
+      margin-top: vars.$spacing-tertiary;
+    }
+
+    .boostsGood {
+      @extend .boosts;
+      color: vars.$color-success;
+    }
+
+    .boostsBad {
+      @extend .boosts;
+      color: vars.$color-danger;
+    }
+  }
+
+  .imageContainer {
+    background-color: vars.$color-primary;
+    aspect-ratio: 1;
+    // height: calc(100% - vars.$spacing-primary);
+    height: 100%;
+    width: 64px;
+    // margin-left: vars.$spacing-secondary;
+    // border-radius: vars.$roundness;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+
+    .image {
+      position: absolute;
+      object-fit: cover;
+
+      height: calc(100% - 4px);
+    }
+  }
+
+  .imageContainerGood {
+    @extend .imageContainer;
+
+    background: vars.$color-good;
+  }
+
+  .imageContainerEvil {
+    @extend .imageContainer;
+    background: vars.$color-evil;
+  }
+
+  .checkButtonContainer {
+    border: 2px solid vars.$color-text-secondary;
+    border-radius: vars.$roundness;
+    aspect-ratio: 1;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    margin-right: vars.$spacing-primary;
+
+    .checkButtonIcon {
+      background-color: transparent;
+      font-size: vars.$icon-size-medium;
+    }
+  }
+
+  .boostIcon {
+    font-size: vars.$icon-size-medium;
+    margin-bottom: 2px;
+    margin-right: vars.$spacing-primary;
+  }
+
+  .boostGoodIcon {
+    @extend .boostIcon;
+
+    color: vars.$color-success;
+  }
+
+  .boostBadIcon {
+    @extend .boostIcon;
+
+    color: vars.$color-danger;
+  }
+}
+
+.containerChecked {
+  filter: brightness(1);
+}

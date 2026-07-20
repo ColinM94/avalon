@@ -1,23 +1,23 @@
 import * as React from "react";
 
 import { MenuBar } from "components/menuBar/menuBar";
-import { StepDescription } from "components/stepDescription/stepDescription";
-import { maxCharacters } from "consts/characters";
+import { maxSpecialCharacters, characters } from "consts/characters";
 import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { setupCanContinue, setupContinue } from "services/session/logic";
-import { charactersDefault } from "consts/defaults";
 import { CharacterId } from "types/general";
+import { useAppStore } from "stores/useAppStore/useAppStore";
 
-import { SetupCharacters } from "./components/setupCharacters/setupCharacters";
-
+import { SetupModule } from "./components/setupModule/setupModule";
 import styles from "./styles.module.scss";
+import { Divider } from "components/divider/divider";
 
 export const GameSetup = () => {
+  const { showToast } = useAppStore();
   const { numPlayers, isMyPlayerHost } = useSessionStore();
 
   const [selectedCharacters, setSelectedCharacters] = React.useState<CharacterId[]>(["merlin", "assassin"]);
 
-  const goodCharacters = Object.values(charactersDefault).filter(
+  const goodCharacters = Object.values(characters).filter(
     (character) =>
       character.allegiance === "good" &&
       !(
@@ -27,6 +27,7 @@ export const GameSetup = () => {
           "sorcererGood",
           "untrustworthyServant",
           "lancelotGood",
+          "troublemaker",
           "cleric",
           "servant1",
           "servant2",
@@ -36,7 +37,7 @@ export const GameSetup = () => {
         ] as CharacterId[]
       ).includes(character.id),
   );
-  const evilCharacters = Object.values(charactersDefault).filter(
+  const evilCharacters = Object.values(characters).filter(
     (character) =>
       character.allegiance === "evil" &&
       !(["assassin", "lunatic", "sorcererEvil", "minion1", "minion2", "minion3"] as CharacterId[]).includes(
@@ -52,38 +53,50 @@ export const GameSetup = () => {
     evilCharacters.find((character) => character.id === characterId),
   ).length;
 
-  const maxGoodCharacters = maxCharacters[numPlayers]?.good;
-  const maxEvilCharacters = maxCharacters[numPlayers]?.evil;
+  const maxGoodCharacters = maxSpecialCharacters[numPlayers]?.good;
+  const maxEvilCharacters = maxSpecialCharacters[numPlayers]?.evil;
+
+  const handleSelect = (characterId: CharacterId) => {
+    const character = characters[characterId];
+    const isSelected = selectedCharacters.includes(characterId);
+
+    if (!character.isOptional) return;
+
+    const atMaxGoodCharacters = character.allegiance === "good" && numActiveGoodCharacters >= maxGoodCharacters;
+    const atMaxEvilCharacters = character.allegiance === "evil" && numActiveEvilCharacters >= maxEvilCharacters;
+
+    if ((atMaxGoodCharacters || atMaxEvilCharacters) && !isSelected) {
+      showToast(`You cannot have more ${character.allegiance} characters`);
+      return;
+    }
+
+    setSelectedCharacters((prev) => {
+      if (!isSelected) return [...prev, character.id];
+      return prev.filter((id) => id !== characterId);
+    });
+  };
 
   return (
     <>
-      {isMyPlayerHost && (
-        <>
-          <SetupCharacters
-            heading="Good Characters"
-            allegiance="good"
-            selectedCharacters={selectedCharacters}
-            characters={goodCharacters.map((character) => character.id)}
-            maxActiveCharacters={maxGoodCharacters}
-            setCharacters={setSelectedCharacters}
-            numActiveCharacters={numActiveGoodCharacters}
-            className={styles.section}
-          />
+      <div className={styles.container}>
+        <SetupModule characterId="merlin" selected={selectedCharacters.includes("merlin")} onSelect={handleSelect} />
+        <SetupModule
+          characterId="assassin"
+          selected={selectedCharacters.includes("assassin")}
+          onSelect={handleSelect}
+        />
 
-          <SetupCharacters
-            heading="Evil Characters"
-            allegiance="evil"
-            selectedCharacters={selectedCharacters}
-            characters={evilCharacters.map((character) => character.id)}
-            maxActiveCharacters={maxEvilCharacters}
-            setCharacters={setSelectedCharacters}
-            numActiveCharacters={numActiveEvilCharacters}
-            className={styles.section}
-          />
-        </>
-      )}
+        <Divider className={styles.divider} />
 
-      {!isMyPlayerHost && <StepDescription heading="Please Wait" description="The Host is selecting Characters." />}
+        <SetupModule
+          characterId="percival"
+          selected={selectedCharacters.includes("percival")}
+          onSelect={handleSelect}
+        />
+        <SetupModule characterId="morgana" selected={selectedCharacters.includes("morgana")} onSelect={handleSelect} />
+        <SetupModule characterId="mordred" selected={selectedCharacters.includes("mordred")} onSelect={handleSelect} />
+        <SetupModule characterId="oberon" selected={selectedCharacters.includes("oberon")} onSelect={handleSelect} />
+      </div>
 
       <MenuBar
         showContinue={isMyPlayerHost}

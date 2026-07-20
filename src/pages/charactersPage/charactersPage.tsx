@@ -1,11 +1,11 @@
 import { MainLayout } from "layouts/mainLayout/mainLayout";
 import { CharacterCard } from "components/characterCard/characterCard";
-import { charactersDefault } from "consts/defaults";
+import { characters } from "consts/characters";
 
 import styles from "./styles.module.scss";
 
 export const CharactersPage = () => {
-  const characters = Object.values(charactersDefault);
+  const characters = Object.values(characters);
 
   return (
     <MainLayout showHeader showBackButton heading="Characters" className={styles.container}>

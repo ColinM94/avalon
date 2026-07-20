@@ -1,7 +1,7 @@
 import { CharacterCard } from "components/characterCard/characterCard";
 import { Heading } from "components/heading/heading";
 import { Modal } from "components/modal/modal";
-import { charactersDefault } from "consts/defaults";
+import { characters } from "consts/characters";
 
 import { Props } from "./types";
 import styles from "./styles.module.scss";
@@ -14,7 +14,7 @@ export const CharacterModal = (props: Props) => {
       {headingTitle && <Heading headingTitle={headingTitle} headingSubtitle={headingSubtitle} />}
 
       <CharacterCard
-        character={charactersDefault[characterId]}
+        character={characters[characterId]}
         showDescription
         showName
         orientation="landscape"
