@@ -6,21 +6,18 @@ import { classes } from "utils/classes";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const SetupModule = (props: Props) => {
   const { characterId, selected, onSelect } = props;
   const { showToast } = useAppStore();
 
-  const character = characters[characterId];
-  const title = `${character.name} ${character.boosts === "good" ? "Makes Good Stronger" : "Makes Evil Stronger"}`;
-
   const [image, setImage] = React.useState<string | null>(null);
+
+  const character = characters[characterId];
 
   React.useEffect(() => {
     const loadImage = async () => {
       const tempImage = await import(`assets/images/characters/${characterId}.webp`);
-
       setImage(tempImage.default);
     };
 
@@ -33,7 +30,6 @@ export const SetupModule = (props: Props) => {
       return;
     }
 
-    // showToast(title);
     onSelect(characterId);
   };
 
@@ -44,21 +40,10 @@ export const SetupModule = (props: Props) => {
       </div>
 
       <div className={styles.text}>
-        <div title={title} className={styles.nameContainer}>
-          <div className={styles.name}>{character.name}</div>
-        </div>
+        <div className={styles.name}>{character.name}</div>
 
         <div className={styles.description}>{character.description}</div>
       </div>
-
-      {/* <FontAwesomeIcon
-        icon="angles-up"
-        className={character.boosts === "good" ? styles.boostGoodIcon : styles.boostBadIcon}
-      /> */}
-
-      {/* <div className={styles.checkButtonContainer}>
-        {checked && <FontAwesomeIcon icon="check" className={styles.checkButtonIcon} />}
-      </div> */}
 
       <div className={character.boosts === "good" ? styles.boostsGood : styles.boostsBad}>
         {character.boosts === "good" ? "Boosts Good" : "Boosts Evil"}

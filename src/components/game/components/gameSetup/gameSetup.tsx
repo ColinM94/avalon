@@ -13,7 +13,7 @@ import styles from "./styles.module.scss";
 
 export const GameSetup = () => {
   const { showToast } = useAppStore();
-  const { numPlayers, isMyPlayerHost } = useSessionStore();
+  const { numPlayers } = useSessionStore();
 
   const [selectedCharacters, setSelectedCharacters] = React.useState<CharacterId[]>(["merlin", "assassin"]);
 
@@ -76,9 +76,18 @@ export const GameSetup = () => {
     });
   };
 
+  const heading = (label: string, rightLabel?: string) => (
+    <div className={styles.heading}>
+      <div className={styles.headingLabel}>{label}</div>
+      <div className={styles.headingAmount}>{rightLabel}</div>
+    </div>
+  );
+
   return (
     <>
       <div className={styles.container}>
+        {heading("Required Characters")}
+
         <SetupModule characterId="merlin" selected={selectedCharacters.includes("merlin")} onSelect={handleSelect} />
         <SetupModule
           characterId="assassin"
@@ -86,16 +95,19 @@ export const GameSetup = () => {
           onSelect={handleSelect}
         />
 
-        <Divider className={styles.divider} />
+        {heading("Optional Good Characters", `${numActiveGoodCharacters}/${maxGoodCharacters}`)}
 
         <SetupModule
           characterId="percival"
           selected={selectedCharacters.includes("percival")}
           onSelect={handleSelect}
         />
+
+        {heading("Optional Evil Characters", `${numActiveEvilCharacters}/${maxEvilCharacters}`)}
+
         <SetupModule characterId="morgana" selected={selectedCharacters.includes("morgana")} onSelect={handleSelect} />
-        <SetupModule characterId="oberon" selected={selectedCharacters.includes("oberon")} onSelect={handleSelect} />
         <SetupModule characterId="mordred" selected={selectedCharacters.includes("mordred")} onSelect={handleSelect} />
+        <SetupModule characterId="oberon" selected={selectedCharacters.includes("oberon")} onSelect={handleSelect} />
       </div>
 
       <MenuBar

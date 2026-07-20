@@ -10,38 +10,11 @@
   cursor: pointer;
   border: 1px solid vars.$color-surface2;
 
-  .text {
-    flex: 1;
-    padding: vars.$spacing-secondary;
-    padding-inline: vars.$spacing-primary;
-    height: 100%;
-
-    .nameContainer {
-      flex-direction: row;
-      gap: vars.$spacing-tertiary;
-      align-items: center;
-
-      .name {
-        font-size: vars.$font-size-h3;
-        flex: 1;
-      }
-    }
-
-    .description {
-      font-size: vars.$font-size-body2;
-      color: vars.$color-text-secondary;
-      white-space: wrap;
-    }
-  }
-
   .imageContainer {
     background-color: vars.$color-primary;
     aspect-ratio: 1;
-    // height: calc(100% - vars.$spacing-primary);
     height: 100%;
     width: 64px;
-    // margin-left: vars.$spacing-secondary;
-    // border-radius: vars.$roundness;
     justify-content: flex-end;
     align-items: center;
     overflow: hidden;
@@ -49,7 +22,6 @@
     .image {
       position: absolute;
       object-fit: cover;
-
       height: calc(100% - 4px);
     }
   }
@@ -65,66 +37,56 @@
     background: vars.$gradient-evil;
   }
 
-  .checkButtonContainer {
-    border: 2px solid vars.$color-text-secondary;
-    border-radius: vars.$roundness;
-    aspect-ratio: 1;
-    height: 40px;
-    justify-content: center;
-    align-items: center;
-    margin-right: vars.$spacing-primary;
+  .text {
+    flex: 1;
+    padding: vars.$spacing-secondary;
+    padding-inline: vars.$spacing-primary;
+    height: 100%;
 
-    .checkButtonIcon {
-      background-color: transparent;
-      font-size: vars.$icon-size-medium;
+    .name {
+      flex-direction: row;
+      gap: vars.$spacing-tertiary;
+      align-items: center;
+      font-size: vars.$font-size-h3;
+      flex: 1;
+    }
+
+    .description {
+      font-size: vars.$font-size-body2;
+      color: vars.$color-text-secondary;
+      white-space: wrap;
     }
   }
 
-  .boostIcon {
-    font-size: vars.$icon-size-medium;
-    margin-bottom: 2px;
-    margin-right: vars.$spacing-primary;
+  .boosts {
+    font-size: vars.$font-size-body2;
+    margin-right: 4px;
+    position: absolute;
+    top: 0;
+    right: -4px;
+    background-color: vars.$color-surface2;
+    padding-left: vars.$spacing-tertiary;
+    padding-right: vars.$spacing-tertiary;
+    padding-top: 3px;
+    padding-bottom: 2px;
+    border-bottom-left-radius: vars.$roundness;
+    outline: 1px solid vars.$color-surface3;
+    width: 88px;
+    white-space: nowrap;
+    text-align: center;
   }
 
-  .boostGoodIcon {
-    @extend .boostIcon;
-
+  .boostsGood {
+    @extend .boosts;
     color: vars.$color-good;
   }
 
-  .boostBadIcon {
-    @extend .boostIcon;
-
+  .boostsBad {
+    @extend .boosts;
     color: vars.$color-evil;
   }
 }
 
 .containerChecked {
   filter: brightness(1);
-}
-
-.boosts {
-  font-size: vars.$font-size-body2;
-  margin-right: 4px;
-  position: absolute;
-  top: 0;
-  right: -4px;
-  background-color: vars.$color-surface2;
-  padding-left: vars.$spacing-tertiary;
-  padding-right: vars.$spacing-tertiary;
-  padding-top: 3px;
-  padding-bottom: 2px;
-  border-bottom-left-radius: vars.$roundness;
-  outline: 1px solid vars.$color-surface3;
-  width: 80px;
-}
-
-.boostsGood {
-  @extend .boosts;
-  color: vars.$color-good;
-}
-
-.boostsBad {
-  @extend .boosts;
-  color: vars.$color-evil;
 }
