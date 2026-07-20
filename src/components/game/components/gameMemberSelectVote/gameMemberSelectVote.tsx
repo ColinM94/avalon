@@ -54,7 +54,6 @@ export const GameMemberSelectVote = (props: Props) => {
       </div>
 
       <MenuBar
-        showContinue={isMyPlayerHost}
         canReady={() => memberSelectVoteCanReady(myPlayer.id)}
         canContinue={memberSelectVoteCanContinue}
         onContinue={memberSelectVoteContinue}

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { deleteField } from "firebase/firestore";
 import { Button } from "components/button/button";
 import { Modal } from "components/modal/modal";
 import { capitaliseFirstLetter } from "utils/capitaliseFirstLetter";

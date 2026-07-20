@@ -5,5 +5,6 @@ export interface Props {
   onContinue?: () => Promise<void>;
   onReady?: () => Promise<void>;
   hideReadyButton: boolean | undefined;
+  showContinueToLeader: boolean | undefined;
   className?: string;
 }

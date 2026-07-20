@@ -53,9 +53,10 @@ export const GameMemberSelect = (props: Props) => {
       </div>
 
       <MenuBar
-        showContinue={isMyPlayerLeader}
+        showContinueToLeader
         canContinue={memberSelectCanContinue}
         onContinue={memberSelectContinue}
+        hideReadyButton
       />
     </>
   );
