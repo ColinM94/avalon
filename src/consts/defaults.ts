@@ -41,6 +41,7 @@ export const sessionDefault = (): GameSession => {
     activeQuestIndex: 0,
     activeMemberSelectVoteIndex: 0,
     numFailMemberSelectVotes: 0,
+    selectedCharacters: ["merlin", "assassin"],
     quests: {
       0: {
         index: 0,

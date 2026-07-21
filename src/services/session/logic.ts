@@ -108,11 +108,6 @@ export const setupContinue = async (characterIds: CharacterId[]) => {
   const numMinionsToAdd =
     numEvilPlayers - updatedCharacterIds.filter((characterId) => characters[characterId].allegiance === "evil").length;
 
-  console.log({
-    numServantsToAdd,
-    numMinionsToAdd,
-  });
-
   if (numServantsToAdd >= 0) {
     for (let i = 1; i <= numServantsToAdd; i++) {
       updatedCharacterIds.push(characters[`servant${i}`].id);
@@ -126,8 +121,6 @@ export const setupContinue = async (characterIds: CharacterId[]) => {
   }
 
   updatedCharacterIds = shuffleArray(updatedCharacterIds) as CharacterId[];
-
-  console.log(updatedCharacterIds, numPlayers);
 
   const playerUpdates: Record<string, Partial<Player>> = {};
 

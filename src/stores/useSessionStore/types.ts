@@ -1,4 +1,5 @@
 import { GameSession, Player, Quest } from "types/gameSession";
+import { CharacterId } from "types/general";
 
 export type State = {
   // session: GameSession;
@@ -22,6 +23,7 @@ export type State = {
   step: GameSession["step"];
   numFailQuests: number;
   quests: GameSession["quests"];
+  selectedCharacters: CharacterId[];
   onReady?: () => string | void;
   canReady?: () => string | boolean;
   onContinue?: () => string | void;

@@ -3,6 +3,7 @@ import * as React from "react";
 import { characters } from "consts/characters";
 import { useAppStore } from "stores/useAppStore/useAppStore";
 import { classes } from "utils/classes";
+import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 
 import styles from "./styles.module.scss";
 import { Props } from "./types";
@@ -10,6 +11,7 @@ import { Props } from "./types";
 export const SetupModule = (props: Props) => {
   const { characterId, selected, onSelect } = props;
   const { showToast } = useAppStore();
+  const { isMyPlayerHost } = useSessionStore();
 
   const [image, setImage] = React.useState<string | null>(null);
 
@@ -25,8 +27,13 @@ export const SetupModule = (props: Props) => {
   }, [characterId]);
 
   const handleClick = () => {
+    if (!isMyPlayerHost) {
+      showToast("Only the host can choose characters!");
+      return;
+    }
+
     if (!character.isOptional) {
-      showToast(`${character.name} is not optional`);
+      showToast(`${character.name} is not optional!`);
       return;
     }
 

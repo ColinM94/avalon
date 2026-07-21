@@ -11,25 +11,15 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const MenuBarReadyButton = (props: Props) => {
-  const { canReady, onReady, canContinue, onContinue, hideReadyButton, showContinueToLeader } = props;
+  const { canReady, onReady, canContinue, onContinue, showContinue, showReady } = props;
 
-  const { myPlayer, isMyPlayerHost, isMyPlayerLeader } = useSessionStore();
+  const { myPlayer } = useSessionStore();
   const { showToast } = useAppStore();
 
   const [isLoading, setIsLoading] = React.useState(false);
 
   const isContinueDisabled = Boolean((canContinue && canContinue() !== true) || isLoading);
   const isReadyDisabled = Boolean((canReady && canReady() !== true) || isLoading);
-
-  // React.useEffect(() => {
-  //   void (() => {
-  //     if (myPlayer.isMyPlayerHost) return
-
-  //     setTimeout(() => {
-  //       void handleReady()
-  //     }, 1000)
-  //   })()
-  // }, [])
 
   const handleCanReady = (alertUser: boolean) => {
     if (!canReady) return;
@@ -81,19 +71,11 @@ export const MenuBarReadyButton = (props: Props) => {
     }
   };
 
-  const showContinue = () => {
-    if (showContinueToLeader) return isMyPlayerLeader;
-    return myPlayer.isReady || hideReadyButton;
-  };
-
-  const showReady = () => {
-    return !showContinue() && !hideReadyButton;
-  };
   return (
     <>
       {isLoading && <LoadingOverlay />}
 
-      {showContinue() && (
+      {showContinue && !showReady && (
         <Button
           label="Continue"
           onClick={handleContinue}
@@ -103,7 +85,7 @@ export const MenuBarReadyButton = (props: Props) => {
         />
       )}
 
-      {showReady() && (
+      {showReady && (
         <Button
           label="Ready"
           onClick={handleReady}

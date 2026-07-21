@@ -51,6 +51,7 @@ export const PlayProtected = () => {
         characters: data.characters,
         quests: data.quests,
         step: data.step,
+        selectedCharacters: data.selectedCharacters,
         // session: data,
       });
     } catch (error) {

@@ -9,7 +9,7 @@ import styles from "./styles.module.scss";
 import { Props } from "./types";
 
 export const MenuBar = (props: Props) => {
-  const { canContinue, canReady, onContinue, onReady, showContinueToLeader, hideReadyButton, className } = props;
+  const { showContinue, showReady, canContinue, canReady, onContinue, onReady, className } = props;
 
   return (
     <div className={classes(styles.container, className)}>
@@ -20,8 +20,8 @@ export const MenuBar = (props: Props) => {
         canReady={canReady}
         onContinue={onContinue}
         onReady={onReady}
-        hideReadyButton={hideReadyButton}
-        showContinueToLeader={showContinueToLeader}
+        showContinue={showContinue}
+        showReady={showReady}
       />
 
       {isDev && <Debug />}

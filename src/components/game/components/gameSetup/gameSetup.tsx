@@ -6,16 +6,14 @@ import { useSessionStore } from "stores/useSessionStore/useSessionStore";
 import { setupCanContinue, setupContinue } from "services/session/logic";
 import { CharacterId } from "types/general";
 import { useAppStore } from "stores/useAppStore/useAppStore";
-import { Divider } from "components/divider/divider";
+import { updateSession } from "services/session/updateSession";
 
 import { SetupModule } from "./components/setupModule/setupModule";
 import styles from "./styles.module.scss";
 
 export const GameSetup = () => {
   const { showToast } = useAppStore();
-  const { numPlayers } = useSessionStore();
-
-  const [selectedCharacters, setSelectedCharacters] = React.useState<CharacterId[]>(["merlin", "assassin"]);
+  const { numPlayers, isMyPlayerHost, selectedCharacters } = useSessionStore();
 
   const goodCharacters = Object.values(characters).filter(
     (character) =>
@@ -37,6 +35,7 @@ export const GameSetup = () => {
         ] as CharacterId[]
       ).includes(character.id),
   );
+
   const evilCharacters = Object.values(characters).filter(
     (character) =>
       character.allegiance === "evil" &&
@@ -70,9 +69,10 @@ export const GameSetup = () => {
       return;
     }
 
-    setSelectedCharacters((prev) => {
-      if (!isSelected) return [...prev, character.id];
-      return prev.filter((id) => id !== characterId);
+    void updateSession({
+      selectedCharacters: isSelected
+        ? selectedCharacters.filter((id) => id !== characterId)
+        : [...selectedCharacters, characterId],
     });
   };
 
@@ -111,7 +111,8 @@ export const GameSetup = () => {
       </div>
 
       <MenuBar
-        hideReadyButton
+        showReady={false}
+        showContinue={isMyPlayerHost}
         canContinue={() => setupCanContinue(numActiveGoodCharacters, numActiveEvilCharacters)}
         onContinue={() => setupContinue(selectedCharacters)}
       />

@@ -50,4 +50,5 @@ export type GameSession = {
   numFailQuests: number;
   isRitualFinished: boolean;
   activeMemberSelectVoteIndex: number;
+  selectedCharacters: CharacterId[];
 };

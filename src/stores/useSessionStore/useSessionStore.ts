@@ -37,6 +37,7 @@ const initialState: State = {
   characters: [],
   quests: {},
   activeMemberSelectVoteIndex: 0,
+  selectedCharacters: ["merlin", "assassin"],
 };
 
 export const useSessionStore = create<State & Actions>()(
